@@ -1,1 +1,0 @@
-/usr/bin/c++ "CMakeFiles/project-web.dir/project-web_autogen/mocs_compilation.cpp.o" "CMakeFiles/project-web.dir/main.cpp.o" "CMakeFiles/project-web.dir/browserwindow.cpp.o" "CMakeFiles/project-web.dir/components/titlebarbuttons.cpp.o" -o project-web  /usr/lib/libQt6Widgets.so.6.7.0 /usr/lib/libQt6Gui.so.6.7.0 /usr/lib/libQt6Core.so.6.7.0 /usr/lib/libGLX.so /usr/lib/libOpenGL.so

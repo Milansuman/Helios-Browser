@@ -1,9 +1,0 @@
-/home/milan/projects/project-web/build/CMakeFiles/project-web.dir
-/home/milan/projects/project-web/build/CMakeFiles/edit_cache.dir
-/home/milan/projects/project-web/build/CMakeFiles/rebuild_cache.dir
-/home/milan/projects/project-web/build/CMakeFiles/list_install_components.dir
-/home/milan/projects/project-web/build/CMakeFiles/install.dir
-/home/milan/projects/project-web/build/CMakeFiles/install/local.dir
-/home/milan/projects/project-web/build/CMakeFiles/install/strip.dir
-/home/milan/projects/project-web/build/CMakeFiles/project-web_autogen_timestamp_deps.dir
-/home/milan/projects/project-web/build/CMakeFiles/project-web_autogen.dir
