@@ -6,16 +6,16 @@
 
 TitleBarButtons::CloseButton::CloseButton(BrowserWindow *window, QWidget *parent) : QWidget(parent){
     this->window = window;
-    this->setFixedSize(15, 15);
+    this->setFixedSize(12, 12);
 }
 
 void TitleBarButtons::CloseButton::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(Qt::red);
+    painter.setBrush(QBrush(QColor(255, 93, 73)));
 
-    painter.drawEllipse(0, 0, 15, 15);
+    painter.drawEllipse(0, 0, this->width(), this->height());
 }
 
 void TitleBarButtons::CloseButton::mousePressEvent(QMouseEvent *event){
@@ -26,7 +26,7 @@ TitleBarButtons::CloseButton::~CloseButton(){}
 
 TitleBarButtons::MinimizeButton::MinimizeButton(BrowserWindow *window, QWidget *parent) : QWidget(parent){
     this->window = window;
-    this->setFixedSize(15, 15);
+    this->setFixedSize(12, 12);
 }
 
 void TitleBarButtons::MinimizeButton::mousePressEvent(QMouseEvent *event){
@@ -37,16 +37,16 @@ void TitleBarButtons::MinimizeButton::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(Qt::green);
+    painter.setBrush(QBrush(QColor(34, 203, 62)));
 
-    painter.drawEllipse(0, 0, 15, 15);
+    painter.drawEllipse(0, 0, this->width(), this->height());
 }
 
 TitleBarButtons::MinimizeButton::~MinimizeButton(){}
 
 TitleBarButtons::MaximizeButton::MaximizeButton(BrowserWindow *window, QWidget *parent) : QWidget(parent){
     this->window = window;
-    this->setFixedSize(15, 15);
+    this->setFixedSize(12, 12);
 }
 
 void TitleBarButtons::MaximizeButton::mousePressEvent(QMouseEvent *event){
@@ -63,9 +63,9 @@ void TitleBarButtons::MaximizeButton::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(Qt::NoPen);
-    painter.setBrush(Qt::yellow);
+    painter.setBrush(QBrush(QColor(255, 188, 47)));
 
-    painter.drawEllipse(0, 0, 15, 15);
+    painter.drawEllipse(0, 0, this->width(), this->height());
 }
 
 TitleBarButtons::MaximizeButton::~MaximizeButton(){}

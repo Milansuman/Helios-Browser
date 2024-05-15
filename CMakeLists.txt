@@ -19,6 +19,8 @@ set(PROJECT_SOURCES
         browserwindow.cpp
         components/titlebarbuttons.h
         components/titlebarbuttons.cpp
+        components/addressbox.h
+        components/addressbox.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

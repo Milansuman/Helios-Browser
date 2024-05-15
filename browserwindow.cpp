@@ -1,15 +1,19 @@
 #include "browserwindow.h"
 #include "components/titlebarbuttons.h"
+#include "components/addressbox.h"
 #include <QMainWindow>
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
+#include <QMouseEvent>
+
 
 BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMainWindow(parent){
     this->resize(width, height);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setMouseTracking(true);
 
     //Implement Outer UI
     QWidget *centralWidget = new QWidget(this);
@@ -21,7 +25,7 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     //=======================ADDRESS BAR=====================================
     QHBoxLayout *addressbarLayout = new QHBoxLayout;
 
-    QLabel *search = new QLabel("Search");
+    AddressBox *search = new AddressBox("search or enter link");
     addressbarLayout->addWidget(search, 0, Qt::AlignCenter);
 
     //=======================TITLE BAR BUTTON=================================
@@ -58,5 +62,37 @@ void BrowserWindow::paintEvent(QPaintEvent *event){
     }
 }
 
-BrowserWindow::~BrowserWindow(){
+void BrowserWindow::mousePressEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton && this->isEdgePosition(event->position())){
+        this->resizing = true;
+    }
+    QMainWindow::mousePressEvent(event);
 }
+
+void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
+    if(this->isEdgePosition(event->position())){
+        this->setCursor(Qt::SizeAllCursor);
+        qDebug() << event->position();
+    }
+    qDebug() << event->position();
+    QMainWindow::mouseMoveEvent(event);
+}
+
+void BrowserWindow::mouseReleaseEvent(QMouseEvent *event){
+    QMainWindow::mouseReleaseEvent(event);
+}
+
+bool BrowserWindow::isEdgePosition(QPointF position){
+    if(position.x() <= this->width() && position.y() == 0){
+        return true;
+    }else if(position.y() <= this->height() && position.x() == 0){
+        return true;
+    }else if(position.x() <= this->width() && position.y() == this->height()){
+        return true;
+    }else if(position.y() <= this->height() && position.x() == this->width()){
+        return true;
+    }
+    return false;
+}
+
+BrowserWindow::~BrowserWindow(){}
