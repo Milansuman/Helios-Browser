@@ -4,7 +4,7 @@
 #include <QPainter>
 #include "titlebarbuttons.h"
 
-TitleBarButtons::CloseButton::CloseButton(QMainWindow *window, QWidget *parent) : QWidget(parent){
+TitleBarButtons::CloseButton::CloseButton(BrowserWindow *window, QWidget *parent) : QWidget(parent){
     this->window = window;
     this->setFixedSize(15, 15);
 }
@@ -24,7 +24,7 @@ void TitleBarButtons::CloseButton::mousePressEvent(QMouseEvent *event){
 
 TitleBarButtons::CloseButton::~CloseButton(){}
 
-TitleBarButtons::MinimizeButton::MinimizeButton(QMainWindow *window, QWidget *parent) : QWidget(parent){
+TitleBarButtons::MinimizeButton::MinimizeButton(BrowserWindow *window, QWidget *parent) : QWidget(parent){
     this->window = window;
     this->setFixedSize(15, 15);
 }
@@ -44,18 +44,18 @@ void TitleBarButtons::MinimizeButton::paintEvent(QPaintEvent *event){
 
 TitleBarButtons::MinimizeButton::~MinimizeButton(){}
 
-TitleBarButtons::MaximizeButton::MaximizeButton(QMainWindow *window, QWidget *parent) : QWidget(parent){
+TitleBarButtons::MaximizeButton::MaximizeButton(BrowserWindow *window, QWidget *parent) : QWidget(parent){
     this->window = window;
     this->setFixedSize(15, 15);
 }
 
 void TitleBarButtons::MaximizeButton::mousePressEvent(QMouseEvent *event){
-    if(this->isMaximized){
+    if(this->window->maximized){
         this->window->showNormal();
-        this->isMaximized = false;
+        this->window->maximized = false;
     }else{
         this->window->showMaximized();
-        this->isMaximized = true;
+        this->window->maximized = true;
     }
 }
 

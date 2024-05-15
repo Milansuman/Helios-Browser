@@ -4,14 +4,15 @@
 #include <QPaintEvent>
 #include <QMouseEvent>
 #include <QMainWindow>
+#include "../browserwindow.h"
 
 namespace TitleBarButtons{
     class CloseButton : public QWidget {
         Q_OBJECT
     private:
-        QMainWindow *window;
+        BrowserWindow *window;
     public:
-        explicit CloseButton(QMainWindow *window, QWidget *parent = nullptr);
+        explicit CloseButton(BrowserWindow *window, QWidget *parent = nullptr);
         ~CloseButton();
     protected:
         void paintEvent(QPaintEvent *event) override;
@@ -21,9 +22,9 @@ namespace TitleBarButtons{
     class MinimizeButton : public QWidget {
         Q_OBJECT
     private:
-        QMainWindow *window;
+        BrowserWindow *window;
     public:
-        explicit MinimizeButton(QMainWindow *window, QWidget *parent = nullptr);
+        explicit MinimizeButton(BrowserWindow *window, QWidget *parent = nullptr);
         ~MinimizeButton();
     protected:
         void paintEvent(QPaintEvent *event) override;
@@ -33,10 +34,9 @@ namespace TitleBarButtons{
     class MaximizeButton : public QWidget {
         Q_OBJECT
     private:
-        QMainWindow *window;
-        bool isMaximized = false;
+        BrowserWindow *window;
     public:
-        explicit MaximizeButton(QMainWindow *window, QWidget *parent = nullptr);
+        explicit MaximizeButton(BrowserWindow *window, QWidget *parent = nullptr);
         ~MaximizeButton();
     protected:
         void paintEvent(QPaintEvent *event) override;

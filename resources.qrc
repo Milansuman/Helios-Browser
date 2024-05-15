@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file alias="calsans.ttf">resources/fonts/calsans.ttf</file>
+    </qresource>
+</RCC>

@@ -12,6 +12,7 @@
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
 public:
+    bool maximized = false;
     explicit BrowserWindow(QWidget *parent = nullptr, double width=800.0, double height=600.0);
     ~BrowserWindow();
 protected:
