@@ -73,6 +73,8 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
     if(this->isEdgePosition(event->position())){
         this->setCursor(Qt::SizeAllCursor);
         qDebug() << event->position();
+    }else{
+        this->setCursor(Qt::ArrowCursor);
     }
     qDebug() << event->position();
     QMainWindow::mouseMoveEvent(event);
