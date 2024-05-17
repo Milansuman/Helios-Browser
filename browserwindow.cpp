@@ -66,7 +66,12 @@ void BrowserWindow::paintEvent(QPaintEvent *event){
 
 void BrowserWindow::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton && this->isEdgePosition(event->position())){
+        this->showNormal();
         this->resizing = true;
+        this->maximized = false;
+        this->originalGeometry = this->geometry();
+        this->lastMousePosition = event->globalPosition();
+        this->currentEdgePosition = this->edgePosition(event->position());
     }
     QMainWindow::mousePressEvent(event);
 }
@@ -92,10 +97,49 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
         default:
             this->setCursor(Qt::ArrowCursor);
     }
+
+    if(this->resizing){
+        QPointF delta = event->globalPosition() - lastMousePosition;
+        QRect newGeometry = originalGeometry;
+
+        switch(this->currentEdgePosition){
+        case WindowBoundary::TOP:
+            newGeometry.setTop(originalGeometry.top() + delta.y());
+            break;
+        case WindowBoundary::BOTTOM:
+            newGeometry.setBottom(originalGeometry.bottom() + delta.y());
+            break;
+        case WindowBoundary::LEFT:
+            newGeometry.setLeft(originalGeometry.left() + delta.x());
+            break;
+        case WindowBoundary::RIGHT:
+            newGeometry.setRight(originalGeometry.right() + delta.x());
+            break;
+        case WindowBoundary::TOP_LEFT:
+            newGeometry.setTop(originalGeometry.top() + delta.y());
+            newGeometry.setLeft(originalGeometry.left() + delta.x());
+            break;
+        case WindowBoundary::TOP_RIGHT:
+            newGeometry.setTop(originalGeometry.top() + delta.y());
+            newGeometry.setRight(originalGeometry.right() + delta.x());
+            break;
+        case WindowBoundary::BOTTOM_LEFT:
+            newGeometry.setBottom(originalGeometry.bottom() + delta.y());
+            newGeometry.setLeft(originalGeometry.left() + delta.x());
+            break;
+        case WindowBoundary::BOTTOM_RIGHT:
+            newGeometry.setBottom(originalGeometry.bottom() + delta.y());
+            newGeometry.setRight(originalGeometry.right() + delta.x());
+            break;
+        }
+
+        this->setGeometry(newGeometry);
+    }
     QMainWindow::mouseMoveEvent(event);
 }
 
 void BrowserWindow::mouseReleaseEvent(QMouseEvent *event){
+    this->resizing = false;
     QMainWindow::mouseReleaseEvent(event);
 }
 

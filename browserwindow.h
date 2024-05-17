@@ -25,7 +25,11 @@ enum WindowBoundary {
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
 private:
+    //==================HANDLING WINDOW RESIZE FUNCTIONALITY==================================
     bool resizing;
+    WindowBoundary currentEdgePosition;
+    QRect originalGeometry;
+    QPointF lastMousePosition;
     bool isEdgePosition(QPointF position);
     WindowBoundary edgePosition(QPointF position);
 public:
