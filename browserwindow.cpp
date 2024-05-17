@@ -9,7 +9,7 @@
 #include <QMouseEvent>
 
 
-BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMainWindow(parent){
+BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMainWindow(parent), resizing(false){
     this->resize(width, height);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
@@ -44,6 +44,8 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     mainLayout->addLayout(titlebarLayout);
     mainLayout->addStretch();
 
+    centralWidget->setMouseTracking(true);
+
     this->setCentralWidget(centralWidget);
 }
 
@@ -70,13 +72,26 @@ void BrowserWindow::mousePressEvent(QMouseEvent *event){
 }
 
 void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
-    if(this->isEdgePosition(event->position())){
-        this->setCursor(Qt::SizeAllCursor);
-        qDebug() << event->position();
-    }else{
-        this->setCursor(Qt::ArrowCursor);
+    switch(this->edgePosition(event->position())){
+        case WindowBoundary::TOP:
+        case WindowBoundary::BOTTOM:
+            this->setCursor(Qt::SizeVerCursor);
+            break;
+        case WindowBoundary::RIGHT:
+        case WindowBoundary::LEFT:
+            this->setCursor(Qt::SizeHorCursor);
+            break;
+        case WindowBoundary::TOP_LEFT:
+        case WindowBoundary::BOTTOM_RIGHT:
+            this->setCursor(Qt::SizeFDiagCursor);
+            break;
+        case WindowBoundary::TOP_RIGHT:
+        case WindowBoundary::BOTTOM_LEFT:
+            this->setCursor(Qt::SizeBDiagCursor);
+            break;
+        default:
+            this->setCursor(Qt::ArrowCursor);
     }
-    qDebug() << event->position();
     QMainWindow::mouseMoveEvent(event);
 }
 
@@ -85,16 +100,42 @@ void BrowserWindow::mouseReleaseEvent(QMouseEvent *event){
 }
 
 bool BrowserWindow::isEdgePosition(QPointF position){
-    if(position.x() <= this->width() && position.y() == 0){
+    int offset = 3;
+    if(position.x() <= this->width() && position.y() >= 0 && position.y() <= offset){
         return true;
-    }else if(position.y() <= this->height() && position.x() == 0){
+    }else if(position.y() <= this->height() && position.x() >= 0 && position.x() <= offset){
         return true;
-    }else if(position.x() <= this->width() && position.y() == this->height()){
+    }else if(position.x() <= this->width() && position.y() <= this->height() && position.y() >= this->height() - offset){
         return true;
-    }else if(position.y() <= this->height() && position.x() == this->width()){
+    }else if(position.y() <= this->height() && position.x() <= this->width() && position.x() >= this->width() - offset){
         return true;
     }
     return false;
+}
+
+WindowBoundary BrowserWindow::edgePosition(QPointF position){
+    int offset = 3;
+
+    if((position.x() >= 0 && position.x() <= offset) && (position.y() >= 0 && position.y() <= offset)){
+        return WindowBoundary::TOP_LEFT;
+    }else if((position.x() >= this->width() - offset && position.x() <= this->width()) && (position.y() >= 0 && position.y() <= offset)){
+        return WindowBoundary::TOP_RIGHT;
+    }else if((position.x() >= 0 && position.x() <= offset) && (position.y() >= this->height() - offset && position.y() <= this->height())){
+        return WindowBoundary::BOTTOM_LEFT;
+    }else if((position.x() >= this->width() - offset && position.x() <= this->width()) && (position.y() >= this->height() - offset && position.y() <= this->height())){
+        return WindowBoundary::BOTTOM_RIGHT;
+    }
+
+    if(position.x() <= this->width() && position.y() >= 0 && position.y() <= offset){
+        return WindowBoundary::TOP;
+    }else if(position.y() <= this->height() && position.x() >= 0 && position.x() <= offset){
+        return WindowBoundary::LEFT;
+    }else if(position.x() <= this->width() && position.y() <= this->height() && position.y() >= this->height() - offset){
+        return WindowBoundary::BOTTOM;
+    }else if(position.y() <= this->height() && position.x() <= this->width() && position.x() >= this->width() - offset){
+        return WindowBoundary::RIGHT;
+    }
+    return WindowBoundary::NOT_BOUNDARY;
 }
 
 BrowserWindow::~BrowserWindow(){}
