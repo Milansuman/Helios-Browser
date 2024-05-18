@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QMainWindow>
-#include <QtWidgets>
+#include <QWidget>
 #include <QMouseEvent>
 
 // QT_BEGIN_NAMESPACE
@@ -22,7 +21,7 @@ enum WindowBoundary {
     NOT_BOUNDARY
 };
 
-class BrowserWindow : public QMainWindow {
+class BrowserWindow : public QWidget {
     Q_OBJECT
 private:
     //==================HANDLING WINDOW RESIZE FUNCTIONALITY==================================

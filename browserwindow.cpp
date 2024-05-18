@@ -2,37 +2,29 @@
 #include "components/titlebarbuttons.h"
 #include "components/addressbox.h"
 #include "components/titlebar.h"
-#include <QMainWindow>
+#include <QWidget>
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QMouseEvent>
 
-
-BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMainWindow(parent), resizing(false){
+BrowserWindow::BrowserWindow(QWidget*parent, double width, double height): QWidget(parent), resizing(false){
     this->resize(width, height);
+    this->setMouseTracking(true);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setMouseTracking(true);
 
-    //Implement Outer UI
-    QWidget *centralWidget = new QWidget(this);
-
-    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
     
     TitleBar *titlebar = new TitleBar(this);
 
     mainLayout->addWidget(titlebar);
     mainLayout->addStretch();
-
-    centralWidget->setMouseTracking(true);
-
-    this->setCentralWidget(centralWidget);
 }
 
 void BrowserWindow::paintEvent(QPaintEvent *event){
-    QMainWindow::paintEvent(event);
+    QWidget::paintEvent(event);
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -55,7 +47,7 @@ void BrowserWindow::mousePressEvent(QMouseEvent *event){
         this->lastMousePosition = event->globalPosition();
         this->currentEdgePosition = this->edgePosition(event->position());
     }
-    QMainWindow::mousePressEvent(event);
+    QWidget::mousePressEvent(event);
 }
 
 void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
@@ -117,12 +109,12 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
 
         this->setGeometry(newGeometry);
     }
-    QMainWindow::mouseMoveEvent(event);
+    QWidget::mouseMoveEvent(event);
 }
 
 void BrowserWindow::mouseReleaseEvent(QMouseEvent *event){
     this->resizing = false;
-    QMainWindow::mouseReleaseEvent(event);
+    QWidget::mouseReleaseEvent(event);
 }
 
 bool BrowserWindow::isEdgePosition(QPointF position){
