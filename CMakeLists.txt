@@ -21,6 +21,8 @@ set(PROJECT_SOURCES
         components/titlebarbuttons.cpp
         components/addressbox.h
         components/addressbox.cpp
+        components/titlebar.h
+        components/titlebar.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
