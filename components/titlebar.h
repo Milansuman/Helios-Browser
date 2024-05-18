@@ -8,6 +8,8 @@ class TitleBar : public QWidget {
     Q_OBJECT
 private:
     bool moving;
+    QPointF originalPosition;
+    QRect originalGeometry;
     BrowserWindow *window;
 public:
     TitleBar(BrowserWindow *window, QWidget *parent = nullptr);

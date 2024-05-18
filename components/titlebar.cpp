@@ -4,7 +4,13 @@
 #include "../browserwindow.h"
 #include "titlebarbuttons.h"
 
-TitleBar::TitleBar(BrowserWindow *window, QWidget *parent): QWidget(parent), moving(false), window(window) {
+TitleBar::TitleBar(BrowserWindow *window, QWidget *parent): 
+    QWidget(parent), 
+    moving(false), 
+    window(window)
+{
+    this->originalGeometry = this->window->geometry();
+
     //=======================TITLE BAR=======================================
     QHBoxLayout *titlebarLayout = new QHBoxLayout;
 
@@ -32,12 +38,19 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent): QWidget(parent), mov
 
 void TitleBar::mousePressEvent(QMouseEvent *event){
     this->moving = true;
+    this->originalPosition = event->globalPosition();
+    this->originalGeometry = this->window->geometry();
     QWidget::mousePressEvent(event);
 }
 
 void TitleBar::mouseMoveEvent(QMouseEvent *event){
     if(this->moving){
-        this->window->move(0, 0);
+        QPointF delta = event->globalPosition() - this->originalPosition;
+        QRect newGeometry = this->originalGeometry;
+
+        newGeometry.setTopLeft(this->originalGeometry.topLeft() + delta.toPoint());
+
+        this->window->setGeometry(newGeometry);
     }
 }
 
