@@ -48,7 +48,7 @@ void TitleBar::mouseMoveEvent(QMouseEvent *event){
         QPointF delta = event->globalPosition() - this->originalPosition;
         QRect newGeometry = this->originalGeometry;
 
-        newGeometry.setTopLeft(this->originalGeometry.topLeft() + delta.toPoint());
+        newGeometry.moveTopLeft(this->originalGeometry.topLeft() + delta.toPoint());
 
         this->window->setGeometry(newGeometry);
     }
