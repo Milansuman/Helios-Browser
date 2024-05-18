@@ -1,4 +1,6 @@
 #include <QWidget>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
 #include "titlebar.h"
 #include "addressbox.h"
 #include "../browserwindow.h"
