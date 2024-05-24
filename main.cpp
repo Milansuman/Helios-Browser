@@ -1,18 +1,19 @@
-#include <QApplication>
-#include <QFontDatabase>
-#include <QFont>
-#include "browserwindow.h"
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
 
-int main(int argc, char *argv[]){
-    QApplication a(argc, argv);
-    Q_INIT_RESOURCE(resources);
-    BrowserWindow *browser = new BrowserWindow(nullptr, 800.0, 600.0);
+int main(int argc, char *argv[])
+{
+    QGuiApplication app(argc, argv);
 
-    QFontDatabase::addApplicationFont(":/fonts/calsans.ttf");
-    QString fontFamily = QFontDatabase::applicationFontFamilies(0).at(0);
-    QFont *font = new QFont(fontFamily);
+    QQmlApplicationEngine engine;
+    const QUrl url(QStringLiteral("qrc:/project-web/Main.qml"));
+    QObject::connect(
+        &engine,
+        &QQmlApplicationEngine::objectCreationFailed,
+        &app,
+        []() { QCoreApplication::exit(-1); },
+        Qt::QueuedConnection);
+    engine.load(url);
 
-    browser->setFont(*font);
-    browser->show();
-    return a.exec();
+    return app.exec();
 }
