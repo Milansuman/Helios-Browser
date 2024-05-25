@@ -9,28 +9,11 @@
 // }
 // QT_END_NAMESPACE
 
-enum WindowBoundary {
-    TOP,
-    BOTTOM,
-    LEFT,
-    RIGHT,
-    TOP_LEFT,
-    TOP_RIGHT,
-    BOTTOM_LEFT,
-    BOTTOM_RIGHT,
-    NOT_BOUNDARY
-};
-
-class BrowserWindow : public QWidget {
+class BrowserWindow : public QMainWindow {
     Q_OBJECT
 private:
-    //==================HANDLING WINDOW RESIZE FUNCTIONALITY==================================
-    bool resizing;
-    WindowBoundary currentEdgePosition;
-    QRect originalGeometry;
-    QPointF lastMousePosition;
+    bool resizing = false;
     bool isEdgePosition(QPointF position);
-    WindowBoundary edgePosition(QPointF position);
 public:
     bool maximized = false;
     explicit BrowserWindow(QWidget *parent = nullptr, double width=800.0, double height=600.0);
