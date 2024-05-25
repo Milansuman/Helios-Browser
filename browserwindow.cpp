@@ -1,8 +1,7 @@
 #include "browserwindow.h"
 #include "components/titlebarbuttons.h"
 #include "components/addressbox.h"
-#include "components/titlebar.h"
-#include <QWidget>
+#include <QMainWindow>
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
@@ -15,11 +14,33 @@ BrowserWindow::BrowserWindow(QWidget*parent, double width, double height): QWidg
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    
-    TitleBar *titlebar = new TitleBar(this);
+    //Implement Outer UI
+    QWidget *centralWidget = new QWidget(this);
 
-    mainLayout->addWidget(titlebar);
+    QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
+    //=======================TITLE BAR=======================================
+    QHBoxLayout *titlebarLayout = new QHBoxLayout;
+
+    //=======================ADDRESS BAR=====================================
+    QHBoxLayout *addressbarLayout = new QHBoxLayout;
+
+    AddressBox *search = new AddressBox("search or enter link");
+    addressbarLayout->addWidget(search, 0, Qt::AlignCenter);
+
+    //=======================TITLE BAR BUTTON=================================
+    QHBoxLayout *titlebarButtonsLayout = new QHBoxLayout;
+
+    TitleBarButtons::MinimizeButton *minimizeButton = new TitleBarButtons::MinimizeButton(this);
+    TitleBarButtons::MaximizeButton *maximizeButton = new TitleBarButtons::MaximizeButton(this);
+    TitleBarButtons::CloseButton *closeButton = new TitleBarButtons::CloseButton(this);
+    titlebarButtonsLayout->addWidget(minimizeButton);
+    titlebarButtonsLayout->addWidget(maximizeButton);
+    titlebarButtonsLayout->addWidget(closeButton);
+
+    //=======================SETTING UP LAYOUTS===============================
+    titlebarLayout->addLayout(addressbarLayout);
+    titlebarLayout->addLayout(titlebarButtonsLayout);
+    mainLayout->addLayout(titlebarLayout);
     mainLayout->addStretch();
 }
 
