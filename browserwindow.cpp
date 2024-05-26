@@ -68,7 +68,7 @@ void BrowserWindow::paintEvent(QPaintEvent *event){
 
 void BrowserWindow::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton && this->isEdgePosition(event->position())){
-        this->windowHandle()->startSystemResize(this->getEdgePosition(event->globalPosition()));
+        this->windowHandle()->startSystemResize(this->getEdgePosition(event->position()));
     }else if(event->button() == Qt::LeftButton && event->position().y() <= 20){
         this->windowHandle()->startSystemMove();
     }
@@ -76,7 +76,7 @@ void BrowserWindow::mousePressEvent(QMouseEvent *event){
 }
 
 void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
-    switch(this->getEdgePosition(event->globalPosition())){
+    switch(this->getEdgePosition(event->position())){
         case Qt::TopEdge:
         case Qt::BottomEdge:
             this->setCursor(Qt::SizeVerCursor);
