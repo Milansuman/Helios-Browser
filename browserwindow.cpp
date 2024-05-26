@@ -100,8 +100,6 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
 }
 
 void BrowserWindow::mouseReleaseEvent(QMouseEvent *event){
-    this->resizing = false;
-    this->moving = false;
     QWidget::mouseReleaseEvent(event);
 }
 

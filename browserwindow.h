@@ -13,8 +13,6 @@
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
 private:
-    bool resizing = false;
-    bool moving = false;
     bool isEdgePosition(QPointF position);
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:

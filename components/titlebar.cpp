@@ -34,4 +34,4 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
     this->setLayout(titlebarLayout);
 }
 
-TitleBar::~TitleBar(){}
+TitleBar::~TitleBar(){} 
