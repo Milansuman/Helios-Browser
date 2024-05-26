@@ -9,6 +9,7 @@
 TitleBar::TitleBar(BrowserWindow *window, QWidget *parent): 
     QWidget(parent)
 {
+    this->setMaximumHeight(30);
     //=======================TITLE BAR=======================================
     QHBoxLayout *titlebarLayout = new QHBoxLayout;
 
@@ -20,6 +21,8 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
 
     //=======================TITLE BAR BUTTON=================================
     QHBoxLayout *titlebarButtonsLayout = new QHBoxLayout;
+
+    titlebarButtonsLayout->setSpacing(3);
 
     TitleBarButtons::MinimizeButton *minimizeButton = new TitleBarButtons::MinimizeButton(window);
     TitleBarButtons::MaximizeButton *maximizeButton = new TitleBarButtons::MaximizeButton(window);

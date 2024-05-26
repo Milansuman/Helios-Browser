@@ -12,6 +12,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 find_package(Qt6 REQUIRED COMPONENTS Gui)
+find_package(Qt6 REQUIRED COMPONENTS WebEngineWidgets)
+find_package(Qt6 REQUIRED COMPONENTS WebEngineCore) 
 
 set(PROJECT_SOURCES
         main.cpp
@@ -19,8 +21,12 @@ set(PROJECT_SOURCES
         browserwindow.cpp
         components/titlebarbuttons.h
         components/titlebarbuttons.cpp
+        components/titlebar.h
+        components/titlebar.cpp
         components/addressbox.h
         components/addressbox.cpp
+        components/webview.h
+        components/webview.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -49,6 +55,8 @@ endif()
 
 target_link_libraries(project-web PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(project-web PRIVATE Qt6::Gui)
+target_link_libraries(project-web PRIVATE Qt6::WebEngineWidgets)
+target_link_libraries(project-web PRIVATE Qt6::WebEngineCore)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

@@ -1,6 +1,7 @@
 #include "browserwindow.h"
-#include "components/titlebarbuttons.h"
+#include "components/titlebar.h"
 #include "components/addressbox.h"
+#include "components/webview.h"
 #include <QMainWindow>
 #include <QPainter>
 #include <QVBoxLayout>
@@ -16,37 +17,27 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     this->setMouseTracking(true);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setMouseTracking(true);
+    this->setMouseTracking(true);    
 
     //Implement Outer UI
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setMouseTracking(true);
+    centralWidget->setContentsMargins(0,0,0,0);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-    //=======================TITLE BAR=======================================
-    QHBoxLayout *titlebarLayout = new QHBoxLayout;
+    mainLayout->setSpacing(0);
+    mainLayout->setContentsMargins(0,0,0,0);
+    
+    TitleBar *titlebar = new TitleBar(this);
 
-    //=======================ADDRESS BAR=====================================
-    QHBoxLayout *addressbarLayout = new QHBoxLayout;
+    //=======================CONTENT==========================================
+    QHBoxLayout *contentLayout = new QHBoxLayout;
+    WebView *webview = new WebView();
+    webview->setMouseTracking(true);
 
-    AddressBox *search = new AddressBox("search or enter link");
-    addressbarLayout->addWidget(search, 0, Qt::AlignCenter);
-
-    //=======================TITLE BAR BUTTON=================================
-    QHBoxLayout *titlebarButtonsLayout = new QHBoxLayout;
-
-    TitleBarButtons::MinimizeButton *minimizeButton = new TitleBarButtons::MinimizeButton(this);
-    TitleBarButtons::MaximizeButton *maximizeButton = new TitleBarButtons::MaximizeButton(this);
-    TitleBarButtons::CloseButton *closeButton = new TitleBarButtons::CloseButton(this);
-    titlebarButtonsLayout->addWidget(minimizeButton);
-    titlebarButtonsLayout->addWidget(maximizeButton);
-    titlebarButtonsLayout->addWidget(closeButton);
-
-    //=======================SETTING UP LAYOUTS===============================
-    titlebarLayout->addLayout(addressbarLayout);
-    titlebarLayout->addLayout(titlebarButtonsLayout);
-    mainLayout->addLayout(titlebarLayout);
-    mainLayout->addStretch();
+    contentLayout->addWidget(webview);
+    mainLayout->addWidget(titlebar);
+    mainLayout->addLayout(contentLayout);
 
     this->setCentralWidget(centralWidget);
 }
@@ -69,7 +60,7 @@ void BrowserWindow::paintEvent(QPaintEvent *event){
 void BrowserWindow::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton && this->isEdgePosition(event->position())){
         this->windowHandle()->startSystemResize(this->getEdgePosition(event->position()));
-    }else if(event->button() == Qt::LeftButton && event->position().y() <= 20){
+    }else if(event->button() == Qt::LeftButton && event->position().y() <= 30){
         this->windowHandle()->startSystemMove();
     }
     QWidget::mousePressEvent(event);
@@ -101,6 +92,10 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
 
 void BrowserWindow::mouseReleaseEvent(QMouseEvent *event){
     QWidget::mouseReleaseEvent(event);
+}
+
+void BrowserWindow::resizeEvent(QResizeEvent *event){
+    
 }
 
 bool BrowserWindow::isEdgePosition(QPointF position){
