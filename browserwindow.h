@@ -2,6 +2,7 @@
 
 #include <QWidget>
 #include <QMouseEvent>
+#include <QMainWindow>
 
 // QT_BEGIN_NAMESPACE
 // namespace Ui {
@@ -13,7 +14,9 @@ class BrowserWindow : public QMainWindow {
     Q_OBJECT
 private:
     bool resizing = false;
+    bool moving = false;
     bool isEdgePosition(QPointF position);
+    QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
     bool maximized = false;
     explicit BrowserWindow(QWidget *parent = nullptr, double width=800.0, double height=600.0);
