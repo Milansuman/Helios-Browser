@@ -20,6 +20,7 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
 
     //Implement Outer UI
     QWidget *centralWidget = new QWidget(this);
+    centralWidget->setMouseTracking(true);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
     //=======================TITLE BAR=======================================
@@ -67,15 +68,15 @@ void BrowserWindow::paintEvent(QPaintEvent *event){
 
 void BrowserWindow::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton && this->isEdgePosition(event->position())){
-        this->resizing = true;
+        this->windowHandle()->startSystemResize(this->getEdgePosition(event->globalPosition()));
     }else if(event->button() == Qt::LeftButton && event->position().y() <= 20){
-        this->moving = true;
+        this->windowHandle()->startSystemMove();
     }
     QWidget::mousePressEvent(event);
 }
 
 void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
-    switch(this->getEdgePosition(event->position())){
+    switch(this->getEdgePosition(event->globalPosition())){
         case Qt::TopEdge:
         case Qt::BottomEdge:
             this->setCursor(Qt::SizeVerCursor);
@@ -94,14 +95,6 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event){
             break;
         default:
             this->setCursor(Qt::ArrowCursor);
-    }
-
-    if(this->moving){
-        this->windowHandle()->startSystemMove();
-    }
-
-    if(this->resizing){
-        this->windowHandle()->startSystemResize(this->getEdgePosition(event->globalPosition()));
     }
     QMainWindow::mouseMoveEvent(event);
 }
