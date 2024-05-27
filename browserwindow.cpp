@@ -33,9 +33,13 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     //=======================CONTENT==========================================
     QHBoxLayout *contentLayout = new QHBoxLayout;
     WebView *webview = new WebView();
-    webview->setMouseTracking(true);
+    webview->load(QUrl("https://youtube.com"));
+
+    WebView *devTools = new WebView();
+    devTools->page()->setInspectedPage(webview->page());
 
     contentLayout->addWidget(webview);
+    contentLayout->addWidget(devTools);
     mainLayout->addWidget(titlebar);
     mainLayout->addLayout(contentLayout);
 
