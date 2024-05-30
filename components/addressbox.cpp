@@ -4,7 +4,8 @@
 #include <QFont>
 #include "addressbox.h"
 
-AddressBox::AddressBox(QString text, QWidget *parent) : QLabel(parent) {
+AddressBox::AddressBox(QString text, BrowserWindow *window, QWidget *parent) : QLabel(parent) {
+    this->window = window;
     this->setText(text);
     this->setMinimumSize(140, 20);
     this->setAlignment(Qt::AlignCenter);
@@ -30,4 +31,9 @@ void AddressBox::paintEvent(QPaintEvent *event){
     QLabel::paintEvent(event);
 }
 
-AddressBox::~AddressBox(){}
+void AddressBox::mousePressEvent(QMouseEvent *event){
+    this->window->showSearchDialog();
+}
+
+AddressBox::~AddressBox(){
+}

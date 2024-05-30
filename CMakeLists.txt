@@ -25,6 +25,8 @@ set(PROJECT_SOURCES
         components/titlebar.cpp
         components/addressbox.h
         components/addressbox.cpp
+        components/searchDialog.h
+        components/searchDialog.cpp
         components/webview.h
         components/webview.cpp
 )

@@ -2,4 +2,7 @@
     <qresource prefix="/fonts">
         <file alias="calsans.ttf">resources/fonts/calsans.ttf</file>
     </qresource>
+    <qresource prefix="/icons">
+        <file alias="search.png">resources/icons/search.png</file>
+    </qresource>
 </RCC>

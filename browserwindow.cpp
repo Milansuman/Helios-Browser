@@ -17,16 +17,16 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     this->setMouseTracking(true);
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setMouseTracking(true);    
+    this->setMouseTracking(true);
+
+    this->search = new SearchDialog(this);
 
     //Implement Outer UI
     QWidget *centralWidget = new QWidget(this);
     centralWidget->setMouseTracking(true);
-    centralWidget->setContentsMargins(0,0,0,0);
 
     QVBoxLayout *mainLayout = new QVBoxLayout(centralWidget);
-    mainLayout->setSpacing(0);
-    mainLayout->setContentsMargins(0,0,0,0);
+    mainLayout->setContentsMargins(5,0,5,5);
     
     TitleBar *titlebar = new TitleBar(this);
 
@@ -34,12 +34,17 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     QHBoxLayout *contentLayout = new QHBoxLayout;
     WebView *webview = new WebView();
     webview->load(QUrl("https://youtube.com"));
+    webview->setMouseTracking(true);
 
-    WebView *devTools = new WebView();
-    devTools->page()->setInspectedPage(webview->page());
+    QObject::connect(this->search, &SearchDialog::accepted, this, [=](){
+        webview->load(QUrl(this->search->getSearch()));
+    });
+
+    // WebView *devTools = new WebView();
+    // devTools->page()->setInspectedPage(webview->page());
 
     contentLayout->addWidget(webview);
-    contentLayout->addWidget(devTools);
+    // contentLayout->addWidget(devTools);
     mainLayout->addWidget(titlebar);
     mainLayout->addLayout(contentLayout);
 
@@ -100,6 +105,10 @@ void BrowserWindow::mouseReleaseEvent(QMouseEvent *event){
 
 void BrowserWindow::resizeEvent(QResizeEvent *event){
     
+}
+
+void BrowserWindow::showSearchDialog(){
+    this->search->open();
 }
 
 bool BrowserWindow::isEdgePosition(QPointF position){

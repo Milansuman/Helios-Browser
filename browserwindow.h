@@ -4,6 +4,8 @@
 #include <QMouseEvent>
 #include <QMainWindow>
 
+#include "components/searchDialog.h"
+
 // QT_BEGIN_NAMESPACE
 // namespace Ui {
 //     class BrowserWindow;
@@ -15,9 +17,11 @@ class BrowserWindow : public QMainWindow {
 private:
     bool isEdgePosition(QPointF position);
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
+    SearchDialog *search;
 public:
     bool maximized = false;
     explicit BrowserWindow(QWidget *parent = nullptr, double width=800.0, double height=600.0);
+    void showSearchDialog();
     ~BrowserWindow();
 protected:
     void paintEvent(QPaintEvent *event) override;
