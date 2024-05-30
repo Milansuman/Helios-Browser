@@ -38,6 +38,7 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
 
     QObject::connect(this->search, &SearchDialog::accepted, this, [=](){
         webview->load(QUrl(this->search->getSearch()));
+        titlebar->setTitle(webview->title());
     });
 
     // WebView *devTools = new WebView();

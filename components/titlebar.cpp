@@ -11,23 +11,23 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
 {
     this->setMaximumHeight(25);
     //=======================TITLE BAR=======================================
-    QHBoxLayout *titlebarLayout = new QHBoxLayout;
+    titlebarLayout = new QHBoxLayout;
 
     //=======================ADDRESS BAR=====================================
-    QHBoxLayout *addressbarLayout = new QHBoxLayout;
+    addressbarLayout = new QHBoxLayout;
 
-    AddressBox *search = new AddressBox("search or enter link.", window);
+    search = new AddressBox("search or enter link.", window);
     addressbarLayout->addWidget(search, 0, Qt::AlignCenter);
 
     //=======================TITLE BAR BUTTON=================================
-    QHBoxLayout *titlebarButtonsLayout = new QHBoxLayout;
+    titlebarButtonsLayout = new QHBoxLayout;
 
     titlebarButtonsLayout->setSpacing(3);
     titlebarButtonsLayout->setContentsMargins(0, 5, 0, 0);
 
-    TitleBarButtons::MinimizeButton *minimizeButton = new TitleBarButtons::MinimizeButton(window);
-    TitleBarButtons::MaximizeButton *maximizeButton = new TitleBarButtons::MaximizeButton(window);
-    TitleBarButtons::CloseButton *closeButton = new TitleBarButtons::CloseButton(window);
+    minimizeButton = new TitleBarButtons::MinimizeButton(window);
+    maximizeButton = new TitleBarButtons::MaximizeButton(window);
+    closeButton = new TitleBarButtons::CloseButton(window);
     titlebarButtonsLayout->addWidget(minimizeButton);
     titlebarButtonsLayout->addWidget(maximizeButton);
     titlebarButtonsLayout->addWidget(closeButton);
@@ -38,4 +38,17 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
     this->setLayout(titlebarLayout);
 }
 
-TitleBar::~TitleBar(){} 
+void TitleBar::setTitle(QString title){
+    this->search->setText(title);
+    this->search->setBlank(false);
+}
+
+TitleBar::~TitleBar(){
+    delete this->titlebarLayout;
+    delete this->addressbarLayout;
+    delete this->search;
+    delete this->titlebarButtonsLayout;
+    delete this->minimizeButton;
+    delete this->maximizeButton;
+    delete this->closeButton;
+} 

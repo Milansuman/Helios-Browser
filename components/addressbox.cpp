@@ -4,7 +4,7 @@
 #include <QFont>
 #include "addressbox.h"
 
-AddressBox::AddressBox(QString text, BrowserWindow *window, QWidget *parent) : QLabel(parent) {
+AddressBox::AddressBox(QString text, BrowserWindow *window, QWidget *parent) : QLabel(parent), isBlank(true) {
     this->window = window;
     this->setText(text);
     this->setMinimumSize(140, 20);
@@ -20,13 +20,15 @@ AddressBox::AddressBox(QString text, BrowserWindow *window, QWidget *parent) : Q
 }
 
 void AddressBox::paintEvent(QPaintEvent *event){
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
+    if(this->isBlank){
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setBrush(QBrush(QColor(58, 58, 58)));
-    painter.setPen(Qt::NoPen);
+        painter.setBrush(QBrush(QColor(58, 58, 58)));
+        painter.setPen(Qt::NoPen);
 
-    painter.drawRoundedRect(QRect(0, 0, this->width(), this->height()), 5, 5);
+        painter.drawRoundedRect(QRect(0, 0, this->width(), this->height()), 5, 5);
+    }
 
     QLabel::paintEvent(event);
 }
@@ -35,5 +37,10 @@ void AddressBox::mousePressEvent(QMouseEvent *event){
     this->window->showSearchDialog();
 }
 
+void AddressBox::setBlank(bool blank){
+    this->isBlank = blank;
+}
+
 AddressBox::~AddressBox(){
+    delete this->window;
 }
