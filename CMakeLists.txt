@@ -29,6 +29,10 @@ set(PROJECT_SOURCES
         components/searchDialog.cpp
         components/webview.h
         components/webview.cpp
+        components/tabManager.h
+        components/tabManager.cpp
+        components/tab.h
+        components/tab.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

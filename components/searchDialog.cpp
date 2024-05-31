@@ -15,7 +15,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     this->setFixedWidth(500);
 
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Window, QColor(0, 0, 0, 200));
+    palette.setColor(QPalette::Window, QColor(0, 0, 0, 237));
     setPalette(palette);
 
     searchLayout = new QHBoxLayout();

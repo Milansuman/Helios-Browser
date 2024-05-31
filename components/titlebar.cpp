@@ -16,7 +16,11 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
     //=======================ADDRESS BAR=====================================
     addressbarLayout = new QHBoxLayout;
 
-    search = new AddressBox("search or enter link.", window);
+    search = new AddressBox("search or enter link.");
+    connect(search, &AddressBox::requestedSearchDialog, this, [=](){
+        window->showSearchDialog();
+    });
+
     addressbarLayout->addWidget(search, 0, Qt::AlignCenter);
 
     //=======================TITLE BAR BUTTON=================================

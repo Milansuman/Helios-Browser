@@ -4,10 +4,10 @@
 #include <QFont>
 #include "addressbox.h"
 
-AddressBox::AddressBox(QString text, BrowserWindow *window, QWidget *parent) : QLabel(parent), isBlank(true) {
-    this->window = window;
+AddressBox::AddressBox(QString text, QWidget *parent) : QLabel(parent), isBlank(true) {
     this->setText(text);
     this->setMinimumSize(140, 20);
+    this->setFixedHeight(20);
     this->setAlignment(Qt::AlignCenter);
 
     this->setStyleSheet("color: #888888;");
@@ -34,13 +34,9 @@ void AddressBox::paintEvent(QPaintEvent *event){
 }
 
 void AddressBox::mousePressEvent(QMouseEvent *event){
-    this->window->showSearchDialog();
+    emit this->requestedSearchDialog();
 }
 
 void AddressBox::setBlank(bool blank){
     this->isBlank = blank;
-}
-
-AddressBox::~AddressBox(){
-    delete this->window;
 }

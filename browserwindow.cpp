@@ -2,6 +2,8 @@
 #include "components/titlebar.h"
 #include "components/addressbox.h"
 #include "components/webview.h"
+#include "components/tabManager.h"
+#include "components/tab.h"
 #include <QMainWindow>
 #include <QPainter>
 #include <QVBoxLayout>
@@ -31,27 +33,12 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     TitleBar *titlebar = new TitleBar(this);
 
     //=======================CONTENT==========================================
-    QHBoxLayout *contentLayout = new QHBoxLayout;
-    WebView *webview = new WebView();
-    webview->load(QUrl("https://youtube.com"));
-    webview->setMouseTracking(true);
-
-    QObject::connect(this->search, &SearchDialog::accepted, this, [=](){
-        webview->load(QUrl(this->search->getSearch()));
-    });
-
-    QObject::connect(webview, &WebView::titleChanged, this, [=](){
-        titlebar->setTitle(webview->title());
-    });
-
-    // WebView *devTools = new WebView();
-    // devTools->page()->setInspectedPage(webview->page());
-
-    contentLayout->addWidget(webview);
-    // contentLayout->addWidget(devTools);
+    //TabManager *tabManager = new TabManager();
+    Tab *test = new Tab("https://umbrel.com/umbrel-home");
+    
     mainLayout->addWidget(titlebar);
-    mainLayout->addLayout(contentLayout);
-
+    mainLayout->addWidget(test);
+    // mainLayout->addWidget(tabManager);
     this->setCentralWidget(centralWidget);
 }
 
@@ -61,7 +48,7 @@ void BrowserWindow::paintEvent(QPaintEvent *event){
     painter.setRenderHint(QPainter::Antialiasing);
 
     //setting color and rounded corners
-    painter.setBrush(QBrush(QColor(26, 29, 34)));
+    painter.setBrush(QBrush(QColor(30, 30, 30)));
     painter.setPen(Qt::NoPen);
     if(this->maximized){
         painter.drawRect(rect());
