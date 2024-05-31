@@ -33,6 +33,8 @@ set(PROJECT_SOURCES
         components/tabManager.cpp
         components/tab.h
         components/tab.cpp
+        components/tabGroup.h
+        components/tabGroup.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

@@ -3,7 +3,7 @@
 #include "components/addressbox.h"
 #include "components/webview.h"
 #include "components/tabManager.h"
-#include "components/tab.h"
+#include "components/tabGroup.h"
 #include <QMainWindow>
 #include <QPainter>
 #include <QVBoxLayout>
@@ -34,10 +34,13 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
 
     //=======================CONTENT==========================================
     //TabManager *tabManager = new TabManager();
-    Tab *test = new Tab("https://umbrel.com/umbrel-home");
+    TabGroup *tabs = new TabGroup();
+    tabs->splitRight(tabs->tabs.at(0));
+    tabs->splitLeft(tabs->tabs.at(0));
+    tabs->splitLeft(tabs->tabs.at(0));
     
     mainLayout->addWidget(titlebar);
-    mainLayout->addWidget(test);
+    mainLayout->addWidget(tabs);
     // mainLayout->addWidget(tabManager);
     this->setCentralWidget(centralWidget);
 }

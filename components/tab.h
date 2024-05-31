@@ -27,7 +27,9 @@ private:
     TabTitleBar *titlebar;
     bool isTitleBarShowing;
 public:
+    Tab(bool showTitleBar=false, QWidget *parent=nullptr);
     Tab(QString url, bool showTitleBar=false, QWidget *parent=nullptr);
+    void setTitleBarVisible(bool visible);
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;
