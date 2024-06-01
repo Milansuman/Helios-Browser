@@ -3,23 +3,23 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QHBoxLayout>
-#include <QVBoxLayout>
-#include "addressbox.h"
+#include "tabTitleBar.h"
 #include "titlebarbuttons.h"
 #include "../browserwindow.h"
+#include "searchDialog.h"
 
 class TitleBar : public QWidget {
     Q_OBJECT
 private:
+    TabTitleBar *titlebar;
     QHBoxLayout *titlebarLayout;
-    QHBoxLayout *addressbarLayout;
-    AddressBox *search;
     QHBoxLayout *titlebarButtonsLayout;
     TitleBarButtons::MinimizeButton *minimizeButton;
     TitleBarButtons::MaximizeButton *maximizeButton;
     TitleBarButtons::CloseButton *closeButton;
 public:
     TitleBar(BrowserWindow *window, QWidget *parent = nullptr);
-    void setTitle(QString title);
+    void addTabTitleBar(TabTitleBar* titlebar);
+    void removeTabTitleBar();
     ~TitleBar();
 };

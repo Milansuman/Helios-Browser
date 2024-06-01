@@ -10,21 +10,9 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
     QWidget(parent)
 {
     this->setMaximumHeight(25);
-    //=======================TITLE BAR=======================================
-    titlebarLayout = new QHBoxLayout;
-
-    //=======================ADDRESS BAR=====================================
-    addressbarLayout = new QHBoxLayout;
-
-    search = new AddressBox("search or enter link.");
-    connect(search, &AddressBox::requestedSearchDialog, this, [=](){
-        window->showSearchDialog();
-    });
-
-    addressbarLayout->addWidget(search, 0, Qt::AlignCenter);
 
     //=======================TITLE BAR BUTTON=================================
-    titlebarButtonsLayout = new QHBoxLayout;
+    titlebarButtonsLayout = new QHBoxLayout();
 
     titlebarButtonsLayout->setSpacing(3);
     titlebarButtonsLayout->setContentsMargins(0, 5, 0, 0);
@@ -37,20 +25,27 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
     titlebarButtonsLayout->addWidget(closeButton);
 
     //=======================SETTING UP LAYOUTS===============================
-    titlebarLayout->addLayout(addressbarLayout);
+    this->titlebarLayout = new QHBoxLayout();
+    this->titlebarLayout->setContentsMargins(0, 0, 0, 0);
+    
     titlebarLayout->addLayout(titlebarButtonsLayout);
     this->setLayout(titlebarLayout);
 }
 
-void TitleBar::setTitle(QString title){
-    this->search->setText(title);
-    this->search->setBlank(false);
+void TitleBar::addTabTitleBar(TabTitleBar *titlebar){
+    this->titlebar = titlebar;
+    this->titlebar->setVisible(true);
+    this->titlebarLayout->insertWidget(0, this->titlebar);
+}
+
+void TitleBar::removeTabTitleBar(){
+    this->titlebar = nullptr;
+    this->titlebarLayout->removeWidget(this->titlebar);
 }
 
 TitleBar::~TitleBar(){
     delete this->titlebarLayout;
-    delete this->addressbarLayout;
-    delete this->search;
+    delete this->titlebar;
     delete this->titlebarButtonsLayout;
     delete this->minimizeButton;
     delete this->maximizeButton;

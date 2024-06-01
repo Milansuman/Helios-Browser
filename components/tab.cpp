@@ -1,45 +1,29 @@
 #include "tab.h"
 #include "addressbox.h"
+#include "tabTitleBar.h"
 
 #include <QPainter>
 #include <QPainterPath>
 #include <QResizeEvent>
 
-TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
-    this->setFixedHeight(25);
-    this->titlebarLayout = new QHBoxLayout(this);
+Tab::Tab(QWebEngineProfile *profile, bool showTitleBar, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", showTitleBar, parent){}
 
-    this->addressBox = new AddressBox("");
-    this->addressBox->setBlank(false);
-
-    this->titlebarLayout->addStretch();
-    this->titlebarLayout->addWidget(this->addressBox);
-    this->titlebarLayout->addStretch();
-}
-
-void TabTitleBar::setTitle(QString title){
-    this->addressBox->setText(title);
-}
-
-TabTitleBar::~TabTitleBar(){
-    delete this->titlebarLayout;
-    delete this->addressBox;
-}
-
-Tab::Tab(bool showTitleBar, QWidget *parent): Tab("https://browser-homepage-alpha.vercel.app/", showTitleBar, parent){}
-
-Tab::Tab(QString url, bool showTitleBar, QWidget *parent): QWidget(parent), isTitleBarShowing(showTitleBar){
+Tab::Tab(QWebEngineProfile *profile, QString url, bool showTitleBar, QWidget *parent): QWidget(parent), isTitleBarShowing(showTitleBar){
     this->setMinimumWidth(250);
     this->setMouseTracking(true);
-    this->webview = new WebView();
+    this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
 
     this->tabLayout = new QVBoxLayout();
 
     this->titlebar = new TabTitleBar();
 
-    QObject::connect(this->webview, &WebView::loadFinished, this, [=](){
+    connect(this->webview, &WebView::loadFinished, this, [=](){
         this->titlebar->setTitle(this->webview->title());
+    });
+
+    connect(this->titlebar, &TabTitleBar::search, this, [=](QString search){
+        this->webview->load(QUrl(search));
     });
 
     this->titlebar->setVisible(this->isTitleBarShowing);
@@ -68,9 +52,17 @@ void Tab::resizeEvent(QResizeEvent *event){
     this->setMask(path.toFillPolygon().toPolygon());
 }
 
+void Tab::mousePressEvent(QMouseEvent *event){
+    qDebug() << "tab focused";
+}
+
 void Tab::setTitleBarVisible(bool visible){
     this->isTitleBarShowing = visible;
     this->titlebar->setVisible(visible);
+}
+
+TabTitleBar* Tab::getTitleBar(){
+    return this->titlebar;
 }
 
 Tab::~Tab(){

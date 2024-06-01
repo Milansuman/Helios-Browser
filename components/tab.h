@@ -1,23 +1,13 @@
 #pragma once
 
 #include <QWidget>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QPaintEvent>
 #include <QResizeEvent>
+#include <QMouseEvent>
 #include "webview.h"
-#include "addressbox.h"
-
-class TabTitleBar : public QWidget {
-    Q_OBJECT
-private:
-    QHBoxLayout* titlebarLayout;
-    AddressBox* addressBox;
-public:
-    TabTitleBar(QWidget *parent=nullptr);
-    void setTitle(QString title);
-    ~TabTitleBar();
-};
+#include "tabTitleBar.h"
+#include "searchDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -27,11 +17,14 @@ private:
     TabTitleBar *titlebar;
     bool isTitleBarShowing;
 public:
-    Tab(bool showTitleBar=false, QWidget *parent=nullptr);
-    Tab(QString url, bool showTitleBar=false, QWidget *parent=nullptr);
+    //show homepage if url is not provided
+    Tab(QWebEngineProfile *profile, bool showTitleBar=false, QWidget *parent=nullptr);
+    Tab(QWebEngineProfile *profile, QString url, bool showTitleBar=false, QWidget *parent=nullptr);
     void setTitleBarVisible(bool visible);
+    TabTitleBar* getTitleBar();
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 };

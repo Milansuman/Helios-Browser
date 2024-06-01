@@ -4,21 +4,22 @@
 #include <QStackedWidget>
 #include <QHBoxLayout>
 #include <QWidget>
-#include "webview.h"
+#include <QWebEngineProfile>
 
-// struct TabGroup{
-//     std::vector<WebView*> webviews;
-//     QWidget *canvas;
-//     QHBoxLayout *layout;
-// };
+#include "tabTitleBar.h"
+#include "tabGroup.h"
+#include "searchDialog.h"
 
 class TabManager : public QStackedWidget {
     Q_OBJECT
 private:
-    //Tabs could contain groups of tabs
-    WebView* currentWebView = nullptr;
+    std::vector<TabGroup*> groups;
+    QWebEngineProfile *profile;
 public:
     TabManager(QWidget *parent=nullptr);
-    //void updateLayout();
+    TabGroup* getTabGroup(int pos);
     ~TabManager();
+signals:
+    void embedTabTitlebar(TabTitleBar* titlebar);
+    void removeTabTitleBar();
 };

@@ -3,7 +3,6 @@
 #include "components/addressbox.h"
 #include "components/webview.h"
 #include "components/tabManager.h"
-#include "components/tabGroup.h"
 #include <QMainWindow>
 #include <QPainter>
 #include <QVBoxLayout>
@@ -33,15 +32,22 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
     TitleBar *titlebar = new TitleBar(this);
 
     //=======================CONTENT==========================================
-    //TabManager *tabManager = new TabManager();
-    TabGroup *tabs = new TabGroup();
-    tabs->splitRight(tabs->tabs.at(0));
-    tabs->splitLeft(tabs->tabs.at(0));
-    tabs->splitLeft(tabs->tabs.at(0));
-    
+    TabManager *tabManager = new TabManager();
+
+
+    TabTitleBar *tabTitleBar = tabManager->getTabGroup(0)->getTab(0)->getTitleBar();
+    titlebar->addTabTitleBar(tabTitleBar);
+
+    connect(tabManager, &TabManager::embedTabTitlebar, this, [=](TabTitleBar *tabtitlebar){
+        titlebar->addTabTitleBar(tabtitlebar);
+    });
+
+    connect(tabManager, &TabManager::removeTabTitleBar, this, [=](){
+        titlebar->removeTabTitleBar();
+    });
+
     mainLayout->addWidget(titlebar);
-    mainLayout->addWidget(tabs);
-    // mainLayout->addWidget(tabManager);
+    mainLayout->addWidget(tabManager);
     this->setCentralWidget(centralWidget);
 }
 
@@ -142,4 +148,6 @@ QFlags<Qt::Edge> BrowserWindow::getEdgePosition(QPointF position){
     return QFlags<Qt::Edge>();
 }
 
-BrowserWindow::~BrowserWindow(){}
+BrowserWindow::~BrowserWindow(){
+    this->deleteLater();
+}
