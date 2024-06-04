@@ -1,42 +1,24 @@
 cmake_minimum_required(VERSION 3.16)
 
-project(project-web VERSION 0.1 LANGUAGES CXX)
+project(project-web VERSION 0.2 LANGUAGES CXX)
 
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.4 REQUIRED COMPONENTS Quick)
+add_subdirectory(third_party/qwindowkit)
+add_subdirectory(src)
+
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core)
 
 qt_standard_project_setup()
 
-qt_add_executable(appproject-web
-    main.cpp
+qt_add_executable(project-web 
+    ${SOURCES}
 )
 
-qt_add_qml_module(appproject-web
-    URI project-web
-    VERSION 1.0
-    QML_FILES
-        Main.qml
-)
+target_link_libraries(project-web PRIVATE Qt6::Widgets Qt6::Core)
 
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
-set_target_properties(appproject-web PROPERTIES
-#    MACOSX_BUNDLE_GUI_IDENTIFIER com.example.appproject-web
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
-)
-
-target_link_libraries(appproject-web
-    PRIVATE Qt6::Quick
-)
-
-include(GNUInstallDirs)
-install(TARGETS appproject-web
-    BUNDLE DESTINATION .
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+set_target_properties(project-web PROPERTIES
+    WIN32_EXECUTABLE ON
+    MACOSX_BUNDLE ON
 )
