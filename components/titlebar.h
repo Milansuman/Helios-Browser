@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QMouseEvent>
 #include <QHBoxLayout>
+#include "tab.h"
 #include "tabTitleBar.h"
 #include "titlebarbuttons.h"
 #include "../browserwindow.h"
@@ -20,6 +21,6 @@ private:
 public:
     TitleBar(BrowserWindow *window, QWidget *parent = nullptr);
     void addTabTitleBar(TabTitleBar* titlebar);
-    void removeTabTitleBar();
+    void removeTabTitleBar(Tab *tab);
     ~TitleBar();
 };

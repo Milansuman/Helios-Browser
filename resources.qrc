@@ -4,5 +4,8 @@
     </qresource>
     <qresource prefix="/icons">
         <file alias="search.png">resources/icons/search.png</file>
+        <file alias="split.png">resources/icons/split.png</file>
+        <file alias="split-left.png">resources/icons/split-left.png</file>
+        <file alias="split-right.png">resources/icons/split-right.png</file>
     </qresource>
 </RCC>

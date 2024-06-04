@@ -6,7 +6,9 @@
 TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QWidget(parent){
     this->profile = profile;
     Tab *tab = new Tab(profile);
-    Tab *another = new Tab(profile);
+
+    this->mainTab = tab;
+    
     this->tabs.push_back(tab);
 
     this->tabSplitter = new QSplitter();
@@ -22,13 +24,19 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QWidget(parent)
     this->tabSplitter->addWidget(tab);
     this->splitScreenLayout->addWidget(this->tabSplitter);
     
-    // this->splitScreenLayout->setSpacing(5);
     this->splitScreenLayout->setContentsMargins(0,0,0,0);
-    // splitScreenLayout->addWidget(tab);
 
     emit this->reachedSingleTab(this->tabs.at(0));
 
-    QObject::connect(this, &TabGroup::tabsChanged, this, &TabGroup::handleTitleBars);
+    connect(this, &TabGroup::tabsChanged, this, &TabGroup::handleTitleBars);
+
+    connect(this->tabs.at(0), &Tab::splitLeftRequested, this, [=](){
+        this->splitLeft(this->tabs.at(0));
+    });
+
+    connect(this->tabs.at(0), &Tab::splitRightRequested, this, [=](){
+        this->splitRight(this->tabs.at(0));
+    });
 }
 
 void TabGroup::insertTab(Tab *tab, int pos){
@@ -50,6 +58,14 @@ void TabGroup::splitLeft(Tab *tab){
     this->insertTab(new Tab(this->profile), pos);
 
     emit this->tabsChanged(this->tabs.size());
+
+    connect(this->tabs.at(pos), &Tab::splitLeftRequested, this, [=](){
+        this->splitLeft(this->tabs.at(pos));
+    });
+
+    connect(this->tabs.at(pos), &Tab::splitRightRequested, this, [=](){
+        this->splitRight(this->tabs.at(pos));
+    });
 }
 
 void TabGroup::splitRight(Tab *tab){
@@ -62,6 +78,14 @@ void TabGroup::splitRight(Tab *tab){
     this->insertTab(new Tab(this->profile), pos+1);
 
     emit this->tabsChanged(this->tabs.size());
+
+    connect(this->tabs.at(pos), &Tab::splitLeftRequested, this, [=](){
+        this->splitLeft(this->tabs.at(pos));
+    });
+
+    connect(this->tabs.at(pos), &Tab::splitRightRequested, this, [=](){
+        this->splitRight(this->tabs.at(pos));
+    });
 }
 
 void TabGroup::handleTitleBars(int count){
@@ -70,15 +94,20 @@ void TabGroup::handleTitleBars(int count){
     }
 
     if(this->tabs.size() == 1){
+        this->mainTab = this->tabs.at(0);
         emit this->reachedSingleTab(this->tabs.at(0));
     }
+}
+
+Tab* TabGroup::getMainTab(){
+    return this->mainTab;
 }
 
 TabGroup::~TabGroup(){
     for(Tab* tab: this->tabs){
         delete tab;
     }
-
+    
     delete this->tabSplitter;
     delete this->splitScreenLayout;
 }

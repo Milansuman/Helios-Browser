@@ -26,6 +26,14 @@ Tab::Tab(QWebEngineProfile *profile, QString url, bool showTitleBar, QWidget *pa
         this->webview->load(QUrl(search));
     });
 
+    connect(this->titlebar, &TabTitleBar::splitLeftRequested, this, [=](){
+        emit this->splitLeftRequested();
+    });
+
+    connect(this->titlebar, &TabTitleBar::splitRightRequested, this, [=](){
+        emit this->splitRightRequested();
+    });
+
     this->titlebar->setVisible(this->isTitleBarShowing);
     
     this->tabLayout->addWidget(this->titlebar);
@@ -63,6 +71,10 @@ void Tab::setTitleBarVisible(bool visible){
 
 TabTitleBar* Tab::getTitleBar(){
     return this->titlebar;
+}
+
+void Tab::insertTitleBar(TabTitleBar *titlebar){
+    this->tabLayout->insertWidget(0, titlebar);
 }
 
 Tab::~Tab(){

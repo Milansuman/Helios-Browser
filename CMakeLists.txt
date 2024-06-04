@@ -37,6 +37,12 @@ set(PROJECT_SOURCES
         components/tabGroup.cpp
         components/tabTitleBar.h
         components/tabTitleBar.cpp
+        components/iconButton.h
+        components/iconButton.cpp
+        components/splitTabDialog.h
+        components/splitTabDialog.cpp
+        components/splitTabMenu.h
+        components/splitTabMenu.cpp
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

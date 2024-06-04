@@ -6,6 +6,7 @@
 #include <QWidget>
 #include <QWebEngineProfile>
 
+#include "tab.h"
 #include "tabTitleBar.h"
 #include "tabGroup.h"
 #include "searchDialog.h"
@@ -21,5 +22,5 @@ public:
     ~TabManager();
 signals:
     void embedTabTitlebar(TabTitleBar* titlebar);
-    void removeTabTitleBar();
+    void removeTabTitleBar(Tab *tab);
 };

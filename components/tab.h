@@ -22,9 +22,13 @@ public:
     Tab(QWebEngineProfile *profile, QString url, bool showTitleBar=false, QWidget *parent=nullptr);
     void setTitleBarVisible(bool visible);
     TabTitleBar* getTitleBar();
+    void insertTitleBar(TabTitleBar *titlebar);
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+signals: 
+    void splitLeftRequested();
+    void splitRightRequested();
 };

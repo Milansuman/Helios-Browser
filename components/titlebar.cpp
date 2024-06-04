@@ -9,7 +9,7 @@
 TitleBar::TitleBar(BrowserWindow *window, QWidget *parent): 
     QWidget(parent)
 {
-    this->setMaximumHeight(25);
+    this->setFixedHeight(25);
 
     //=======================TITLE BAR BUTTON=================================
     titlebarButtonsLayout = new QHBoxLayout();
@@ -33,14 +33,17 @@ TitleBar::TitleBar(BrowserWindow *window, QWidget *parent):
 }
 
 void TitleBar::addTabTitleBar(TabTitleBar *titlebar){
+    this->titlebarLayout->removeWidget(0);
     this->titlebar = titlebar;
     this->titlebar->setVisible(true);
     this->titlebarLayout->insertWidget(0, this->titlebar);
 }
 
-void TitleBar::removeTabTitleBar(){
-    this->titlebar = nullptr;
+void TitleBar::removeTabTitleBar(Tab *tab){
     this->titlebarLayout->removeWidget(this->titlebar);
+    tab->insertTitleBar(this->titlebar);
+    this->titlebar = nullptr;
+    this->titlebarLayout->insertStretch(0);
 }
 
 TitleBar::~TitleBar(){

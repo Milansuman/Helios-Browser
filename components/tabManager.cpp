@@ -11,13 +11,12 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent){
 
     //Temporary until multiple groups
     connect(initialGroup, &TabGroup::reachedSingleTab, this, [=](Tab* tab){
-        qDebug() << "reached single tab";
         emit this->embedTabTitlebar(tab->getTitleBar());
     });
 
     connect(initialGroup, &TabGroup::tabsChanged, this, [=](int count){
-        if(count > 1){
-            emit this->removeTabTitleBar();
+        if(count == 2){
+            emit this->removeTabTitleBar(initialGroup->getMainTab());
         }
     });
 

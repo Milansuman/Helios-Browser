@@ -13,6 +13,7 @@ class TabGroup : public QWidget{
 private:
     QWebEngineProfile *profile;
     std::vector<Tab*> tabs;
+    Tab *mainTab; //set tab whenever there is only one tab in a group
     QHBoxLayout *splitScreenLayout;
     QSplitter *tabSplitter;
     void insertTab(Tab *tab, int pos);
@@ -23,6 +24,7 @@ public:
     void splitLeft(Tab* tab);
     void splitRight(Tab* tab);
     Tab* getTab(int pos);
+    Tab* getMainTab();
     ~TabGroup();
 signals:
     void tabsChanged(int count);

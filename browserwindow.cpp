@@ -42,8 +42,8 @@ BrowserWindow::BrowserWindow(QWidget *parent, double width, double height): QMai
         titlebar->addTabTitleBar(tabtitlebar);
     });
 
-    connect(tabManager, &TabManager::removeTabTitleBar, this, [=](){
-        titlebar->removeTabTitleBar();
+    connect(tabManager, &TabManager::removeTabTitleBar, this, [=](Tab *tab){
+        titlebar->removeTabTitleBar(tab);
     });
 
     mainLayout->addWidget(titlebar);
