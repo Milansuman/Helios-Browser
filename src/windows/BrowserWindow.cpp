@@ -98,42 +98,65 @@ bool BrowserWindow::nativeEvent(const QByteArray &eventType, void *message, qint
 
     if(eventType == "windows_generic_MSG"){
         MSG *msg = static_cast<MSG*>(message);
-        switch (msg->message)
-        {
-        case WM_NCHITTEST:
-            *result = 0;
-            return true;
-            break;
-        case WM_GETMINMAXINFO:
-            this->handleAeroSnap(msg, (long*) result);
-            return true;
-            break;
-        default:
-            break;
+        if(msg->message == WM_NCHITTEST){
+            RECT windowRect;
+            GetWindowRect((HWND)this->winId(), &windowRect);
+
+            long x = GET_X_LPARAM(msg->lparam);
+            long y = GET_Y_LPARAM(msg->lparam);
+
+            if ( x >= winrect.left && x < winrect.left + borderWidth &&
+                y < winrect.bottom && y >= winrect.bottom - borderWidth )
+            {
+                *result = HTBOTTOMLEFT;
+            }
+            //bottom right corner
+            if ( x < winrect.right && x >= winrect.right - borderWidth &&
+                y < winrect.bottom && y >= winrect.bottom - borderWidth )
+            {
+                *result = HTBOTTOMRIGHT;
+            }
+            //top left corner
+            if ( x >= winrect.left && x < winrect.left + borderWidth &&
+                y >= winrect.top && y < winrect.top + borderWidth )
+            {
+                *result = HTTOPLEFT;
+            }
+            //top right corner
+            if ( x < winrect.right && x >= winrect.right - borderWidth &&
+                y >= winrect.top && y < winrect.top + borderWidth )
+            {
+                *result = HTTOPRIGHT;
+            }
+            //left border
+            if ( x >= winrect.left && x < winrect.left + borderWidth )
+            {
+                *result = HTLEFT;
+            }
+            //right border
+            if ( x < winrect.right && x >= winrect.right - borderWidth )
+            {
+                *result = HTRIGHT;
+            }
+            //bottom border
+            if ( y < winrect.bottom && y >= winrect.bottom - borderWidth )
+            {
+                *result = HTBOTTOM;
+            }
+            //top border
+            if ( y >= winrect.top && y < winrect.top + borderWidth )
+            {
+                *result = HTTOP;
+            }
+            }
+
+            *result = HTCAPTION;
         }
     }
 
     #endif
     return QWidget::nativeEvent(eventType, message, result);
 }
-
-#ifdef _WIN32
-void BrowserWindow::handleAeroSnap(MSG *msg, long *result){
-    LPMINMAXINFO mmi = (LPMINMAXINFO)msg->lParam;
-
-    // Get the work area of the monitor
-    HMONITOR hMonitor = MonitorFromWindow(msg->hwnd, MONITOR_DEFAULTTONEAREST);
-    MONITORINFO mi = { sizeof(MONITORINFO) };
-    GetMonitorInfo(hMonitor, &mi);
-
-    mmi->ptMaxPosition.x = mi.rcWork.left;
-    mmi->ptMaxPosition.y = mi.rcWork.top;
-    mmi->ptMaxSize.x = mi.rcWork.right - mi.rcWork.left;
-    mmi->ptMaxSize.y = mi.rcWork.bottom - mi.rcWork.top;
-
-    *result = 0;
-}
-#endif
 
 bool BrowserWindow::isEdgePosition(QPointF position){
     if(position.x() <= this->width() && position.y() >= 0 && position.y() <= EDGE_MARGIN){

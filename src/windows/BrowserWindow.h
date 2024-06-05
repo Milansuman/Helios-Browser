@@ -7,10 +7,6 @@
 
 #include "../components/WindowTitleBar.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
 private:
@@ -19,9 +15,6 @@ private:
     QWidget *centralWidget;
     bool isMaximized;
 
-    #ifdef _WIN32
-    void handleAeroSnap(MSG *msg, long *result);
-    #endif
     bool isEdgePosition(QPointF position);
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
