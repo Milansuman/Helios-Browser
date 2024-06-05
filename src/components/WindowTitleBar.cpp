@@ -5,8 +5,28 @@
 #include <QStyle>
 
 WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
-    this->tabTitleBarLayout = new QHBoxLayout(this);
+    this->setContentsMargins(0,0,0,0);
+    this->setFixedHeight(30);
+    this->tabTitleBar = new QWidget();
+    this->tabTitleBar->setContentsMargins(0,0,0,0);
+    this->tabTitleBarLayout = new QHBoxLayout(this->tabTitleBar);
+    this->tabTitleBarLayout->setContentsMargins(0,0,0,0);
+    this->titleBarLayout = new QHBoxLayout(this);
+    this->titleBarLayout->setContentsMargins(0,0,0,0);
     this->windowButtonsLayout = new QHBoxLayout();
+    this->windowButtonsLayout->setContentsMargins(0,0,0,0);
+
+    QIcon sidebarIcon(":/icons/sidebar.png");
+    this->sideBarButton = new QPushButton();
+    this->sideBarButton->setIcon(sidebarIcon);
+    this->sideBarButton->setStyleSheet(
+        "QPushButton{"
+        "   background: transparent;"
+        "   border: none;"
+        "}"
+    );
+
+    this->addressBox = new AddressBox("search or enter link.");
 
     //Creating window titlebar buttons
     QStyle *style = qApp->style();
@@ -41,12 +61,17 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
         "}"
     );
 
+    this->tabTitleBarLayout->addWidget(this->sideBarButton);
+    this->tabTitleBarLayout->addStretch();
+    this->tabTitleBarLayout->addWidget(this->addressBox);
+    this->tabTitleBarLayout->addStretch();
+
     this->windowButtonsLayout->addWidget(this->minimize);
     this->windowButtonsLayout->addWidget(this->maximize);
     this->windowButtonsLayout->addWidget(this->close);
 
-    this->tabTitleBarLayout->addStretch();
-    this->tabTitleBarLayout->addLayout(this->windowButtonsLayout);
+    this->titleBarLayout->addWidget(this->tabTitleBar);
+    this->titleBarLayout->addLayout(this->windowButtonsLayout);
 }
 
 QPushButton* WindowTitleBar::minimizeButton(){
@@ -64,7 +89,10 @@ QPushButton* WindowTitleBar::closeButton(){
 WindowTitleBar::~WindowTitleBar(){
     delete this->tabTitleBarLayout;
     delete this->windowButtonsLayout;
+    delete this->titleBarLayout;
     delete this->minimize;
     delete this->maximize;
     delete this->close;
+    delete this->sideBarButton;
+    delete this->addressBox;
 }

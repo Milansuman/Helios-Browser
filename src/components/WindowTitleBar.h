@@ -4,11 +4,16 @@
 #include <QHBoxLayout>
 #include <QPushButton>
 
+#include "AddressBox.h"
+
 class WindowTitleBar : public QWidget{
     Q_OBJECT
 private:
-    QHBoxLayout *tabTitleBarLayout, *windowButtonsLayout;
+    QHBoxLayout *tabTitleBarLayout, *titleBarLayout, *windowButtonsLayout;
     QPushButton *minimize, *maximize, *close;
+    QPushButton *sideBarButton;
+    QWidget *tabTitleBar;
+    AddressBox *addressBox;
 public:
     WindowTitleBar(QWidget *parent=nullptr);
     QPushButton* minimizeButton();

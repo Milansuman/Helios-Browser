@@ -7,6 +7,7 @@
 #include <QWindow>
 
 #include "BrowserWindow.h"
+#include "../components/WebView.h"
 
 #define EDGE_MARGIN 5
 
@@ -17,13 +18,18 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->setMouseTracking(true);
 
     this->centralWidget = new QWidget();
+    this->centralWidget->setContentsMargins(0, 0, 0, 0);
     this->centralWidget->setMouseTracking(true);
     this->layout = new QVBoxLayout(this->centralWidget);
+    this->layout->setSpacing(0);
 
     this->titleBar = new WindowTitleBar();
 
+    WebView *test = new WebView(QWebEngineProfile::defaultProfile());
+    test->load(QUrl("https://youtube.com"));
+
     this->layout->addWidget(this->titleBar);
-    this->layout->addStretch();
+    this->layout->addWidget(test);
 
     // Handle titlebar buttons
     connect(this->titleBar->minimizeButton(), &QPushButton::clicked, this, &BrowserWindow::showMinimized);

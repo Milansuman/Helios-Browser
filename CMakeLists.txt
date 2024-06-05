@@ -2,20 +2,25 @@ cmake_minimum_required(VERSION 3.16)
 
 project(project-web VERSION 0.2 LANGUAGES CXX)
 
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(src)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui WebEngineWidgets WebEngineCore)
 
 qt_standard_project_setup()
 
-qt_add_executable(project-web 
+qt_add_executable(project-web
     ${SOURCES}
+    resources.qrc
 )
 
-target_link_libraries(project-web PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui)
+target_link_libraries(project-web PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui Qt6::WebEngineWidgets Qt6::WebEngineCore)
 
 set_target_properties(project-web PROPERTIES
     WIN32_EXECUTABLE ON

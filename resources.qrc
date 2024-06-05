@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/fonts">
+        <file alias="calsans.ttf">res/fonts/calsans.ttf</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="sidebar.png">res/icons/sidebar.png</file>
+    </qresource>
+</RCC>
