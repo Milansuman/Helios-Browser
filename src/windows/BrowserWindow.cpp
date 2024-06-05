@@ -99,52 +99,53 @@ bool BrowserWindow::nativeEvent(const QByteArray &eventType, void *message, qint
     if(eventType == "windows_generic_MSG"){
         MSG *msg = static_cast<MSG*>(message);
         if(msg->message == WM_NCHITTEST){
+            const LONG borderWidth = 8;
             RECT windowRect;
             GetWindowRect((HWND)this->winId(), &windowRect);
 
-            long x = GET_X_LPARAM(msg->lparam);
-            long y = GET_Y_LPARAM(msg->lparam);
+            long x = GET_X_LPARAM(msg->lParam);
+            long y = GET_Y_LPARAM(msg->lParam);
 
-            if ( x >= winrect.left && x < winrect.left + borderWidth &&
-                y < winrect.bottom && y >= winrect.bottom - borderWidth )
+            if ( x >= windowRect.left && x < windowRect.left + borderWidth &&
+                y < windowRect.bottom && y >= windowRect.bottom - borderWidth )
             {
                 *result = HTBOTTOMLEFT;
             }
             //bottom right corner
-            if ( x < winrect.right && x >= winrect.right - borderWidth &&
-                y < winrect.bottom && y >= winrect.bottom - borderWidth )
+            if ( x < windowRect.right && x >= windowRect.right - borderWidth &&
+                y < windowRect.bottom && y >= windowRect.bottom - borderWidth )
             {
                 *result = HTBOTTOMRIGHT;
             }
             //top left corner
-            if ( x >= winrect.left && x < winrect.left + borderWidth &&
-                y >= winrect.top && y < winrect.top + borderWidth )
+            if ( x >= windowRect.left && x < windowRect.left + borderWidth &&
+                y >= windowRect.top && y < windowRect.top + borderWidth )
             {
                 *result = HTTOPLEFT;
             }
             //top right corner
-            if ( x < winrect.right && x >= winrect.right - borderWidth &&
-                y >= winrect.top && y < winrect.top + borderWidth )
+            if ( x < windowRect.right && x >= windowRect.right - borderWidth &&
+                y >= windowRect.top && y < windowRect.top + borderWidth )
             {
                 *result = HTTOPRIGHT;
             }
             //left border
-            if ( x >= winrect.left && x < winrect.left + borderWidth )
+            if ( x >= windowRect.left && x < windowRect.left + borderWidth )
             {
                 *result = HTLEFT;
             }
             //right border
-            if ( x < winrect.right && x >= winrect.right - borderWidth )
+            if ( x < windowRect.right && x >= windowRect.right - borderWidth )
             {
                 *result = HTRIGHT;
             }
             //bottom border
-            if ( y < winrect.bottom && y >= winrect.bottom - borderWidth )
+            if ( y < windowRect.bottom && y >= windowRect.bottom - borderWidth )
             {
                 *result = HTBOTTOM;
             }
             //top border
-            if ( y >= winrect.top && y < winrect.top + borderWidth )
+            if ( y >= windowRect.top && y < windowRect.top + borderWidth )
             {
                 *result = HTTOP;
             }
