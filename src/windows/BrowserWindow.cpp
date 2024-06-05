@@ -104,8 +104,8 @@ bool BrowserWindow::nativeEvent(const QByteArray &eventType, void *message, qint
             *result = 0;
             return true;
             break;
-        case WM_GETMINMAXINFO;
-            this->handleAeroSnap(msg, result);
+        case WM_GETMINMAXINFO:
+            this->handleAeroSnap(msg, (long*) result);
             return true;
             break;
         default:
@@ -118,7 +118,7 @@ bool BrowserWindow::nativeEvent(const QByteArray &eventType, void *message, qint
 }
 
 #ifdef _WIN32
-void BrowserWindow::handleAeroSnap(MSG *msg, qintptr result){
+void BrowserWindow::handleAeroSnap(MSG *msg, long *result){
     LPMINMAXINFO mmi = (LPMINMAXINFO)msg->lParam;
 
     // Get the work area of the monitor

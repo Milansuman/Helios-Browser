@@ -7,6 +7,10 @@
 
 #include "../components/WindowTitleBar.h"
 
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
 private:
