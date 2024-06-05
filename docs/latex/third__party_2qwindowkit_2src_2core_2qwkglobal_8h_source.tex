@@ -1,0 +1,49 @@
+\doxysection{qwkglobal.\+h}
+\hypertarget{third__party_2qwindowkit_2src_2core_2qwkglobal_8h_source}{}\label{third__party_2qwindowkit_2src_2core_2qwkglobal_8h_source}\index{third\_party/qwindowkit/src/core/qwkglobal.h@{third\_party/qwindowkit/src/core/qwkglobal.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ QWKGLOBAL\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ QWKGLOBAL\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#include\ <QtCore/QEvent>}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QtGui/QtEvents>}}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#ifndef\ QWK\_CORE\_EXPORT}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#\ \ ifdef\ QWK\_CORE\_STATIC}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#\ \ \ \ define\ QWK\_CORE\_EXPORT}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#\ \ else}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#\ \ \ \ ifdef\ QWK\_CORE\_LIBRARY}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#\ \ \ \ \ \ define\ QWK\_CORE\_EXPORT\ Q\_DECL\_EXPORT}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#\ \ \ \ else}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#\ \ \ \ \ \ define\ QWK\_CORE\_EXPORT\ Q\_DECL\_IMPORT}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#\ \ \ \ endif}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#\ \ endif}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#if\ (QT\_VERSION\ >=\ QT\_VERSION\_CHECK(6,\ 0,\ 0))}}
+\DoxyCodeLine{00026\ \textcolor{keyword}{using\ }QT\_NATIVE\_EVENT\_RESULT\_TYPE\ =\ qintptr;}
+\DoxyCodeLine{00027\ \textcolor{keyword}{using\ }QT\_ENTER\_EVENT\_TYPE\ =\ QEnterEvent;}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00029\ \textcolor{keyword}{using\ }QT\_NATIVE\_EVENT\_RESULT\_TYPE\ =\ long;}
+\DoxyCodeLine{00030\ \textcolor{keyword}{using\ }QT\_ENTER\_EVENT\_TYPE\ =\ QEvent;}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifndef\ QWINDOWKIT\_CONFIG}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#\ \ define\ QWINDOWKIT\_CONFIG(feature)\ ((1\ /\ QWINDOWKIT\_\#\#feature)\ ==\ 1)}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{using\ }ScreenRectCallback\ =\ std::function<QRect(\textcolor{keyword}{const}\ QSize\ \&)>;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QWKGLOBAL\_H}}
+
+\end{DoxyCode}

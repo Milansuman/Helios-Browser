@@ -1,0 +1,67 @@
+\doxysection{sharedeventfilter\+\_\+p.\+h}
+\hypertarget{third__party_2qwindowkit_2src_2core_2kernel_2sharedeventfilter__p_8h_source}{}\label{third__party_2qwindowkit_2src_2core_2kernel_2sharedeventfilter__p_8h_source}\index{third\_party/qwindowkit/src/core/kernel/sharedeventfilter\_p.h@{third\_party/qwindowkit/src/core/kernel/sharedeventfilter\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ SHAREDEVENTFILTER\_P\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ SHAREDEVENTFILTER\_P\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ \ W\ A\ R\ N\ I\ N\ G\ !!!}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ This\ file\ is\ not\ part\ of\ the\ QWindowKit\ API.\ It\ is\ used\ purely\ as\ an}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ implementation\ detail.\ This\ header\ file\ may\ change\ from\ version\ to}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ version\ without\ notice,\ or\ may\ even\ be\ removed.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QWKCore/qwkglobal.h>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{class\ }SharedEventFilter;}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{class\ }QWK\_CORE\_EXPORT\ \mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{SharedEventDispatcher}}\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{SharedEventDispatcher}}();}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{\string~SharedEventDispatcher}}();}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ sharedDispatch(QObject\ *obj,\ QEvent\ *event);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ installSharedEventFilter(\mbox{\hyperlink{classQWK_1_1SharedEventFilter}{SharedEventFilter}}\ *filter);}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeSharedEventFilter(\mbox{\hyperlink{classQWK_1_1SharedEventFilter}{SharedEventFilter}}\ *filter);}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ QVector<SharedEventFilter\ *>\ m\_sharedEventFilters;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQWK_1_1SharedEventFilter}{SharedEventFilter}};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ Q\_DISABLE\_COPY(\mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{SharedEventDispatcher}})}
+\DoxyCodeLine{00041\ \ \ \ \ \};}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{class\ }QWK\_CORE\_EXPORT\ \mbox{\hyperlink{classQWK_1_1SharedEventFilter}{SharedEventFilter}}\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1SharedEventFilter}{SharedEventFilter}}();}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classQWK_1_1SharedEventFilter}{\string~SharedEventFilter}}();}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ sharedEventFilter(QObject\ *obj,\ QEvent\ *event)\ =\ 0;}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{SharedEventDispatcher}}\ *m\_sharedDispatcher;}
+\DoxyCodeLine{00053\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keyword}{friend}\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{SharedEventDispatcher}};}
+\DoxyCodeLine{00055\ }
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ Q\_DISABLE\_COPY(\mbox{\hyperlink{classQWK_1_1SharedEventFilter}{SharedEventFilter}})}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SHAREDEVENTFILTER\_P\_H}}
+
+\end{DoxyCode}

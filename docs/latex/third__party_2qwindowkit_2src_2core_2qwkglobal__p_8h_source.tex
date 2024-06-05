@@ -1,0 +1,77 @@
+\doxysection{qwkglobal\+\_\+p.\+h}
+\hypertarget{third__party_2qwindowkit_2src_2core_2qwkglobal__p_8h_source}{}\label{third__party_2qwindowkit_2src_2core_2qwkglobal__p_8h_source}\index{third\_party/qwindowkit/src/core/qwkglobal\_p.h@{third\_party/qwindowkit/src/core/qwkglobal\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ QWKGLOBAL\_P\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ QWKGLOBAL\_P\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ \ W\ A\ R\ N\ I\ N\ G\ !!!}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ This\ file\ is\ not\ part\ of\ the\ QWindowKit\ API.\ It\ is\ used\ purely\ as\ an}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ implementation\ detail.\ This\ header\ file\ may\ change\ from\ version\ to}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ version\ without\ notice,\ or\ may\ even\ be\ removed.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QtCore/QObject>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QtCore/QLoggingCategory>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QtGui/QMouseEvent>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QWKCore/qwkglobal.h>}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ QWK\_CORE\_EXPORT\ Q\_DECLARE\_LOGGING\_CATEGORY(qWindowKitLog)}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#define\ QWK\_INFO\ \ \ \ \ qCInfo(qWindowKitLog)}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ QWK\_DEBUG\ \ \ \ qCDebug(qWindowKitLog)}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ QWK\_WARNING\ \ qCWarning(qWindowKitLog)}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ QWK\_CRITICAL\ qCCritical(qWindowKitLog)}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#if\ QT\_VERSION\ >=\ QT\_VERSION\_CHECK(6,\ 6,\ 0)}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#\ \ define\ QWK\_FATAL\ qCFatal(qWindowKitLog)}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#define\ MAKE\_RGB\_COLOR(r,\ g,\ b)\ ((quint32)\ (((r)\ \&0xFF)\ <<\ 16)\ |\ (((g)\ \&0xFF)\ <<\ 8)\ |\ ((b)\ \&0xFF))}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ MAKE\_RGBA\_COLOR(r,\ g,\ b,\ a)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\ \ \ \ ((quint32)\ (((a)\ \&0xFF)\ <<\ 24)\ |\ (((r)\ \&0xFF)\ <<\ 16)\ |\ (((g)\ \&0xFF)\ <<\ 8)\ |\ ((b)\ \&0xFF))}}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \textcolor{preprocessor}{\#if\ defined(Q\_CC\_MSVC)}}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#\ \ define\ QWK\_NOINLINE\ \_\_declspec(noinline)}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#\ \ define\ QWK\_INLINE\ \ \ \_\_forceinline}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#\ \ define\ QWK\_USED}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#\ \ define\ QWK\_NOINLINE\ \_\_attribute\_\_((noinline))}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#\ \ define\ QWK\_INLINE\ \ \ \_\_attribute\_\_((always\_inline))}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#\ \ define\ QWK\_USED\ \ \ \ \ \_\_attribute\_\_((used))}}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{inline}\ QPoint\ getMouseEventScenePos(\textcolor{keyword}{const}\ QMouseEvent\ *event)\ \{}
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#if\ QT\_VERSION\ >=\ QT\_VERSION\_CHECK(6,\ 0,\ 0)}}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{event}-\/>scenePosition().toPoint();}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{event}-\/>windowPos().toPoint();}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \textcolor{keyword}{inline}\ QPoint\ getMouseEventGlobalPos(\textcolor{keyword}{const}\ QMouseEvent\ *event)\ \{}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#if\ QT\_VERSION\ >=\ QT\_VERSION\_CHECK(6,\ 0,\ 0)}}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{event}-\/>globalPosition().toPoint();}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{event}-\/>screenPos().toPoint();}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00064\ \ \ \ \ \}}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \textcolor{comment}{//\ Be\ careful\ when\ apply\ this\ function\ to\ a\ widget}}
+\DoxyCodeLine{00067\ \ \ \ \ QWK\_CORE\_EXPORT\ \textcolor{keywordtype}{bool}\ forwardObjectEventFilters(QObject\ *currentFilter,\ QObject\ *receiver,}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ QEvent\ *event);}
+\DoxyCodeLine{00069\ \}}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QWKGLOBAL\_P\_H}}
+
+\end{DoxyCode}

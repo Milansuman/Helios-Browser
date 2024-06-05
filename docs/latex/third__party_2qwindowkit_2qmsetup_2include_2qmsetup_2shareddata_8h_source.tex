@@ -1,0 +1,183 @@
+\doxysection{shareddata.\+h}
+\hypertarget{third__party_2qwindowkit_2qmsetup_2include_2qmsetup_2shareddata_8h_source}{}\label{third__party_2qwindowkit_2qmsetup_2include_2qmsetup_2shareddata_8h_source}\index{third\_party/qwindowkit/qmsetup/include/qmsetup/shareddata.h@{third\_party/qwindowkit/qmsetup/include/qmsetup/shareddata.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ SHAREDDATA\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ SHAREDDATA\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <utility>}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <qmsetup/qmsetup\_global.h>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00010\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}};}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQMSharedData}{QMSharedData}}\ \{}
+\DoxyCodeLine{00013\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{mutable}\ std::atomic\_int\ ref;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedData}{QMSharedData}}()\ noexcept\ :\ ref(0)\{\};}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedData}{QMSharedData}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedData}{QMSharedData}}\ \&)\ noexcept\ :\ ref(0)\{\};}
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classQMSharedData}{\string~QMSharedData}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{comment}{//\ using\ the\ assignment\ operator\ would\ lead\ to\ corruption\ in\ the\ ref-\/counting}}
+\DoxyCodeLine{00021\ \ \ \ \ \mbox{\hyperlink{classQMSharedData}{QMSharedData}}\ \&operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedData}{QMSharedData}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{comment}{//\ NOTICE:\ must\ define\ a\ function\ named\ \`{}clone()`\ which\ returns\ a\ copy}}
+\DoxyCodeLine{00024\ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00027\ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}\ \{}
+\DoxyCodeLine{00028\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{typedef}\ T\ Type;}
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{typedef}\ T\ *pointer;}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ detach()\ \{}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d\ \&\&\ d-\/>ref.load()\ !=\ 1)}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ detach\_helper();}
+\DoxyCodeLine{00035\ \ \ \ \ \}}
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{inline}\ T\ \&operator*()\ \{}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ detach();}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *d;}
+\DoxyCodeLine{00039\ \ \ \ \ \}}
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ T\ \&operator*()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *d;}
+\DoxyCodeLine{00042\ \ \ \ \ \}}
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{inline}\ T\ *operator-\/>()\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ detach();}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00046\ \ \ \ \ \}}
+\DoxyCodeLine{00047\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ T\ *operator-\/>()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00049\ \ \ \ \ \}}
+\DoxyCodeLine{00050\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{operator}\ T\ *()\ \{}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ detach();}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00053\ \ \ \ \ \}}
+\DoxyCodeLine{00054\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{operator}\ \textcolor{keyword}{const}\ T\ *()\ \textcolor{keyword}{const}\ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00056\ \ \ \ \ \}}
+\DoxyCodeLine{00057\ \ \ \ \ \textcolor{keyword}{inline}\ T\ *data()\ \{}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ detach();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ T\ *data()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00063\ \ \ \ \ \}}
+\DoxyCodeLine{00064\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ T\ *constData()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00066\ \ \ \ \ \}}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \textcolor{comment}{//\ Compatible\ with\ std::unique\_ptr}}
+\DoxyCodeLine{00069\ \ \ \ \ \textcolor{keyword}{inline}\ T\ *get()\ \{}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ detach();}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00072\ \ \ \ \ \}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keyword}{const}\ T\ *get()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d;}
+\DoxyCodeLine{00075\ \ \ \ \ \}}
+\DoxyCodeLine{00076\ }
+\DoxyCodeLine{00077\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d\ ==\ other.d;}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ operator!=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&other)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ d\ !=\ other.d;}
+\DoxyCodeLine{00082\ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}()\ \{}
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ d\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00086\ \ \ \ \ \}}
+\DoxyCodeLine{00087\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedDataPointer}{\string~QMSharedDataPointer}}()\ \{}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d\ \&\&\ d-\/>ref.fetch\_sub(1)\ ==\ 1)}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ d;}
+\DoxyCodeLine{00090\ \ \ \ \ \}}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}(T\ *data)\ \textcolor{keyword}{noexcept};}
+\DoxyCodeLine{00093\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&o)\ :\ d(o.d)\ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d)}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ d-\/>ref.fetch\_add(1);}
+\DoxyCodeLine{00096\ \ \ \ \ \}}
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&o)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (o.d\ !=\ d)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (o.d)}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ o.d-\/>ref.fetch\_add(1);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \ \ \ \ T\ *old\ =\ d;}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ o.d;}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (old\ \&\&\ old-\/>ref.fetch\_sub(1)\ ==\ 1)}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ old;}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00107\ \ \ \ \ \}}
+\DoxyCodeLine{00108\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}\ \&operator=(T\ *o)\ \{}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (o\ !=\ d)\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (o)}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ o-\/>ref.fetch\_add(1);}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ \ \ \ \ T\ *old\ =\ d;}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ \ \ \ \ d\ =\ o;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (old\ \&\&\ old-\/>ref.fetch\_sub(1)\ ==\ 1)}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ old;}
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00118\ \ \ \ \ \}}
+\DoxyCodeLine{00119\ \ \ \ \ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}(\mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}\ \&\&o)\ noexcept\ :\ d(o.d)\ \{}
+\DoxyCodeLine{00120\ \ \ \ \ \ \ \ \ o.d\ =\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00121\ \ \ \ \ \}}
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&operator=(\mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&\&other)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}\ moved(std::move(other));}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ swap(moved);}
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00126\ \ \ \ \ \}}
+\DoxyCodeLine{00127\ }
+\DoxyCodeLine{00128\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ operator!()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ !d;}
+\DoxyCodeLine{00130\ \ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ swap(\mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer}}\ \&other)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ std::swap(d,\ other.d);}
+\DoxyCodeLine{00134\ \ \ \ \ \}}
+\DoxyCodeLine{00135\ }
+\DoxyCodeLine{00136\ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00137\ \ \ \ \ T\ *clone();}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00140\ \ \ \ \ \textcolor{keywordtype}{void}\ detach\_helper();}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \ \ \ \ T\ *d;}
+\DoxyCodeLine{00143\ \};}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00146\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ operator==(std::nullptr\_t\ p1,\ \textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&p2)\ \{}
+\DoxyCodeLine{00147\ \ \ \ \ (void)\ p1;}
+\DoxyCodeLine{00148\ \ \ \ \ \textcolor{keywordflow}{return}\ !p2;}
+\DoxyCodeLine{00149\ \}}
+\DoxyCodeLine{00150\ }
+\DoxyCodeLine{00151\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00152\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ operator==(\textcolor{keyword}{const}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>}}\ \&p1,\ std::nullptr\_t\ p2)\ \{}
+\DoxyCodeLine{00153\ \ \ \ \ (void)\ p2;}
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keywordflow}{return}\ !p1;}
+\DoxyCodeLine{00155\ \}}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00158\ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>::QMSharedDataPointer}}(T\ *adata)\ noexcept\ :\ d(adata)\ \{}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keywordflow}{if}\ (d)}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ d-\/>ref.fetch\_add(1);}
+\DoxyCodeLine{00161\ \}}
+\DoxyCodeLine{00162\ }
+\DoxyCodeLine{00163\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00164\ \textcolor{keyword}{inline}\ T\ *\mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>::clone}}()\ \{}
+\DoxyCodeLine{00165\ \ \ \ \ \textcolor{keywordflow}{return}\ d-\/>clone();}
+\DoxyCodeLine{00166\ \}}
+\DoxyCodeLine{00167\ }
+\DoxyCodeLine{00168\ \textcolor{keyword}{template}\ <\textcolor{keyword}{class}\ T>}
+\DoxyCodeLine{00169\ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ \mbox{\hyperlink{classQMSharedDataPointer}{QMSharedDataPointer<T>::detach\_helper}}()\ \{}
+\DoxyCodeLine{00170\ \ \ \ \ T\ *x\ =\ clone();}
+\DoxyCodeLine{00171\ \ \ \ \ x-\/>ref.fetch\_add(1);}
+\DoxyCodeLine{00172\ \ \ \ \ \textcolor{keywordflow}{if}\ (d-\/>ref.fetch\_sub(1)\ ==\ 1)}
+\DoxyCodeLine{00173\ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ d;}
+\DoxyCodeLine{00174\ \ \ \ \ d\ =\ x;}
+\DoxyCodeLine{00175\ \}}
+\DoxyCodeLine{00176\ }
+\DoxyCodeLine{00177\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SHAREDDATA\_H}}
+
+\end{DoxyCode}

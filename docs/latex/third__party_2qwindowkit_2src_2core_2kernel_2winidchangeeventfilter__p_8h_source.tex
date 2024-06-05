@@ -1,0 +1,59 @@
+\doxysection{winidchangeeventfilter\+\_\+p.\+h}
+\hypertarget{third__party_2qwindowkit_2src_2core_2kernel_2winidchangeeventfilter__p_8h_source}{}\label{third__party_2qwindowkit_2src_2core_2kernel_2winidchangeeventfilter__p_8h_source}\index{third\_party/qwindowkit/src/core/kernel/winidchangeeventfilter\_p.h@{third\_party/qwindowkit/src/core/kernel/winidchangeeventfilter\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ WINIDCHANGEEVENTFILTER\_P\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ WINIDCHANGEEVENTFILTER\_P\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ \ W\ A\ R\ N\ I\ N\ G\ !!!}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ This\ file\ is\ not\ part\ of\ the\ QWindowKit\ API.\ It\ is\ used\ purely\ as\ an}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ implementation\ detail.\ This\ header\ file\ may\ change\ from\ version\ to}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ version\ without\ notice,\ or\ may\ even\ be\ removed.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QtGui/QWindow>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QWKCore/qwkglobal.h>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{class\ }AbstractWindowContext;}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQWK_1_1WinIdChangeEventFilter}{WinIdChangeEventFilter}}\ :\ \textcolor{keyword}{public}\ QObject\ \{}
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1WinIdChangeEventFilter}{WinIdChangeEventFilter}}(QObject\ *host,\ \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{AbstractWindowContext}}\ *context)}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \ \ \ \ :\ host(host),\ context(context)\ \{}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ WId\ winId()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ QObject\ *host;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{AbstractWindowContext}}\ *context;}
+\DoxyCodeLine{00036\ \ \ \ \ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{class\ }QWK\_CORE\_EXPORT\ \mbox{\hyperlink{classQWK_1_1WindowWinIdChangeEventFilter}{WindowWinIdChangeEventFilter}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classQWK_1_1WinIdChangeEventFilter}{WinIdChangeEventFilter}}\ \{}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1WindowWinIdChangeEventFilter}{WindowWinIdChangeEventFilter}}(QWindow\ *host,\ \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{AbstractWindowContext}}\ *context);}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ WId\ winId()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ QWindow\ *win;}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isAboutToBeDestroyed;}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ eventFilter(QObject\ *obj,\ QEvent\ *event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00049\ \ \ \ \ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \}}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ WINIDCHANGEEVENTFILTER\_P\_H}}
+
+\end{DoxyCode}

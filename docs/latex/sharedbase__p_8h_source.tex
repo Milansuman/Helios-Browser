@@ -1,0 +1,57 @@
+\doxysection{sharedbase\+\_\+p.\+h}
+\hypertarget{sharedbase__p_8h_source}{}\label{sharedbase__p_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/src/sharedbase\_p.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/src/sharedbase\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ SHAREDBASE\_P\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ SHAREDBASE\_P\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <atomic>}}
+\DoxyCodeLine{00005\ }
+\DoxyCodeLine{00006\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ \{}
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00010\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}();}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{\string~SharedBasePrivate}}();}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ *clone()\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Declare\ basic\ copy\ constructor}}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ \&)\ :\ ref(0)\ \{}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ \&operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ std::atomic\_int\ ref;}
+\DoxyCodeLine{00022\ \ \ \ \ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ ref\_ref(\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ *d)\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d)}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \ \ \ \ d-\/>ref.fetch\_add(1);}
+\DoxyCodeLine{00027\ \ \ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ ref\_deref(SharedBasePrivate\ *d)\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d\ \&\&\ d-\/>ref.fetch\_sub(1)\ ==\ 1)}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ d;}
+\DoxyCodeLine{00032\ \ \ \ \ \}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ ref\_assign(SharedBasePrivate\ *\&d,\ SharedBasePrivate\ *d2)\ \{}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d2)}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \ \ \ \ d2-\/>ref.fetch\_add(1);}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (d\ \&\&\ d-\/>ref.fetch\_sub(1)\ ==\ 1)}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ d;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ d\ =\ d2;}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ Q\_D(T)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\ \ detach();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\ \ T\#\#Private\ *const\ d\ =\ reinterpret\_cast<T\#\#Private\ *>(d\_ptr)}}
+\DoxyCodeLine{00045\ }
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#define\ Q\_D2(T)\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \(\backslash\)}}
+\DoxyCodeLine{00047\ \textcolor{preprocessor}{\ \ \ \ const\ T\#\#Private\ *const\ d\ =\ reinterpret\_cast<const\ T\#\#Private\ *>(d\_ptr)}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SHAREDBASE\_P\_H}}
+
+\end{DoxyCode}

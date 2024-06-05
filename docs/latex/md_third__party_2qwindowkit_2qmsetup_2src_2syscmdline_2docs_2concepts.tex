@@ -1,0 +1,22 @@
+\chapter{Concepts}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts}{}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts}\index{Concepts@{Concepts}}
+\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md53}%
+\Hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md53}%
+ \hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md54}{}\doxysection{\texorpdfstring{Command}{Command}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md54}
+
+\begin{DoxyItemize}
+\item {\bfseries{Command}} is the beginning symbol used to determine the behavior of a set of command-\/line arguments.
+\item The commands of a CLI program are usually in the form of a tree structure, and the program itself is the root command. Take {\ttfamily git} as an example, {\ttfamily git} is the root command and {\ttfamily merge}/{\ttfamily commit}/... are the sub-\/commands.
+\item However, most commands doesn\textquotesingle{}t have sub-\/commands because the root command is sufficient in most scenarios.
+\item Command line parameters must start with the root command and list the subcommands in sequence along the path to a certain leaf command. When the target sub-\/command is listed, all subsequent symbols are regarded as the arguments or options of this sub-\/command.
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md55}{}\doxysection{\texorpdfstring{Argument}{Argument}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md55}
+
+\begin{DoxyItemize}
+\item {\bfseries{Argument}} is the positional argument, which belongs to a command or an option.
+\item The positional arguments are parsed according to the order in which they are specified. Take {\ttfamily mv} as an example, {\ttfamily mv \texorpdfstring{$<$}{<}src\texorpdfstring{$>$}{>} \texorpdfstring{$<$}{<}dest\texorpdfstring{$>$}{>}} shows that it has two positional arguments and the first will be recognized as source and the second as destination.
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md56}{}\doxysection{\texorpdfstring{Option}{Option}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts_autotoc_md56}
+
+\begin{DoxyItemize}
+\item {\bfseries{Option}}, usually a word or letter beginning with the {\ttfamily -\/} or {\ttfamily /} sign. ({\ttfamily -\/} is the Unix style and {\ttfamily /} is the Dos style)
+\item Options can have none or a fixed number of positional arguments which are recommended to be non-\/required. 
+\end{DoxyItemize}

@@ -1,0 +1,196 @@
+\doxysection{Sys\+Cmd\+Line\+::Parse\+Result Class Reference}
+\hypertarget{classSysCmdLine_1_1ParseResult}{}\label{classSysCmdLine_1_1ParseResult}\index{SysCmdLine::ParseResult@{SysCmdLine::ParseResult}}
+Inheritance diagram for Sys\+Cmd\+Line\+::Parse\+Result\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classSysCmdLine_1_1ParseResult}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a3af5d3413910051ec1452242c28d4f5e}\label{classSysCmdLine_1_1ParseResult_a3af5d3413910051ec1452242c28d4f5e} 
+enum {\bfseries Error} \{ \newline
+{\bfseries No\+Error}
+, {\bfseries Unknown\+Option}
+, {\bfseries Unknown\+Command}
+, {\bfseries Missing\+Option\+Argument}
+, \newline
+{\bfseries Missing\+Command\+Argument}
+, {\bfseries Too\+Many\+Arguments}
+, {\bfseries Invalid\+Argument\+Value}
+, {\bfseries Invalid\+Option\+Position}
+, \newline
+{\bfseries Missing\+Required\+Option}
+, {\bfseries Option\+Occur\+Too\+Much}
+, {\bfseries Argument\+Type\+Mismatch}
+, {\bfseries Argument\+Validate\+Failed}
+, \newline
+{\bfseries Mutually\+Exclusive\+Options}
+, {\bfseries Prior\+Option\+With\+Arguments}
+, {\bfseries Prior\+Option\+With\+Options}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aa1daf56768b0ea85603f75f583b9701a}\label{classSysCmdLine_1_1ParseResult_aa1daf56768b0ea85603f75f583b9701a} 
+bool {\bfseries is\+Valid} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a2f8eda1c8ab228b5124c6ea17feff5e2}\label{classSysCmdLine_1_1ParseResult_a2f8eda1c8ab228b5124c6ea17feff5e2} 
+\mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}} {\bfseries root\+Command} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aae5e703ef4fa86886578a9cb262b85b3}\label{classSysCmdLine_1_1ParseResult_aae5e703ef4fa86886578a9cb262b85b3} 
+const std\+::vector$<$ std\+::string $>$ \& {\bfseries arguments} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aca74282329a399c46147347be856f974}\label{classSysCmdLine_1_1ParseResult_aca74282329a399c46147347be856f974} 
+int {\bfseries invoke} (int err\+Code=-\/1) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a8e2098ddfc07dc030312521aead9fa01}\label{classSysCmdLine_1_1ParseResult_a8e2098ddfc07dc030312521aead9fa01} 
+int {\bfseries dispatch} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a625a9cee7c913bd02e6724cae3727fc8}\label{classSysCmdLine_1_1ParseResult_a625a9cee7c913bd02e6724cae3727fc8} 
+Error {\bfseries error} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aa79a4d77fb32a4554929f4791236a913}\label{classSysCmdLine_1_1ParseResult_aa79a4d77fb32a4554929f4791236a913} 
+std\+::string {\bfseries error\+Text} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_af2ef259096f4c19381a491a2e39957b7}\label{classSysCmdLine_1_1ParseResult_af2ef259096f4c19381a491a2e39957b7} 
+std\+::string {\bfseries correction\+Text} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aafc5015856fa4034da0f25d39d0a2f44}\label{classSysCmdLine_1_1ParseResult_aafc5015856fa4034da0f25d39d0a2f44} 
+std\+::string {\bfseries cancellation\+Token} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_ab4054334a7eb537994734ced6d24ff61}\label{classSysCmdLine_1_1ParseResult_ab4054334a7eb537994734ced6d24ff61} 
+\mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}} {\bfseries command} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a9f908524397ea320df4447d12aa95e1a}\label{classSysCmdLine_1_1ParseResult_a9f908524397ea320df4447d12aa95e1a} 
+std\+::vector$<$ \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} $>$ {\bfseries global\+Options} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_acd78c4704c74b9b3b0d89689f7096d17}\label{classSysCmdLine_1_1ParseResult_acd78c4704c74b9b3b0d89689f7096d17} 
+std\+::vector$<$ int $>$ {\bfseries command\+Index\+Stack} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aa3cfa422469a6530ebc10c1ddea106a2}\label{classSysCmdLine_1_1ParseResult_aa3cfa422469a6530ebc10c1ddea106a2} 
+int {\bfseries index\+Of\+Argument} (const std\+::string \&name) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a24dae455b56229e100a36e439b71fbaa}\label{classSysCmdLine_1_1ParseResult_a24dae455b56229e100a36e439b71fbaa} 
+int {\bfseries index\+Of\+Option} (const std\+::string \&token) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aa8e736ea48fa2109020017a6c5420997}\label{classSysCmdLine_1_1ParseResult_aa8e736ea48fa2109020017a6c5420997} 
+void {\bfseries show\+Error} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_acd1ca8ce96b644e44aa6dffa3aaaf939}\label{classSysCmdLine_1_1ParseResult_acd1ca8ce96b644e44aa6dffa3aaaf939} 
+void {\bfseries show\+Help\+Text} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a2e564a29b047c27ff0b970f8097e470d}\label{classSysCmdLine_1_1ParseResult_a2e564a29b047c27ff0b970f8097e470d} 
+void {\bfseries show\+Message} (const std\+::string \&info, const std\+::string \&warning, const std\+::string \&error) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a4dd6df1cb5eb0b6d5d1c315f9e155191}\label{classSysCmdLine_1_1ParseResult_a4dd6df1cb5eb0b6d5d1c315f9e155191} 
+bool {\bfseries is\+Version\+Set} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a53e2694a48a760541a6ee33a1457e765}\label{classSysCmdLine_1_1ParseResult_a53e2694a48a760541a6ee33a1457e765} 
+bool {\bfseries is\+Help\+Set} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_ac045c8249aba665961cc9a1ec53e18c9}\label{classSysCmdLine_1_1ParseResult_ac045c8249aba665961cc9a1ec53e18c9} 
+bool {\bfseries is\+Role\+Set} (Option\+::\+Role role) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_acf89038c2f62876301103f57eaa1380f}\label{classSysCmdLine_1_1ParseResult_acf89038c2f62876301103f57eaa1380f} 
+bool {\bfseries is\+Argument\+Set} (const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&arg) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a5c86438bac2e609d9cb584c2c86b810d}\label{classSysCmdLine_1_1ParseResult_a5c86438bac2e609d9cb584c2c86b810d} 
+bool {\bfseries is\+Argument\+Set} (const std\+::string \&name) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a61004ef692e4e2d8fe3a9e4d6c753fc7}\label{classSysCmdLine_1_1ParseResult_a61004ef692e4e2d8fe3a9e4d6c753fc7} 
+bool {\bfseries is\+Argument\+Set} (int index) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a7ee5fd28df9c1e0854e5f94462a3cca1}\label{classSysCmdLine_1_1ParseResult_a7ee5fd28df9c1e0854e5f94462a3cca1} 
+const std\+::vector$<$ \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} $>$ \& {\bfseries values} (const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&arg) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a584256f3a0e06a5dc4efea97877fb7c3}\label{classSysCmdLine_1_1ParseResult_a584256f3a0e06a5dc4efea97877fb7c3} 
+const std\+::vector$<$ \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} $>$ \& {\bfseries values} (const std\+::string \&name) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a4e90c3ff7ee528229c74a5c17d924fe7}\label{classSysCmdLine_1_1ParseResult_a4e90c3ff7ee528229c74a5c17d924fe7} 
+const std\+::vector$<$ \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} $>$ \& {\bfseries values} (int index) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aecd659184ddf75177b0d967e16c075fc}\label{classSysCmdLine_1_1ParseResult_aecd659184ddf75177b0d967e16c075fc} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} {\bfseries value} (const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&arg) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aff25341038190b1635804c97a3de0aee}\label{classSysCmdLine_1_1ParseResult_aff25341038190b1635804c97a3de0aee} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} {\bfseries value} (const std\+::string \&name) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a5c39e801e8d7c142b04c3710253e80ed}\label{classSysCmdLine_1_1ParseResult_a5c39e801e8d7c142b04c3710253e80ed} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} {\bfseries value} (int index) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_af47a67921c12d3a559bed27e03a1e6f9}\label{classSysCmdLine_1_1ParseResult_af47a67921c12d3a559bed27e03a1e6f9} 
+bool {\bfseries is\+Option\+Set} (const \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \&option) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a9b10ddf09cdacb195489edbc5d07ce23}\label{classSysCmdLine_1_1ParseResult_a9b10ddf09cdacb195489edbc5d07ce23} 
+bool {\bfseries is\+Option\+Set} (const std\+::string \&token) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_aa419ca6f363d48d1d4cdfe49abdf5393}\label{classSysCmdLine_1_1ParseResult_aa419ca6f363d48d1d4cdfe49abdf5393} 
+bool {\bfseries is\+Option\+Set} (int index) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a270a10c03b5e918fcfd67755404c1add}\label{classSysCmdLine_1_1ParseResult_a270a10c03b5e918fcfd67755404c1add} 
+\mbox{\hyperlink{classSysCmdLine_1_1OptionResult}{Option\+Result}} {\bfseries option} (const \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \&option) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a7afe473b5b091361485f4a58cc6ac301}\label{classSysCmdLine_1_1ParseResult_a7afe473b5b091361485f4a58cc6ac301} 
+\mbox{\hyperlink{classSysCmdLine_1_1OptionResult}{Option\+Result}} {\bfseries option} (const std\+::string \&token) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_ab6b735384d4283023f74a210e3a824f8}\label{classSysCmdLine_1_1ParseResult_ab6b735384d4283023f74a210e3a824f8} 
+\mbox{\hyperlink{classSysCmdLine_1_1OptionResult}{Option\+Result}} {\bfseries option} (int index) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_ad482dfbe4ba41e1cda07bbb1c4d08f04}\label{classSysCmdLine_1_1ParseResult_ad482dfbe4ba41e1cda07bbb1c4d08f04} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} {\bfseries value\+For\+Option} (const \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \&option) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_ae0cbb7d095789cf0fa8ebd46c4d16c99}\label{classSysCmdLine_1_1ParseResult_ae0cbb7d095789cf0fa8ebd46c4d16c99} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} {\bfseries value\+For\+Option} (const std\+::string \&token) const
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a146cf4f73e8d28d456110388cbaaaa81}\label{classSysCmdLine_1_1ParseResult_a146cf4f73e8d28d456110388cbaaaa81} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} {\bfseries value\+For\+Option} (int index) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Shared\+Base} (const \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other)
+\item 
+{\bfseries Shared\+Base} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&\&other) noexcept
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \& {\bfseries operator=} (const \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other)
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&\&other) noexcept
+\item 
+void {\bfseries swap} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other) noexcept
+\item 
+bool {\bfseries is\+Detached} () const
+\item 
+void {\bfseries detach} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_a6fdfe17e92ffcb8f6d351b3e9fe5dcc8}\label{classSysCmdLine_1_1ParseResult_a6fdfe17e92ffcb8f6d351b3e9fe5dcc8} 
+{\bfseries Parse\+Result} (\mbox{\hyperlink{classSysCmdLine_1_1ParseResultPrivate}{Parse\+Result\+Private}} \texorpdfstring{$\ast$}{*}d)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Shared\+Base} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{Shared\+Base\+Private}} \texorpdfstring{$\ast$}{*}d)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Friends}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1ParseResult_ab80291af9c262f63b83fa9c16f12014d}\label{classSysCmdLine_1_1ParseResult_ab80291af9c262f63b83fa9c16f12014d} 
+class {\bfseries Parser}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{Shared\+Base\+Private}} \texorpdfstring{$\ast$}{*} {\bfseries d\+\_\+ptr}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/parseresult.\+h\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/src/parseresult.\+cpp\end{DoxyCompactItemize}

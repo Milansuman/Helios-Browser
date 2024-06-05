@@ -1,0 +1,135 @@
+\chapter{Sys\+Cmd\+Line}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README}{}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README}\index{SysCmdLine@{SysCmdLine}}
+\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md65}%
+\Hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md65}%
+ C++ Advanced Command Line Parser.
+
+Inspired by Qt {\ttfamily QCommand\+Line\+Parser} and C\# {\ttfamily System.\+Command\+Line}.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md66}{}\doxysection{\texorpdfstring{Introduction}{Introduction}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md66}
+To be in line with the principle of "{}don\textquotesingle{}t learn anything new if you don\textquotesingle{}t need to"{}, on the one hand, {\ttfamily syscmdline} contains as many common features as possible, on the other hand, it\textquotesingle{}s simple enough to be easy to understand.
+
+Therefore, the project is designed to be configurable, but it\textquotesingle{}s not intended to be as complex as a framework.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md67}{}\doxysection{\texorpdfstring{Features}{Features}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md67}
+
+\begin{DoxyItemize}
+\item Support sub-\/commands
+\item Support case-\/insensitive parsing
+\item Support global options
+\item Support mutually exclusive options
+\item Support short options and group flags
+\item Support help text customization
+\item Support localization
+\item Simple tips for typo correction
+\item Special implementations for Windows
+\item Highly configurable
+\item Friendly interface
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md70}{}\doxysection{\texorpdfstring{Simple Example}{Simple Example}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md70}
+A simple {\ttfamily mv} command\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\ ++}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <iostream>}}
+\DoxyCodeLine{\textcolor{preprocessor}{\#include\ <syscmdline/parser.h>}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{namespace\ }SCL\ =\ SysCmdLine;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keywordtype}{int}\ main(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ *argv[])\ \{}
+\DoxyCodeLine{\ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Command}{SCL::Command}}\ cmd(\textcolor{stringliteral}{"{}mv"{}},\ \textcolor{stringliteral}{"{}move\ files\ to\ directory"{}});}
+\DoxyCodeLine{\ \ \ \ cmd.addArguments(\{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Argument}{SCL::Argument}}(\textcolor{stringliteral}{"{}files"{}},\ \textcolor{stringliteral}{"{}Source\ files"{}}).multi(),}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Argument}{SCL::Argument}}(\textcolor{stringliteral}{"{}dir"{}},\ \textcolor{stringliteral}{"{}Destination\ directory"{}}),}
+\DoxyCodeLine{\ \ \ \ \});}
+\DoxyCodeLine{\ \ \ \ cmd.addHelpOption();}
+\DoxyCodeLine{\ \ \ \ cmd.setHandler([](\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1ParseResult}{SCL::ParseResult}}\ \&result)\ -\/>\ \textcolor{keywordtype}{int}\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[Sources]"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&item\ :\ result.values(\textcolor{stringliteral}{"{}files"{}}))\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ std::cout\ <<\ item.toString()\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::cout\ <<\ \textcolor{stringliteral}{"{}[Destination]"{}}\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ std::cout\ <<\ \ result.value(\textcolor{stringliteral}{"{}dir"{}}).toString()\ <<\ std::endl;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ 0;}
+\DoxyCodeLine{\ \ \ \ \});}
+\DoxyCodeLine{\ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{classSysCmdLine_1_1Parser}{SCL::Parser}}(cmd).invoke(argc,\ argv);}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ Running the code\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ ./mv\ -\/-\/help}
+\DoxyCodeLine{Description:}
+\DoxyCodeLine{\ \ \ \ move\ files\ to\ directory}
+\DoxyCodeLine{}
+\DoxyCodeLine{Usage:}
+\DoxyCodeLine{\ \ \ \ mv\ <files>...\ <dir>\ [options]}
+\DoxyCodeLine{}
+\DoxyCodeLine{Arguments:}
+\DoxyCodeLine{\ \ \ \ <files>\ \ \ \ Source\ files}
+\DoxyCodeLine{\ \ \ \ <dir>\ \ \ \ \ \ Destination\ directory}
+\DoxyCodeLine{}
+\DoxyCodeLine{Options:}
+\DoxyCodeLine{\ \ \ \ -\/h,\ -\/-\/help\ \ \ \ Show\ help\ information}
+
+\end{DoxyCode}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>\ ./mv\ 1\ 2}
+\DoxyCodeLine{[Sources]}
+\DoxyCodeLine{1}
+\DoxyCodeLine{[Destination]}
+\DoxyCodeLine{2}
+
+\end{DoxyCode}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{>./mv\ 1\ 2\ 3}
+\DoxyCodeLine{[Sources]}
+\DoxyCodeLine{1\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{2\ \ \ \ \ \ \ \ }
+\DoxyCodeLine{[Destination]}
+\DoxyCodeLine{3}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md71}{}\doxysection{\texorpdfstring{Quick Start}{Quick Start}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md71}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md72}{}\doxysubsection{\texorpdfstring{Concepts}{Concepts}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md72}
+If you are confused about some of the concepts of command line programs, you can learn the following, which will help you use this project.
+
+See \doxysectlink{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2concepts}{Concepts}{0} to learn more.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md73}{}\doxysubsection{\texorpdfstring{More Examples}{More Examples}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md73}
+See \doxysectlink{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2docs_2examples}{Examples}{0} to learn more.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md74}{}\doxysection{\texorpdfstring{CMake Intergration}{CMake Intergration}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md74}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md75}{}\doxysubsection{\texorpdfstring{Build \& Install}{Build \& Install}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md75}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ -\/B\ build\ -\/G\ Ninja}
+\DoxyCodeLine{cmake\ -\/-\/build\ build\ -\/-\/target\ all}
+\DoxyCodeLine{cmake\ -\/-\/build\ build\ -\/-\/target\ install}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md76}{}\doxysubsection{\texorpdfstring{Import}{Import}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md76}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{find\_package(syscmdline\ REQUIRED)}
+\DoxyCodeLine{target\_link\_libraries(my\_project\ PRIVATE\ syscmdline::syscmdline)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md77}{}\doxysection{\texorpdfstring{Notice}{Notice}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md77}
+
+\begin{DoxyItemize}
+\item Minimize Size
+\begin{DoxyItemize}
+\item In order to achieve more functionalities, this project contains a large amount of codes so that the binary size may be relatively large compared with other libraries. Therefore, this implementation uses STL templates as little as possible.
+\item It\textquotesingle{}s suggested to enable size optimizing option for your compiler when building executables.
+\end{DoxyItemize}
+\item Validity Check
+\begin{DoxyItemize}
+\item The root command must be valid, otherwise the parsing result is undefined and may even cause crash.
+\item Validity checking is enabled if {\ttfamily SYSCMDLINE\+\_\+\+ENABLE\+\_\+\+VALIDITY\+\_\+\+CHECK} is defined, which reduces parsing performance. Therefore, this macro is enabled only in debug mode.
+\end{DoxyItemize}
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md78}{}\doxysection{\texorpdfstring{Thanks}{Thanks}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md78}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md79}{}\doxysubsection{\texorpdfstring{Other Projects}{Other Projects}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md79}
+
+\begin{DoxyItemize}
+\item \href{https://github.com/qt/qtbase}{\texttt{ https\+://github.\+com/qt/qtbase}}
+\item \href{https://github.com/dotnet/command-line-api}{\texttt{ https\+://github.\+com/dotnet/command-\/line-\/api}}
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md80}{}\doxysubsection{\texorpdfstring{Contributors}{Contributors}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md80}
+
+\begin{DoxyItemize}
+\item \href{https://github.com/wangwenx190}{\texttt{ wangwenx190}}
+\item \href{https://github.com/JobSecond}{\texttt{ Job\+Second}}
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md81}{}\doxysection{\texorpdfstring{License}{License}}\label{md_third__party_2qwindowkit_2qmsetup_2src_2syscmdline_2README_autotoc_md81}
+This project is licensed under the MIT License. 

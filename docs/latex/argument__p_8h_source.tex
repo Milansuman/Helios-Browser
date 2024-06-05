@@ -1,0 +1,46 @@
+\doxysection{argument\+\_\+p.\+h}
+\hypertarget{argument__p_8h_source}{}\label{argument__p_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/src/argument\_p.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/src/argument\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ ARGUMENT\_P\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ ARGUMENT\_P\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}argument.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}symbol\_p.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSysCmdLine_1_1ArgumentPrivate}{ArgumentPrivate}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1SymbolPrivate}{SymbolPrivate}}\ \{}
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00011\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1ArgumentPrivate}{ArgumentPrivate}}(std::string\ name,\ \textcolor{keyword}{const}\ std::string\ \&desc,\ \textcolor{keywordtype}{bool}\ required,}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}}\ defaultValue);}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1SymbolPrivate}{SymbolPrivate}}\ *clone()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ required;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}}\ defaultValue;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ std::vector<Value>\ expectedValues;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ std::string\ displayName;}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ multiple;}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ Argument::Validator\ validator;}
+\DoxyCodeLine{00024\ \ \ \ \ \};}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolderPrivate}{ArgumentHolderPrivate}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1SymbolPrivate}{SymbolPrivate}}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolderPrivate}{ArgumentHolderPrivate}}(Symbol::SymbolType\ type,\ \textcolor{keyword}{const}\ std::string\ \&desc);}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::vector<Argument>\ arguments;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#ifdef\ SYSCMDLINE\_ENABLE\_VALIDITY\_CHECK}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ checkAddedArgument(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}}\ \&arg)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00036\ \ \ \ \ \};}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ARGUMENT\_P\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,120 @@
+\doxysection{map\+\_\+p.\+h}
+\hypertarget{map__p_8h_source}{}\label{map__p_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/src/map\_p.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/src/map\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ MAP\_P\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ MAP\_P\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <map>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <vector>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \ \ \ \ \textcolor{keyword}{using\ }StringList\ =\ std::vector<std::string>;}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{using\ }IntList\ =\ std::vector<int>;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{union\ }\mbox{\hyperlink{unionSysCmdLine_1_1Ele}{Ele}}\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ i;}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{size\_t}\ s;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ IntList\ *il;}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ StringList\ *sl;}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ *p;}
+\DoxyCodeLine{00020\ \ \ \ \ \};}
+\DoxyCodeLine{00021\ }
+\DoxyCodeLine{00022\ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{unionSysCmdLine_1_1Ele}{Ele}}\ ele(\textcolor{keywordtype}{int}\ i)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ >=\ 202002L}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \mbox{\hyperlink{unionSysCmdLine_1_1Ele}{Ele}}\{.i\ =\ i\};}
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ Ele\ res;}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ res.i\ =\ i;}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00030\ \ \ \ \ \}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \ \ \ \ \textcolor{keyword}{inline}\ Ele\ ele(\textcolor{keywordtype}{size\_t}\ s)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ >=\ 202002L}}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Ele\{.s\ =\ s\};}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ Ele\ res;}
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ res.s\ =\ s;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00039\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00040\ \ \ \ \ \}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{inline}\ Ele\ ele(IntList\ *il)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ >=\ 202002L}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Ele\{.il\ =\ il\};}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ Ele\ res;}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ res.il\ =\ il;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00050\ \ \ \ \ \}}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \textcolor{keyword}{inline}\ Ele\ ele(StringList\ *sl)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ >=\ 202002L}}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Ele\{.sl\ =\ sl\};}
+\DoxyCodeLine{00055\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ Ele\ res;}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ res.sl\ =\ sl;}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00059\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00060\ \ \ \ \ \}}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{inline}\ Ele\ ele(\textcolor{keywordtype}{void}\ *p)\ \textcolor{keyword}{noexcept}\ \{}
+\DoxyCodeLine{00063\ \textcolor{preprocessor}{\#if\ \_\_cplusplus\ >=\ 202002L}}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ Ele\{.p\ =\ p\};}
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ Ele\ res;}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ res.p\ =\ p;}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ res;}
+\DoxyCodeLine{00069\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00070\ \ \ \ \ \}}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \textcolor{comment}{//\ Avoiding\ template\ specialization\ greatly\ helps\ to\ reduce\ the\ binary\ size,}}
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{comment}{//\ so\ we\ only\ use\ this\ map\ in\ the\ library\ implementation.}}
+\DoxyCodeLine{00074\ \ \ \ \ \textcolor{keyword}{using\ }GenericMap\ =\ std::map<std::string,\ Ele>;}
+\DoxyCodeLine{00075\ }
+\DoxyCodeLine{00076\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{StringListMapWrapper}}\ \{}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{StringListMapWrapper}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{StringListMapWrapper}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{StringListMapWrapper}}\ \&other)\ \{}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&pair\ :\ other.data)\ \{}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data[pair.first]\ =\ ele(\textcolor{keyword}{new}\ StringList(*pair.second.sl));}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{\string~StringListMapWrapper}}()\ \{}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&pair\ :\ std::as\_const(data))\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ pair.second.sl;}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ GenericMap\ data;}
+\DoxyCodeLine{00092\ \ \ \ \ \};}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structSysCmdLine_1_1IntListMapWrapper}{IntListMapWrapper}}\ \{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1IntListMapWrapper}{IntListMapWrapper}}()\ =\ \textcolor{keywordflow}{default};}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1IntListMapWrapper}{IntListMapWrapper}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{structSysCmdLine_1_1IntListMapWrapper}{IntListMapWrapper}}\ \&other)\ \{}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&pair\ :\ other.data)\ \{}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data[pair.first]\ =\ ele(\textcolor{keyword}{new}\ IntList(*pair.second.il));}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1IntListMapWrapper}{\string~IntListMapWrapper}}()\ \{}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&pair\ :\ std::as\_const(data))\ \{}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}\ pair.second.il;}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ GenericMap\ data;}
+\DoxyCodeLine{00110\ \ \ \ \ \};}
+\DoxyCodeLine{00111\ }
+\DoxyCodeLine{00112\ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ MAP\_P\_H}}
+
+\end{DoxyCode}

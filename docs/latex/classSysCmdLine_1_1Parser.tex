@@ -1,0 +1,151 @@
+\doxysection{Sys\+Cmd\+Line\+::Parser Class Reference}
+\hypertarget{classSysCmdLine_1_1Parser}{}\label{classSysCmdLine_1_1Parser}\index{SysCmdLine::Parser@{SysCmdLine::Parser}}
+Inheritance diagram for Sys\+Cmd\+Line\+::Parser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classSysCmdLine_1_1Parser}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a23c05175c05c5993897c8b6b30a2962c}\label{classSysCmdLine_1_1Parser_a23c05175c05c5993897c8b6b30a2962c} 
+enum {\bfseries Parse\+Option} \{ \newline
+{\bfseries Standard} = 0
+, {\bfseries Ignore\+Command\+Case} = 0x1
+, {\bfseries Ignore\+Option\+Case} = 0x2
+, {\bfseries Allow\+Unix\+Group\+Flags} = 0x4
+, \newline
+{\bfseries Allow\+Dos\+Short\+Options} = 0x8
+, {\bfseries Dont\+Allow\+Unix\+Short\+Options} = 0x10
+ \}
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a592f831e050e6694e21c861bcec98db5}\label{classSysCmdLine_1_1Parser_a592f831e050e6694e21c861bcec98db5} 
+enum {\bfseries Display\+Option} \{ \newline
+{\bfseries Normal} = 0
+, {\bfseries Dont\+Show\+Help\+On\+Error} = 0x1
+, {\bfseries Dont\+Show\+Intro\+On\+Error} = 0x2
+, {\bfseries Skip\+Correction} = 0x4
+, \newline
+{\bfseries Show\+Argument\+Default\+Value} = 0x8
+, {\bfseries Show\+Argument\+Expected\+Values} = 0x10
+, {\bfseries Show\+Argument\+Is\+Required} = 0x20
+, {\bfseries Show\+Option\+Is\+Required} = 0x40
+, \newline
+{\bfseries Align\+All\+Catalogues} = 0x80
+, {\bfseries Dont\+Show\+Required\+Options\+On\+Usage} = 0x100
+, {\bfseries Show\+Optional\+Options\+On\+Usage} = 0x200
+, {\bfseries Show\+Options\+Behind\+Arguments} = 0x400
+, \newline
+{\bfseries Show\+Options\+Hint\+Front} = 0x800
+ \}
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_ac25c115972ad83c5169856320687a36e}\label{classSysCmdLine_1_1Parser_ac25c115972ad83c5169856320687a36e} 
+enum {\bfseries Size\+Type} \{ {\bfseries ST\+\_\+\+Indent}
+, {\bfseries ST\+\_\+\+Spacing}
+, {\bfseries ST\+\_\+\+Console\+Width}
+ \}
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_adfbd92dfd6bc986b13e30dbb6574f142}\label{classSysCmdLine_1_1Parser_adfbd92dfd6bc986b13e30dbb6574f142} 
+using {\bfseries Text\+Provider} = std\+::string (\texorpdfstring{$\ast$}{*})(int , int )
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a65a3ba17db4c2550c67c1938d8b214fc}\label{classSysCmdLine_1_1Parser_a65a3ba17db4c2550c67c1938d8b214fc} 
+{\bfseries Parser} (const \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}} \&root\+Command)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_aaeb4a542e67f178216bd1d8e54f66cda}\label{classSysCmdLine_1_1Parser_aaeb4a542e67f178216bd1d8e54f66cda} 
+std\+::string {\bfseries prologue} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a2950246dba8a3595d5ae0cd6b3b17cd3}\label{classSysCmdLine_1_1Parser_a2950246dba8a3595d5ae0cd6b3b17cd3} 
+void {\bfseries set\+Prologue} (const std\+::string \&prologue)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a712b270d76095ec8bf7dff048cd8e9b0}\label{classSysCmdLine_1_1Parser_a712b270d76095ec8bf7dff048cd8e9b0} 
+std\+::string {\bfseries epilogue} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_ad62730305f1427792c1c8330cc066176}\label{classSysCmdLine_1_1Parser_ad62730305f1427792c1c8330cc066176} 
+void {\bfseries set\+Epilogue} (const std\+::string \&epilogue)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a1d7e73864d1aeafbdb586ec763568a93}\label{classSysCmdLine_1_1Parser_a1d7e73864d1aeafbdb586ec763568a93} 
+int {\bfseries display\+Options} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a444790631e7aa21eb7e835f8fec222d0}\label{classSysCmdLine_1_1Parser_a444790631e7aa21eb7e835f8fec222d0} 
+void {\bfseries set\+Display\+Options} (int display\+Options)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a8da11d97b5056a28c4546af6d841fc6f}\label{classSysCmdLine_1_1Parser_a8da11d97b5056a28c4546af6d841fc6f} 
+\mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}} {\bfseries root\+Command} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_ac2812d89c49c3c9a186f364552a529ef}\label{classSysCmdLine_1_1Parser_ac2812d89c49c3c9a186f364552a529ef} 
+void {\bfseries set\+Root\+Command} (const \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}} \&root\+Command)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a961c44f850d967dbab17ee1c9b9f1d56}\label{classSysCmdLine_1_1Parser_a961c44f850d967dbab17ee1c9b9f1d56} 
+\mbox{\hyperlink{classSysCmdLine_1_1ParseResult}{Parse\+Result}} {\bfseries parse} (const std\+::vector$<$ std\+::string $>$ \&args, int parse\+Options=Standard)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_ad1dee646700e48054a4140ce150b2c67}\label{classSysCmdLine_1_1Parser_ad1dee646700e48054a4140ce150b2c67} 
+int {\bfseries invoke} (const std\+::vector$<$ std\+::string $>$ \&args, int err\+Code=-\/1, int parse\+Options=Standard)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_aa2ae9d2c16811693e6798f519d3173c3}\label{classSysCmdLine_1_1Parser_aa2ae9d2c16811693e6798f519d3173c3} 
+\mbox{\hyperlink{classSysCmdLine_1_1ParseResult}{Parse\+Result}} {\bfseries parse} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int parse\+Options=Standard)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a9bcbcebfdebcd82e46d3047289e44d59}\label{classSysCmdLine_1_1Parser_a9bcbcebfdebcd82e46d3047289e44d59} 
+int {\bfseries invoke} (int argc, char \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}argv, int err\+Code=-\/1, int parse\+Options=Standard)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a44b8cf004c0410b3616614fa9431ec57}\label{classSysCmdLine_1_1Parser_a44b8cf004c0410b3616614fa9431ec57} 
+\mbox{\hyperlink{classSysCmdLine_1_1HelpLayout}{Help\+Layout}} {\bfseries help\+Layout} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a3a63c65f7ec2b8ef600360acd957dbf6}\label{classSysCmdLine_1_1Parser_a3a63c65f7ec2b8ef600360acd957dbf6} 
+void {\bfseries set\+Help\+Layout} (const \mbox{\hyperlink{classSysCmdLine_1_1HelpLayout}{Help\+Layout}} \&help\+Layout)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a8c5c15e0afd83292d036381e28be616d}\label{classSysCmdLine_1_1Parser_a8c5c15e0afd83292d036381e28be616d} 
+int {\bfseries size} (Size\+Type size\+Type) const
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a1065cb2ef4bc2b0002b2de2d93e362c8}\label{classSysCmdLine_1_1Parser_a1065cb2ef4bc2b0002b2de2d93e362c8} 
+void {\bfseries set\+Size} (Size\+Type size\+Type, int value)
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a759a9f105f0d351a5b62409900ffd97f}\label{classSysCmdLine_1_1Parser_a759a9f105f0d351a5b62409900ffd97f} 
+Text\+Provider {\bfseries text\+Provider} ()
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_ae6581d3ef133b413cd46ce93807c9dbe}\label{classSysCmdLine_1_1Parser_ae6581d3ef133b413cd46ce93807c9dbe} 
+void {\bfseries set\+Text\+Provider} (Text\+Provider text\+Provider)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Shared\+Base} (const \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other)
+\item 
+{\bfseries Shared\+Base} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&\&other) noexcept
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \& {\bfseries operator=} (const \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other)
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&\&other) noexcept
+\item 
+void {\bfseries swap} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other) noexcept
+\item 
+bool {\bfseries is\+Detached} () const
+\item 
+void {\bfseries detach} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Parser_a3268b4cacd9a7fbffa64f38261114882}\label{classSysCmdLine_1_1Parser_a3268b4cacd9a7fbffa64f38261114882} 
+static Text\+Provider {\bfseries default\+Text\+Provider} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Shared\+Base} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{Shared\+Base\+Private}} \texorpdfstring{$\ast$}{*}d)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{Shared\+Base\+Private}} \texorpdfstring{$\ast$}{*} {\bfseries d\+\_\+ptr}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/parser.\+h\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/src/parser.\+cpp\end{DoxyCompactItemize}

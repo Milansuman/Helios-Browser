@@ -1,0 +1,172 @@
+\doxysection{abstractwindowcontext\+\_\+p.\+h}
+\hypertarget{third__party_2qwindowkit_2src_2core_2contexts_2abstractwindowcontext__p_8h_source}{}\label{third__party_2qwindowkit_2src_2core_2contexts_2abstractwindowcontext__p_8h_source}\index{third\_party/qwindowkit/src/core/contexts/abstractwindowcontext\_p.h@{third\_party/qwindowkit/src/core/contexts/abstractwindowcontext\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ ABSTRACTWINDOWCONTEXT\_P\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ ABSTRACTWINDOWCONTEXT\_P\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ \ W\ A\ R\ N\ I\ N\ G\ !!!}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ This\ file\ is\ not\ part\ of\ the\ QWindowKit\ API.\ It\ is\ used\ purely\ as\ an}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ implementation\ detail.\ This\ header\ file\ may\ change\ from\ version\ to}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ version\ without\ notice,\ or\ may\ even\ be\ removed.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <array>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <memory>}}
+\DoxyCodeLine{00019\ }
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#include\ <QtCore/QSet>}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QtCore/QPointer>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <QtGui/QRegion>}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#include\ <QtGui/QWindow>}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{preprocessor}{\#include\ <QWKCore/windowagentbase.h>}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#include\ <QWKCore/private/nativeeventfilter\_p.h>}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#include\ <QWKCore/private/sharedeventfilter\_p.h>}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#include\ <QWKCore/private/windowitemdelegate\_p.h>}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#include\ <QWKCore/private/winidchangeeventfilter\_p.h>}}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \textcolor{keyword}{class\ }QWK\_CORE\_EXPORT\ \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{AbstractWindowContext}}\ :\ \textcolor{keyword}{public}\ QObject,}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classQWK_1_1NativeEventDispatcher}{NativeEventDispatcher}},}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{public}\ \mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{SharedEventDispatcher}}\ \{}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{AbstractWindowContext}}();}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{\string~AbstractWindowContext}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setup(QObject\ *host,\ \mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{WindowItemDelegate}}\ *delegate);}
+\DoxyCodeLine{00043\ }
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ QObject\ *host()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ QWindow\ *window()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ WId\ windowId()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{WindowItemDelegate}}\ *delegate()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isHitTestVisible(\textcolor{keyword}{const}\ QObject\ *obj)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ setHitTestVisible(\textcolor{keyword}{const}\ QObject\ *obj,\ \textcolor{keywordtype}{bool}\ visible);}
+\DoxyCodeLine{00051\ }
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ QObject\ *systemButton(WindowAgentBase::SystemButton\ button)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ setSystemButton(WindowAgentBase::SystemButton\ button,\ QObject\ *obj);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ QObject\ *titleBar()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ setTitleBar(QObject\ *obj);}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \textcolor{preprocessor}{\#ifdef\ Q\_OS\_MAC}}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ ScreenRectCallback\ systemButtonAreaCallback()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setSystemButtonAreaCallback(\textcolor{keyword}{const}\ ScreenRectCallback\ \&callback);}
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isInSystemButtons(\textcolor{keyword}{const}\ QPoint\ \&pos,\ WindowAgentBase::SystemButton\ *button)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ isInTitleBarDraggableArea(\textcolor{keyword}{const}\ QPoint\ \&pos)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00065\ }
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isHostWidthFixed()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_windowHandle}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ ((m\_windowHandle-\/>flags()\ \&\ Qt::MSWindowsFixedSizeDialogHint)\ ||}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_windowHandle-\/>minimumWidth()\ ==\ m\_windowHandle-\/>maximumWidth())}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isHostHeightFixed()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_windowHandle}
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ?\ ((m\_windowHandle-\/>flags()\ \&\ Qt::MSWindowsFixedSizeDialogHint)\ ||}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_windowHandle-\/>minimumHeight()\ ==\ m\_windowHandle-\/>maximumHeight())}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ isHostSizeFixed()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_windowHandle\ ?\ ((m\_windowHandle-\/>flags()\ \&\ Qt::MSWindowsFixedSizeDialogHint)\ ||}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ m\_windowHandle-\/>minimumSize()\ ==\ m\_windowHandle-\/>maximumSize())}
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ :\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00083\ }
+\DoxyCodeLine{00084\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ QString\ key()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ WindowContextHook\ \{}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \ \ \ \ CentralizeHook\ =\ 1,}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \ \ \ \ RaiseWindowHook,}
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ \ \ \ \ ShowSystemMenuHook,}
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \ \ \ \ DefaultColorsHook,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ DrawWindows10BorderHook,\ \ \ \ \ \textcolor{comment}{//\ Only\ works\ on\ Windows\ 10,\ emulated\ workaround}}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ DrawWindows10BorderHook2,\ \ \ \ \textcolor{comment}{//\ Only\ works\ on\ Windows\ 10,\ native\ workaround}}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \ \ \ \ SystemButtonAreaChangedHook,\ \textcolor{comment}{//\ Only\ works\ on\ Mac}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ virtual\_hook(\textcolor{keywordtype}{int}\ \textcolor{keywordtype}{id},\ \textcolor{keywordtype}{void}\ *data);}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ showSystemMenu(\textcolor{keyword}{const}\ QPoint\ \&pos);}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ notifyWinIdChange();}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ QVariant\ windowAttribute(\textcolor{keyword}{const}\ QString\ \&key)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ setWindowAttribute(\textcolor{keyword}{const}\ QString\ \&key,\ \textcolor{keyword}{const}\ QVariant\ \&attribute);}
+\DoxyCodeLine{00102\ }
+\DoxyCodeLine{00103\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ eventFilter(QObject\ *obj,\ QEvent\ *event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ winIdChanged(WId\ winId,\ WId\ oldWinId)\ =\ 0;}
+\DoxyCodeLine{00108\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ windowAttributeChanged(\textcolor{keyword}{const}\ QString\ \&key,\ \textcolor{keyword}{const}\ QVariant\ \&attribute,}
+\DoxyCodeLine{00109\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ QVariant\ \&oldAttribute);}
+\DoxyCodeLine{00110\ }
+\DoxyCodeLine{00111\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00112\ \ \ \ \ \ \ \ \ QObject\ *m\_host\{\};}
+\DoxyCodeLine{00113\ \ \ \ \ \ \ \ \ std::unique\_ptr<WindowItemDelegate>\ m\_delegate;}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ QPointer<QWindow>\ m\_windowHandle;}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ WId\ m\_windowId\{\};}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \ \ \ \ QSet<const\ QObject\ *>\ m\_hitTestVisibleItems;}
+\DoxyCodeLine{00118\ \textcolor{preprocessor}{\#ifdef\ Q\_OS\_MAC}}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ ScreenRectCallback\ m\_systemButtonAreaCallback;}
+\DoxyCodeLine{00120\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \ \ \ \ QObject\ *m\_titleBar\{\};}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ std::array<QObject\ *,\ WindowAgentBase::Close\ +\ 1>\ m\_systemButtons\{\};}
+\DoxyCodeLine{00124\ }
+\DoxyCodeLine{00125\ \ \ \ \ \ \ \ \ QVariantHash\ m\_windowAttributes;}
+\DoxyCodeLine{00126\ \ \ \ \ \ \ \ \ std::unique\_ptr<WinIdChangeEventFilter>\ m\_winIdChangeEventFilter;}
+\DoxyCodeLine{00127\ \ \ \ \ \};}
+\DoxyCodeLine{00128\ }
+\DoxyCodeLine{00129\ \ \ \ \ \textcolor{keyword}{inline}\ QObject\ *AbstractWindowContext::host()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00130\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_host;}
+\DoxyCodeLine{00131\ \ \ \ \ \}}
+\DoxyCodeLine{00132\ }
+\DoxyCodeLine{00133\ \ \ \ \ \textcolor{keyword}{inline}\ QWindow\ *AbstractWindowContext::window()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_windowHandle;}
+\DoxyCodeLine{00135\ \ \ \ \ \}}
+\DoxyCodeLine{00136\ }
+\DoxyCodeLine{00137\ \ \ \ \ \textcolor{keyword}{inline}\ WId\ AbstractWindowContext::windowId()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00138\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_windowId;}
+\DoxyCodeLine{00139\ \ \ \ \ \}}
+\DoxyCodeLine{00140\ }
+\DoxyCodeLine{00141\ \ \ \ \ \textcolor{keyword}{inline}\ WindowItemDelegate\ *AbstractWindowContext::delegate()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_delegate.get();}
+\DoxyCodeLine{00143\ \ \ \ \ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{bool}\ AbstractWindowContext::isHitTestVisible(\textcolor{keyword}{const}\ QObject\ *obj)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00146\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_hitTestVisibleItems.contains(obj);}
+\DoxyCodeLine{00147\ \ \ \ \ \}}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keyword}{inline}\ QObject\ *}
+\DoxyCodeLine{00150\ \ \ \ \ \ \ \ \ AbstractWindowContext::systemButton(WindowAgentBase::SystemButton\ button)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_systemButtons[button];}
+\DoxyCodeLine{00152\ \ \ \ \ \}}
+\DoxyCodeLine{00153\ }
+\DoxyCodeLine{00154\ \ \ \ \ \textcolor{keyword}{inline}\ QObject\ *AbstractWindowContext::titleBar()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_titleBar;}
+\DoxyCodeLine{00156\ \ \ \ \ \}}
+\DoxyCodeLine{00157\ }
+\DoxyCodeLine{00158\ \textcolor{preprocessor}{\#ifdef\ Q\_OS\_MAC}}
+\DoxyCodeLine{00159\ \ \ \ \ \textcolor{keyword}{inline}\ ScreenRectCallback\ AbstractWindowContext::systemButtonAreaCallback()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ m\_systemButtonAreaCallback;}
+\DoxyCodeLine{00161\ \ \ \ \ \}}
+\DoxyCodeLine{00162\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00163\ }
+\DoxyCodeLine{00164\ \}}
+\DoxyCodeLine{00165\ }
+\DoxyCodeLine{00166\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ ABSTRACTWINDOWCONTEXT\_P\_H}}
+
+\end{DoxyCode}

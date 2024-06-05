@@ -1,0 +1,153 @@
+\doxysection{command.\+h}
+\hypertarget{command_8h_source}{}\label{command_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/command.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/command.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/****************************************************************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ MIT\ License}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2023\ SineStriker}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ ****************************************************************************/}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#ifndef\ COMMAND\_H}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ COMMAND\_H}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <cassert>}}
+\DoxyCodeLine{00031\ }
+\DoxyCodeLine{00032\ \textcolor{preprocessor}{\#include\ <syscmdline/option.h>}}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \textcolor{keyword}{class\ }ParseResult;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \textcolor{keyword}{class\ }CommandCataloguePrivate;}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \textcolor{keyword}{class\ }SYSCMDLINE\_EXPORT\ \mbox{\hyperlink{classSysCmdLine_1_1CommandCatalogue}{CommandCatalogue}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{SharedBase}}\ \{}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ SYSCMDLINE\_DECL\_PRIVATE(\mbox{\hyperlink{classSysCmdLine_1_1CommandCatalogue}{CommandCatalogue}})}
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1CommandCatalogue}{CommandCatalogue}}();}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addArguments(\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keyword}{const}\ std::vector<std::string>\ \&args);}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addOptions(\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keyword}{const}\ std::vector<std::string>\ \&options);}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addCommands(\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keyword}{const}\ std::vector<std::string>\ \&commands);}
+\DoxyCodeLine{00049\ \ \ \ \ \};}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSysCmdLine_1_1CommandPrivate}{CommandPrivate}};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \textcolor{keyword}{class\ }SYSCMDLINE\_EXPORT\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolder}{ArgumentHolder}}\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ SYSCMDLINE\_DECL\_PRIVATE(\mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}})}
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Handler\ =\ std::function<\textcolor{keywordtype}{int}\ \textcolor{comment}{/*\ code\ */}\ (\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1ParseResult}{ParseResult}}\ \&\ \textcolor{comment}{/*\ result\ */})>;}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}();}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}(\textcolor{keyword}{const}\ std::string\ \&name,\ \textcolor{keyword}{const}\ std::string\ \&desc\ =\ \{\},}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<Argument>\ \&args\ =\ \{\});}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }Symbol::helpText;}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ std::string\ helpText(HelpPosition\ pos,\ \textcolor{keywordtype}{int}\ displayOptions,\ \textcolor{keywordtype}{void}\ *extra)\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ std::string\ name()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setName(\textcolor{keyword}{const}\ std::string\ \&name);}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ optionCount()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}}\ option(\textcolor{keywordtype}{int}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ addOption(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}}\ \&option,\ \textcolor{keyword}{const}\ std::string\ \&group\ =\ \{\});}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addOptions(\textcolor{keyword}{const}\ std::vector<Option>\ \&options,\ \textcolor{keyword}{const}\ std::string\ \&group\ =\ \{\});}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ commandCount()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ command(\textcolor{keywordtype}{int}\ index)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ addCommand(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&command);}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addCommands(\textcolor{keyword}{const}\ std::vector<Command>\ \&commands);}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ std::string\ detailedDescription()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00080\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setDetailedDescription(\textcolor{keyword}{const}\ std::string\ \&detailedDescription);}
+\DoxyCodeLine{00081\ }
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ Handler\ handler()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setHandler(\textcolor{keyword}{const}\ Handler\ \&handler);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1CommandCatalogue}{CommandCatalogue}}\ catalogue()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setCatalogue(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1CommandCatalogue}{CommandCatalogue}}\ \&catalogue);}
+\DoxyCodeLine{00087\ }
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ std::string\ versionString()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addVersionOption(\textcolor{keyword}{const}\ std::string\ \&version,}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\ \&tokens\ =\ \{\},}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&desc\ =\ \{\});}
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ addHelpOption(\textcolor{keywordtype}{bool}\ showHelpIfNoArg\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ global\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\ \&tokens\ =\ \{\},}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&desc\ =\ \{\});}
+\DoxyCodeLine{00096\ }
+\DoxyCodeLine{00097\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&detailed(\textcolor{keyword}{const}\ std::string\ \&detailedDescription);}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&action(\textcolor{keyword}{const}\ Handler\ \&handler);}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&catalog(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1CommandCatalogue}{CommandCatalogue}}\ \&catalogue);}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&version(\textcolor{keyword}{const}\ std::string\ \&version,}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\ \&tokens\ =\ \{\},}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&desc\ =\ \{\});}
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&help(\textcolor{keywordtype}{bool}\ showHelpIfNoArg\ =\ \textcolor{keyword}{false},\ \textcolor{keywordtype}{bool}\ global\ =\ \textcolor{keyword}{false},}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\ \&tokens\ =\ \{\},}
+\DoxyCodeLine{00106\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&desc\ =\ \{\});}
+\DoxyCodeLine{00107\ \ \ \ \ \};}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Command::addCommand(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&command)\ \{}
+\DoxyCodeLine{00110\ \ \ \ \ \ \ \ \ addCommands(\{command\});}
+\DoxyCodeLine{00111\ \ \ \ \ \}}
+\DoxyCodeLine{00112\ }
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{void}\ Command::addOption(\textcolor{keyword}{const}\ Option\ \&option,\ \textcolor{keyword}{const}\ std::string\ \&group)\ \{}
+\DoxyCodeLine{00114\ \ \ \ \ \ \ \ \ addOptions(\{option\},\ group);}
+\DoxyCodeLine{00115\ \ \ \ \ \}}
+\DoxyCodeLine{00116\ }
+\DoxyCodeLine{00117\ \ \ \ \ \textcolor{keyword}{inline}\ Command\ \&Command::detailed(\textcolor{keyword}{const}\ std::string\ \&detailedDescription)\ \{}
+\DoxyCodeLine{00118\ \ \ \ \ \ \ \ \ setDetailedDescription(detailedDescription);}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \ \ \ \ \textcolor{keyword}{inline}\ Command\ \&Command::action(\textcolor{keyword}{const}\ Command::Handler\ \&handler)\ \{}
+\DoxyCodeLine{00123\ \ \ \ \ \ \ \ \ setHandler(handler);}
+\DoxyCodeLine{00124\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00125\ \ \ \ \ \}}
+\DoxyCodeLine{00126\ }
+\DoxyCodeLine{00127\ \ \ \ \ \textcolor{keyword}{inline}\ Command\ \&Command::catalog(\textcolor{keyword}{const}\ CommandCatalogue\ \&catalogue)\ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ setCatalogue(catalogue);}
+\DoxyCodeLine{00129\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00130\ \ \ \ \ \}}
+\DoxyCodeLine{00131\ }
+\DoxyCodeLine{00132\ \ \ \ \ \textcolor{keyword}{inline}\ Command\ \&Command::version(\textcolor{keyword}{const}\ std::string\ \&version,}
+\DoxyCodeLine{00133\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\ \&tokens,}
+\DoxyCodeLine{00134\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&desc)\ \{}
+\DoxyCodeLine{00135\ \ \ \ \ \ \ \ \ addVersionOption(version,\ tokens,\ desc);}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00137\ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \textcolor{keyword}{inline}\ Command\ \&Command::help(\textcolor{keywordtype}{bool}\ showHelpIfNoArg,\ \textcolor{keywordtype}{bool}\ global,}
+\DoxyCodeLine{00140\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::vector<std::string>\ \&tokens,\ \textcolor{keyword}{const}\ std::string\ \&desc)\ \{}
+\DoxyCodeLine{00141\ \ \ \ \ \ \ \ \ addHelpOption(showHelpIfNoArg,\ global,\ tokens,\ desc);}
+\DoxyCodeLine{00142\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ *\textcolor{keyword}{this};}
+\DoxyCodeLine{00143\ \ \ \ \ \}}
+\DoxyCodeLine{00144\ }
+\DoxyCodeLine{00145\ \}}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ COMMAND\_H}}
+
+\end{DoxyCode}

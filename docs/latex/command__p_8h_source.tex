@@ -1,0 +1,57 @@
+\doxysection{command\+\_\+p.\+h}
+\hypertarget{command__p_8h_source}{}\label{command__p_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/src/command\_p.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/src/command\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ COMMAND\_P\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ COMMAND\_P\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}argument\_p.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}command.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}map\_p.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSysCmdLine_1_1CommandCataloguePrivate}{CommandCataloguePrivate}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ *clone()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00014\ }
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{StringListMapWrapper}}\ arg;}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{StringListMapWrapper}}\ opt;}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1StringListMapWrapper}{StringListMapWrapper}}\ cmd;}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ StringList\ arguments;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ StringList\ options;}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ StringList\ commands;}
+\DoxyCodeLine{00022\ \ \ \ \ \};}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSysCmdLine_1_1CommandPrivate}{CommandPrivate}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolderPrivate}{ArgumentHolderPrivate}}\ \{}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1CommandPrivate}{CommandPrivate}}(std::string\ name,\ \textcolor{keyword}{const}\ std::string\ \&desc);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ *clone()\ \textcolor{keyword}{const\ override};}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ std::string\ name;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ std::vector<Option>\ options;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ std::vector<std::string>\ optionGroupNames;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ std::vector<Command>\ commands;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \ \ \ \ std::string\ version;}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ std::string\ detailedDescription;}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1CommandCatalogue}{CommandCatalogue}}\ catalogue;}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ Command::Handler\ handler;}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#ifdef\ SYSCMDLINE\_ENABLE\_VALIDITY\_CHECK}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ checkAddedCommand(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&cmd)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ checkAddedOption(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}}\ \&opt,\ \textcolor{keyword}{const}\ std::string\ \&exclusiveGroup)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00046\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00047\ \ \ \ \ \};}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ COMMAND\_P\_H}}
+
+\end{DoxyCode}

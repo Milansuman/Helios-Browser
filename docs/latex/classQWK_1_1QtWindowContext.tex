@@ -1,0 +1,180 @@
+\doxysection{QWK\+::Qt\+Window\+Context Class Reference}
+\hypertarget{classQWK_1_1QtWindowContext}{}\label{classQWK_1_1QtWindowContext}\index{QWK::QtWindowContext@{QWK::QtWindowContext}}
+Inheritance diagram for QWK\+::Qt\+Window\+Context\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.962963cm]{classQWK_1_1QtWindowContext}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+QString \mbox{\hyperlink{classQWK_1_1QtWindowContext_a56d574f2288af9d480bbf63c662d5076}{key}} () const override
+\item 
+void \mbox{\hyperlink{classQWK_1_1QtWindowContext_a87ae63924bb126367dd0a7981fa531eb}{virtual\+\_\+hook}} (int id, void \texorpdfstring{$\ast$}{*}data) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{QWK\+::\+Abstract\+Window\+Context}}}
+\begin{DoxyCompactItemize}
+\item 
+void {\bfseries setup} (QObject \texorpdfstring{$\ast$}{*}host, \mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{Window\+Item\+Delegate}} \texorpdfstring{$\ast$}{*}delegate)
+\item 
+QObject \texorpdfstring{$\ast$}{*} {\bfseries host} () const
+\item 
+QWindow \texorpdfstring{$\ast$}{*} {\bfseries window} () const
+\item 
+WId {\bfseries window\+Id} () const
+\item 
+\mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{Window\+Item\+Delegate}} \texorpdfstring{$\ast$}{*} {\bfseries delegate} () const
+\item 
+bool {\bfseries is\+Hit\+Test\+Visible} (const QObject \texorpdfstring{$\ast$}{*}obj) const
+\item 
+bool {\bfseries set\+Hit\+Test\+Visible} (const QObject \texorpdfstring{$\ast$}{*}obj, bool visible)
+\item 
+QObject \texorpdfstring{$\ast$}{*} {\bfseries system\+Button} (Window\+Agent\+Base\+::\+System\+Button button) const
+\item 
+bool {\bfseries set\+System\+Button} (Window\+Agent\+Base\+::\+System\+Button button, QObject \texorpdfstring{$\ast$}{*}obj)
+\item 
+QObject \texorpdfstring{$\ast$}{*} {\bfseries title\+Bar} () const
+\item 
+bool {\bfseries set\+Title\+Bar} (QObject \texorpdfstring{$\ast$}{*}obj)
+\item 
+bool {\bfseries is\+In\+System\+Buttons} (const QPoint \&pos, Window\+Agent\+Base\+::\+System\+Button \texorpdfstring{$\ast$}{*}button) const
+\item 
+bool {\bfseries is\+In\+Title\+Bar\+Draggable\+Area} (const QPoint \&pos) const
+\item 
+bool {\bfseries is\+Host\+Width\+Fixed} () const
+\item 
+bool {\bfseries is\+Host\+Height\+Fixed} () const
+\item 
+bool {\bfseries is\+Host\+Size\+Fixed} () const
+\item 
+void {\bfseries show\+System\+Menu} (const QPoint \&pos)
+\item 
+void {\bfseries notify\+Win\+Id\+Change} ()
+\item 
+virtual QVariant {\bfseries window\+Attribute} (const QString \&key) const
+\item 
+virtual bool {\bfseries set\+Window\+Attribute} (const QString \&key, const QVariant \&attribute)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classQWK_1_1NativeEventDispatcher}{QWK\+::\+Native\+Event\+Dispatcher}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool {\bfseries native\+Dispatch} (const QByte\+Array \&event\+Type, void \texorpdfstring{$\ast$}{*}message, QT\+\_\+\+NATIVE\+\_\+\+EVENT\+\_\+\+RESULT\+\_\+\+TYPE \texorpdfstring{$\ast$}{*}result)
+\item 
+void {\bfseries install\+Native\+Event\+Filter} (\mbox{\hyperlink{classQWK_1_1NativeEventFilter}{Native\+Event\+Filter}} \texorpdfstring{$\ast$}{*}filter)
+\item 
+void {\bfseries remove\+Native\+Event\+Filter} (\mbox{\hyperlink{classQWK_1_1NativeEventFilter}{Native\+Event\+Filter}} \texorpdfstring{$\ast$}{*}filter)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{QWK\+::\+Shared\+Event\+Dispatcher}}}
+\begin{DoxyCompactItemize}
+\item 
+virtual bool {\bfseries shared\+Dispatch} (QObject \texorpdfstring{$\ast$}{*}obj, QEvent \texorpdfstring{$\ast$}{*}event)
+\item 
+void {\bfseries install\+Shared\+Event\+Filter} (\mbox{\hyperlink{classQWK_1_1SharedEventFilter}{Shared\+Event\+Filter}} \texorpdfstring{$\ast$}{*}filter)
+\item 
+void {\bfseries remove\+Shared\+Event\+Filter} (\mbox{\hyperlink{classQWK_1_1SharedEventFilter}{Shared\+Event\+Filter}} \texorpdfstring{$\ast$}{*}filter)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classQWK_1_1QtWindowContext_a2b3a0fe4ec0eb81a53a8ff1934b86d7e}{win\+Id\+Changed}} (WId win\+Id, WId old\+Win\+Id) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{QWK\+::\+Abstract\+Window\+Context}}}
+\begin{DoxyCompactItemize}
+\item 
+bool {\bfseries event\+Filter} (QObject \texorpdfstring{$\ast$}{*}obj, QEvent \texorpdfstring{$\ast$}{*}event) override
+\item 
+virtual bool {\bfseries window\+Attribute\+Changed} (const QString \&key, const QVariant \&attribute, const QVariant \&old\+Attribute)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1QtWindowContext_a31881dcb809908e087fba1928e89e374}\label{classQWK_1_1QtWindowContext_a31881dcb809908e087fba1928e89e374} 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classQWK_1_1SharedEventFilter}{Shared\+Event\+Filter}} $>$ {\bfseries qt\+Window\+Event\+Filter}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{QWK\+::\+Abstract\+Window\+Context}}}
+\begin{DoxyCompactItemize}
+\item 
+QObject \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+host} \{\}
+\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{Window\+Item\+Delegate}} $>$ {\bfseries m\+\_\+delegate}
+\item 
+QPointer$<$ QWindow $>$ {\bfseries m\+\_\+window\+Handle}
+\item 
+WId {\bfseries m\+\_\+window\+Id} \{\}
+\item 
+QSet$<$ const QObject \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+\_\+hit\+Test\+Visible\+Items}
+\item 
+QObject \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+title\+Bar} \{\}
+\item 
+std\+::array$<$ QObject \texorpdfstring{$\ast$}{*}, Window\+Agent\+Base\+::\+Close+1 $>$ {\bfseries m\+\_\+system\+Buttons} \{\}
+\item 
+QVariant\+Hash {\bfseries m\+\_\+window\+Attributes}
+\item 
+std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classQWK_1_1WinIdChangeEventFilter}{Win\+Id\+Change\+Event\+Filter}} $>$ {\bfseries m\+\_\+win\+Id\+Change\+Event\+Filter}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classQWK_1_1NativeEventDispatcher}{QWK\+::\+Native\+Event\+Dispatcher}}}
+\begin{DoxyCompactItemize}
+\item 
+QVector$<$ \mbox{\hyperlink{classQWK_1_1NativeEventFilter}{Native\+Event\+Filter}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+\_\+native\+Event\+Filters}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{QWK\+::\+Shared\+Event\+Dispatcher}}}
+\begin{DoxyCompactItemize}
+\item 
+QVector$<$ \mbox{\hyperlink{classQWK_1_1SharedEventFilter}{Shared\+Event\+Filter}} \texorpdfstring{$\ast$}{*} $>$ {\bfseries m\+\_\+shared\+Event\+Filters}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{QWK\+::\+Abstract\+Window\+Context}}}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1AbstractWindowContext_a54e3d90efe0e74969dba4531e79055ae}\label{classQWK_1_1AbstractWindowContext_a54e3d90efe0e74969dba4531e79055ae} 
+enum {\bfseries Window\+Context\+Hook} \{ \newline
+{\bfseries Centralize\+Hook} = 1
+, {\bfseries Raise\+Window\+Hook}
+, {\bfseries Show\+System\+Menu\+Hook}
+, {\bfseries Default\+Colors\+Hook}
+, \newline
+{\bfseries Draw\+Windows10\+Border\+Hook}
+, {\bfseries Draw\+Windows10\+Border\+Hook2}
+, {\bfseries System\+Button\+Area\+Changed\+Hook}
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classQWK_1_1QtWindowContext_a56d574f2288af9d480bbf63c662d5076}\index{QWK::QtWindowContext@{QWK::QtWindowContext}!key@{key}}
+\index{key@{key}!QWK::QtWindowContext@{QWK::QtWindowContext}}
+\doxysubsubsection{\texorpdfstring{key()}{key()}}
+{\footnotesize\ttfamily \label{classQWK_1_1QtWindowContext_a56d574f2288af9d480bbf63c662d5076} 
+QString QWK\+::\+Qt\+Window\+Context\+::key (\begin{DoxyParamCaption}{}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{QWK\+::\+Abstract\+Window\+Context}}.
+
+\Hypertarget{classQWK_1_1QtWindowContext_a87ae63924bb126367dd0a7981fa531eb}\index{QWK::QtWindowContext@{QWK::QtWindowContext}!virtual\_hook@{virtual\_hook}}
+\index{virtual\_hook@{virtual\_hook}!QWK::QtWindowContext@{QWK::QtWindowContext}}
+\doxysubsubsection{\texorpdfstring{virtual\_hook()}{virtual\_hook()}}
+{\footnotesize\ttfamily \label{classQWK_1_1QtWindowContext_a87ae63924bb126367dd0a7981fa531eb} 
+void QWK\+::\+Qt\+Window\+Context\+::virtual\+\_\+hook (\begin{DoxyParamCaption}\item[{int}]{id}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{data}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+
+
+Reimplemented from \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{QWK\+::\+Abstract\+Window\+Context}}.
+
+\Hypertarget{classQWK_1_1QtWindowContext_a2b3a0fe4ec0eb81a53a8ff1934b86d7e}\index{QWK::QtWindowContext@{QWK::QtWindowContext}!winIdChanged@{winIdChanged}}
+\index{winIdChanged@{winIdChanged}!QWK::QtWindowContext@{QWK::QtWindowContext}}
+\doxysubsubsection{\texorpdfstring{winIdChanged()}{winIdChanged()}}
+{\footnotesize\ttfamily \label{classQWK_1_1QtWindowContext_a2b3a0fe4ec0eb81a53a8ff1934b86d7e} 
+void QWK\+::\+Qt\+Window\+Context\+::win\+Id\+Changed (\begin{DoxyParamCaption}\item[{WId}]{win\+Id}{, }\item[{WId}]{old\+Win\+Id}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{QWK\+::\+Abstract\+Window\+Context}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/qwindowkit/src/core/contexts/qtwindowcontext\+\_\+p.\+h\item 
+third\+\_\+party/qwindowkit/src/core/contexts/qtwindowcontext.\+cpp\end{DoxyCompactItemize}

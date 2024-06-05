@@ -1,0 +1,56 @@
+\doxysection{windowbutton.\+h}
+\hypertarget{windowbutton_8h_source}{}\label{windowbutton_8h_source}\index{third\_party/qwindowkit/examples/shared/widgetframe/windowbutton.h@{third\_party/qwindowkit/examples/shared/widgetframe/windowbutton.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ WINDOWBUTTON\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ WINDOWBUTTON\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QtWidgets/QPushButton>}}
+\DoxyCodeLine{00009\ }
+\DoxyCodeLine{00010\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00011\ }
+\DoxyCodeLine{00012\ \ \ \ \ \textcolor{keyword}{class\ }WindowButtonPrivate;}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQWK_1_1WindowButton}{WindowButton}}\ :\ \textcolor{keyword}{public}\ QPushButton\ \{}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00016\ \ \ \ \ \ \ \ \ Q\_DECLARE\_PRIVATE(\mbox{\hyperlink{classQWK_1_1WindowButton}{WindowButton}})}
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ Q\_PROPERTY(QIcon\ iconNormal\ READ\ iconNormal\ WRITE\ setIconNormal\ FINAL)}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ Q\_PROPERTY(QIcon\ iconChecked\ READ\ iconChecked\ WRITE\ setIconChecked\ FINAL)}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ Q\_PROPERTY(QIcon\ iconDisabled\ READ\ iconDisabled\ WRITE\ setIconDisabled\ FINAL)}
+\DoxyCodeLine{00020\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00021\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classQWK_1_1WindowButton}{WindowButton}}(QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1WindowButton}{\string~WindowButton}}();}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00025\ \ \ \ \ \ \ \ \ QIcon\ iconNormal()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setIconNormal(\textcolor{keyword}{const}\ QIcon\ \&icon);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ QIcon\ iconChecked()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setIconChecked(\textcolor{keyword}{const}\ QIcon\ \&icon);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ QIcon\ iconDisabled()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setIconDisabled(\textcolor{keyword}{const}\ QIcon\ \&icon);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \ \ \ \ Q\_SIGNALS:}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ doubleClicked();}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ checkStateSet()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ mouseDoubleClickEvent(QMouseEvent\ *event)\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1WindowButton}{WindowButton}}(\mbox{\hyperlink{classQWK_1_1WindowButtonPrivate}{WindowButtonPrivate}}\ \&d,\ QWidget\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ QScopedPointer<WindowButtonPrivate>\ d\_ptr;}
+\DoxyCodeLine{00046\ \ \ \ \ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \}}
+\DoxyCodeLine{00049\ }
+\DoxyCodeLine{00050\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ WINDOWBUTTON\_H}}
+
+\end{DoxyCode}

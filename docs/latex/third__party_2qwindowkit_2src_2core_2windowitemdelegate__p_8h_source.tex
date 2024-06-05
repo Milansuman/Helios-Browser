@@ -1,0 +1,71 @@
+\doxysection{windowitemdelegate\+\_\+p.\+h}
+\hypertarget{third__party_2qwindowkit_2src_2core_2windowitemdelegate__p_8h_source}{}\label{third__party_2qwindowkit_2src_2core_2windowitemdelegate__p_8h_source}\index{third\_party/qwindowkit/src/core/windowitemdelegate\_p.h@{third\_party/qwindowkit/src/core/windowitemdelegate\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ WINDOWITEMDELEGATE\_P\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ WINDOWITEMDELEGATE\_P\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ \ W\ A\ R\ N\ I\ N\ G\ !!!}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ This\ file\ is\ not\ part\ of\ the\ QWindowKit\ API.\ It\ is\ used\ purely\ as\ an}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ implementation\ detail.\ This\ header\ file\ may\ change\ from\ version\ to}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ version\ without\ notice,\ or\ may\ even\ be\ removed.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QtCore/QObject>}}
+\DoxyCodeLine{00018\ \textcolor{preprocessor}{\#include\ <QtCore/QPoint>}}
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QtGui/QWindow>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#include\ <QWKCore/private/winidchangeeventfilter\_p.h>}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#include\ <QWKCore/qwkglobal.h>}}
+\DoxyCodeLine{00023\ }
+\DoxyCodeLine{00024\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keyword}{class\ }QWK\_CORE\_EXPORT\ \mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{WindowItemDelegate}}\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{WindowItemDelegate}}();}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{\string~WindowItemDelegate}}();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Item\ property\ query}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ QWindow\ *window(\textcolor{keyword}{const}\ QObject\ *obj)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isEnabled(\textcolor{keyword}{const}\ QObject\ *obj)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isVisible(\textcolor{keyword}{const}\ QObject\ *obj)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ QRect\ mapGeometryToScene(\textcolor{keyword}{const}\ QObject\ *obj)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Host\ property\ query}}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ QWindow\ *hostWindow(\textcolor{keyword}{const}\ QObject\ *host)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{bool}\ isWindowActive(\textcolor{keyword}{const}\ QObject\ *host)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ Qt::WindowStates\ getWindowState(\textcolor{keyword}{const}\ QObject\ *host)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ Qt::WindowFlags\ getWindowFlags(\textcolor{keyword}{const}\ QObject\ *host)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ QRect\ getGeometry(\textcolor{keyword}{const}\ QObject\ *host)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00044\ }
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Callbacks}}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ resetQtGrabbedControl(QObject\ *host)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setWindowState(QObject\ *host,\ Qt::WindowStates\ state)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setCursorShape(QObject\ *host,\ Qt::CursorShape\ shape)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ restoreCursorShape(QObject\ *host)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setWindowFlags(QObject\ *host,\ Qt::WindowFlags\ flags)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setWindowVisible(QObject\ *host,\ \textcolor{keywordtype}{bool}\ visible)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ setGeometry(QObject\ *host,\ \textcolor{keyword}{const}\ QRect\ \&rect)\ =\ 0;}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ bringWindowToTop(QObject\ *host)\ \textcolor{keyword}{const}\ =\ 0;}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Factories}}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ \mbox{\hyperlink{classQWK_1_1WinIdChangeEventFilter}{WinIdChangeEventFilter}}\ *}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ createWinIdEventFilter(QObject\ *host,\ \mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{AbstractWindowContext}}\ *context)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ Q\_DISABLE\_COPY(\mbox{\hyperlink{classQWK_1_1WindowItemDelegate}{WindowItemDelegate}})}
+\DoxyCodeLine{00061\ \ \ \ \ \};}
+\DoxyCodeLine{00062\ }
+\DoxyCodeLine{00063\ \}}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ WINDOWITEMDELEGATE\_P\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,130 @@
+\doxysection{parser.\+h}
+\hypertarget{parser_8h_source}{}\label{parser_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/parser.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/parser.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/****************************************************************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ MIT\ License}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2023\ SineStriker}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ ****************************************************************************/}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#ifndef\ PARSER\_H}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ PARSER\_H}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <syscmdline/parseresult.h>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <syscmdline/helplayout.h>}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \textcolor{keyword}{class\ }ParserPrivate;}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{class\ }SYSCMDLINE\_EXPORT\ \mbox{\hyperlink{classSysCmdLine_1_1Parser}{Parser}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{SharedBase}}\ \{}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ SYSCMDLINE\_DECL\_PRIVATE(\mbox{\hyperlink{classSysCmdLine_1_1Parser}{Parser}})}
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Parser}{Parser}}();}
+\DoxyCodeLine{00041\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Parser}{Parser}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&rootCommand);}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ ParseOption\ \{}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ Standard\ =\ 0,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \ \ \ \ IgnoreCommandCase\ =\ 0x1,}
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \ \ \ \ IgnoreOptionCase\ =\ 0x2,}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ AllowUnixGroupFlags\ =\ 0x4,}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ AllowDosShortOptions\ =\ 0x8,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ DontAllowUnixShortOptions\ =\ 0x10,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00052\ }
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ DisplayOption\ \{}
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \ \ \ \ Normal\ =\ 0,}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ DontShowHelpOnError\ =\ 0x1,}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ DontShowIntroOnError\ =\ 0x2,}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ SkipCorrection\ =\ 0x4,}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ ShowArgumentDefaultValue\ =\ 0x8,}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \ \ \ \ ShowArgumentExpectedValues\ =\ 0x10,}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \ \ \ \ ShowArgumentIsRequired\ =\ 0x20,}
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \ \ \ \ ShowOptionIsRequired\ =\ 0x40,}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \ \ \ \ AlignAllCatalogues\ =\ 0x80,}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ \ \ \ \ DontShowRequiredOptionsOnUsage\ =\ 0x100,}
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \ \ \ \ ShowOptionalOptionsOnUsage\ =\ 0x200,}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \ \ \ \ ShowOptionsBehindArguments\ =\ 0x400,}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \ \ \ \ ShowOptionsHintFront\ =\ 0x800,}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00068\ }
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ std::string\ prologue()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setPrologue(\textcolor{keyword}{const}\ std::string\ \&prologue);}
+\DoxyCodeLine{00071\ }
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ std::string\ epilogue()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00073\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setEpilogue(\textcolor{keyword}{const}\ std::string\ \&epilogue);}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ displayOptions()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setDisplayOptions(\textcolor{keywordtype}{int}\ displayOptions);}
+\DoxyCodeLine{00077\ }
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ rootCommand()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setRootCommand(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ \&rootCommand);}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1ParseResult}{ParseResult}}\ parse(\textcolor{keyword}{const}\ std::vector<std::string>\ \&args,\ \textcolor{keywordtype}{int}\ parseOptions\ =\ Standard);}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ invoke(\textcolor{keyword}{const}\ std::vector<std::string>\ \&args,\ \textcolor{keywordtype}{int}\ errCode\ =\ -\/1,}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ parseOptions\ =\ Standard);}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ Don't\ use\ this\ pair\ of\ API\ on\ Windows\ because\ the\ arguemnts\ passed\ by\ \`{}main`}}
+\DoxyCodeLine{00086\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ entry\ is\ in\ ANSI\ encoding,\ but\ the\ library\ uses\ UTF-\/8.}}
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \mbox{\hyperlink{classSysCmdLine_1_1ParseResult}{ParseResult}}\ parse(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv,\ \textcolor{keywordtype}{int}\ parseOptions\ =\ Standard);}
+\DoxyCodeLine{00088\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ invoke(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv,\ \textcolor{keywordtype}{int}\ errCode\ =\ -\/1,\ \textcolor{keywordtype}{int}\ parseOptions\ =\ Standard);}
+\DoxyCodeLine{00089\ }
+\DoxyCodeLine{00090\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1HelpLayout}{HelpLayout}}\ helpLayout()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00092\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setHelpLayout(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1HelpLayout}{HelpLayout}}\ \&helpLayout);}
+\DoxyCodeLine{00093\ }
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }TextProvider\ =\ std::string\ (*)(\textcolor{keywordtype}{int}\ \textcolor{comment}{/*\ category\ */},\ \textcolor{keywordtype}{int}\ \textcolor{comment}{/*\ index\ */});}
+\DoxyCodeLine{00095\ }
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ SizeType\ \{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ ST\_Indent,}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \ \ \ \ ST\_Spacing,}
+\DoxyCodeLine{00099\ \ \ \ \ \ \ \ \ \ \ \ \ ST\_ConsoleWidth,}
+\DoxyCodeLine{00100\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00101\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ size(SizeType\ sizeType)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setSize(SizeType\ sizeType,\ \textcolor{keywordtype}{int}\ value);}
+\DoxyCodeLine{00103\ }
+\DoxyCodeLine{00104\ \ \ \ \ \ \ \ \ TextProvider\ textProvider();}
+\DoxyCodeLine{00105\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setTextProvider(TextProvider\ textProvider);}
+\DoxyCodeLine{00106\ }
+\DoxyCodeLine{00107\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ TextProvider\ defaultTextProvider();}
+\DoxyCodeLine{00108\ \ \ \ \ \};}
+\DoxyCodeLine{00109\ }
+\DoxyCodeLine{00110\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Parser::invoke(\textcolor{keyword}{const}\ std::vector<std::string>\ \&args,\ \textcolor{keywordtype}{int}\ errCode,\ \textcolor{keywordtype}{int}\ parseOptions)\ \{}
+\DoxyCodeLine{00111\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parse(args,\ parseOptions).invoke(errCode);}
+\DoxyCodeLine{00112\ \ \ \ \ \}}
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \ \ \ \ \textcolor{keyword}{inline}\ ParseResult\ Parser::parse(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv,\ \textcolor{keywordtype}{int}\ parseOptions)\ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parse(\{argv,\ argv\ +\ argc\},\ parseOptions);}
+\DoxyCodeLine{00116\ \ \ \ \ \}}
+\DoxyCodeLine{00117\ }
+\DoxyCodeLine{00118\ \ \ \ \ \textcolor{keyword}{inline}\ \textcolor{keywordtype}{int}\ Parser::invoke(\textcolor{keywordtype}{int}\ argc,\ \textcolor{keywordtype}{char}\ **argv,\ \textcolor{keywordtype}{int}\ errCode,\ \textcolor{keywordtype}{int}\ parseOptions)\ \{}
+\DoxyCodeLine{00119\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ parse(\{argv,\ argv\ +\ argc\},\ parseOptions).invoke(errCode);}
+\DoxyCodeLine{00120\ \ \ \ \ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \}}
+\DoxyCodeLine{00123\ }
+\DoxyCodeLine{00124\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ PARSER\_H}}
+
+\end{DoxyCode}

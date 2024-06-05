@@ -1,0 +1,243 @@
+\doxysection{Sys\+Cmd\+Line\+::Option Class Reference}
+\hypertarget{classSysCmdLine_1_1Option}{}\label{classSysCmdLine_1_1Option}\index{SysCmdLine::Option@{SysCmdLine::Option}}
+Inheritance diagram for Sys\+Cmd\+Line\+::Option\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=4.000000cm]{classSysCmdLine_1_1Option}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ad297924fbae24cdc097cc3035fa0cf25}\label{classSysCmdLine_1_1Option_ad297924fbae24cdc097cc3035fa0cf25} 
+enum {\bfseries Role} \{ \newline
+{\bfseries No\+Role}
+, {\bfseries Debug}
+, {\bfseries Verbose}
+, {\bfseries Version}
+, \newline
+{\bfseries Help}
+ \}
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a641a6e19f4bae8afc89176155556b49f}\label{classSysCmdLine_1_1Option_a641a6e19f4bae8afc89176155556b49f} 
+enum {\bfseries Prior\+Level} \{ \newline
+{\bfseries No\+Prior}
+, {\bfseries Ignore\+Missing\+Arguments}
+, {\bfseries Ignore\+Missing\+Symbols}
+, {\bfseries Auto\+Set\+When\+No\+Symbols}
+, \newline
+{\bfseries Exclusive\+To\+Arguments}
+, {\bfseries Exclusive\+To\+Options}
+, {\bfseries Exclusive\+To\+All}
+ \}
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_abeaf01b3edc7971fc545bef5b40f39ea}\label{classSysCmdLine_1_1Option_abeaf01b3edc7971fc545bef5b40f39ea} 
+enum {\bfseries Short\+Match\+Rule} \{ {\bfseries No\+Short\+Match}
+, {\bfseries Short\+Match\+Single\+Letter}
+, {\bfseries Short\+Match\+Single\+Char}
+, {\bfseries Short\+Match\+All}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{classSysCmdLine_1_1Symbol}{Sys\+Cmd\+Line\+::\+Symbol}}}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Symbol_af4e1a2914c08b1c88286862cd7483cb3}\label{classSysCmdLine_1_1Symbol_af4e1a2914c08b1c88286862cd7483cb3} 
+enum {\bfseries Symbol\+Type} \{ {\bfseries ST\+\_\+\+Command}
+, {\bfseries ST\+\_\+\+Option}
+, {\bfseries ST\+\_\+\+Argument}
+ \}
+\item 
+\Hypertarget{classSysCmdLine_1_1Symbol_a16939faec017dd7b3b99343481c3c484}\label{classSysCmdLine_1_1Symbol_a16939faec017dd7b3b99343481c3c484} 
+enum {\bfseries Help\+Position} \{ {\bfseries HP\+\_\+\+Usage}
+, {\bfseries HP\+\_\+\+Error\+Text}
+, {\bfseries HP\+\_\+\+First\+Column}
+, {\bfseries HP\+\_\+\+Second\+Column}
+ \}
+\item 
+using \mbox{\hyperlink{classSysCmdLine_1_1Symbol_a3e45ad5adb189cd48e41f38691556bb6}{Help\+Provider}}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_abcc6f1f5866421d2e92f72b128589422}\label{classSysCmdLine_1_1Option_abcc6f1f5866421d2e92f72b128589422} 
+{\bfseries Option} (Role role, const std\+::vector$<$ std\+::string $>$ \&tokens=\{\}, const std\+::string \&desc=\{\})
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ade2abb87347a997c9aba750db3f16208}\label{classSysCmdLine_1_1Option_ade2abb87347a997c9aba750db3f16208} 
+{\bfseries Option} (const std\+::string \&token, const std\+::string \&desc=\{\}, const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&arg=\{\}, bool required=false)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a735b29caf841009f440a411366bd7c16}\label{classSysCmdLine_1_1Option_a735b29caf841009f440a411366bd7c16} 
+{\bfseries Option} (const std\+::vector$<$ std\+::string $>$ \&tokens, const std\+::string \&desc=\{\}, const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&arg=\{\}, bool required=false)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a6172484652251f1174509bbcd4d5045f}\label{classSysCmdLine_1_1Option_a6172484652251f1174509bbcd4d5045f} 
+{\bfseries Option} (std\+::initializer\+\_\+list$<$ std\+::string $>$ tokens, const std\+::string \&desc=\{\}, const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&arg=\{\}, bool required=false)
+\item 
+std\+::string \mbox{\hyperlink{classSysCmdLine_1_1Option_aca7b54b0852540b5e38f3b09704af4df}{help\+Text}} (Help\+Position pos, int display\+Options, void \texorpdfstring{$\ast$}{*}extra) const override
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_afaaecb4d4a49083f07d767a0af82e245}\label{classSysCmdLine_1_1Option_afaaecb4d4a49083f07d767a0af82e245} 
+Role {\bfseries role} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a4d09e668fa3f38b04dd6c38cc43b76ba}\label{classSysCmdLine_1_1Option_a4d09e668fa3f38b04dd6c38cc43b76ba} 
+void {\bfseries set\+Role} (Role role)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_af373539b744e4d23e80d3597f21d0323}\label{classSysCmdLine_1_1Option_af373539b744e4d23e80d3597f21d0323} 
+const std\+::vector$<$ std\+::string $>$ \& {\bfseries tokens} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a4446a342037c46f8e2c9a24e58bb60a9}\label{classSysCmdLine_1_1Option_a4446a342037c46f8e2c9a24e58bb60a9} 
+std\+::string {\bfseries token} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a0f9642392a2dd566d8c7c8786cb49a5a}\label{classSysCmdLine_1_1Option_a0f9642392a2dd566d8c7c8786cb49a5a} 
+void {\bfseries set\+Tokens} (const std\+::vector$<$ std\+::string $>$ \&tokens)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a33026605f1503635470c9b42b1848ad6}\label{classSysCmdLine_1_1Option_a33026605f1503635470c9b42b1848ad6} 
+void {\bfseries set\+Token} (const std\+::string \&token)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ad4a6d3ec0f2cfb5a5736b7e6d7403b5a}\label{classSysCmdLine_1_1Option_ad4a6d3ec0f2cfb5a5736b7e6d7403b5a} 
+bool {\bfseries is\+Required} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ae6d48193f3fd17479718602991388b21}\label{classSysCmdLine_1_1Option_ae6d48193f3fd17479718602991388b21} 
+void {\bfseries set\+Required} (bool required)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_af3a651d608c4a940605005efe015b489}\label{classSysCmdLine_1_1Option_af3a651d608c4a940605005efe015b489} 
+bool {\bfseries is\+Optional} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a03a8c22f8faa24e17512661d70a10418}\label{classSysCmdLine_1_1Option_a03a8c22f8faa24e17512661d70a10418} 
+void {\bfseries set\+Optional} (bool optional)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ab3d0843c2a84479f585855a4a2e1a467}\label{classSysCmdLine_1_1Option_ab3d0843c2a84479f585855a4a2e1a467} 
+Short\+Match\+Rule {\bfseries short\+Match\+Rule} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a0952494fb1124b2cd1477d522d76be98}\label{classSysCmdLine_1_1Option_a0952494fb1124b2cd1477d522d76be98} 
+void {\bfseries set\+Short\+Match\+Rule} (Short\+Match\+Rule short\+Match\+Rule)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a14c2cd9297475d4e06ed9353b476db61}\label{classSysCmdLine_1_1Option_a14c2cd9297475d4e06ed9353b476db61} 
+Prior\+Level {\bfseries prior\+Level} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a7523a4746f4fce6407a3b6fb1e57180a}\label{classSysCmdLine_1_1Option_a7523a4746f4fce6407a3b6fb1e57180a} 
+void {\bfseries set\+Prior\+Level} (Prior\+Level prior\+Level)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a5541d2c5263bd65f2e4b19ca5884f488}\label{classSysCmdLine_1_1Option_a5541d2c5263bd65f2e4b19ca5884f488} 
+bool {\bfseries is\+Global} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a19f4df25d93c7b2cb8292c5e3186385b}\label{classSysCmdLine_1_1Option_a19f4df25d93c7b2cb8292c5e3186385b} 
+void {\bfseries set\+Global} (bool on)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_aa47a7741196d79b2a51e8219e4324ea4}\label{classSysCmdLine_1_1Option_aa47a7741196d79b2a51e8219e4324ea4} 
+int {\bfseries max\+Occurrence} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a6b5f7ceed5cf458c020fa52ecb0b29c7}\label{classSysCmdLine_1_1Option_a6b5f7ceed5cf458c020fa52ecb0b29c7} 
+void {\bfseries set\+Max\+Occurrence} (int max)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ac07ec656a102c9a38950ba074a2bef12}\label{classSysCmdLine_1_1Option_ac07ec656a102c9a38950ba074a2bef12} 
+void {\bfseries set\+Unlimited\+Occurrence} ()
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a32df2be7ce49c8dcaac04a38d4b44572}\label{classSysCmdLine_1_1Option_a32df2be7ce49c8dcaac04a38d4b44572} 
+\mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \& {\bfseries arg} (const std\+::string \&name, bool required=true, const \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \&default\+Value=\{\})
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a2ebed3d1181a60a89d2c4577ae92597e}\label{classSysCmdLine_1_1Option_a2ebed3d1181a60a89d2c4577ae92597e} 
+\mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \& {\bfseries arg} (const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&arg)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a4df0641408a3822176142e657468c9e0}\label{classSysCmdLine_1_1Option_a4df0641408a3822176142e657468c9e0} 
+\mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \& {\bfseries required} (bool required=true)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ae26c0d2f9d9bccca1d2156ca9ddc2564}\label{classSysCmdLine_1_1Option_ae26c0d2f9d9bccca1d2156ca9ddc2564} 
+\mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \& {\bfseries short\+\_\+match} (Short\+Match\+Rule short\+Match\+Rule=Short\+Match\+All)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_a6270a9e8f3dce6b4d5ee3f701cff484b}\label{classSysCmdLine_1_1Option_a6270a9e8f3dce6b4d5ee3f701cff484b} 
+\mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \& {\bfseries prior} (Prior\+Level prior\+Level)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_abacd44eb094c9ccecbb457a896e01dd5}\label{classSysCmdLine_1_1Option_abacd44eb094c9ccecbb457a896e01dd5} 
+\mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \& {\bfseries global} (bool global=true)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_ab38a5ce6b2d4dfc64500b35e6236d356}\label{classSysCmdLine_1_1Option_ab38a5ce6b2d4dfc64500b35e6236d356} 
+\mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}} \& {\bfseries multi} (int max\+Occurrence=0)
+\item 
+\Hypertarget{classSysCmdLine_1_1Option_addcfc23e7bc947f067371fd358594f8e}\label{classSysCmdLine_1_1Option_addcfc23e7bc947f067371fd358594f8e} 
+std\+::string {\bfseries help\+Text} (Help\+Position pos, int display\+Options) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolder}{Sys\+Cmd\+Line\+::\+Argument\+Holder}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string {\bfseries displayed\+Arguments} (int display\+Options) const
+\item 
+int {\bfseries argument\+Count} () const
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} {\bfseries argument} (int index) const
+\item 
+void {\bfseries add\+Argument} (const \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} \&argument)
+\item 
+void {\bfseries add\+Arguments} (const std\+::vector$<$ \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}} $>$ \&arguments)
+\item 
+std\+::string {\bfseries help\+Text} (Help\+Position pos, int display\+Options) const
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1Symbol}{Sys\+Cmd\+Line\+::\+Symbol}}}
+\begin{DoxyCompactItemize}
+\item 
+std\+::string {\bfseries help\+Text} (Help\+Position pos, int display\+Options) const
+\item 
+Symbol\+Type \mbox{\hyperlink{classSysCmdLine_1_1Symbol_a33ce25e6209259328d951962f5c27ae4}{type}} () const
+\item 
+std\+::string \mbox{\hyperlink{classSysCmdLine_1_1Symbol_ae0426f63c9e003664a5ee91176e529f5}{description}} () const
+\item 
+void \mbox{\hyperlink{classSysCmdLine_1_1Symbol_ac7f261f542359c9fef9f1af24cc09de2}{set\+Description}} (const std\+::string \&desc)
+\item 
+Help\+Provider \mbox{\hyperlink{classSysCmdLine_1_1Symbol_a5a6574b6b6d332e8fb92b3508f70ddee}{help\+Provider}} () const
+\item 
+void \mbox{\hyperlink{classSysCmdLine_1_1Symbol_ad8e43a97fbc098f4a12c58a6485fa6f2}{set\+Help\+Provider}} (const Help\+Provider \&\mbox{\hyperlink{classSysCmdLine_1_1Symbol_a5a6574b6b6d332e8fb92b3508f70ddee}{help\+Provider}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Shared\+Base} (const \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other)
+\item 
+{\bfseries Shared\+Base} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&\&other) noexcept
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \& {\bfseries operator=} (const \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other)
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \& {\bfseries operator=} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&\&other) noexcept
+\item 
+void {\bfseries swap} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Shared\+Base}} \&other) noexcept
+\item 
+bool {\bfseries is\+Detached} () const
+\item 
+void {\bfseries detach} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolder}{Sys\+Cmd\+Line\+::\+Argument\+Holder}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Argument\+Holder} (\mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolderPrivate}{Argument\+Holder\+Private}} \texorpdfstring{$\ast$}{*}d)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1Symbol}{Sys\+Cmd\+Line\+::\+Symbol}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Symbol} (\mbox{\hyperlink{classSysCmdLine_1_1SymbolPrivate}{Symbol\+Private}} \texorpdfstring{$\ast$}{*}d)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Shared\+Base} (\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{Shared\+Base\+Private}} \texorpdfstring{$\ast$}{*}d)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{Sys\+Cmd\+Line\+::\+Shared\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{Shared\+Base\+Private}} \texorpdfstring{$\ast$}{*} {\bfseries d\+\_\+ptr}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classSysCmdLine_1_1Option_aca7b54b0852540b5e38f3b09704af4df}\index{SysCmdLine::Option@{SysCmdLine::Option}!helpText@{helpText}}
+\index{helpText@{helpText}!SysCmdLine::Option@{SysCmdLine::Option}}
+\doxysubsubsection{\texorpdfstring{helpText()}{helpText()}}
+{\footnotesize\ttfamily \label{classSysCmdLine_1_1Option_aca7b54b0852540b5e38f3b09704af4df} 
+std\+::string Sys\+Cmd\+Line\+::\+Option\+::help\+Text (\begin{DoxyParamCaption}\item[{Symbol\+::\+Help\+Position}]{pos}{, }\item[{int}]{display\+Options}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{extra}{}\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [virtual]}}
+
+Returns the help text at given position with given display options. 
+
+Reimplemented from \mbox{\hyperlink{classSysCmdLine_1_1ArgumentHolder_ab8dd2fa09938735d0679122d3fcda48d}{Sys\+Cmd\+Line\+::\+Argument\+Holder}}.
+
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/option.\+h\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/src/option.\+cpp\end{DoxyCompactItemize}
