@@ -45,6 +45,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->windowButtonsLayout->addWidget(this->maximize);
     this->windowButtonsLayout->addWidget(this->close);
 
+    this->tabTitleBarLayout->addStretch();
     this->tabTitleBarLayout->addLayout(this->windowButtonsLayout);
 }
 

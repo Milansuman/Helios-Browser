@@ -1,5 +1,5 @@
 set(SOURCES ${SOURCES}
-    src/windows/Win32MainWindow.h
-    src/windows/Win32MainWindow.cpp
+    src/windows/BrowserWindow.h
+    src/windows/BrowserWindow.cpp
     PARENT_SCOPE
 )
