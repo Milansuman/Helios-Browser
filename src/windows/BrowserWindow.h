@@ -14,7 +14,9 @@ private:
     QVBoxLayout *layout;
     QWidget *centralWidget;
     bool isMaximized;
-
+#ifdef _WIN32
+    void handleAeroSnap(MSG *msg, long *result);
+#endif
     bool isEdgePosition(QPointF position);
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
