@@ -1,5 +1,6 @@
 #ifdef _WIN32
 #include <windows.h>
+#include <windowsx.h>
 #endif
 
 #include <QPainter>
@@ -148,7 +149,6 @@ bool BrowserWindow::nativeEvent(const QByteArray &eventType, void *message, qint
             if ( y >= windowRect.top && y < windowRect.top + borderWidth )
             {
                 *result = HTTOP;
-            }
             }
 
             *result = HTCAPTION;
