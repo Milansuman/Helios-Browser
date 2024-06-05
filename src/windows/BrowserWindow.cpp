@@ -16,11 +16,13 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setMinimumSize(size);
     this->setMouseTracking(true);
+    this->setContentsMargins(0,0,0,0);
 
     this->centralWidget = new QWidget();
     this->centralWidget->setContentsMargins(0, 0, 0, 0);
     this->centralWidget->setMouseTracking(true);
     this->layout = new QVBoxLayout(this->centralWidget);
+    this->layout->setContentsMargins(5,0,5,5);
     this->layout->setSpacing(0);
 
     this->titleBar = new WindowTitleBar();
