@@ -12,5 +12,6 @@
         <file alias="split-left.png">res/icons/split-left.png</file>
         <file alias="split-right.png">res/icons/split-right.png</file>
         <file alias="split.png">res/icons/split.png</file>
+        <file alias="reload.png">res/icons/reload.png</file>
     </qresource>
 </RCC>

@@ -19,6 +19,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->sideBarButton = new IconButton(":/icons/sidebar.png");
     this->backButton = new IconButton(":/icons/chevron-left.png");
     this->forwardButton = new IconButton(":/icons/chevron-right.png");
+    this->reloadButton = new IconButton(":/icons/reload.png");
     this->copyLinkButton = new IconButton(":/icons/link.png");
     this->addressBox = new AddressBox("search or enter link.");
     this->siteSettingsButton = new IconButton(":/icons/page-settings.png");
@@ -30,6 +31,30 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     QIcon minimizeIcon = style->standardIcon(QStyle::SP_TitleBarMinButton);
     QIcon maximizeIcon = style->standardIcon(QStyle::SP_TitleBarMaxButton);
     QIcon closeIcon = style->standardIcon(QStyle::SP_TitleBarCloseButton);
+
+    this->connect(this->backButton, &IconButton::clicked, this, [=](){
+        emit this->previousPageRequested();
+    });
+
+    this->connect(this->forwardButton, &IconButton::clicked, this, [=](){
+        emit this->nextPageRequested();
+    });
+
+    this->connect(this->reloadButton, &IconButton::clicked, this, [=](){
+        emit this->reloadRequested();
+    });
+
+    this->connect(this->copyLinkButton, &IconButton::clicked, this, [=](){
+        emit this->copyLinkRequested();
+    });
+
+    this->connect(this->splitTabMenu, &SplitTabMenu::splitTabLeftRequested, this, [=](){
+        emit this->splitTabLeftRequested();
+    });
+
+    this->connect(this->splitTabMenu, &SplitTabMenu::splitTabRightRequested, this, [=](){
+        emit this->splitTabRightRequested();
+    });
 
     this->minimize = new QPushButton();
     this->minimize->setIcon(minimizeIcon);
@@ -88,6 +113,11 @@ QPushButton* WindowTitleBar::closeButton(){
     return this->close;
 }
 
+void WindowTitleBar::setTitle(QString title){
+    this->addressBox->setBlank(false);
+    this->addressBox->setText(title);
+}
+
 WindowTitleBar::~WindowTitleBar(){
     delete this->tabTitleBarLayout;
     delete this->windowButtonsLayout;
@@ -101,4 +131,5 @@ WindowTitleBar::~WindowTitleBar(){
     delete this->siteSettingsButton;
     delete this->backButton;
     delete this->forwardButton;
+    delete this->reloadButton;
 }

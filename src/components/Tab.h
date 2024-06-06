@@ -18,8 +18,13 @@ private:
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
+    void setTitleBarVisible(bool visible);
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
+signals:
+    void closeTabRequested();
+    void splitTabLeftRequested();
+    void splitTabRightRequested();
 };

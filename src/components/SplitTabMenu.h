@@ -16,6 +16,9 @@ private:
 public:
     SplitTabMenuAction(QObject *parent=nullptr);
     ~SplitTabMenuAction();
+signals:
+    void splitTabLeftRequested();
+    void splitTabRightRequested();
 };
 
 class SplitTabMenu : public IconButton{
@@ -26,4 +29,7 @@ private:
 public:
     SplitTabMenu(QWidget *parent=nullptr);
     ~SplitTabMenu();
+signals:
+    void splitTabLeftRequested();
+    void splitTabRightRequested();
 };

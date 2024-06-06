@@ -13,7 +13,7 @@ class WindowTitleBar : public QWidget{
 private:
     QHBoxLayout *tabTitleBarLayout, *titleBarLayout, *windowButtonsLayout;
     QPushButton *minimize, *maximize, *close;
-    IconButton *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton;
+    IconButton *reloadButton, *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton;
     SplitTabMenu *splitTabMenu;
     QWidget *tabTitleBar;
     AddressBox *addressBox;
@@ -22,5 +22,14 @@ public:
     QPushButton* minimizeButton();
     QPushButton* maximizeButton();
     QPushButton* closeButton();
+    void setTitle(QString title);
     ~WindowTitleBar();
+signals:
+    void reloadRequested();
+    void previousPageRequested();
+    void nextPageRequested();
+    void closeTabRequested();
+    void splitTabLeftRequested();
+    void splitTabRightRequested();
+    void copyLinkRequested();
 };

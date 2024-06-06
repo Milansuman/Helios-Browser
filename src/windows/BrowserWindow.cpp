@@ -7,7 +7,7 @@
 #include <QWindow>
 
 #include "BrowserWindow.h"
-#include "../components/Tab.h"
+#include "../components/TabGroup.h"
 
 #define EDGE_MARGIN 5
 
@@ -27,7 +27,15 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     this->titleBar = new WindowTitleBar();
 
-    Tab *test = new Tab(QWebEngineProfile::defaultProfile());    
+    TabGroup *test = new TabGroup(QWebEngineProfile::defaultProfile());
+
+    connect(this->titleBar, &WindowTitleBar::splitTabLeftRequested, this, [=](){
+        test->splitLeft(0);
+    });
+
+    connect(this->titleBar, &WindowTitleBar::splitTabRightRequested, this, [=](){
+        test->splitRight(0);
+    });
 
     this->layout->addWidget(this->titleBar);
     this->layout->addWidget(test);
