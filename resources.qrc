@@ -4,5 +4,13 @@
     </qresource>
     <qresource prefix="/icons">
         <file alias="sidebar.png">res/icons/sidebar.png</file>
+        <file alias="chevron-left.png">res/icons/chevron-left.png</file>
+        <file alias="chevron-right.png">res/icons/chevron-right.png</file>
+        <file alias="link.png">res/icons/link.png</file>
+        <file alias="page-settings.png">res/icons/page-settings.png</file>
+        <file alias="tab-close.png">res/icons/tab-close.png</file>
+        <file alias="split-left.png">res/icons/split-left.png</file>
+        <file alias="split-right.png">res/icons/split-right.png</file>
+        <file alias="split.png">res/icons/split.png</file>
     </qresource>
 </RCC>

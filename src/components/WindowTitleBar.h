@@ -5,13 +5,16 @@
 #include <QPushButton>
 
 #include "AddressBox.h"
+#include "IconButton.h"
+#include "SplitTabMenu.h"
 
 class WindowTitleBar : public QWidget{
     Q_OBJECT
 private:
     QHBoxLayout *tabTitleBarLayout, *titleBarLayout, *windowButtonsLayout;
     QPushButton *minimize, *maximize, *close;
-    QPushButton *sideBarButton;
+    IconButton *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton;
+    SplitTabMenu *splitTabMenu;
     QWidget *tabTitleBar;
     AddressBox *addressBox;
 public:

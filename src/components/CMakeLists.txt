@@ -1,9 +1,17 @@
 set(SOURCES ${SOURCES}
+    src/components/IconButton.h
+    src/components/IconButton.cpp
     src/components/AddressBox.h
     src/components/AddressBox.cpp
     src/components/WebView.h
     src/components/WebView.cpp
     src/components/WindowTitleBar.h
     src/components/WindowTitleBar.cpp
+    src/components/Tab.h
+    src/components/Tab.cpp
+    src/components/TabTitleBar.h
+    src/components/TabTitleBar.cpp
+    src/components/SplitTabMenu.h
+    src/components/SplitTabMenu.cpp
     PARENT_SCOPE
 )

@@ -7,7 +7,7 @@
 #include <QWindow>
 
 #include "BrowserWindow.h"
-#include "../components/WebView.h"
+#include "../components/Tab.h"
 
 #define EDGE_MARGIN 5
 
@@ -27,8 +27,7 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     this->titleBar = new WindowTitleBar();
 
-    WebView *test = new WebView(QWebEngineProfile::defaultProfile());
-    test->load(QUrl("https://youtube.com"));
+    Tab *test = new Tab(QWebEngineProfile::defaultProfile());    
 
     this->layout->addWidget(this->titleBar);
     this->layout->addWidget(test);
