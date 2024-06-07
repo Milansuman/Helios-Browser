@@ -1,6 +1,10 @@
 #ifdef _WIN32
 #include <windows.h>
 #include <windowsx.h>
+#include <dwmapi.h>
+#define FIXED_WIDTH(widget) (widget->minimumWidth() >= widget->maximumWidth())
+#define FIXED_HEIGHT(widget) (widget->minimumHeight() >= widget->maximumHeight())
+#define FIXED_SIZE(widget) (FIXED_WIDTH(widget) && FIXED_HEIGHT(widget))
 #endif
 
 #include <QPainter>
@@ -12,6 +16,40 @@
 #define EDGE_MARGIN 5
 
 BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent), isMaximized(false) {
+    #ifdef _WIN32
+    HINSTANCE hInstance = GetModuleHandleW(nullptr);
+
+    HWND parent_hwnd = nullptr;
+
+    if (parent)
+        parent_hwnd = HWND(parent->winId());
+    WNDCLASSEXW wcx;
+    memset(&wcx, 0, sizeof(WNDCLASSEXW));
+    wcx.cbSize = sizeof(WNDCLASSEXW);
+    wcx.style = CS_HREDRAW | CS_VREDRAW;
+    wcx.hInstance = hInstance;
+    wcx.lpfnWndProc = WNDPROC(WndProc);
+    wcx.cbClsExtra = 0;
+    wcx.cbWndExtra = 0;
+    wcx.hCursor	= LoadCursorW(nullptr, IDC_ARROW);
+
+    wcx.lpszClassName = L"BrowserWindow";
+
+    RegisterClassExW(&wcx);
+
+    this->windowID = CreateWindowW(wcx.lpszClassName, nullptr,
+                           WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
+                           CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
+                           parent_hwnd, nullptr, hInstance, nullptr);
+    if (!this->windowID)
+    {
+        qDebug()<<"error occured runnnnn";
+    }
+
+    SetWindowLongPtrW(this->windowID, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+    #endif
+
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setMinimumSize(size);
@@ -114,48 +152,66 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event) {
     QMainWindow::mouseMoveEvent(event);
 }
 
-bool BrowserWindow::nativeEvent(const QByteArray &eventType, void *message, qintptr *result) {
+
+
 #ifdef _WIN32
-    if (eventType == "windows_generic_MSG") {
-        MSG *msg = static_cast<MSG*>(message);
-        switch (msg->message) {
-        case WM_NCHITTEST:
-            *result = 0;
-            if (isEdgePosition(QPointF(GET_X_LPARAM(msg->lParam), GET_Y_LPARAM(msg->lParam)))) {
-                *result = HTCLIENT;
-                return QWidget::nativeEvent(eventType, message, result);
-            }
-            break;
-        case WM_GETMINMAXINFO:
-            handleAeroSnap(msg, (long*) result);
-            return true;
-        default:
-            break;
-        }
+LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
+    BrowserWindow *window = reinterpret_cast<BrowserWindow*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+    if(!window){
+        return DefWindowProcW(hwnd, uMsg, wParam, lParam);
     }
-#endif
-    return QWidget::nativeEvent(eventType, message, result);
-}
+    if(uMsg==WM_NCHITTEST){
+        QPoint pos = QPoint(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
 
-#ifdef _WIN32
-void BrowserWindow::handleAeroSnap(MSG *msg, long *result) {
-    LPMINMAXINFO mmi = (LPMINMAXINFO)msg->lParam;
+        LRESULT lresult = LRESULT(window->ncHitTest(pos.x(), pos.y()));
 
-    // Get the work area of the monitor
-    HMONITOR hMonitor = MonitorFromWindow(msg->hwnd, MONITOR_DEFAULTTONEAREST);
-    MONITORINFO mi = { sizeof(MONITORINFO) };
-    GetMonitorInfo(hMonitor, &mi);
+        if (FIXED_SIZE(window))
+        {
+            //If have fixed size, then only HTCAPTION hit test is valid,
+            //which means that only the title bar click and move is valid.
 
-    RECT rcWork = mi.rcWork;
-    RECT rcMonitor = mi.rcMonitor;
+            if (lresult != HTNOWHERE
+                && lresult != HTSYSMENU
+                && lresult != HTMINBUTTON
+                && lresult != HTMAXBUTTON
+                && lresult != HTCLOSE
+                && lresult != HTCAPTION)
+                lresult = HTNOWHERE;
 
-    // Adjust the maximized size and position to account for the taskbar
-    mmi->ptMaxPosition.x = rcWork.left - rcMonitor.left;
-    mmi->ptMaxPosition.y = rcWork.top - rcMonitor.top;
-    mmi->ptMaxSize.x = rcWork.right - rcWork.left;
-    mmi->ptMaxSize.y = rcWork.bottom - rcWork.top;
+            return lresult;
+        }
+        else if (FIXED_WIDTH(window))
+        {
+            if (lresult != HTNOWHERE
+                && lresult != HTSYSMENU
+                && lresult != HTMINBUTTON
+                && lresult != HTMAXBUTTON
+                && lresult != HTCLOSE
+                && lresult != HTCAPTION
+                && lresult != HTTOP
+                && lresult != HTBOTTOM)
+                lresult = HTNOWHERE;
 
-    *result = 0;
+            return lresult;
+        }
+        else if (FIXED_HEIGHT(window))
+        {
+            if (lresult != HTNOWHERE
+                && lresult != HTSYSMENU
+                && lresult != HTMINBUTTON
+                && lresult != HTMAXBUTTON
+                && lresult != HTCLOSE
+                && lresult != HTCAPTION
+                && lresult != HTLEFT
+                && lresult != HTRIGHT)
+                lresult = HTNOWHERE;
+
+            return lresult;
+        }
+
+        return lresult;
+
+    }
 }
 #endif
 

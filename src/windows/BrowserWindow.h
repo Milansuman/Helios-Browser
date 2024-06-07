@@ -4,6 +4,9 @@
 #include <QVBoxLayout>
 #include <QWidget>
 #include <QPaintEvent>
+#ifdef _WIN32
+#include <windows.h>
+#endif
 
 #include "../components/WindowTitleBar.h"
 
@@ -15,8 +18,10 @@ private:
     QWidget *centralWidget;
     bool isMaximized;
 #ifdef _WIN32
-    void handleAeroSnap(MSG *msg, long *result);
+    HWND windowID;
+    static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
+
     bool isEdgePosition(QPointF position);
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
@@ -26,5 +31,5 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    bool nativeEvent(const QByteArray &eventType, void *message, qintptr *result) override;
+
 };
