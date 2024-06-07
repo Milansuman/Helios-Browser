@@ -17,6 +17,10 @@ TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
     this->splitTabMenu = new SplitTabMenu();
     this->closeButton = new IconButton(":/icons/tab-close.png");
 
+    this->connect(this->addressBox, &AddressBox::searchRequested, this, [=](){
+        emit this->searchRequested();
+    });
+
     this->connect(this->reloadButton, &IconButton::clicked, this, [=](){
         emit this->reloadRequested();
     });

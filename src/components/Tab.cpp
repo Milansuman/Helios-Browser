@@ -15,10 +15,20 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
 
+    this->searchDialog = new SearchDialog(this);
+
     this->tabTitleBar = new TabTitleBar();
 
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
+    });
+
+    this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
+        this->searchDialog->open();
+    });
+
+    this->connect(this->searchDialog, &SearchDialog::accepted, this, [=](){
+        this->webview->load(QUrl(this->searchDialog->getSearch()));
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::copyLinkRequested, this, [=](){
@@ -77,4 +87,5 @@ Tab::~Tab(){
     delete this->webview;
     delete this->tabTitleBar;
     delete this->layout;
+    delete this->searchDialog;
 }

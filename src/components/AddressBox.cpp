@@ -36,3 +36,9 @@ void AddressBox::paintEvent(QPaintEvent *event){
 void AddressBox::setBlank(bool blank){
     this->isBlank = blank;
 }
+
+void AddressBox::mousePressEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton){
+        emit this->searchRequested();
+    }
+}

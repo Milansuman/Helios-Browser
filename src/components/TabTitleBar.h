@@ -27,4 +27,5 @@ signals:
     void splitTabLeftRequested();
     void splitTabRightRequested();
     void copyLinkRequested();
+    void searchRequested();
 };

@@ -1,6 +1,8 @@
 #pragma once
 
 #include <QLabel>
+#include <QPaintEvent>
+#include <QMouseEvent>
 
 class AddressBox : public QLabel {
     Q_OBJECT
@@ -11,4 +13,7 @@ public:
     void setBlank(bool blank);
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+signals:
+    void searchRequested();
 };

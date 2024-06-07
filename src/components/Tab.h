@@ -8,6 +8,7 @@
 
 #include "WebView.h"
 #include "TabTitleBar.h"
+#include "../windows/SearchDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -15,6 +16,7 @@ private:
     QVBoxLayout *layout;
     WebView *webview;
     TabTitleBar *tabTitleBar;
+    SearchDialog *searchDialog;
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
