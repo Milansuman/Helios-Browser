@@ -88,7 +88,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
         "}"
     );
 
-    this->tabTitleBarLayout->addWidget(this->sideBarButton);
+    this->titleBarLayout->addWidget(this->sideBarButton);
     this->tabTitleBarLayout->addWidget(this->backButton);
     this->tabTitleBarLayout->addWidget(this->forwardButton);
     this->tabTitleBarLayout->addStretch();
