@@ -89,6 +89,10 @@ void TabGroup::removeTab(int pos){
     emit this->tabsChanged();
 }
 
+std::vector<Tab*> TabGroup::getTabs(){
+    return this->tabs;
+}
+
 TabGroup::~TabGroup(){
     for(Tab *tab: this->tabs){
         delete tab;

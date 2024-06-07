@@ -8,6 +8,11 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->setContentsMargins(0,0,0,0);
     this->setFixedHeight(30);
     this->tabTitleBar = new QWidget();
+
+    QSizePolicy retainWidth = this->tabTitleBar->sizePolicy();
+    retainWidth.setRetainSizeWhenHidden(true);
+    this->tabTitleBar->setSizePolicy(retainWidth);
+
     this->tabTitleBar->setContentsMargins(0,0,0,0);
     this->tabTitleBarLayout = new QHBoxLayout(this->tabTitleBar);
     this->tabTitleBarLayout->setContentsMargins(0,0,0,0);
@@ -116,6 +121,10 @@ QPushButton* WindowTitleBar::closeButton(){
 void WindowTitleBar::setTitle(QString title){
     this->addressBox->setBlank(false);
     this->addressBox->setText(title);
+}
+
+void WindowTitleBar::setTitleBarVisible(bool visible){
+    this->tabTitleBar->setVisible(visible);
 }
 
 WindowTitleBar::~WindowTitleBar(){

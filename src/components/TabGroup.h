@@ -18,6 +18,7 @@ public:
     void splitLeft(int pos);
     void splitRight(int pos);
     void removeTab(int pos);
+    std::vector<Tab*> getTabs();
     ~TabGroup();
 signals:
     void tabsChanged();

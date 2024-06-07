@@ -29,6 +29,14 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     TabGroup *test = new TabGroup(QWebEngineProfile::defaultProfile());
 
+    connect(test, &TabGroup::tabsChanged, this, [=](){
+        if(test->getTabs().size() != 1){
+            this->titleBar->setTitleBarVisible(false);
+        }else{
+            this->titleBar->setTitleBarVisible(true);
+        }
+    });
+
     connect(this->titleBar, &WindowTitleBar::splitTabLeftRequested, this, [=](){
         test->splitLeft(0);
     });

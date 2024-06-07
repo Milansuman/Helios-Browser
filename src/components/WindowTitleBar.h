@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QPushButton>
+#include <QSpacerItem>
 
 #include "AddressBox.h"
 #include "IconButton.h"
@@ -23,6 +24,7 @@ public:
     QPushButton* maximizeButton();
     QPushButton* closeButton();
     void setTitle(QString title);
+    void setTitleBarVisible(bool visible);
     ~WindowTitleBar();
 signals:
     void reloadRequested();
