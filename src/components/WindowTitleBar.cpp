@@ -39,6 +39,10 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     QIcon maximizeIcon = style->standardIcon(QStyle::SP_TitleBarMaxButton);
     QIcon closeIcon = style->standardIcon(QStyle::SP_TitleBarCloseButton);
 
+    this->connect(this->addressBox, &AddressBox::searchRequested, this, [=](){
+        emit this->searchRequested();
+    });
+
     this->connect(this->backButton, &IconButton::clicked, this, [=](){
         emit this->previousPageRequested();
     });

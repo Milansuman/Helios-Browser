@@ -15,5 +15,7 @@ set(SOURCES ${SOURCES}
     src/components/SplitTabMenu.cpp
     src/components/TabGroup.h
     src/components/TabGroup.cpp
+    src/components/TabManager.h
+    src/components/TabManager.cpp
     PARENT_SCOPE
 )

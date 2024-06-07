@@ -93,6 +93,10 @@ std::vector<Tab*> TabGroup::getTabs(){
     return this->tabs;
 }
 
+Tab* TabGroup::getTab(int pos){
+    return this->tabs.at(pos);
+}
+
 TabGroup::~TabGroup(){
     for(Tab *tab: this->tabs){
         delete tab;

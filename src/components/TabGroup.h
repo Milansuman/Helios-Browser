@@ -11,7 +11,6 @@ class TabGroup : public QSplitter{
 private:
     std::vector<Tab*> tabs;
     QWebEngineProfile *profile;
-
     int findTab(Tab *tab);
 public:
     TabGroup(QWebEngineProfile *profile, QWidget *parent=nullptr);
@@ -19,6 +18,7 @@ public:
     void splitRight(int pos);
     void removeTab(int pos);
     std::vector<Tab*> getTabs();
+    Tab* getTab(int pos);
     ~TabGroup();
 signals:
     void tabsChanged();

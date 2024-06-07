@@ -9,11 +9,13 @@
 #endif
 
 #include "../components/WindowTitleBar.h"
+#include "../components/TabManager.h"
 
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
 private:
     WindowTitleBar *titleBar;
+    TabManager *tabManager;
     QVBoxLayout *layout;
     QWidget *centralWidget;
     bool isMaximized;

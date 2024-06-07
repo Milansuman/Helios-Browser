@@ -21,6 +21,7 @@ public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
     void setTitleBarVisible(bool visible);
+    void requestSearchDialog();
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -29,4 +30,5 @@ signals:
     void closeTabRequested();
     void splitTabLeftRequested();
     void splitTabRightRequested();
+    void titleChanged(QString title);
 };

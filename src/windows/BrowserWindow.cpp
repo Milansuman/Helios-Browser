@@ -11,7 +11,7 @@
 #include <QWindow>
 
 #include "BrowserWindow.h"
-#include "../components/TabGroup.h"
+#include "../components/TabManager.h"
 
 #define EDGE_MARGIN 5
 
@@ -64,27 +64,34 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->layout->setSpacing(0);
 
     this->titleBar = new WindowTitleBar();
-
-    TabGroup *test = new TabGroup(QWebEngineProfile::defaultProfile());
-
-    connect(test, &TabGroup::tabsChanged, this, [=](){
-        if(test->getTabs().size() != 1){
-            this->titleBar->setTitleBarVisible(false);
-        }else{
-            this->titleBar->setTitleBarVisible(true);
-        }
-    });
+    this->tabManager = new TabManager();
 
     connect(this->titleBar, &WindowTitleBar::splitTabLeftRequested, this, [=](){
-        test->splitLeft(0);
+        this->tabManager->windowSplitLeft();
     });
 
     connect(this->titleBar, &WindowTitleBar::splitTabRightRequested, this, [=](){
-        test->splitRight(0);
+        this->tabManager->windowSplitRight();
+    });
+
+    connect(this->titleBar, &WindowTitleBar::searchRequested, this, [=](){
+        this->tabManager->windowSearch();
+    });
+
+    connect(this->tabManager, &TabManager::titleChanged, this, [=](QString title){
+        this->titleBar->setTitle(title);
+    });
+
+    connect(this->tabManager, &TabManager::displayTitleBarOnWindowRequested, this, [=](){
+        this->titleBar->setTitleBarVisible(true);
+    });
+
+    connect(this->tabManager, &TabManager::hideTitleBarOnWindowRequested, this, [=](){
+        this->titleBar->setTitleBarVisible(false);
     });
 
     this->layout->addWidget(this->titleBar);
-    this->layout->addWidget(test);
+    this->layout->addWidget(this->tabManager);
 
     // Handle titlebar buttons
     connect(this->titleBar->minimizeButton(), &QPushButton::clicked, this, &BrowserWindow::showMinimized);
@@ -201,6 +208,9 @@ QFlags<Qt::Edge> BrowserWindow::getEdgePosition(QPointF position) {
 
 BrowserWindow::~BrowserWindow() {
     delete this->titleBar;
+    delete this->tabManager;
+    delete this->layout;
+    delete this->centralWidget;
 }
 
 

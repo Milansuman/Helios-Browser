@@ -21,6 +21,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
+        emit this->titleChanged(this->webview->title());
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
@@ -81,6 +82,10 @@ void Tab::resizeEvent(QResizeEvent *event){
 
 void Tab::setTitleBarVisible(bool visible){
     this->tabTitleBar->setVisible(visible);
+}
+
+void Tab::requestSearchDialog(){
+    this->searchDialog->open();
 }
 
 Tab::~Tab(){
