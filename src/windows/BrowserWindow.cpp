@@ -160,58 +160,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
     if(!window){
         return DefWindowProcW(hwnd, uMsg, wParam, lParam);
     }
-    if(uMsg==WM_NCHITTEST){
-        QPoint pos = QPoint(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
-
-        LRESULT lresult = LRESULT(window->ncHitTest(pos.x(), pos.y()));
-
-        if (FIXED_SIZE(window))
-        {
-            //If have fixed size, then only HTCAPTION hit test is valid,
-            //which means that only the title bar click and move is valid.
-
-            if (lresult != HTNOWHERE
-                && lresult != HTSYSMENU
-                && lresult != HTMINBUTTON
-                && lresult != HTMAXBUTTON
-                && lresult != HTCLOSE
-                && lresult != HTCAPTION)
-                lresult = HTNOWHERE;
-
-            return lresult;
-        }
-        else if (FIXED_WIDTH(window))
-        {
-            if (lresult != HTNOWHERE
-                && lresult != HTSYSMENU
-                && lresult != HTMINBUTTON
-                && lresult != HTMAXBUTTON
-                && lresult != HTCLOSE
-                && lresult != HTCAPTION
-                && lresult != HTTOP
-                && lresult != HTBOTTOM)
-                lresult = HTNOWHERE;
-
-            return lresult;
-        }
-        else if (FIXED_HEIGHT(window))
-        {
-            if (lresult != HTNOWHERE
-                && lresult != HTSYSMENU
-                && lresult != HTMINBUTTON
-                && lresult != HTMAXBUTTON
-                && lresult != HTCLOSE
-                && lresult != HTCAPTION
-                && lresult != HTLEFT
-                && lresult != HTRIGHT)
-                lresult = HTNOWHERE;
-
-            return lresult;
-        }
-
-        return lresult;
-
-    }
+    return DefWindowProcW(hwnd, uMsg, wParam, lParam);
 }
 #endif
 
