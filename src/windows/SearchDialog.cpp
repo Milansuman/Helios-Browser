@@ -15,7 +15,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     this->setFixedWidth(500);
 
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Window, QColor(0, 0, 0, 237));
+    palette.setColor(QPalette::Window, QColor(30,30,30));
     setPalette(palette);
 
     searchLayout = new QHBoxLayout();
@@ -52,7 +52,7 @@ void SearchDialog::paintEvent(QPaintEvent *event) {
     painter.fillPath(path, palette().window());
 
     // Draw the border
-    painter.setPen(QPen(QColor(92, 92, 92), 1));
+    painter.setPen(Qt::NoPen);
     painter.drawPath(path);
 
     // Call the base class implementation
