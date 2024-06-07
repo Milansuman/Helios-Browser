@@ -24,10 +24,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     //Search Icon
     searchIconLabel = new QLabel();
     QPixmap searchIcon(":/icons/search.png");
-    searchIcon.scaled(20, 20);
-    searchIconLabel->setPixmap(searchIcon);
-    searchIconLabel->setScaledContents(true);
-    searchIconLabel->setFixedSize(20, 20);
+    searchIconLabel->setPixmap(searchIcon.scaledToHeight(20));
 
     //Search input
     searchbar = new QLineEdit();
