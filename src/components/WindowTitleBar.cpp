@@ -18,7 +18,9 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->tabTitleBarLayout->setContentsMargins(0,0,0,0);
     this->titleBarLayout = new QHBoxLayout(this);
     this->titleBarLayout->setContentsMargins(0,0,0,0);
+    this->titleBarLayout->setAlignment(Qt::AlignCenter);
     this->windowButtonsLayout = new QHBoxLayout();
+    this->windowButtonsLayout->setAlignment(Qt::AlignCenter);
     this->windowButtonsLayout->setContentsMargins(0,0,0,0);
 
     this->sideBarButton = new IconButton(":/icons/sidebar.png");
