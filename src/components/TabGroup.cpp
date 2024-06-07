@@ -83,7 +83,7 @@ void TabGroup::splitRight(int pos){
 
 void TabGroup::removeTab(int pos){
     this->tabs.at(pos)->hide();
-    //delete this->tabs.at(pos);
+    delete this->tabs.at(pos);
     this->tabs.erase(this->tabs.begin()+pos);
 
     emit this->tabsChanged();

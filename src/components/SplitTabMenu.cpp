@@ -22,10 +22,10 @@ SplitTabMenuAction::SplitTabMenuAction(QObject *parent): QWidgetAction(parent){
 }
 
 SplitTabMenuAction::~SplitTabMenuAction(){
-    delete this->defaultWidget;
-    delete this->layout;
     delete this->splitTabLeftButton;
     delete this->splitTabRightButton;
+    delete this->layout;
+    delete this->defaultWidget;
 }
 
 SplitTabMenu::SplitTabMenu(QWidget *parent): IconButton(":/icons/split.png", parent){

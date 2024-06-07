@@ -15,6 +15,8 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui WebEngineWidgets WebEngine
 
 qt_standard_project_setup()
 
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
+
 qt_add_executable(project-web
     ${SOURCES}
     resources.qrc
