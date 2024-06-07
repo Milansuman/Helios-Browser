@@ -4,7 +4,7 @@ TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
     this->setFixedHeight(30);
     this->layout = new QHBoxLayout(this);
     this->layout->setAlignment(Qt::AlignCenter);
-    
+    this->layout->setContentsMargins(0,0,0,0);
     this->backButton = new IconButton(":/icons/chevron-left.png");
     this->forwardButton = new IconButton(":/icons/chevron-right.png");
     this->reloadButton = new IconButton(":/icons/reload.png");
