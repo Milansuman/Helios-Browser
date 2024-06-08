@@ -40,6 +40,10 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     QIcon maximizeIcon = style->standardIcon(QStyle::SP_TitleBarMaxButton);
     QIcon closeIcon = style->standardIcon(QStyle::SP_TitleBarCloseButton);
 
+    this->connect(this->sideBarButton, &IconButton::clicked, this, [=](){
+        emit this->toggleSideBarRequested();
+    });
+
     this->connect(this->addressBox, &AddressBox::searchRequested, this, [=](){
         emit this->searchRequested();
     });
@@ -66,6 +70,10 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
 
     this->connect(this->splitTabMenu, &SplitTabMenu::splitTabRightRequested, this, [=](){
         emit this->splitTabRightRequested();
+    });
+
+    this->connect(this->groupSelectorButton, &IconButton::clicked, this, [=](){
+        emit this->showGroupBar();
     });
 
     this->minimize = new QPushButton();

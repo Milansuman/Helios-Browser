@@ -16,6 +16,10 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
         emit this->windowTitleChanged(title);
     });
 
+    this->connect(this->tabs.at(0), &Tab::iconChanged, this, [=](){
+        emit this->tabIconChanged();
+    });
+
     this->connect(this, &TabGroup::tabsChanged, this, [=](){
         for(Tab* tab: this->tabs){
             tab->setTitleBarVisible(this->tabs.size() > 1);
@@ -55,6 +59,10 @@ void TabGroup::splitLeft(int pos){
 
     Tab *temp = this->tabs.at(pos);
 
+    connect(this->tabs.at(pos), &Tab::iconChanged, this, [=](){
+        emit this->tabIconChanged();
+    });
+
     connect(this->tabs.at(pos), &Tab::splitTabLeftRequested, this, [=](){
         this->splitLeft(this->findTab(temp)); //the position of tabs may change, we use the Tab pointer to find the new position
     });
@@ -79,6 +87,10 @@ void TabGroup::splitRight(int pos){
 
     Tab *temp = this->tabs.at(pos+1);
 
+    connect(this->tabs.at(pos+1), &Tab::iconChanged, this, [=](){
+        emit this->tabIconChanged();
+    });
+
     connect(this->tabs.at(pos+1), &Tab::splitTabLeftRequested, this, [=](){
         this->splitLeft(this->findTab(temp)); //the position of tabs may change, we use the Tab pointer to find the new position
     });
@@ -99,6 +111,7 @@ void TabGroup::removeTab(int pos){
     delete this->tabs.at(pos);
     this->tabs.erase(this->tabs.begin()+pos);
 
+    emit this->tabIconChanged();
     emit this->tabsChanged();
 }
 

@@ -17,5 +17,9 @@ set(SOURCES ${SOURCES}
     src/components/TabGroup.cpp
     src/components/TabManager.h
     src/components/TabManager.cpp
+    src/components/SideBar.h
+    src/components/SideBar.cpp
+    src/components/GroupIcons.h
+    src/components/GroupIcons.cpp
     PARENT_SCOPE
 )

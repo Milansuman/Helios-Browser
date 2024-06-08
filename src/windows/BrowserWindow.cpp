@@ -63,8 +63,15 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->layout->setContentsMargins(5,0,5,5);
     this->layout->setSpacing(0);
 
+    this->contentLayout = new QHBoxLayout();
+    this->contentLayout->setContentsMargins(0,0,0,0);
+
     this->titleBar = new WindowTitleBar();
     this->tabManager = new TabManager();
+
+    connect(this->titleBar, &WindowTitleBar::showGroupBar, this, [=](){
+        this->tabManager->windowShowGroups();
+    });
 
     connect(this->titleBar, &WindowTitleBar::splitTabLeftRequested, this, [=](){
         this->tabManager->windowSplitLeft();
@@ -106,8 +113,17 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         this->titleBar->setTitleBarVisible(false);
     });
 
+    this->sideBar = new SideBar();
+
+    connect(this->titleBar, &WindowTitleBar::toggleSideBarRequested, this, [=](){
+        this->sideBar->setVisible(!this->sideBar->isVisible());
+    });
+
+    this->contentLayout->addWidget(this->sideBar);
+    this->contentLayout->addWidget(this->tabManager);
+
     this->layout->addWidget(this->titleBar);
-    this->layout->addWidget(this->tabManager);
+    this->layout->addLayout(this->contentLayout);
 
     // Handle titlebar buttons
     connect(this->titleBar->minimizeButton(), &QPushButton::clicked, this, &BrowserWindow::showMinimized);
@@ -239,6 +255,8 @@ QFlags<Qt::Edge> BrowserWindow::getEdgePosition(QPointF position) {
 BrowserWindow::~BrowserWindow() {
     delete this->titleBar;
     delete this->tabManager;
+    delete this->sideBar;
+    delete this->contentLayout;
     delete this->layout;
     delete this->centralWidget;
 }

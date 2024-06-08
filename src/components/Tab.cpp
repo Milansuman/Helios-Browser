@@ -19,9 +19,17 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->tabTitleBar = new TabTitleBar();
 
+    this->connect(this->webview, &WebView::loadStarted, this, [=](){
+        this->tabTitleBar->setTitle(this->webview->url().toString());
+    });
+
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
+    });
+
+    this->connect(this->webview, &WebView::iconChanged, this, [=](){
+        emit this->iconChanged(this->webview->icon());
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
@@ -90,6 +98,10 @@ void Tab::requestSearchDialog(){
 
 QString Tab::getTitle(){
     return this->webview->title();
+}
+
+QIcon Tab::getIcon(){
+    return this->webview->icon();
 }
 
 void Tab::copyUrl(){

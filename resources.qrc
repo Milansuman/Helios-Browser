@@ -15,5 +15,7 @@
         <file alias="reload.png">res/icons/reload.png</file>
         <file alias="search.png">res/icons/search.png</file>
         <file alias="group-selector.png">res/icons/group-selector.png</file>
+        <file alias="grid.png">res/icons/grid.png</file>
+        <file alias="plus.png">res/icons/plus.png</file>
     </qresource>
 </RCC>

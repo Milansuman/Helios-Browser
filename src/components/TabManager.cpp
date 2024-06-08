@@ -4,6 +4,9 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
     this->profile = new QWebEngineProfile();
     this->groups.push_back(new TabGroup(profile));
 
+    this->groupSelectorDialog = new GroupSelectorDialog(this);
+    this->groupSelectorDialog->addGroup(new GroupIcons(this->groups.at(0)));
+
     this->connect(this->groups.at(0), &TabGroup::tabsChanged, this, [=](){
         if(this->groups.at(0)->getTabs().size() == 1){
             emit this->displayTitleBarOnWindowRequested();
@@ -53,6 +56,10 @@ void TabManager::windowPreviousPage(){
 
 void TabManager::windowReload(){
     this->getCurrentGroup()->getTab(0)->requestReload();
+}
+
+void TabManager::windowShowGroups(){
+    this->groupSelectorDialog->open();
 }
 
 TabManager::~TabManager(){

@@ -5,6 +5,7 @@
 #include <QVBoxLayout>
 #include <QPaintEvent>
 #include <QResizeEvent>
+#include <QIcon>
 
 #include "WebView.h"
 #include "TabTitleBar.h"
@@ -23,6 +24,7 @@ public:
     void setTitleBarVisible(bool visible);
     void requestSearchDialog();
     QString getTitle();
+    QIcon getIcon();
     void copyUrl();
     void requestNextPage();
     void requestPreviousPage();
@@ -36,4 +38,5 @@ signals:
     void splitTabLeftRequested();
     void splitTabRightRequested();
     void titleChanged(QString title);
+    void iconChanged(QIcon icon);
 };

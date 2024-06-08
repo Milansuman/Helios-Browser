@@ -46,16 +46,12 @@ void SearchDialog::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     QPainterPath path;
-    path.addRoundedRect(rect(), 10, 10); // Adjust the radius for rounded corners
-
-    // Draw the background
+    path.addRoundedRect(rect(), 10, 10);
     painter.fillPath(path, palette().window());
 
-    // Draw the border
     painter.setPen(Qt::NoPen);
     painter.drawPath(path);
 
-    // Call the base class implementation
     QDialog::paintEvent(event);
 }
 

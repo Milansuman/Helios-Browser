@@ -2,6 +2,7 @@
 
 #include <QMainWindow>
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QWidget>
 #include <QPaintEvent>
 #ifdef _WIN32
@@ -10,6 +11,7 @@
 
 #include "../components/WindowTitleBar.h"
 #include "../components/TabManager.h"
+#include "../components/SideBar.h"
 
 class BrowserWindow : public QMainWindow {
     Q_OBJECT
@@ -17,7 +19,9 @@ private:
     WindowTitleBar *titleBar;
     TabManager *tabManager;
     QVBoxLayout *layout;
+    QHBoxLayout *contentLayout;
     QWidget *centralWidget;
+    SideBar *sideBar;
     bool isMaximized;
 #ifdef _WIN32
     HWND windowID;

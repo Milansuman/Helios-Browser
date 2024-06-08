@@ -35,4 +35,6 @@ signals:
     void splitTabRightRequested();
     void copyLinkRequested();
     void searchRequested();
+    void toggleSideBarRequested();
+    void showGroupBar();
 };

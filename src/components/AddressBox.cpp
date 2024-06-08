@@ -7,6 +7,7 @@
 AddressBox::AddressBox(QString text, QWidget *parent) : QLabel(parent), isBlank(true) {
     this->setText(text);
     this->setMinimumSize(140, 20);
+    this->setMaximumWidth(200);
     this->setFixedHeight(20);
     this->setAlignment(Qt::AlignCenter);
 
