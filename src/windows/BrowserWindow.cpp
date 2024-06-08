@@ -192,7 +192,7 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event) {
 
 
 #ifdef _WIN32
-LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
+LRESULT CALLBACK BrowserWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
     BrowserWindow *window = reinterpret_cast<BrowserWindow*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
     if(!window){
         return DefWindowProcW(hwnd, uMsg, wParam, lParam);
