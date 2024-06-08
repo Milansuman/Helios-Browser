@@ -14,5 +14,6 @@
         <file alias="split.png">res/icons/split.png</file>
         <file alias="reload.png">res/icons/reload.png</file>
         <file alias="search.png">res/icons/search.png</file>
+        <file alias="group-selector.png">res/icons/group-selector.png</file>
     </qresource>
 </RCC>

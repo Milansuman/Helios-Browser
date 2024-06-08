@@ -15,7 +15,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
 
     this->tabTitleBar->setContentsMargins(0,0,0,0);
     this->tabTitleBarLayout = new QHBoxLayout(this->tabTitleBar);
-    this->tabTitleBarLayout->setContentsMargins(0,0,0,0);
+    this->tabTitleBarLayout->setContentsMargins(15,0,15,0);
     this->titleBarLayout = new QHBoxLayout(this);
     this->titleBarLayout->setContentsMargins(0,0,0,0);
     this->titleBarLayout->setAlignment(Qt::AlignCenter);
@@ -24,6 +24,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->windowButtonsLayout->setContentsMargins(0,0,0,0);
 
     this->sideBarButton = new IconButton(":/icons/sidebar.png");
+    this->groupSelectorButton = new IconButton(":/icons/group-selector.png");
     this->backButton = new IconButton(":/icons/chevron-left.png");
     this->forwardButton = new IconButton(":/icons/chevron-right.png");
     this->reloadButton = new IconButton(":/icons/reload.png");
@@ -95,6 +96,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     );
 
     this->titleBarLayout->addWidget(this->sideBarButton);
+    this->titleBarLayout->addWidget(this->groupSelectorButton);
     this->tabTitleBarLayout->addWidget(this->backButton);
     this->tabTitleBarLayout->addWidget(this->forwardButton);
     this->tabTitleBarLayout->addWidget(this->reloadButton);
@@ -148,4 +150,5 @@ WindowTitleBar::~WindowTitleBar(){
     delete this->backButton;
     delete this->forwardButton;
     delete this->reloadButton;
+    delete this->groupSelectorButton;
 }

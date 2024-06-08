@@ -14,7 +14,7 @@ class WindowTitleBar : public QWidget{
 private:
     QHBoxLayout *tabTitleBarLayout, *titleBarLayout, *windowButtonsLayout;
     QPushButton *minimize, *maximize, *close;
-    IconButton *reloadButton, *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton;
+    IconButton *reloadButton, *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton, *groupSelectorButton;
     SplitTabMenu *splitTabMenu;
     QWidget *tabTitleBar;
     AddressBox *addressBox;

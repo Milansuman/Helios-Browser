@@ -52,7 +52,7 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setMinimumSize(size);
+    this->resize(size);
     this->setMouseTracking(true);
     this->setContentsMargins(0,0,0,0);
 
