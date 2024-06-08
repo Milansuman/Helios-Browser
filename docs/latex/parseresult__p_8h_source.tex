@@ -1,0 +1,106 @@
+\doxysection{parseresult\+\_\+p.\+h}
+\hypertarget{parseresult__p_8h_source}{}\label{parseresult__p_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/src/parseresult\_p.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/src/parseresult\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ PARSERESULT\_P\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ PARSERESULT\_P\_H}}
+\DoxyCodeLine{00003\ }
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ "{}sharedbase\_p.h"{}}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ "{}parser.h"{}}}
+\DoxyCodeLine{00006\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ "{}map\_p.h"{}}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structSysCmdLine_1_1ArgumentHolderData}{ArgumentHolderData}}\ \{}
+\DoxyCodeLine{00012\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ optionalArgIndex;}
+\DoxyCodeLine{00013\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ multiValueArgIndex;}
+\DoxyCodeLine{00014\ \ \ \ \ \ \ \ \ GenericMap\ argNameIndexes;\ \textcolor{comment}{//\ name\ -\/>\ index\ of\ argument}}
+\DoxyCodeLine{00015\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ argSize;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ equal\ to\ \`{}argumentCount()`}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1ArgumentHolderData}{ArgumentHolderData}}()\ :\ optionalArgIndex(-\/1),\ multiValueArgIndex(-\/1),\ argSize(0)\ \{}
+\DoxyCodeLine{00018\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00019\ \ \ \ \ \};}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structSysCmdLine_1_1OptionData}{OptionData}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structSysCmdLine_1_1ArgumentHolderData}{ArgumentHolderData}}\ \{}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}}\ *option;\ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ MUST\ BE\ SET}}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ std::vector<Value>\ **argResult;\ \textcolor{comment}{//\ first:\ occurrence,\ second:\ arg\ index}}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ count;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ occurrence\ times}}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1OptionData}{OptionData}}()\ :\ option(\textcolor{keyword}{nullptr}),\ argResult(\textcolor{keyword}{nullptr}),\ count(0)\ \{}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1OptionData}{\string~OptionData}}()\ \{}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ count;\ ++i)\ \{}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ argResult[i];}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ argResult;}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00035\ }
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keyword}{static}\ \textcolor{keyword}{const}\ \mbox{\hyperlink{structSysCmdLine_1_1OptionData}{OptionData}}\ \&sharedNull();}
+\DoxyCodeLine{00037\ \ \ \ \ \};}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{struct\ }\mbox{\hyperlink{structSysCmdLine_1_1ParseResultData2}{ParseResultData2}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{structSysCmdLine_1_1ArgumentHolderData}{ArgumentHolderData}}\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ std::vector<Value>\ *argResult;\ \ \ \ \textcolor{comment}{//\ arg\ result}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1OptionData}{OptionData}}\ *allOptionsResult;\ \ \ \ \ \textcolor{comment}{//\ option\ result}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ allOptionsSize;\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ command\ option\ count\ +\ global\ option\ count}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ globalOptionsSize;\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ global\ option\ count}}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ GenericMap\ allOptionTokenIndexes;\ \textcolor{comment}{//\ token\ -\/>\ index\ of\ \`{}allOptionsResult`}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ GenericMap\ cmdNameIndexes;\ \ \ \ \ \ \ \ \textcolor{comment}{//\ name\ -\/>\ index\ of\ command}}
+\DoxyCodeLine{00048\ }
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1ParseResultData2}{\string~ParseResultData2}}()\ \{}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ allOptionsResult;}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ argResult;}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00053\ \ \ \ \ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classSysCmdLine_1_1ParseResultPrivate}{ParseResultPrivate}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ \{}
+\DoxyCodeLine{00056\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1ParseResultPrivate}{ParseResultPrivate}}()}
+\DoxyCodeLine{00058\ \ \ \ \ \ \ \ \ \ \ \ \ :\ error(ParseResult::NoError),\ errorOption(\textcolor{keyword}{nullptr}),\ errorArgument(\textcolor{keyword}{nullptr})\ \{}
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1ParseResultPrivate}{ParseResultPrivate}}(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1ParseResultPrivate}{ParseResultPrivate}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00062\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1ParseResultPrivate}{ParseResultPrivate}}\ \&operator=(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1ParseResultPrivate}{ParseResultPrivate}}\ \&)\ =\ \textcolor{keyword}{delete};}
+\DoxyCodeLine{00063\ }
+\DoxyCodeLine{00064\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ This\ is\ a\ read-\/only\ class,\ we\ can\ store\ the\ pointers\ pointing\ to}}
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ its\ own\ data,\ and\ we\ don't\ need\ to\ implement\ the\ clone\ method}}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1SharedBasePrivate}{SharedBasePrivate}}\ *clone()\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00067\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00069\ }
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ parse\ information}}
+\DoxyCodeLine{00071\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Parser}{Parser}}\ parser;}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ std::vector<std::string>\ arguments;}
+\DoxyCodeLine{00073\ }
+\DoxyCodeLine{00074\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ error\ related}}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ ParseResult::Error\ error;}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ std::vector<std::string>\ errorPlaceholders;}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Option}{Option}}\ *errorOption;}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Argument}{Argument}}\ *errorArgument;}
+\DoxyCodeLine{00079\ \ \ \ \ \ \ \ \ std::string\ cancellationToken;}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ success\ results}}
+\DoxyCodeLine{00082\ \ \ \ \ \ \ \ \ std::vector<int>\ stack;}
+\DoxyCodeLine{00083\ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Command}{Command}}\ *command;\ \textcolor{comment}{//\ MUST\ BE\ SET}}
+\DoxyCodeLine{00084\ }
+\DoxyCodeLine{00085\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{structSysCmdLine_1_1ParseResultData2}{ParseResultData2}}\ core;}
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{bool}\ roleSet[5]\ =\ \{\};}
+\DoxyCodeLine{00088\ }
+\DoxyCodeLine{00089\ \ \ \ \ \ \ \ \ std::string\ correctionText()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00090\ }
+\DoxyCodeLine{00091\ \ \ \ \ \ \ \ \ std::vector<Option>\ globalOptions()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00093\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ isMsg:\ mainly\ to\ display\ message\ rather\ than\ help}}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ showMessage(\textcolor{keyword}{const}\ std::string\ \&info,\ \textcolor{keyword}{const}\ std::string\ \&catalogNames,}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{const}\ std::string\ \&symbolIndexes,\ \textcolor{keywordtype}{bool}\ isMsg\ =\ \textcolor{keyword}{false})\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00096\ \ \ \ \ \};}
+\DoxyCodeLine{00097\ }
+\DoxyCodeLine{00098\ \}}
+\DoxyCodeLine{00099\ }
+\DoxyCodeLine{00100\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ PARSERESULT\_P\_H}}
+
+\end{DoxyCode}

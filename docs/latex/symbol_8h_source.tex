@@ -1,0 +1,87 @@
+\doxysection{symbol.\+h}
+\hypertarget{symbol_8h_source}{}\label{symbol_8h_source}\index{third\_party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/symbol.h@{third\_party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/symbol.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{/****************************************************************************}}
+\DoxyCodeLine{00002\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00003\ \textcolor{comment}{\ *\ MIT\ License}}
+\DoxyCodeLine{00004\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00005\ \textcolor{comment}{\ *\ Copyright\ (c)\ 2023\ SineStriker}}
+\DoxyCodeLine{00006\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00007\ \textcolor{comment}{\ *\ Permission\ is\ hereby\ granted,\ free\ of\ charge,\ to\ any\ person\ obtaining\ a\ copy}}
+\DoxyCodeLine{00008\ \textcolor{comment}{\ *\ of\ this\ software\ and\ associated\ documentation\ files\ (the\ "{}Software"{}),\ to\ deal}}
+\DoxyCodeLine{00009\ \textcolor{comment}{\ *\ in\ the\ Software\ without\ restriction,\ including\ without\ limitation\ the\ rights}}
+\DoxyCodeLine{00010\ \textcolor{comment}{\ *\ to\ use,\ copy,\ modify,\ merge,\ publish,\ distribute,\ sublicense,\ and/or\ sell}}
+\DoxyCodeLine{00011\ \textcolor{comment}{\ *\ copies\ of\ the\ Software,\ and\ to\ permit\ persons\ to\ whom\ the\ Software\ is}}
+\DoxyCodeLine{00012\ \textcolor{comment}{\ *\ furnished\ to\ do\ so,\ subject\ to\ the\ following\ conditions:}}
+\DoxyCodeLine{00013\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00014\ \textcolor{comment}{\ *\ The\ above\ copyright\ notice\ and\ this\ permission\ notice\ shall\ be\ included\ in\ all}}
+\DoxyCodeLine{00015\ \textcolor{comment}{\ *\ copies\ or\ substantial\ portions\ of\ the\ Software.}}
+\DoxyCodeLine{00016\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00017\ \textcolor{comment}{\ *\ THE\ SOFTWARE\ IS\ PROVIDED\ "{}AS\ IS"{},\ WITHOUT\ WARRANTY\ OF\ ANY\ KIND,\ EXPRESS\ OR}}
+\DoxyCodeLine{00018\ \textcolor{comment}{\ *\ IMPLIED,\ INCLUDING\ BUT\ NOT\ LIMITED\ TO\ THE\ WARRANTIES\ OF\ MERCHANTABILITY,}}
+\DoxyCodeLine{00019\ \textcolor{comment}{\ *\ FITNESS\ FOR\ A\ PARTICULAR\ PURPOSE\ AND\ NONINFRINGEMENT.\ IN\ NO\ EVENT\ SHALL\ THE}}
+\DoxyCodeLine{00020\ \textcolor{comment}{\ *\ AUTHORS\ OR\ COPYRIGHT\ HOLDERS\ BE\ LIABLE\ FOR\ ANY\ CLAIM,\ DAMAGES\ OR\ OTHER}}
+\DoxyCodeLine{00021\ \textcolor{comment}{\ *\ LIABILITY,\ WHETHER\ IN\ AN\ ACTION\ OF\ CONTRACT,\ TORT\ OR\ OTHERWISE,\ ARISING\ FROM,}}
+\DoxyCodeLine{00022\ \textcolor{comment}{\ *\ OUT\ OF\ OR\ IN\ CONNECTION\ WITH\ THE\ SOFTWARE\ OR\ THE\ USE\ OR\ OTHER\ DEALINGS\ IN\ THE}}
+\DoxyCodeLine{00023\ \textcolor{comment}{\ *\ SOFTWARE.}}
+\DoxyCodeLine{00024\ \textcolor{comment}{\ *}}
+\DoxyCodeLine{00025\ \textcolor{comment}{\ ****************************************************************************/}}
+\DoxyCodeLine{00026\ }
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#ifndef\ SYMBOL\_H}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ SYMBOL\_H}}
+\DoxyCodeLine{00029\ }
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#include\ <functional>}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#include\ <string>}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{preprocessor}{\#include\ <syscmdline/sharedbase.h>}}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \textcolor{keyword}{namespace\ }SysCmdLine\ \{}
+\DoxyCodeLine{00036\ }
+\DoxyCodeLine{00037\ \ \ \ \ \textcolor{keyword}{class\ }SymbolPrivate;}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \ \ \ \ \textcolor{keyword}{class\ }SYSCMDLINE\_EXPORT\ \mbox{\hyperlink{classSysCmdLine_1_1Symbol}{Symbol}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classSysCmdLine_1_1SharedBase}{SharedBase}}\ \{}
+\DoxyCodeLine{00040\ \ \ \ \ \ \ \ \ SYSCMDLINE\_DECL\_PRIVATE(\mbox{\hyperlink{classSysCmdLine_1_1Symbol}{Symbol}})}
+\DoxyCodeLine{00041\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00042\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ SymbolType\ \{}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \ \ \ \ ST\_Command,}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ \ \ \ \ ST\_Option,}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ \ \ \ \ ST\_Argument,}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00047\ }
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \textcolor{keyword}{enum}\ HelpPosition\ \{}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \ \ \ \ HP\_Usage,}
+\DoxyCodeLine{00050\ \ \ \ \ \ \ \ \ \ \ \ \ HP\_ErrorText,}
+\DoxyCodeLine{00051\ \ \ \ \ \ \ \ \ \ \ \ \ HP\_FirstColumn,}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \ \ \ \ HP\_SecondColumn,}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \};}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \textcolor{keyword}{using\ }HelpProvider\ =}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \ \ \ \ std::function<std::string(\textcolor{keyword}{const}\ \mbox{\hyperlink{classSysCmdLine_1_1Symbol}{Symbol}}\ *\ \textcolor{comment}{/*\ this\ */},\ HelpPosition\ \textcolor{comment}{/*\ pos\ */},}
+\DoxyCodeLine{00057\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{int}\ \textcolor{comment}{/*\ displayOptions\ */},\ \textcolor{keywordtype}{void}\ *\ \textcolor{comment}{/*\ extra\ */})>;}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \ \ \ \ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ helpText(HelpPosition\ pos,\ \textcolor{keywordtype}{int}\ displayOptions)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00060\ \ \ \ \ \ \ \ \ \textcolor{keyword}{virtual}\ std::string\ helpText(HelpPosition\ pos,\ \textcolor{keywordtype}{int}\ displayOptions,\ \textcolor{keywordtype}{void}\ *extra)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00061\ }
+\DoxyCodeLine{00062\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00063\ \ \ \ \ \ \ \ \ SymbolType\ type()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00064\ }
+\DoxyCodeLine{00065\ \ \ \ \ \ \ \ \ std::string\ description()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00066\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setDescription(\textcolor{keyword}{const}\ std::string\ \&desc);}
+\DoxyCodeLine{00067\ }
+\DoxyCodeLine{00068\ \ \ \ \ \ \ \ \ HelpProvider\ helpProvider()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setHelpProvider(\textcolor{keyword}{const}\ HelpProvider\ \&helpProvider);}
+\DoxyCodeLine{00070\ }
+\DoxyCodeLine{00071\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00072\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classSysCmdLine_1_1Symbol}{Symbol}}(\mbox{\hyperlink{classSysCmdLine_1_1SymbolPrivate}{SymbolPrivate}}\ *d);}
+\DoxyCodeLine{00073\ \ \ \ \ \};}
+\DoxyCodeLine{00074\ }
+\DoxyCodeLine{00075\ \ \ \ \ \textcolor{keyword}{inline}\ std::string\ Symbol::helpText(Symbol::HelpPosition\ pos,\ \textcolor{keywordtype}{int}\ displayOptions)\textcolor{keyword}{\ const\ }\{}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ helpText(pos,\ displayOptions,\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00077\ \ \ \ \ \}}
+\DoxyCodeLine{00078\ }
+\DoxyCodeLine{00079\ \}}
+\DoxyCodeLine{00080\ }
+\DoxyCodeLine{00081\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ SYMBOL\_H}}
+
+\end{DoxyCode}

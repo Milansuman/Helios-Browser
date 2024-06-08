@@ -1,0 +1,49 @@
+\doxysection{styleagent\+\_\+p.\+h}
+\hypertarget{third__party_2qwindowkit_2src_2core_2style_2styleagent__p_8h_source}{}\label{third__party_2qwindowkit_2src_2core_2style_2styleagent__p_8h_source}\index{third\_party/qwindowkit/src/core/style/styleagent\_p.h@{third\_party/qwindowkit/src/core/style/styleagent\_p.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ STYLEAGENTPRIVATE\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ STYLEAGENTPRIVATE\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{comment}{//}}
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ \ W\ A\ R\ N\ I\ N\ G\ !!!}}
+\DoxyCodeLine{00010\ \textcolor{comment}{//\ \ -\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/-\/}}
+\DoxyCodeLine{00011\ \textcolor{comment}{//}}
+\DoxyCodeLine{00012\ \textcolor{comment}{//\ This\ file\ is\ not\ part\ of\ the\ QWindowKit\ API.\ It\ is\ used\ purely\ as\ an}}
+\DoxyCodeLine{00013\ \textcolor{comment}{//\ implementation\ detail.\ This\ header\ file\ may\ change\ from\ version\ to}}
+\DoxyCodeLine{00014\ \textcolor{comment}{//\ version\ without\ notice,\ or\ may\ even\ be\ removed.}}
+\DoxyCodeLine{00015\ \textcolor{comment}{//}}
+\DoxyCodeLine{00016\ }
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#include\ <QtCore/QHash>}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{preprocessor}{\#include\ <QWKCore/styleagent.h>}}
+\DoxyCodeLine{00020\ }
+\DoxyCodeLine{00021\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keyword}{class\ }\mbox{\hyperlink{classQWK_1_1StyleAgentPrivate}{StyleAgentPrivate}}\ :\ \textcolor{keyword}{public}\ QObject\ \{}
+\DoxyCodeLine{00024\ \ \ \ \ \ \ \ \ Q\_DECLARE\_PUBLIC(\mbox{\hyperlink{classQWK_1_1StyleAgent}{StyleAgent}})}
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1StyleAgentPrivate}{StyleAgentPrivate}}();}
+\DoxyCodeLine{00027\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1StyleAgentPrivate}{\string~StyleAgentPrivate}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00028\ }
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ init();}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1StyleAgent}{StyleAgent}}\ *q\_ptr;}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ StyleAgent::SystemTheme\ systemTheme\ =\ StyleAgent::Unknown;}
+\DoxyCodeLine{00034\ }
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ setupSystemThemeHook();}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ removeSystemThemeHook();}
+\DoxyCodeLine{00037\ }
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ notifyThemeChanged(StyleAgent::SystemTheme\ theme);}
+\DoxyCodeLine{00039\ \ \ \ \ \};}
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \}}
+\DoxyCodeLine{00042\ }
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ STYLEAGENTPRIVATE\_H}}
+
+\end{DoxyCode}

@@ -1,0 +1,67 @@
+\doxysection{quickwindowagent.\+h}
+\hypertarget{quickwindowagent_8h_source}{}\label{quickwindowagent_8h_source}\index{third\_party/qwindowkit/src/quick/quickwindowagent.h@{third\_party/qwindowkit/src/quick/quickwindowagent.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//\ Copyright\ (C)\ 2023-\/2024\ Stdware\ Collections\ (https://www.github.com/stdware)}}
+\DoxyCodeLine{00002\ \textcolor{comment}{//\ Copyright\ (C)\ 2021-\/2023\ wangwenx190\ (Yuhang\ Zhao)}}
+\DoxyCodeLine{00003\ \textcolor{comment}{//\ SPDX-\/License-\/Identifier:\ Apache-\/2.0}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#ifndef\ QUICKWINDOWAGENT\_H}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#define\ QUICKWINDOWAGENT\_H}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{preprocessor}{\#include\ <QtQuick/QQuickItem>}}
+\DoxyCodeLine{00009\ \textcolor{preprocessor}{\#include\ <QtQuick/QQuickWindow>}}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#include\ <QWKCore/windowagentbase.h>}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#include\ <QWKQuick/qwkquickglobal.h>}}
+\DoxyCodeLine{00013\ }
+\DoxyCodeLine{00014\ \textcolor{keyword}{namespace\ }\mbox{\hyperlink{namespaceQWK}{QWK}}\ \{}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ \textcolor{keyword}{class\ }QuickWindowAgentPrivate;}
+\DoxyCodeLine{00017\ }
+\DoxyCodeLine{00018\ \ \ \ \ \textcolor{keyword}{class\ }QWK\_QUICK\_EXPORT\ \mbox{\hyperlink{classQWK_1_1QuickWindowAgent}{QuickWindowAgent}}\ :\ \textcolor{keyword}{public}\ \mbox{\hyperlink{classQWK_1_1WindowAgentBase}{WindowAgentBase}}\ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ Q\_DECLARE\_PRIVATE(\mbox{\hyperlink{classQWK_1_1QuickWindowAgent}{QuickWindowAgent}})}
+\DoxyCodeLine{00021\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00022\ \ \ \ \ \ \ \ \ \textcolor{keyword}{explicit}\ \mbox{\hyperlink{classQWK_1_1QuickWindowAgent}{QuickWindowAgent}}(QObject\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00023\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1QuickWindowAgent}{\string~QuickWindowAgent}}()\ \textcolor{keyword}{override};}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \ \ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00026\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{bool}\ setup(QQuickWindow\ *window);}
+\DoxyCodeLine{00027\ }
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ QQuickItem\ *titleBar()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{void}\ setTitleBar(QQuickItem\ *item);}
+\DoxyCodeLine{00030\ }
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ QQuickItem\ *systemButton(SystemButton\ button)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{void}\ setSystemButton(SystemButton\ button,\ QQuickItem\ *item);}
+\DoxyCodeLine{00033\ }
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#if\ (QT\_VERSION\ <\ QT\_VERSION\_CHECK(6,\ 0,\ 0))}}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{bool}\ isHitTestVisible(QQuickItem\ *item)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00036\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{void}\ setHitTestVisible(QQuickItem\ *item,\ \textcolor{keywordtype}{bool}\ visible\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00038\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{bool}\ isHitTestVisible(\textcolor{keyword}{const}\ QQuickItem\ *item)\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00039\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{void}\ setHitTestVisible(\textcolor{keyword}{const}\ QQuickItem\ *item,\ \textcolor{keywordtype}{bool}\ visible\ =\ \textcolor{keyword}{true});}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00041\ }
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#ifdef\ Q\_OS\_MAC}}
+\DoxyCodeLine{00043\ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ The\ system\ button\ area\ APIs\ are\ experimental,\ very\ likely\ to\ change\ in\ the\ future.}}
+\DoxyCodeLine{00044\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ QQuickItem\ *systemButtonArea()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00045\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{void}\ setSystemButtonArea(QQuickItem\ *item);}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ ScreenRectCallback\ systemButtonAreaCallback()\ \textcolor{keyword}{const};}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ Q\_INVOKABLE\ \textcolor{keywordtype}{void}\ setSystemButtonAreaCallback(\textcolor{keyword}{const}\ ScreenRectCallback\ \&callback);}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \ \ \ \ Q\_SIGNALS:}
+\DoxyCodeLine{00052\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ titleBarWidgetChanged(QQuickItem\ *item);}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ \textcolor{keywordtype}{void}\ systemButtonChanged(SystemButton\ button,\ QQuickItem\ *item);}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \ \ \ \ \textcolor{keyword}{protected}:}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \mbox{\hyperlink{classQWK_1_1QuickWindowAgent}{QuickWindowAgent}}(\mbox{\hyperlink{classQWK_1_1QuickWindowAgentPrivate}{QuickWindowAgentPrivate}}\ \&d,\ QObject\ *parent\ =\ \textcolor{keyword}{nullptr});}
+\DoxyCodeLine{00057\ \ \ \ \ \};}
+\DoxyCodeLine{00058\ }
+\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{preprocessor}{\#endif\ }\textcolor{comment}{//\ QUICKWINDOWAGENT\_H}}
+
+\end{DoxyCode}

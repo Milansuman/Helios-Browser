@@ -1,0 +1,109 @@
+\doxysection{QWK\+::Quick\+Window\+Agent Class Reference}
+\hypertarget{classQWK_1_1QuickWindowAgent}{}\label{classQWK_1_1QuickWindowAgent}\index{QWK::QuickWindowAgent@{QWK::QuickWindowAgent}}
+
+
+\doxylink{classQWK_1_1QuickWindowAgent}{Quick\+Window\+Agent} is the window agent for Qt\+Quick.  
+
+
+Inheritance diagram for QWK\+::Quick\+Window\+Agent\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classQWK_1_1QuickWindowAgent}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_aedcbf44986e4f61d4d2ce7213db57bdc}\label{classQWK_1_1QuickWindowAgent_aedcbf44986e4f61d4d2ce7213db57bdc} 
+void {\bfseries title\+Bar\+Widget\+Changed} (QQuick\+Item \texorpdfstring{$\ast$}{*}item)
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a27e0dfb08da9d8bf6a783c0867cecdbb}\label{classQWK_1_1QuickWindowAgent_a27e0dfb08da9d8bf6a783c0867cecdbb} 
+void {\bfseries system\+Button\+Changed} (System\+Button button, QQuick\+Item \texorpdfstring{$\ast$}{*}item)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a1587ac0bcea7a2a71768c8513571b3c8}\label{classQWK_1_1QuickWindowAgent_a1587ac0bcea7a2a71768c8513571b3c8} 
+{\bfseries Quick\+Window\+Agent} (QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a912990d4fb607bcb1a841c0635b618a6}\label{classQWK_1_1QuickWindowAgent_a912990d4fb607bcb1a841c0635b618a6} 
+Q\+\_\+\+INVOKABLE bool {\bfseries setup} (QQuick\+Window \texorpdfstring{$\ast$}{*}window)
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a708decc27f76460e28318b97eaf579f7}\label{classQWK_1_1QuickWindowAgent_a708decc27f76460e28318b97eaf579f7} 
+Q\+\_\+\+INVOKABLE QQuick\+Item \texorpdfstring{$\ast$}{*} {\bfseries title\+Bar} () const
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_ae28835eb4d9a5bbcbba4546c5bc6a8fa}\label{classQWK_1_1QuickWindowAgent_ae28835eb4d9a5bbcbba4546c5bc6a8fa} 
+Q\+\_\+\+INVOKABLE void {\bfseries set\+Title\+Bar} (QQuick\+Item \texorpdfstring{$\ast$}{*}item)
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a602da5a9fde0f7959d328650cd3a6834}\label{classQWK_1_1QuickWindowAgent_a602da5a9fde0f7959d328650cd3a6834} 
+Q\+\_\+\+INVOKABLE QQuick\+Item \texorpdfstring{$\ast$}{*} {\bfseries system\+Button} (System\+Button button) const
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a5018ee8dd3cfcc63cf7fcc7728fefde2}\label{classQWK_1_1QuickWindowAgent_a5018ee8dd3cfcc63cf7fcc7728fefde2} 
+Q\+\_\+\+INVOKABLE void {\bfseries set\+System\+Button} (System\+Button button, QQuick\+Item \texorpdfstring{$\ast$}{*}item)
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a77ae8709d071cb649a8216614e7daa5a}\label{classQWK_1_1QuickWindowAgent_a77ae8709d071cb649a8216614e7daa5a} 
+Q\+\_\+\+INVOKABLE bool {\bfseries is\+Hit\+Test\+Visible} (const QQuick\+Item \texorpdfstring{$\ast$}{*}item) const
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a6748623349aca07adf9b66fd9600cc98}\label{classQWK_1_1QuickWindowAgent_a6748623349aca07adf9b66fd9600cc98} 
+Q\+\_\+\+INVOKABLE void {\bfseries set\+Hit\+Test\+Visible} (const QQuick\+Item \texorpdfstring{$\ast$}{*}item, bool visible=true)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions inherited from \mbox{\hyperlink{classQWK_1_1WindowAgentBase}{QWK\+::\+Window\+Agent\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classQWK_1_1WindowAgentBase_a6ab505554d10c23cadbf2ab5b346246b}{\texorpdfstring{$\sim$}{\string~}\+Window\+Agent\+Base}} () override
+\item 
+QVariant \mbox{\hyperlink{classQWK_1_1WindowAgentBase_a3333eea610aaa46da3a5d32411c07f25}{window\+Attribute}} (const QString \&key) const
+\item 
+Q\+\_\+\+INVOKABLE bool \mbox{\hyperlink{classQWK_1_1WindowAgentBase_a83119a8b950f54155ed51d417cef9996}{set\+Window\+Attribute}} (const QString \&key, const QVariant \&attribute)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1QuickWindowAgent_a6a0569d983fdbaa3ab56ac907f2431e8}\label{classQWK_1_1QuickWindowAgent_a6a0569d983fdbaa3ab56ac907f2431e8} 
+{\bfseries Quick\+Window\+Agent} (\mbox{\hyperlink{classQWK_1_1QuickWindowAgentPrivate}{Quick\+Window\+Agent\+Private}} \&d, QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Member Functions inherited from \mbox{\hyperlink{classQWK_1_1WindowAgentBase}{QWK\+::\+Window\+Agent\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+{\bfseries Window\+Agent\+Base} (\mbox{\hyperlink{classQWK_1_1WindowAgentBasePrivate}{Window\+Agent\+Base\+Private}} \&d, QObject \texorpdfstring{$\ast$}{*}parent=nullptr)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Additional Inherited Members}
+\doxysubsection*{Public Types inherited from \mbox{\hyperlink{classQWK_1_1WindowAgentBase}{QWK\+::\+Window\+Agent\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1WindowAgentBase_a674f7281654d67693ee6dd71dddc5002}\label{classQWK_1_1WindowAgentBase_a674f7281654d67693ee6dd71dddc5002} 
+enum {\bfseries System\+Button} \{ \newline
+{\bfseries Unknown}
+, {\bfseries Window\+Icon}
+, {\bfseries Help}
+, {\bfseries Minimize}
+, \newline
+{\bfseries Maximize}
+, {\bfseries Close}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Slots inherited from \mbox{\hyperlink{classQWK_1_1WindowAgentBase}{QWK\+::\+Window\+Agent\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classQWK_1_1WindowAgentBase_a34ada9d4a3fa9c9c555d8de216d4f6b1}{show\+System\+Menu}} (const QPoint \&pos)
+\item 
+void \mbox{\hyperlink{classQWK_1_1WindowAgentBase_a71fe31a7ba212c0b756bae1fb47f7d3b}{centralize}} ()
+\item 
+void \mbox{\hyperlink{classQWK_1_1WindowAgentBase_ac3d49f2dc4e37612456af1428926e877}{raise}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classQWK_1_1WindowAgentBase}{QWK\+::\+Window\+Agent\+Base}}}
+\begin{DoxyCompactItemize}
+\item 
+const std\+::unique\+\_\+ptr$<$ \mbox{\hyperlink{classQWK_1_1WindowAgentBasePrivate}{Window\+Agent\+Base\+Private}} $>$ {\bfseries d\+\_\+ptr}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\doxylink{classQWK_1_1QuickWindowAgent}{Quick\+Window\+Agent} is the window agent for Qt\+Quick. 
+
+It provides interfaces for Qt\+Quick and processes some Qt events related to the QQuick\+Item instance. The usage of all APIs is consistent with the {\itshape Widgets} module. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/qwindowkit/src/quick/quickwindowagent.\+h\item 
+third\+\_\+party/qwindowkit/src/quick/quickwindowagent.\+cpp\end{DoxyCompactItemize}

@@ -1,0 +1,115 @@
+\doxysection{Sys\+Cmd\+Line\+::Value Class Reference}
+\hypertarget{classSysCmdLine_1_1Value}{}\label{classSysCmdLine_1_1Value}\index{SysCmdLine::Value@{SysCmdLine::Value}}
+\doxysubsubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_aed266b239a00466a4e96d44f71f58b76}\label{classSysCmdLine_1_1Value_aed266b239a00466a4e96d44f71f58b76} 
+enum {\bfseries Type} \{ \newline
+{\bfseries Null}
+, {\bfseries Bool}
+, {\bfseries Int}
+, {\bfseries Int64}
+, \newline
+{\bfseries Double}
+, {\bfseries String}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_ad64ea804d5dd3f23195d891eb92d3363}\label{classSysCmdLine_1_1Value_ad64ea804d5dd3f23195d891eb92d3363} 
+{\bfseries Value} (Type type=Null)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_aa06a4b2dcfab56bbd95f8e4f432b7f82}\label{classSysCmdLine_1_1Value_aa06a4b2dcfab56bbd95f8e4f432b7f82} 
+{\bfseries Value} (bool b)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a786dd1a275af3986baf3b2a2a13f23e3}\label{classSysCmdLine_1_1Value_a786dd1a275af3986baf3b2a2a13f23e3} 
+{\bfseries Value} (int i)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a20281d459a798107ca5564249f3e4cc2}\label{classSysCmdLine_1_1Value_a20281d459a798107ca5564249f3e4cc2} 
+{\bfseries Value} (int64\+\_\+t l)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a9f28ba6af72ee4215d223b332da5b26a}\label{classSysCmdLine_1_1Value_a9f28ba6af72ee4215d223b332da5b26a} 
+{\bfseries Value} (double d)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a039a90d1d19d01ee963ad8588bc2d455}\label{classSysCmdLine_1_1Value_a039a90d1d19d01ee963ad8588bc2d455} 
+{\bfseries Value} (const std\+::string \&s)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a3a32e55132c782eca1df5d85ae4421c0}\label{classSysCmdLine_1_1Value_a3a32e55132c782eca1df5d85ae4421c0} 
+{\bfseries Value} (const char \texorpdfstring{$\ast$}{*}ch, int size=-\/1)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_abad6c13707a781f9c682269a8811473c}\label{classSysCmdLine_1_1Value_abad6c13707a781f9c682269a8811473c} 
+{\bfseries Value} (const \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \&other)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a3494f2eb0ee2d2835576606135f92449}\label{classSysCmdLine_1_1Value_a3494f2eb0ee2d2835576606135f92449} 
+{\bfseries Value} (\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \&\&other) noexcept
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a2ece17fbd78393ed9dbac26feb074043}\label{classSysCmdLine_1_1Value_a2ece17fbd78393ed9dbac26feb074043} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \& {\bfseries operator=} (const \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \&other)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a9e8b5aaa1c36e2c085c1ffae52c76bd3}\label{classSysCmdLine_1_1Value_a9e8b5aaa1c36e2c085c1ffae52c76bd3} 
+\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \& {\bfseries operator=} (\mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \&\&other) noexcept
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_abdf0d8a4655457d0e92b5882daa23a01}\label{classSysCmdLine_1_1Value_abdf0d8a4655457d0e92b5882daa23a01} 
+Type {\bfseries type} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a6207b24daccc143cd7d5fc4b2c5c3f4e}\label{classSysCmdLine_1_1Value_a6207b24daccc143cd7d5fc4b2c5c3f4e} 
+bool {\bfseries is\+Empty} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a0a24a0fe57281c72cc40877c3b6d3beb}\label{classSysCmdLine_1_1Value_a0a24a0fe57281c72cc40877c3b6d3beb} 
+bool {\bfseries to\+Bool} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_ad161ef3641f7a9e1bdc9f5dd63ccdc69}\label{classSysCmdLine_1_1Value_ad161ef3641f7a9e1bdc9f5dd63ccdc69} 
+int {\bfseries to\+Int} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a15fee01170c171a9447c2b62aa971062}\label{classSysCmdLine_1_1Value_a15fee01170c171a9447c2b62aa971062} 
+int64\+\_\+t {\bfseries to\+Int64} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a734b129a9b1595c27ed5a6751bbb2895}\label{classSysCmdLine_1_1Value_a734b129a9b1595c27ed5a6751bbb2895} 
+double {\bfseries to\+Double} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_acc68bb90d7fa67b8a44227ad5beecce4}\label{classSysCmdLine_1_1Value_acc68bb90d7fa67b8a44227ad5beecce4} 
+std\+::string {\bfseries to\+String} () const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a00cd18f5ecd0f1133d54ecb51d4c1d1b}\label{classSysCmdLine_1_1Value_a00cd18f5ecd0f1133d54ecb51d4c1d1b} 
+bool {\bfseries operator==} (const \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \&other) const
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a84b6eefd8db2de7aad49339c302e3e0b}\label{classSysCmdLine_1_1Value_a84b6eefd8db2de7aad49339c302e3e0b} 
+bool {\bfseries operator!=} (const \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} \&other) const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_af8e8568aff35da21365263a1306c0570}\label{classSysCmdLine_1_1Value_af8e8568aff35da21365263a1306c0570} 
+static \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} {\bfseries from\+String} (const std\+::string \&s, Type type)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_ab12987582a7ebade3f373fc200d85b4f}\label{classSysCmdLine_1_1Value_ab12987582a7ebade3f373fc200d85b4f} 
+static std\+::vector$<$ std\+::string $>$ {\bfseries to\+String\+List} (const std\+::vector$<$ \mbox{\hyperlink{classSysCmdLine_1_1Value}{Value}} $>$ \&values)
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_a45ba0180797bb7330c1a33dd70d4c9ca}\label{classSysCmdLine_1_1Value_a45ba0180797bb7330c1a33dd70d4c9ca} 
+static const char \texorpdfstring{$\ast$}{*} {\bfseries type\+Name} (Type type)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classSysCmdLine_1_1Value_ad76a96237145bad2f16f957bbec8df93}\label{classSysCmdLine_1_1Value_ad76a96237145bad2f16f957bbec8df93} 
+\begin{tabbing}
+xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=xx\=\kill
+union \{\\
+\>bool {\bfseries b}\\
+\>int {\bfseries i}\\
+\>int64\_t {\bfseries l}\\
+\>double {\bfseries d}\\
+\>std::string \texorpdfstring{$\ast$}{*} {\bfseries s}\\
+\} {\bfseries data}\\
+
+\end{tabbing}\item 
+\Hypertarget{classSysCmdLine_1_1Value_a3ade9811609d7b98225851a7c98f2754}\label{classSysCmdLine_1_1Value_a3ade9811609d7b98225851a7c98f2754} 
+Type {\bfseries \+\_\+type}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/include/syscmdline/value.\+h\item 
+third\+\_\+party/qwindowkit/qmsetup/src/syscmdline/src/value.\+cpp\end{DoxyCompactItemize}

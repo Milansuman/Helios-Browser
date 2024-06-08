@@ -1,0 +1,256 @@
+\chapter{QMSetup}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README}{}\label{md_third__party_2qwindowkit_2qmsetup_2README}\index{QMSetup@{QMSetup}}
+\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md20}%
+\Hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md20}%
+ {\bfseries{QMSetup}} is a set of CMake Modules and Basic Libraries for C/\+C++ projects.
+
+{\bfseries{This project is independent from Qt and other 3rdparty libraries.}} Due to the fact that it encompasses some tools that need to be compiled, it\textquotesingle{}s strongly not suggested to be included as a subproject.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md21}{}\doxysection{\texorpdfstring{Features}{Features}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md21}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md22}{}\doxysubsection{\texorpdfstring{Helpful Functions}{Helpful Functions}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md22}
+
+\begin{DoxyItemize}
+\item Path, Version functions
+\item Target configuration functions
+\item Qt related functions
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md23}{}\doxysubsection{\texorpdfstring{Generators}{Generators}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md23}
+
+\begin{DoxyItemize}
+\item Generate Windows RC files, manifest files
+\item Generate Mac\+OS Bundle info files
+\item Generate configuration header files
+\item Generate Git information header files
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md24}{}\doxysubsection{\texorpdfstring{Filesystem Utilities}{Filesystem Utilities}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md24}
+
+\begin{DoxyItemize}
+\item Reorganize header files
+\item Copy files and directories after build
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md25}{}\doxysubsection{\texorpdfstring{Install Utilities}{Install Utilities}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md25}
+
+\begin{DoxyItemize}
+\item Deploy project dependencies and fix rpaths
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md26}{}\doxysubsection{\texorpdfstring{Extended Build Rules}{Extended Build Rules}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md26}
+
+\begin{DoxyItemize}
+\item Create translations with {\bfseries{Qt Linguist}} tools
+\item Create source files with {\bfseries{Protobuf}} compiler
+\item Create documentations with {\bfseries{Doxygen}}
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md27}{}\doxysection{\texorpdfstring{Support Platforms}{Support Platforms}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md27}
+
+\begin{DoxyItemize}
+\item Microsoft Windows
+\item Apple Macintosh
+\item GNU/\+Linux
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md28}{}\doxysection{\texorpdfstring{Dependencies}{Dependencies}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md28}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md29}{}\doxysubsection{\texorpdfstring{Required Packages}{Required Packages}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md29}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md30}{}\doxysubsubsection{\texorpdfstring{Windows}{Windows}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md30}
+Windows deploy command acquires the shared library paths by reading the PE files and searching the specified paths so that it doesn\textquotesingle{}t depend on {\ttfamily dumpbin} tool.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md31}{}\doxysubsubsection{\texorpdfstring{Unix}{Unix}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md31}
+Unix deploy command acquires the shared library paths by running {\ttfamily ldd}/{\ttfamily otool} command and fixes the \texorpdfstring{$\ast$}{*}rpath\texorpdfstring{$\ast$}{*}s by runing the {\ttfamily patchelf}/{\ttfamily install\+\_\+name\+\_\+tool} command, make sure you have installed them.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sudo\ apt\ install\ patchelf}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md32}{}\doxysubsection{\texorpdfstring{Build System}{Build System}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md32}
+
+\begin{DoxyItemize}
+\item C++ 17
+\item CMake 3.\+19
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md33}{}\doxysubsection{\texorpdfstring{Open-\/\+Source Libraries}{Open-\/\+Source Libraries}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md33}
+
+\begin{DoxyItemize}
+\item \href{https://github.com/SineStriker/syscmdline}{\texttt{ https\+://github.\+com/\+Sine\+Striker/syscmdline}}
+\item \href{https://github.com/jothepro/doxygen-awesome-css}{\texttt{ https\+://github.\+com/jothepro/doxygen-\/awesome-\/css}}
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md34}{}\doxysection{\texorpdfstring{Integrate}{Integrate}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md34}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md35}{}\doxysubsection{\texorpdfstring{Clone}{Clone}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md35}
+Via Https 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ -\/-\/recursive\ https://github.com/stdware/qmsetup.git}
+
+\end{DoxyCode}
+ Via SSH 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{git\ clone\ -\/-\/recursive\ git@github.com:stdware/qmsetup.git}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md36}{}\doxysubsection{\texorpdfstring{Preinstall (Suggested)}{Preinstall (Suggested)}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md36}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md37}{}\doxysubsubsection{\texorpdfstring{Build \& Install}{Build \& Install}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md37}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ -\/B\ build\ -\/DCMAKE\_BUILD\_TYPE=Release\ \(\backslash\)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ -\/DCMAKE\_INSTALL\_PREFIX=/path/to}
+\DoxyCodeLine{cmake\ -\/B\ build\ -\/-\/target\ all}
+\DoxyCodeLine{cmake\ -\/B\ build\ -\/-\/target\ install}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md38}{}\doxysubsubsection{\texorpdfstring{Import}{Import}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md38}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{cmake\ -\/Dqmsetup\_DIR=/path/to/lib/cmake/qmsetup\ ...}
+
+\end{DoxyCode}
+ 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{find\_package(qmsetup\ REQUIRED)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md39}{}\doxysubsection{\texorpdfstring{Sub-\/project}{Sub-\/project}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md39}
+It still needs to be installed, but the installation occurs during the CMake Configure phase and is executed only once.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{find\_package(qmsetup\ QUIET)}
+\DoxyCodeLine{}
+\DoxyCodeLine{if\ (NOT\ TARGET\ qmsetup::library)}
+\DoxyCodeLine{\ \ \ \ \#\ Modify\ this\ variable\ according\ to\ your\ project\ structure}
+\DoxyCodeLine{\ \ \ \ set(\_source\_dir\ \$\{CMAKE\_CURRENT\_SOURCE\_DIR\}/qmsetup)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ Import\ install\ function}
+\DoxyCodeLine{\ \ \ \ include("{}\$\{\_source\_dir\}/cmake/modules/private/InstallPackage.cmake"{})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ Install\ package\ in\ place}
+\DoxyCodeLine{\ \ \ \ set(\_package\_path)}
+\DoxyCodeLine{\ \ \ \ qm\_install\_package(qmsetup}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ SOURCE\_DIR\ \$\{\_source\_dir\}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ BUILD\_TYPE\ Release}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ RESULT\_PATH\ \_package\_path}
+\DoxyCodeLine{\ \ \ \ )}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ Find\ package\ again}
+\DoxyCodeLine{\ \ \ \ find\_package(qmsetup\ REQUIRED\ PATHS\ \$\{\_package\_path\})}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \#\ Update\ import\ path}
+\DoxyCodeLine{\ \ \ \ set(qmsetup\_DIR\ \$\{\_package\_path\}\ CACHE\ PATH\ "{}"{}\ FORCE)}
+\DoxyCodeLine{endif()}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md40}{}\doxysection{\texorpdfstring{Quick Start}{Quick Start}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md40}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md41}{}\doxysubsection{\texorpdfstring{Examples}{Examples}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md41}
+You can use the functions in this library to greatly simplify several kinds of common build rules.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md42}{}\doxysubsubsection{\texorpdfstring{Generate Configuration Header}{Generate Configuration Header}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md42}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{qm\_import(Preprocess)}
+\DoxyCodeLine{}
+\DoxyCodeLine{qm\_add\_definition(FOO\ false)}
+\DoxyCodeLine{qm\_add\_definition(BAR\ 114514)}
+\DoxyCodeLine{qm\_add\_definition(BAZ\ "{}ABC"{}\ STRING\_LITERAL)}
+\DoxyCodeLine{}
+\DoxyCodeLine{qm\_generate\_config(\$\{CMAKE\_BINARY\_DIR\}/conf.h)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md43}{}\doxysubsubsection{\texorpdfstring{Reorganize Include Directory}{Reorganize Include Directory}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md43}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{qm\_import(Preprocess)}
+\DoxyCodeLine{}
+\DoxyCodeLine{qm\_sync\_include(src/core\ \$\{CMAKE\_BINARY\_DIR\}/include/MyCore}
+\DoxyCodeLine{\ \ \ \ INSTALL\_DIR\ \$\{CMAKE\_INSTALL\_INCLUDEDIR\}/MyCore}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md44}{}\doxysubsubsection{\texorpdfstring{Sync Resource Files After Build}{Sync Resource Files After Build}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md44}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{qm\_import(Filesystem)}
+\DoxyCodeLine{}
+\DoxyCodeLine{qm\_add\_copy\_command(\$\{PROJECT\_NAME\}}
+\DoxyCodeLine{\ \ \ \ SOURCES}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ file.txt}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dir\_to\_copy}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ dir\_contents\_to\_copy/}
+\DoxyCodeLine{\ \ \ \ DESTINATION\ .}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md45}{}\doxysubsubsection{\texorpdfstring{Deploy Project And All Dependencies}{Deploy Project And All Dependencies}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md45}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{qm\_import(Deploy)}
+\DoxyCodeLine{}
+\DoxyCodeLine{qm\_deploy\_directory("{}\$\{CMAKE\_INSTALL\_PREFIX\}"{}}
+\DoxyCodeLine{\ \ \ \ COMMENT\ "{}Deploy\ project\ spectacularly"{}}
+\DoxyCodeLine{\ \ \ \ PLUGINS\ "{}iconengines/qsvgicon"{}\ "{}bearer/qgenericbearer"{}}
+\DoxyCodeLine{\ \ \ \ QML\ Qt\ QtQml}
+\DoxyCodeLine{\ \ \ \ PLUGIN\_DIR\ share/plugins}
+\DoxyCodeLine{\ \ \ \ QML\_DIR\ share/qml}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md46}{}\doxysubsubsection{\texorpdfstring{Add Qt Translations}{Add Qt Translations}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md46}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{qm\_import(Translate)}
+\DoxyCodeLine{}
+\DoxyCodeLine{qm\_find\_qt(LinguistTools)}
+\DoxyCodeLine{qm\_add\_translation(\$\{PROJECT\_NAME\}\_translations}
+\DoxyCodeLine{\ \ \ \ LOCALES\ ja\_JP\ zh\_CN\ zh\_TW}
+\DoxyCodeLine{\ \ \ \ PREFIX\ \$\{PROJECT\_NAME\}}
+\DoxyCodeLine{\ \ \ \ TARGETS\ \$\{PROJECT\_NAME\}}
+\DoxyCodeLine{\ \ \ \ TS\_DIR\ \$\{CMAKE\_CURRENT\_SOURCE\_DIR\}/translations}
+\DoxyCodeLine{\ \ \ \ QM\_DIR\ \$\{CMAKE\_CURRENT\_BINARY\_DIR\}/translations}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md47}{}\doxysubsubsection{\texorpdfstring{Generate Protubuf Source Files}{Generate Protubuf Source Files}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md47}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{qm\_import(Protobuf)}
+\DoxyCodeLine{}
+\DoxyCodeLine{find\_package(Protobuf\ REQUIRED)}
+\DoxyCodeLine{qm\_create\_protobuf(\_proto\_src}
+\DoxyCodeLine{\ \ \ \ INPUT\ a.proto\ b.proto}
+\DoxyCodeLine{\ \ \ \ INCLUDE\_DIRECTORIES\ src/proto}
+\DoxyCodeLine{\ \ \ \ OUTPUT\_DIR\ \$\{CMAKE\_CURRENT\_BINARY\_DIR\}/proto}
+\DoxyCodeLine{)}
+\DoxyCodeLine{target\_sources(\$\{PROJECT\_NAME\}\ PUBLIC\ \$\{\_proto\_src\})}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md48}{}\doxysubsubsection{\texorpdfstring{Generate Doxygen HTML Documentations}{Generate Doxygen HTML Documentations}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md48}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{qm\_import(Doxygen)}
+\DoxyCodeLine{}
+\DoxyCodeLine{find\_package(Doxygen\ REQUIRED)}
+\DoxyCodeLine{qm\_setup\_doxygen(\$\{PROJECT\_NAME\}\_RunDoxygen}
+\DoxyCodeLine{\ \ \ \ NAME\ \$\{PROJECT\_NAME\}}
+\DoxyCodeLine{\ \ \ \ DESCRIPTION\ "{}my\ project"{}}
+\DoxyCodeLine{\ \ \ \ MDFILE\ "{}\$\{CMAKE\_SOURCE\_DIR\}/README.md"{}}
+\DoxyCodeLine{\ \ \ \ OUTPUT\_DIR\ "{}\$\{CMAK\_BINARY\_DIR\}/doc"{}}
+\DoxyCodeLine{\ \ \ \ INPUT\ src}
+\DoxyCodeLine{\ \ \ \ TARGETS\ \$\{PROJECT\_NAME\}}
+\DoxyCodeLine{\ \ \ \ DEPENDS\ \$\{PROJECT\_NAME\}}
+\DoxyCodeLine{\ \ \ \ NO\_EXPAND\_MACROS}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Q\_OBJECT}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Q\_GADGET}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Q\_DECLARE\_TR\_FUNCTIONS}
+\DoxyCodeLine{\ \ \ \ COMPILE\_DEFINITIONS\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Q\_SIGNALS=Q\_SIGNALS}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ Q\_SLOTS=Q\_SLOTS}
+\DoxyCodeLine{\ \ \ \ GENERATE\_TAGFILE\ "{}\$\{PROJECT\_NAME\}\_tagfile.xml"{}}
+\DoxyCodeLine{\ \ \ \ INSTALL\_DIR\ "{}doc"{}}
+\DoxyCodeLine{)}
+
+\end{DoxyCode}
+\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md49}{}\doxysubsection{\texorpdfstring{Find Modules}{Find Modules}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md49}
+Use {\ttfamily qm\+\_\+find\+\_\+package} to find supported third-\/party packages.
+
+
+\begin{DoxyItemize}
+\item YY-\/\+Thunks\+: \href{https://github.com/Chuyu-Team/YY-Thunks}{\texttt{ https\+://github.\+com/\+Chuyu-\/\+Team/\+YY-\/\+Thunks}}
+\item VC-\/\+LTL5\+: \href{https://github.com/Chuyu-Team/VC-LTL5}{\texttt{ https\+://github.\+com/\+Chuyu-\/\+Team/\+VC-\/\+LTL5}}
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md50}{}\doxysubsection{\texorpdfstring{Detailed Documentations}{Detailed Documentations}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md50}
+
+\begin{DoxyItemize}
+\item \doxysectlink{md_third__party_2qwindowkit_2qmsetup_2docs_2core-command}{Core Command}{0}
+\end{DoxyItemize}
+
+The CMake Modules documentations is provided in the comments.
+
+See {\ttfamily examples} to get detailed use cases.\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md51}{}\doxysection{\texorpdfstring{Contributors}{Contributors}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md51}
+
+\begin{DoxyItemize}
+\item \href{https://github.com/SineStriker}{\texttt{ Sine\+Striker}}
+\item \href{https://github.com/wangwenx190}{\texttt{ wangwenx190}}
+\item \href{https://github.com/RigoLigoRLC}{\texttt{ Rigo\+Ligo\+RLC}}
+\item \href{https://github.com/CrSjimo}{\texttt{ Cr\+Sjimo}}
+\end{DoxyItemize}\hypertarget{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md52}{}\doxysection{\texorpdfstring{License}{License}}\label{md_third__party_2qwindowkit_2qmsetup_2README_autotoc_md52}
+QMSetup is licensed under the MIT License. 

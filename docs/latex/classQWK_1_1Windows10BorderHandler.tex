@@ -1,0 +1,86 @@
+\doxysection{QWK\+::Windows10\+Border\+Handler Class Reference}
+\hypertarget{classQWK_1_1Windows10BorderHandler}{}\label{classQWK_1_1Windows10BorderHandler}\index{QWK::Windows10BorderHandler@{QWK::Windows10BorderHandler}}
+Inheritance diagram for QWK\+::Windows10\+Border\+Handler\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classQWK_1_1Windows10BorderHandler}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_adb6c6d6492b71e96685c0e7ca8000df1}\label{classQWK_1_1Windows10BorderHandler_adb6c6d6492b71e96685c0e7ca8000df1} 
+{\bfseries Windows10\+Border\+Handler} (\mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{Abstract\+Window\+Context}} \texorpdfstring{$\ast$}{*}ctx)
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_aed98337e8485df30d2fbb5023f2a30a4}\label{classQWK_1_1Windows10BorderHandler_aed98337e8485df30d2fbb5023f2a30a4} 
+void {\bfseries setup\+Necessary\+Attributes} ()
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_aa03116450ed86f09782f61acdc61fb56}\label{classQWK_1_1Windows10BorderHandler_aa03116450ed86f09782f61acdc61fb56} 
+bool {\bfseries is\+Normal\+Window} () const
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_a6e7dd19aa29a5116be1742e02154c33e}\label{classQWK_1_1Windows10BorderHandler_a6e7dd19aa29a5116be1742e02154c33e} 
+void {\bfseries draw\+Border} ()
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_aeaab582ecb1fc5bd0550bf5aa2896d3d}\label{classQWK_1_1Windows10BorderHandler_aeaab582ecb1fc5bd0550bf5aa2896d3d} 
+int {\bfseries border\+Thickness} () const
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_a3cd91070b438ea08de55e082731cd24e}\label{classQWK_1_1Windows10BorderHandler_a3cd91070b438ea08de55e082731cd24e} 
+void {\bfseries update\+Extra\+Margins} (bool window\+Active)
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_af489f65648f619763f68abc0554f21f1}\label{classQWK_1_1Windows10BorderHandler_af489f65648f619763f68abc0554f21f1} 
+virtual void {\bfseries update\+Geometry} ()=0
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_aae799e0c28b24c65679e0ba30daaac34}\label{classQWK_1_1Windows10BorderHandler_aae799e0c28b24c65679e0ba30daaac34} 
+virtual bool {\bfseries is\+Window\+Active} () const
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classQWK_1_1Windows10BorderHandler_ac8b9c0a238be9be0f8fb74f4fa5122aa}{native\+Event\+Filter}} (const QByte\+Array \&event\+Type, void \texorpdfstring{$\ast$}{*}message, QT\+\_\+\+NATIVE\+\_\+\+EVENT\+\_\+\+RESULT\+\_\+\+TYPE \texorpdfstring{$\ast$}{*}result) override
+\item 
+bool \mbox{\hyperlink{classQWK_1_1Windows10BorderHandler_a20545d458df6db36fc63784ea494b6a2}{shared\+Event\+Filter}} (QObject \texorpdfstring{$\ast$}{*}obj, QEvent \texorpdfstring{$\ast$}{*}event) override
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{classQWK_1_1Windows10BorderHandler_abf0ec3e0df7d59efd00fa20ae616afd4}\label{classQWK_1_1Windows10BorderHandler_abf0ec3e0df7d59efd00fa20ae616afd4} 
+\mbox{\hyperlink{classQWK_1_1AbstractWindowContext}{Abstract\+Window\+Context}} \texorpdfstring{$\ast$}{*} {\bfseries ctx}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classQWK_1_1NativeEventFilter}{QWK\+::\+Native\+Event\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classQWK_1_1NativeEventDispatcher}{Native\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+native\+Dispatcher}
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes inherited from \mbox{\hyperlink{classQWK_1_1SharedEventFilter}{QWK\+::\+Shared\+Event\+Filter}}}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classQWK_1_1SharedEventDispatcher}{Shared\+Event\+Dispatcher}} \texorpdfstring{$\ast$}{*} {\bfseries m\+\_\+shared\+Dispatcher}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{classQWK_1_1Windows10BorderHandler_ac8b9c0a238be9be0f8fb74f4fa5122aa}\index{QWK::Windows10BorderHandler@{QWK::Windows10BorderHandler}!nativeEventFilter@{nativeEventFilter}}
+\index{nativeEventFilter@{nativeEventFilter}!QWK::Windows10BorderHandler@{QWK::Windows10BorderHandler}}
+\doxysubsubsection{\texorpdfstring{nativeEventFilter()}{nativeEventFilter()}}
+{\footnotesize\ttfamily \label{classQWK_1_1Windows10BorderHandler_ac8b9c0a238be9be0f8fb74f4fa5122aa} 
+bool QWK\+::\+Windows10\+Border\+Handler\+::native\+Event\+Filter (\begin{DoxyParamCaption}\item[{const QByte\+Array \&}]{event\+Type}{, }\item[{void \texorpdfstring{$\ast$}{*}}]{message}{, }\item[{QT\+\_\+\+NATIVE\+\_\+\+EVENT\+\_\+\+RESULT\+\_\+\+TYPE \texorpdfstring{$\ast$}{*}}]{result}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classQWK_1_1NativeEventFilter}{QWK\+::\+Native\+Event\+Filter}}.
+
+\Hypertarget{classQWK_1_1Windows10BorderHandler_a20545d458df6db36fc63784ea494b6a2}\index{QWK::Windows10BorderHandler@{QWK::Windows10BorderHandler}!sharedEventFilter@{sharedEventFilter}}
+\index{sharedEventFilter@{sharedEventFilter}!QWK::Windows10BorderHandler@{QWK::Windows10BorderHandler}}
+\doxysubsubsection{\texorpdfstring{sharedEventFilter()}{sharedEventFilter()}}
+{\footnotesize\ttfamily \label{classQWK_1_1Windows10BorderHandler_a20545d458df6db36fc63784ea494b6a2} 
+bool QWK\+::\+Windows10\+Border\+Handler\+::shared\+Event\+Filter (\begin{DoxyParamCaption}\item[{QObject \texorpdfstring{$\ast$}{*}}]{obj}{, }\item[{QEvent \texorpdfstring{$\ast$}{*}}]{event}{}\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [override]}, {\ttfamily [protected]}, {\ttfamily [virtual]}}
+
+
+
+Implements \mbox{\hyperlink{classQWK_1_1SharedEventFilter}{QWK\+::\+Shared\+Event\+Filter}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+third\+\_\+party/qwindowkit/src/core/shared/windows10borderhandler\+\_\+p.\+h\end{DoxyCompactItemize}
