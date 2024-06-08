@@ -78,6 +78,22 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         this->tabManager->windowSearch();
     });
 
+    connect(this->titleBar, &WindowTitleBar::nextPageRequested, this, [=](){
+        this->tabManager->windowNextPage();
+    });
+
+    connect(this->titleBar, &WindowTitleBar::previousPageRequested, this, [=](){
+        this->tabManager->windowPreviousPage();
+    });
+
+    connect(this->titleBar, &WindowTitleBar::reloadRequested, this, [=](){
+        this->tabManager->windowReload();
+    });
+
+    connect(this->titleBar, &WindowTitleBar::copyLinkRequested, this, [=](){
+        this->tabManager->windowCopyLink();
+    });
+
     connect(this->tabManager, &TabManager::titleChanged, this, [=](QString title){
         this->titleBar->setTitle(title);
     });
@@ -127,12 +143,26 @@ void BrowserWindow::paintEvent(QPaintEvent *event) {
 }
 
 void BrowserWindow::mousePressEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton && this->isEdgePosition(event->position())) {
-        this->windowHandle()->startSystemResize(this->getEdgePosition(event->position()));
-    } else if (event->button() == Qt::LeftButton && event->position().y() <= 30) {
-        this->windowHandle()->startSystemMove();
+    if(event->button() == Qt::LeftButton){
+        if (this->isEdgePosition(event->position())) {
+            this->windowHandle()->startSystemResize(this->getEdgePosition(event->position()));
+        } else if (event->position().y() <= 30) {
+            this->windowHandle()->startSystemMove();
+        }
     }
     QMainWindow::mousePressEvent(event);
+}
+
+void BrowserWindow::mouseDoubleClickEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton && event->position().y() <= 30){
+        if (this->isMaximized) {
+            this->showNormal();
+        } else {
+            this->showMaximized();
+        }
+        this->isMaximized = !this->isMaximized;
+    }
+    QMainWindow::mouseDoubleClickEvent(event);
 }
 
 void BrowserWindow::mouseMoveEvent(QMouseEvent *event) {

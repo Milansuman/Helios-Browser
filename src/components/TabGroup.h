@@ -22,4 +22,5 @@ public:
     ~TabGroup();
 signals:
     void tabsChanged();
+    void windowTitleChanged(QString title);
 };

@@ -22,6 +22,11 @@ public:
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
     void setTitleBarVisible(bool visible);
     void requestSearchDialog();
+    QString getTitle();
+    void copyUrl();
+    void requestNextPage();
+    void requestPreviousPage();
+    void requestReload();
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;

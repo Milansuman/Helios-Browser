@@ -12,22 +12,31 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
 
     this->addWidget(this->tabs.at(0));
 
+    this->connect(this->tabs.at(0), &Tab::titleChanged, this, [=](QString title){
+        emit this->windowTitleChanged(title);
+    });
+
     this->connect(this, &TabGroup::tabsChanged, this, [=](){
         for(Tab* tab: this->tabs){
             tab->setTitleBarVisible(this->tabs.size() > 1);
         }
-    });
 
+        if(this->tabs.size() == 1){
+            emit this->windowTitleChanged(this->tabs.at(0)->getTitle());
+        }
+    });
+    
+    Tab *temp = this->tabs.at(0);
     connect(this->tabs.at(0), &Tab::splitTabLeftRequested, this, [=](){
-        this->splitLeft(0);
+        this->splitLeft(this->findTab(temp)); //the position of tabs may change, we use the Tab pointer to find the new position
     });
 
     connect(this->tabs.at(0), &Tab::splitTabRightRequested, this, [=](){
-        this->splitRight(0);
+        this->splitRight(this->findTab(temp));
     });
 
     connect(this->tabs.at(0), &Tab::closeTabRequested, this, [=](){
-        this->removeTab(0);
+        this->removeTab(this->findTab(temp));
     });
 }
 
@@ -44,16 +53,18 @@ void TabGroup::splitLeft(int pos){
     this->tabs.insert(this->tabs.begin()+pos, new Tab(this->profile));
     this->insertWidget(pos, this->tabs.at(pos));
 
+    Tab *temp = this->tabs.at(pos);
+
     connect(this->tabs.at(pos), &Tab::splitTabLeftRequested, this, [=](){
-        this->splitLeft(pos);
+        this->splitLeft(this->findTab(temp)); //the position of tabs may change, we use the Tab pointer to find the new position
     });
 
     connect(this->tabs.at(pos), &Tab::splitTabRightRequested, this, [=](){
-        this->splitRight(pos);
+        this->splitRight(this->findTab(temp));
     });
 
     connect(this->tabs.at(pos), &Tab::closeTabRequested, this, [=](){
-        this->removeTab(pos);
+        this->removeTab(this->findTab(temp));
     });
 
     emit this->tabsChanged();
@@ -66,16 +77,18 @@ void TabGroup::splitRight(int pos){
     this->tabs.insert(this->tabs.begin()+pos+1, new Tab(this->profile));
     this->insertWidget(pos+1, this->tabs.at(pos+1));
 
+    Tab *temp = this->tabs.at(pos+1);
+
     connect(this->tabs.at(pos+1), &Tab::splitTabLeftRequested, this, [=](){
-        this->splitLeft(pos+1);
+        this->splitLeft(this->findTab(temp)); //the position of tabs may change, we use the Tab pointer to find the new position
     });
 
     connect(this->tabs.at(pos+1), &Tab::splitTabRightRequested, this, [=](){
-        this->splitRight(pos+1);
+        this->splitRight(this->findTab(temp));
     });
 
     connect(this->tabs.at(pos+1), &Tab::closeTabRequested, this, [=](){
-        this->removeTab(pos+1);
+        this->removeTab(this->findTab(temp));
     });
 
     emit this->tabsChanged();

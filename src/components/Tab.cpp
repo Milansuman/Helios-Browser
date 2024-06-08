@@ -88,6 +88,26 @@ void Tab::requestSearchDialog(){
     this->searchDialog->open();
 }
 
+QString Tab::getTitle(){
+    return this->webview->title();
+}
+
+void Tab::copyUrl(){
+    qApp->clipboard()->setText(this->webview->url().toString());
+}
+
+void Tab::requestNextPage(){
+    this->webview->forward();
+}
+
+void Tab::requestPreviousPage(){
+    this->webview->back();
+}
+
+void Tab::requestReload(){
+    this->webview->reload();
+}
+
 Tab::~Tab(){
     delete this->webview;
     delete this->tabTitleBar;
