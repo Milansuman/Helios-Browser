@@ -48,7 +48,7 @@ void GroupIcons::addFavicon(QIcon favicon){
     this->favicons.at(this->favicons.size()-1)->setPixmap(favicon.pixmap(30, 30));
 
     this->layout->addWidget(this->favicons.at(this->favicons.size()-1));
-    this->updateGeometry();
+    this->updateGeometry(); //force geometry update to fix issue with layout cramping
 }
 
 void GroupIcons::insertFavicon(int pos, QIcon favicon){
@@ -57,12 +57,12 @@ void GroupIcons::insertFavicon(int pos, QIcon favicon){
     this->favicons.at(pos)->setPixmap(favicon.pixmap(30, 30));
 
     this->layout->insertWidget(pos, this->favicons.at(pos));
-    this->updateGeometry();
+    this->updateGeometry(); //force geometry update to fix issue with layout cramping
 }
 
 void GroupIcons::deleteFavicon(int pos){
     delete this->favicons.at(pos);
-    this->updateGeometry();
+    this->updateGeometry(); //force geometry update to fix issue with layout cramping
 }
 
 GroupIcons::~GroupIcons(){

@@ -6,6 +6,9 @@ GroupSelectorDialog::GroupSelectorDialog(QWidget *parent): QDialog(parent){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
+    this->setFixedHeight(60);
+    this->setMinimumWidth(60);
+
     this->layout = new QHBoxLayout(this);
     this->layout->setContentsMargins(5, 5, 5, 5);
     this->layout->setSpacing(5);
@@ -37,7 +40,8 @@ void GroupSelectorDialog::open(){
     if (parent) {
         QRect parentGeom = parent->geometry();
         int x = parentGeom.x() + (parentGeom.width() - width()) / 2;
-        int y = parentGeom.y() + parentGeom.height() - height() - 20;
+        int y = parentGeom.y() + (parentGeom.height() - height()) - 20;
+        qDebug() << x << "," << y;
         move(x, y);
     }
     QDialog::open();
