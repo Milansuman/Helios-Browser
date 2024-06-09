@@ -17,5 +17,6 @@
         <file alias="group-selector.png">res/icons/group-selector.png</file>
         <file alias="grid.png">res/icons/grid.png</file>
         <file alias="plus.png">res/icons/plus.png</file>
+        <file alias="earth.png">res/icons/earth.png</file>
     </qresource>
 </RCC>

@@ -41,7 +41,6 @@ void GroupSelectorDialog::open(){
         QRect parentGeom = parent->geometry();
         int x = parentGeom.x() + (parentGeom.width() - width()) / 2;
         int y = parentGeom.y() + (parentGeom.height() - height()) - 20;
-        qDebug() << x << "," << y;
         move(x, y);
     }
     QDialog::open();

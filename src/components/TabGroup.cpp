@@ -75,6 +75,7 @@ void TabGroup::splitLeft(int pos){
         this->removeTab(this->findTab(temp));
     });
 
+    emit this->tabIconChanged();
     emit this->tabsChanged();
 }
 
@@ -103,6 +104,7 @@ void TabGroup::splitRight(int pos){
         this->removeTab(this->findTab(temp));
     });
 
+    emit this->tabIconChanged();
     emit this->tabsChanged();
 }
 

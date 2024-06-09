@@ -119,6 +119,10 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         this->sideBar->setVisible(!this->sideBar->isVisible());
     });
 
+    connect(this->sideBar, &SideBar::newGroupRequested, this, [=](){
+        this->tabManager->addGroup();
+    });
+
     this->contentLayout->addWidget(this->sideBar);
     this->contentLayout->addWidget(this->tabManager);
 

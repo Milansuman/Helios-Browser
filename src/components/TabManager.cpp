@@ -30,6 +30,29 @@ TabGroup* TabManager::getCurrentGroup(){
     return this->groups.at(this->currentGroup);
 }
 
+void TabManager::addGroup(){
+    this->groups.push_back(new TabGroup(profile));
+    int pos = this->groups.size()-1;
+    this->groupSelectorDialog->addGroup(new GroupIcons(this->groups.at(pos)));
+
+    this->connect(this->groups.at(pos), &TabGroup::tabsChanged, this, [=](){
+        if(this->groups.at(pos)->getTabs().size() == 1){
+            emit this->displayTitleBarOnWindowRequested();
+        }else{
+            emit this->hideTitleBarOnWindowRequested();
+        }
+    });
+
+    this->connect(this->groups.at(pos), &TabGroup::windowTitleChanged, this, [=](QString title){
+        emit this->titleChanged(title);
+    });
+
+    this->currentGroup = pos;
+    this->addWidget(this->groups.at(pos));
+    this->setCurrentIndex(pos);
+    emit this->displayTitleBarOnWindowRequested();
+}
+
 void TabManager::windowSplitLeft(){
     this->getCurrentGroup()->splitLeft(0);
 }

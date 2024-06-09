@@ -15,4 +15,6 @@ private:
 public:
     SideBar(QWidget *parent=nullptr);
     ~SideBar();
+signals:
+    void newGroupRequested();
 };

@@ -26,6 +26,10 @@ SideBar::SideBar(QWidget *parent): QWidget(parent){
     );
     this->newGroupButton->setFixedSize(60, 40);
 
+    this->connect(this->newGroupButton, &IconButton::clicked, this, [=](){
+        emit this->newGroupRequested();
+    });
+
     this->bottomRowLayout->addWidget(this->gridViewButton);
     this->bottomRowLayout->addWidget(this->newGroupButton);
 

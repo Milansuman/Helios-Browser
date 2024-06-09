@@ -15,7 +15,7 @@ GroupIcons::GroupIcons(TabGroup *group, QWidget *parent): QWidget(parent){
     this->layout->setSpacing(10);
 
     for(Tab *tab: group->getTabs()){
-        this->addFavicon(tab->getIcon());
+        this->addFavicon(!tab->getIcon().isNull() ? tab->getIcon() : QIcon(":/icons/earth.png"));
     }
 
     this->connect(group, &TabGroup::tabIconChanged, this, [=](){
@@ -25,9 +25,10 @@ GroupIcons::GroupIcons(TabGroup *group, QWidget *parent): QWidget(parent){
         this->favicons.clear();
 
         for(Tab *tab: group->getTabs()){
-            this->addFavicon(tab->getIcon());
+            this->addFavicon(!tab->getIcon().isNull() ? tab->getIcon() : QIcon(":/icons/earth.png"));
         }
         this->layout->update();
+        this->updateGeometry(); //force geometry update to fix issue with layout cramping
     });
 }
 

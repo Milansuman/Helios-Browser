@@ -19,6 +19,7 @@ public:
     TabManager(QWidget *parent=nullptr);
     TabGroup* getGroup(int pos);
     TabGroup* getCurrentGroup();
+    void addGroup();
     void windowSplitLeft();
     void windowSplitRight();
     void windowSearch();
