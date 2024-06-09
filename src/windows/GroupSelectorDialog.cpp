@@ -28,11 +28,21 @@ void GroupSelectorDialog::paintEvent(QPaintEvent *event){
 void GroupSelectorDialog::addGroup(GroupIcons *group){
     this->groups.push_back(group);
     this->layout->addWidget(group);
+
+    int pos = this->groups.size()-1;
+
+    this->connect(group, &GroupIcons::clicked, this, [=](){
+        emit this->changeGroupRequested(pos);
+    });
 }
 
 void GroupSelectorDialog::insertGroup(int pos, GroupIcons *group){
     this->groups.insert(this->groups.begin()+pos, group);
     this->layout->insertWidget(pos, this->groups.at(pos));
+
+    this->connect(group, &GroupIcons::clicked, this, [=](){
+        emit this->changeGroupRequested(pos);
+    });
 }
 
 void GroupSelectorDialog::open(){

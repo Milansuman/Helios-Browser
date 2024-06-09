@@ -8,7 +8,8 @@
                 "/usr/include/qt6",
                 "/usr/include/qt6/QtGui",
                 "/usr/include/qt6/QtWebEngineWidgets",
-                "/usr/include/qt6/QtWebEngineCore"
+                "/usr/include/qt6/QtWebEngineCore",
+                "/usr/include/qt6/QtCore"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

@@ -43,6 +43,12 @@ void GroupIcons::paintEvent(QPaintEvent *event){
     QWidget::paintEvent(event);
 }
 
+void GroupIcons::mousePressEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton){
+        emit this->clicked();
+    }
+}
+
 void GroupIcons::addFavicon(QIcon favicon){
     this->favicons.push_back(new QLabel());
     this->favicons.at(this->favicons.size()-1)->setFixedSize(30, 30);

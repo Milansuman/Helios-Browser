@@ -7,6 +7,17 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
     this->groupSelectorDialog = new GroupSelectorDialog(this);
     this->groupSelectorDialog->addGroup(new GroupIcons(this->groups.at(0)));
 
+    this->connect(this->groupSelectorDialog, &GroupSelectorDialog::changeGroupRequested, this, [=](int pos){
+        this->currentGroup = pos;
+        this->setCurrentIndex(pos);
+
+        if(this->getCurrentGroup()->getTabs().size() == 1){
+            emit this->displayTitleBarOnWindowRequested();
+        }else{
+            emit this->hideTitleBarOnWindowRequested();
+        }
+    });
+
     this->connect(this->groups.at(0), &TabGroup::tabsChanged, this, [=](){
         if(this->groups.at(0)->getTabs().size() == 1){
             emit this->displayTitleBarOnWindowRequested();

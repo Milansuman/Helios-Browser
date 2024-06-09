@@ -5,6 +5,7 @@
 #include <QLabel>
 #include <vector>
 #include <QPaintEvent>
+#include <QMouseEvent>
 #include <QIcon>
 
 #include "TabGroup.h"
@@ -23,4 +24,7 @@ public:
     ~GroupIcons();
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+signals:
+    void clicked();
 };

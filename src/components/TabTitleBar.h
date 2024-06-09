@@ -2,6 +2,8 @@
 
 #include <QWidget>
 #include <QHBoxLayout>
+#include <QEnterEvent>
+#include <QEvent>
 
 #include "IconButton.h"
 #include "AddressBox.h"
@@ -19,6 +21,9 @@ public:
     TabTitleBar(QWidget *parent=nullptr);
     void setTitle(QString title);
     ~TabTitleBar();
+protected:
+    void enterEvent(QEnterEvent *event);
+    void leaveEvent(QEvent *event);
 signals:
     void reloadRequested();
     void previousPageRequested();

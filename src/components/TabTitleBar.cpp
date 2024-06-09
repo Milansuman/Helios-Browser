@@ -1,7 +1,10 @@
 #include "TabTitleBar.h"
 
+#include <QSizePolicy>
+
 TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
     this->setFixedHeight(30);
+    this->setMouseTracking(true);
     this->layout = new QHBoxLayout(this);
     this->layout->setAlignment(Qt::AlignCenter);
     this->layout->setContentsMargins(10,0,10,0);
@@ -16,6 +19,22 @@ TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
     this->siteSettingsButton = new IconButton(":/icons/page-settings.png");
     this->splitTabMenu = new SplitTabMenu();
     this->closeButton = new IconButton(":/icons/tab-close.png");
+
+    QSizePolicy copyLinkButtonSizePolicy = this->copyLinkButton->sizePolicy();
+    copyLinkButtonSizePolicy.setRetainSizeWhenHidden(true);
+    this->copyLinkButton->setSizePolicy(copyLinkButtonSizePolicy);
+
+    QSizePolicy siteSettingsButtonSizePolicy = this->siteSettingsButton->sizePolicy();
+    siteSettingsButtonSizePolicy.setRetainSizeWhenHidden(true);
+    this->siteSettingsButton->setSizePolicy(siteSettingsButtonSizePolicy);
+
+    QSizePolicy reloadButtonSizePolicy = this->reloadButton->sizePolicy();
+    reloadButtonSizePolicy.setRetainSizeWhenHidden(true);
+    this->reloadButton->setSizePolicy(reloadButtonSizePolicy);
+
+    this->copyLinkButton->setVisible(false);
+    this->siteSettingsButton->setVisible(false);
+    this->reloadButton->setVisible(false);
 
     this->connect(this->addressBox, &AddressBox::searchRequested, this, [=](){
         emit this->searchRequested();
@@ -59,6 +78,18 @@ TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
     this->layout->addStretch();
     this->layout->addWidget(this->splitTabMenu);
     this->layout->addWidget(this->closeButton);
+}
+
+void TabTitleBar::enterEvent(QEnterEvent *event){
+    this->copyLinkButton->setVisible(true);
+    this->siteSettingsButton->setVisible(true);
+    this->reloadButton->setVisible(true);
+}
+
+void TabTitleBar::leaveEvent(QEvent *event){
+    this->copyLinkButton->setVisible(false);
+    this->siteSettingsButton->setVisible(false);
+    this->reloadButton->setVisible(false);
 }
 
 void TabTitleBar::setTitle(QString title){
