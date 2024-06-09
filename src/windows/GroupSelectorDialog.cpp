@@ -1,8 +1,9 @@
 #include "GroupSelectorDialog.h"
 #include <QPropertyAnimation>
 #include <QPainter>
-#include <QPropertyAnimation>
-
+#include <QGraphicsOpacityEffect>
+#include <QParallelAnimationGroup>
+#include <QSequentialAnimationGroup>
 
 GroupSelectorDialog::GroupSelectorDialog(QWidget *parent): QDialog(parent){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
@@ -46,22 +47,19 @@ void GroupSelectorDialog::insertGroup(int pos, GroupIcons *group){
         emit this->changeGroupRequested(pos);
     });
 }
-#include <QPropertyAnimation>
-#include <QGraphicsOpacityEffect>
-#include <QParallelAnimationGroup>
-#include <QSequentialAnimationGroup>
 
 void GroupSelectorDialog::open() {
     QWidget *parent = parentWidget();
     if (parent) {
         QRect parentGeom = parent->geometry();
 
-
-        QDialog::open();
+        this->setFixedSize(this->sizeHint());
 
         int x = parentGeom.x() + (parentGeom.width() - width()) / 2;
         int y = parentGeom.y() + parentGeom.height() - height() - 20;
         move(x, y);
+
+        QDialog::open();
 
         QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
         setGraphicsEffect(effect);
@@ -74,19 +72,13 @@ void GroupSelectorDialog::open() {
 
         QSequentialAnimationGroup *heightAnimationGroup = new QSequentialAnimationGroup(this);
 
-        QPropertyAnimation *growAnimation = new QPropertyAnimation(this, "geometry");
-        growAnimation->setDuration(400);
-        growAnimation->setStartValue(QRect(x, y + height(), width(), 0)); // Start with a height of 0 (collapsed)
-        growAnimation->setEndValue(QRect(x, y - 10, width(), height() + 20)); // Overshoot the target position
-        growAnimation->setEasingCurve(QEasingCurve::OutCubic);
-
         QPropertyAnimation *returnAnimation = new QPropertyAnimation(this, "geometry");
         returnAnimation->setDuration(200);
         returnAnimation->setStartValue(QRect(x, y - 10, width(), height() + 20)); // Start from the overshoot position
         returnAnimation->setEndValue(QRect(x, y, width(), height())); // End at the correct position
         returnAnimation->setEasingCurve(QEasingCurve::OutCubic);
 
-        heightAnimationGroup->addAnimation(growAnimation);
+        //heightAnimationGroup->addAnimation(growAnimation);
         heightAnimationGroup->addAnimation(returnAnimation);
 
         QParallelAnimationGroup *group = new QParallelAnimationGroup(this);
