@@ -49,15 +49,10 @@ void GroupSelectorDialog::insertGroup(int pos, GroupIcons *group){
 }
 
 void GroupSelectorDialog::open() {
-    QWidget *parent = parentWidget();
-    if (parent) {
-        QRect parentGeom = parent->geometry();
-
+    if (this->parentWidget()) {
         this->setFixedSize(this->sizeHint());
-
-        int x = parentGeom.x() + (parentGeom.width() - width()) / 2;
-        int y = parentGeom.y() + parentGeom.height() - height() - 20;
-        move(x, y);
+        QPoint newPos = this->parentWidget()->mapToGlobal(this->parentWidget()->rect().center() + QPoint(-this->width()/2, this->parentWidget()->rect().height()/2 - this->height() - 20));
+        move(newPos);
 
         QDialog::open();
 
@@ -74,14 +69,14 @@ void GroupSelectorDialog::open() {
 
         QPropertyAnimation *growAnimation = new QPropertyAnimation(this, "geometry");
         growAnimation->setDuration(400);
-        growAnimation->setStartValue(QRect(x, y + height(), width(), 0)); // Start with a height of 0 (collapsed)
-        growAnimation->setEndValue(QRect(x, y - 10, width(), height() + 20)); // Overshoot the target position
+        growAnimation->setStartValue(QRect(newPos.x(), newPos.y() + height(), width(), 0)); // Start with a height of 0 (collapsed)
+        growAnimation->setEndValue(QRect(newPos.x(), newPos.y() - 10, width(), height() + 20)); // Overshoot the target position
         growAnimation->setEasingCurve(QEasingCurve::OutCubic);
 
         QPropertyAnimation *returnAnimation = new QPropertyAnimation(this, "geometry");
         returnAnimation->setDuration(200);
-        returnAnimation->setStartValue(QRect(x, y - 10, width(), height() + 20)); // Start from the overshoot position
-        returnAnimation->setEndValue(QRect(x, y, width(), height())); // End at the correct position
+        returnAnimation->setStartValue(QRect(newPos.x(), newPos.y() - 10, width(), height() + 20)); // Start from the overshoot position
+        returnAnimation->setEndValue(QRect(newPos.x(), newPos.y(), width(), height())); // End at the correct position
         returnAnimation->setEasingCurve(QEasingCurve::OutCubic);
 
         heightAnimationGroup->addAnimation(growAnimation);
