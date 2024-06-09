@@ -45,17 +45,19 @@ void GroupSelectorDialog::insertGroup(int pos, GroupIcons *group){
     });
 }
 
-void GroupSelectorDialog::open(){
+void GroupSelectorDialog::open() {
     QWidget *parent = parentWidget();
     if (parent) {
         QRect parentGeom = parent->geometry();
-        int x = parentGeom.x() + (parentGeom.width() - width()) / 2;
-        int y = parentGeom.y() + (parentGeom.height() - height()) - 20;
-        move(x, y);
-    }
-    QDialog::open();
-}
+        QDialog::open();
 
+        int x = parentGeom.x() + (parentGeom.width() - width()) / 2;
+        int y = parentGeom.y() + parentGeom.height() - height()-20;
+        move(x, y);
+    } else {
+        QDialog::open();
+    }
+}
 GroupSelectorDialog::~GroupSelectorDialog(){
     for(GroupIcons *group: this->groups){
         delete group;
