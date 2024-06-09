@@ -3,7 +3,7 @@
 #include <QPainter>
 
 GroupSelectorDialog::GroupSelectorDialog(QWidget *parent): QDialog(parent){
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
     this->setFixedHeight(60);

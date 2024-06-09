@@ -10,7 +10,7 @@
 #include <QKeyEvent>
 
 SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedWidth(500);
 
