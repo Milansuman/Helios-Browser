@@ -6,6 +6,7 @@
 #include <QClipboard>
 #include <QWebEnginePage>
 #include <QWebEngineFullScreenRequest>
+#include <QSizePolicy>
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
@@ -13,8 +14,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
     this->layout->setSpacing(0);
-
-    this->webview = new WebView(profile, this);
+    this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
 
     this->searchDialog = new SearchDialog(this);
