@@ -4,15 +4,17 @@
 #include <QPainterPath>
 #include <QApplication>
 #include <QClipboard>
+#include <QWebEnginePage>
+#include <QWebEngineFullScreenRequest>
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
-Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent){
+Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr){
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
     this->layout->setSpacing(0);
 
-    this->webview = new WebView(profile);
+    this->webview = new WebView(profile, this);
     this->webview->load(QUrl(url));
 
     this->searchDialog = new SearchDialog(this);
@@ -30,6 +32,23 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->connect(this->webview, &WebView::iconChanged, this, [=](){
         emit this->iconChanged(this->webview->icon());
+    });
+
+    this->connect(this->webview->page(), &QWebEnginePage::fullScreenRequested, this, [=](QWebEngineFullScreenRequest fullScreenRequest){
+        qDebug() << "full screen requested";
+        if(fullScreenRequest.toggleOn()){
+            if(this->fullScreenWindow){
+                return;
+            }
+            fullScreenRequest.accept();
+            this->fullScreenWindow = new FullScreenWindow(profile, this->webview);
+        }else{
+            if (!this->fullScreenWindow)
+                return;
+            fullScreenRequest.accept();
+            delete this->fullScreenWindow;
+            this->fullScreenWindow = nullptr;
+        }
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){

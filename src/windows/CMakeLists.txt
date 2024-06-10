@@ -5,5 +5,7 @@ set(SOURCES ${SOURCES}
     src/windows/SearchDialog.cpp
     src/windows/GroupSelectorDialog.h
     src/windows/GroupSelectorDialog.cpp
+    src/windows/FullScreenWindow.h
+    src/windows/FullScreenWindow.cpp
     PARENT_SCOPE
 )

@@ -4,3 +4,4 @@
 #include <QWebEngineProfile>
 
 WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(profile, parent){}
+WebView::WebView(QWidget *parent): QWebEngineView(parent){};

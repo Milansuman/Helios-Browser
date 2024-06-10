@@ -10,6 +10,7 @@
 #include "WebView.h"
 #include "TabTitleBar.h"
 #include "../windows/SearchDialog.h"
+#include "../windows/FullScreenWindow.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -18,6 +19,7 @@ private:
     WebView *webview;
     TabTitleBar *tabTitleBar;
     SearchDialog *searchDialog;
+    FullScreenWindow *fullScreenWindow;
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);

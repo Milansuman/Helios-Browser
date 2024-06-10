@@ -1,7 +1,10 @@
 #include "TabManager.h"
 
+#include <QWebEngineSettings>
+
 TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0){
     this->profile = new QWebEngineProfile();
+    this->profile->settings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
     this->groups.push_back(new TabGroup(profile));
 
     this->groupSelectorDialog = new GroupSelectorDialog(this);
