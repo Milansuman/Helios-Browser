@@ -1,6 +1,18 @@
 <RCC>
     <qresource prefix="/fonts">
         <file alias="calsans.ttf">res/fonts/calsans.ttf</file>
+        <file alias="SFUIText-Bold.ttf">res/fonts/SFUIText-Bold.ttf</file>
+        <file alias="SFUIText-BoldItalic.ttf">res/fonts/SFUIText-BoldItalic.ttf</file>
+        <file alias="SFUIText-Heavy.ttf">res/fonts/SFUIText-Heavy.ttf</file>
+        <file alias="SFUIText-HeavyItalic.ttf">res/fonts/SFUIText-HeavyItalic.ttf</file>
+        <file alias="SFUIText-Light.ttf">res/fonts/SFUIText-Light.ttf</file>
+        <file alias="SFUIText-LightItalic.ttf">res/fonts/SFUIText-LightItalic.ttf</file>
+        <file alias="SFUIText-Medium.ttf">res/fonts/SFUIText-Medium.ttf</file>
+        <file alias="SFUIText-MediumItalic.ttf">res/fonts/SFUIText-MediumItalic.ttf</file>
+        <file alias="SFUIText-Regular.ttf">res/fonts/SFUIText-Regular.ttf</file>
+        <file alias="SFUIText-RegularItalic.ttf">res/fonts/SFUIText-RegularItalic.ttf</file>
+        <file alias="SFUIText-Semibold.ttf">res/fonts/SFUIText-Semibold.ttf</file>
+        <file alias="SFUIText-SemiboldItalic.ttf">res/fonts/SFUIText-SemiboldItalic.ttf</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="sidebar.png">res/icons/sidebar.png</file>

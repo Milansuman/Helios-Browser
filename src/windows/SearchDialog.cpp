@@ -9,13 +9,17 @@
 #include <QPainterPath>
 #include <QKeyEvent>
 
+#ifdef __linux__
+#include <kwindoweffects.h>
+#endif
+
 SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedWidth(500);
 
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Window, QColor(30,30,30));
+    palette.setColor(QPalette::Window, QColor(30,30,30, 170));
     setPalette(palette);
 
     searchLayout = new QHBoxLayout();
@@ -24,7 +28,8 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     //Search Icon
     searchIconLabel = new QLabel();
     QPixmap searchIcon(":/icons/search.png");
-    searchIconLabel->setPixmap(searchIcon.scaledToHeight(20));
+    searchIconLabel->setPixmap(searchIcon.scaled(20, 20));
+    searchIconLabel->setFixedSize(20, 20);
 
     //Search input
     searchbar = new QLineEdit();
@@ -49,11 +54,20 @@ void SearchDialog::paintEvent(QPaintEvent *event) {
     path.addRoundedRect(rect(), 10, 10);
     painter.fillPath(path, palette().window());
 
-    painter.setPen(Qt::NoPen);
+    painter.setPen(QPen(QColor(190, 190, 190)));
     painter.drawPath(path);
 
     QDialog::paintEvent(event);
 }
+
+#ifdef __linux__
+void SearchDialog::open(){
+    QDialog::open();
+    QPainterPath path;
+    path.addRoundedRect(rect(), 10, 10);
+    KWindowEffects::enableBlurBehind(this->windowHandle(), true, QRegion(path.toFillPolygon().toPolygon()));
+}
+#endif
 
 void SearchDialog::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){

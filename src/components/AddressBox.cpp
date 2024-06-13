@@ -13,7 +13,7 @@ AddressBox::AddressBox(QString text, QWidget *parent) : QLabel(parent), isBlank(
 
     this->setStyleSheet("color: #888888;");
 
-    QFontDatabase::addApplicationFont(":/fonts/calsans.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/SFUIText-Medium.ttf");
     QString fontFamily = QFontDatabase::applicationFontFamilies(0).at(0);
     QFont *font = new QFont(fontFamily);
 
@@ -36,6 +36,10 @@ void AddressBox::paintEvent(QPaintEvent *event){
 
 void AddressBox::setBlank(bool blank){
     this->isBlank = blank;
+}
+
+void AddressBox::setColor(bool isBlack){
+    this->setStyleSheet(isBlack ? "color: rgb(30,30,30);" : "color: rgb(209, 209, 209);");
 }
 
 void AddressBox::mousePressEvent(QMouseEvent *event){

@@ -20,6 +20,7 @@ private:
 public:
     TabTitleBar(QWidget *parent=nullptr);
     void setTitle(QString title);
+    void setIsBlack(bool isBlack);
     ~TabTitleBar();
 protected:
     void enterEvent(QEnterEvent *event);

@@ -5,6 +5,7 @@
 #include <QHBoxLayout>
 #include <QWidget>
 #include <QPaintEvent>
+#include <QRegion>
 #ifdef _WIN32
 #include <windows.h>
 #endif
@@ -32,10 +33,16 @@ private:
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
     BrowserWindow(QSize size, QWidget *parent=nullptr);
+#ifdef __linux__
+    void show();
+#endif
     ~BrowserWindow();
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
+    #ifdef __linux__
+    void resizeEvent(QResizeEvent *event) override;
+    #endif
 };

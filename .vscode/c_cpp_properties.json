@@ -9,7 +9,8 @@
                 "/usr/include/qt6/QtGui",
                 "/usr/include/qt6/QtWebEngineWidgets",
                 "/usr/include/qt6/QtWebEngineCore",
-                "/usr/include/qt6/QtCore"
+                "/usr/include/qt6/QtCore",
+                "/usr/include/KF6/KWindowSystem"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

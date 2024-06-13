@@ -11,6 +11,7 @@ private:
 public:
     AddressBox(QString text, QWidget *parent = nullptr);
     void setBlank(bool blank);
+    void setColor(bool isBlack);
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;

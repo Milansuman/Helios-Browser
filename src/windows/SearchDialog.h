@@ -17,6 +17,7 @@ private:
 public:
     SearchDialog(QWidget *parent = nullptr);
     QString getSearch();
+    void open();
     ~SearchDialog();
 protected:
     void paintEvent(QPaintEvent *event) override;

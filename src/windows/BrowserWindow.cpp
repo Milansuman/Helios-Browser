@@ -9,6 +9,12 @@
 
 #include <QPainter>
 #include <QWindow>
+#include <QPainterPath>
+#include <QRegion>
+
+#ifdef __linux__
+#include <kwindoweffects.h>
+#endif
 
 #include "BrowserWindow.h"
 #include "../components/TabManager.h"
@@ -144,7 +150,34 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     connect(this->titleBar->closeButton(), &QPushButton::clicked, this, &BrowserWindow::close);
 
     this->setCentralWidget(this->centralWidget);
+
 }
+
+#ifdef __linux__
+void BrowserWindow::show(){
+    QMainWindow::show();
+
+    QPainterPath *path = new QPainterPath();
+    path->addRoundedRect(rect(), 10, 10);
+
+    if (QWindow *window = windowHandle()) {
+        KWindowEffects::enableBlurBehind(window, true, QRegion(path->toFillPolygon().toPolygon()));
+    }else{
+        qDebug() << this->windowHandle();
+    }
+}
+
+void BrowserWindow::resizeEvent(QResizeEvent *event){
+    QPainterPath *path = new QPainterPath();
+    path->addRoundedRect(rect(), 10, 10);
+
+    if (QWindow *window = windowHandle()) {
+        KWindowEffects::enableBlurBehind(window, true, QRegion(path->toFillPolygon().toPolygon()));
+    }else{
+        qDebug() << this->windowHandle();
+    }
+}
+#endif
 
 void BrowserWindow::paintEvent(QPaintEvent *event) {
     QMainWindow::paintEvent(event);
@@ -152,7 +185,7 @@ void BrowserWindow::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     // Setting color and rounded corners
-    painter.setBrush(QBrush(QColor(30, 30, 30)));
+    painter.setBrush(QBrush(QColor(30, 30, 30, 148)));
     painter.setPen(Qt::NoPen);
     QRect roundedRect = rect();
     if (!this->isMaximized) {

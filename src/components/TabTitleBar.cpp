@@ -96,6 +96,10 @@ void TabTitleBar::setTitle(QString title){
     this->addressBox->setText(title);
 }
 
+void TabTitleBar::setIsBlack(bool isBlack){
+    this->addressBox->setColor(isBlack);
+}
+
 TabTitleBar::~TabTitleBar(){
     delete this->layout;
     delete this->backButton;

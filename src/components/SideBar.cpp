@@ -11,7 +11,7 @@ SideBar::SideBar(QWidget *parent): QWidget(parent){
     this->gridViewButton = new IconButton(":/icons/grid.png");
     this->gridViewButton->setStyleSheet(
         "QPushButton{"
-        "   background-color: rgb(0,0,0);"
+        "   background-color: rgba(87,91,138,178);"
         "   border-radius: 5px;"
         "}"
     );
@@ -20,7 +20,7 @@ SideBar::SideBar(QWidget *parent): QWidget(parent){
     this->newGroupButton = new IconButton(":/icons/plus.png");
     this->newGroupButton->setStyleSheet(
         "QPushButton{"
-        "   background-color: rgb(0,0,0);"
+        "   background-color: rgba(87,91,138,178);"
         "   border-radius: 5px;"
         "}"
     );

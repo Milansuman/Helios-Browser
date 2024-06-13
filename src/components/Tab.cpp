@@ -34,6 +34,16 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         emit this->iconChanged(this->webview->icon());
     });
 
+    this->connect(this->webview, &WebView::colorChanged, this, [=](QColor color){
+        QPalette palette = this->palette();
+        palette.setColor(QPalette::Window, color);
+        setPalette(palette);
+
+        double luminance = (0.299 * color.red() + 0.587 * color.green() + 0.114 * color.blue()) / 255;
+
+        this->tabTitleBar->setIsBlack(luminance > 0.5);
+    });
+
     this->connect(this->webview->page(), &QWebEnginePage::fullScreenRequested, this, [=](QWebEngineFullScreenRequest fullScreenRequest){
         qDebug() << "full screen requested";
         if(fullScreenRequest.toggleOn()){
@@ -95,7 +105,7 @@ void Tab::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    painter.setBrush(QBrush(QColor(0, 0, 0)));
+    painter.setBrush(palette().window());
     painter.setPen(Qt::NoPen);
 
     painter.drawRoundedRect(rect(), 10, 10);
