@@ -11,7 +11,7 @@ AddressBox::AddressBox(QString text, QWidget *parent) : QLabel(parent), isBlank(
     this->setFixedHeight(20);
     this->setAlignment(Qt::AlignCenter);
 
-    this->setStyleSheet("color: #888888;");
+    this->setStyleSheet("color: rgb(209, 209, 209);");
 
     QFontDatabase::addApplicationFont(":/fonts/SFUIText-Medium.ttf");
     QString fontFamily = QFontDatabase::applicationFontFamilies(0).at(0);

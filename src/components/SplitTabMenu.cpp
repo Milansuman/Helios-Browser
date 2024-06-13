@@ -1,11 +1,13 @@
 #include "SplitTabMenu.h"
 
+#include <QPainter>
+
 SplitTabMenuAction::SplitTabMenuAction(QObject *parent): QWidgetAction(parent){
     this->defaultWidget = new QWidget();
     this->layout = new QHBoxLayout(this->defaultWidget);
 
-    this->splitTabLeftButton = new IconButton(":/icons/split-left.png");
-    this->splitTabRightButton = new IconButton(":/icons/split-right.png");
+    this->splitTabLeftButton = new IconButton(":/icons/white/split-left.png");
+    this->splitTabRightButton = new IconButton(":/icons/white/split-right.png");
 
     this->connect(this->splitTabLeftButton, &IconButton::clicked, this, [=](){
         emit this->splitTabLeftRequested();

@@ -31,4 +31,40 @@
         <file alias="plus.png">res/icons/plus.png</file>
         <file alias="earth.png">res/icons/earth.png</file>
     </qresource>
+    <qresource prefix="/icons/black">
+        <file alias="bookmark.png">res/icons/black/bookmark.png</file>
+        <file alias="chevron-left.png">res/icons/black/chevron-left.png</file>
+        <file alias="chevron-right.png">res/icons/black/chevron-right.png</file>
+        <file alias="link.png">res/icons/black/link.png</file>
+        <file alias="page-settings.png">res/icons/black/page-settings.png</file>
+        <file alias="pause.png">res/icons/black/pause.png</file>
+        <file alias="play.png">res/icons/black/play.png</file>
+        <file alias="reload.png">res/icons/black/reload.png</file>
+        <file alias="search.png">res/icons/black/search.png</file>
+        <file alias="sidebar.png">res/icons/black/sidebar.png</file>
+        <file alias="sliders-horizontal.png">res/icons/black/sliders-horizontal.png</file>
+        <file alias="tab-close.png">res/icons/black/tab-close.png</file>
+        <file alias="split-left.png">res/icons/black/split-left.png</file>
+        <file alias="split-right.png">res/icons/black/split-right.png</file>
+        <file alias="split.png">res/icons/black/split.png</file>
+        <file alias="group-selector.png">res/icons/black/group-selector.png</file>
+    </qresource>
+    <qresource prefix="/icons/white">
+        <file alias="bookmark.png">res/icons/white/bookmark.png</file>
+        <file alias="chevron-left.png">res/icons/white/chevron-left.png</file>
+        <file alias="chevron-right.png">res/icons/white/chevron-right.png</file>
+        <file alias="link.png">res/icons/white/link.png</file>
+        <file alias="page-settings.png">res/icons/white/page-settings.png</file>
+        <file alias="pause.png">res/icons/white/pause.png</file>
+        <file alias="play.png">res/icons/white/play.png</file>
+        <file alias="reload.png">res/icons/white/reload.png</file>
+        <file alias="search.png">res/icons/white/search.png</file>
+        <file alias="sidebar.png">res/icons/white/sidebar.png</file>
+        <file alias="sliders-horizontal.png">res/icons/white/sliders-horizontal.png</file>
+        <file alias="tab-close.png">res/icons/white/tab-close.png</file>
+        <file alias="split-left.png">res/icons/white/split-left.png</file>
+        <file alias="split-right.png">res/icons/white/split-right.png</file>
+        <file alias="split.png">res/icons/white/split.png</file>
+        <file alias="group-selector.png">res/icons/white/group-selector.png</file>
+    </qresource>
 </RCC>

@@ -10,5 +10,6 @@ private:
 public:
     IconButton(QString filename, QWidget *parent=nullptr);
     void scale(int w, int h);
+    void setButtonIcon(QString filename);
     ~IconButton();
 };

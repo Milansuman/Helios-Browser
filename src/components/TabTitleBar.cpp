@@ -98,6 +98,24 @@ void TabTitleBar::setTitle(QString title){
 
 void TabTitleBar::setIsBlack(bool isBlack){
     this->addressBox->setColor(isBlack);
+
+    if(isBlack){
+        this->backButton->setButtonIcon(":/icons/black/chevron-left.png");
+        this->forwardButton->setButtonIcon(":/icons/black/chevron-right.png");
+        this->reloadButton->setButtonIcon(":/icons/black/reload.png");
+        this->copyLinkButton->setButtonIcon(":/icons/black/link.png");
+        this->siteSettingsButton->setButtonIcon(":/icons/black/page-settings.png");
+        this->splitTabMenu->setButtonIcon(":/icons/black/split.png");
+        this->closeButton->setButtonIcon(":/icons/black/tab-close.png");
+    }else{
+        this->backButton->setButtonIcon(":/icons/white/chevron-left.png");
+        this->forwardButton->setButtonIcon(":/icons/white/chevron-right.png");
+        this->reloadButton->setButtonIcon(":/icons/white/reload.png");
+        this->copyLinkButton->setButtonIcon(":/icons/white/link.png");
+        this->siteSettingsButton->setButtonIcon(":/icons/white/page-settings.png");
+        this->splitTabMenu->setButtonIcon(":/icons/white/split.png");
+        this->closeButton->setButtonIcon(":/icons/white/tab-close.png");
+    }
 }
 
 TabTitleBar::~TabTitleBar(){

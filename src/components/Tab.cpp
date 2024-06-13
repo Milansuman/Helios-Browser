@@ -8,7 +8,7 @@
 #include <QWebEngineFullScreenRequest>
 #include <QSizePolicy>
 
-Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
+Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://search.brave.com/", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr){
     this->layout = new QVBoxLayout(this);

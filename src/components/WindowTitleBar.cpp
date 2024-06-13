@@ -23,16 +23,17 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->windowButtonsLayout->setAlignment(Qt::AlignCenter);
     this->windowButtonsLayout->setContentsMargins(0,0,0,0);
 
-    this->sideBarButton = new IconButton(":/icons/sidebar.png");
-    this->groupSelectorButton = new IconButton(":/icons/group-selector.png");
-    this->backButton = new IconButton(":/icons/chevron-left.png");
-    this->forwardButton = new IconButton(":/icons/chevron-right.png");
-    this->reloadButton = new IconButton(":/icons/reload.png");
-    this->copyLinkButton = new IconButton(":/icons/link.png");
+    this->sideBarButton = new IconButton(":/icons/white/sidebar.png");
+    this->groupSelectorButton = new IconButton(":/icons/white/group-selector.png");
+    this->backButton = new IconButton(":/icons/white/chevron-left.png");
+    this->forwardButton = new IconButton(":/icons/white/chevron-right.png");
+    this->reloadButton = new IconButton(":/icons/white/reload.png");
+    this->copyLinkButton = new IconButton(":/icons/white/link.png");
     this->addressBox = new AddressBox("search or enter link.");
-    this->siteSettingsButton = new IconButton(":/icons/page-settings.png");
+    this->siteSettingsButton = new IconButton(":/icons/white/page-settings.png");
 
     this->splitTabMenu = new SplitTabMenu();
+    this->splitTabMenu->setButtonIcon(":/icons/white/split.png");
 
     //Creating window titlebar buttons
     QStyle *style = qApp->style();
