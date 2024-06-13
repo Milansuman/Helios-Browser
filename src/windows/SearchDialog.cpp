@@ -25,10 +25,9 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     searchLayout = new QHBoxLayout();
     searchLayout->setContentsMargins(10, 10, 10, 10);
 
-    //Search Icon
     searchIconLabel = new QLabel();
     QPixmap searchIcon(":/icons/white/search.png");
-    searchIconLabel->setPixmap(searchIcon.scaled(20, 20));
+    searchIconLabel->setPixmap(searchIcon.scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     searchIconLabel->setFixedSize(20, 20);
 
     //Search input
@@ -41,7 +40,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
         "   border: none;"
         "}"
     );
-    
+
     searchLayout->addWidget(searchIconLabel);
     searchLayout->addWidget(searchbar);
     this->setLayout(searchLayout);
@@ -51,12 +50,20 @@ void SearchDialog::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    QPainterPath path;
-    path.addRoundedRect(rect(), 10, 10);
-    painter.fillPath(path, palette().window());
+    // Draw the background
+    QPainterPath backgroundPath;
+    backgroundPath.addRoundedRect(rect(), 10, 10);
+    painter.fillPath(backgroundPath, palette().window());
 
-    painter.setPen(QPen(QColor(190, 190, 190)));
-    painter.drawPath(path);
+    // Draw the border
+    QPainterPath borderPath;
+    QRectF borderRect = rect();
+    borderRect.adjust(0.5, 0.5, -0.5, -0.5);
+    borderPath.addRoundedRect(borderRect, 10, 10);
+    QPen borderPen(QColor(190, 190, 190));
+    borderPen.setWidthF(1.0);
+    painter.setPen(borderPen);
+    painter.drawPath(borderPath);
 
     QDialog::paintEvent(event);
 }

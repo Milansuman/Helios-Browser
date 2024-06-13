@@ -20,6 +20,8 @@ private:
     TabTitleBar *tabTitleBar;
     SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
+
+
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
