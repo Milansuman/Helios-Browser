@@ -45,7 +45,6 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->connect(this->webview->page(), &QWebEnginePage::fullScreenRequested, this, [=](QWebEngineFullScreenRequest fullScreenRequest){
-        qDebug() << "full screen requested";
         if(fullScreenRequest.toggleOn()){
             if(this->fullScreenWindow){
                 return;
@@ -98,6 +97,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->layout->addWidget(this->tabTitleBar);
+    //this->layout->addWidget(this->pageSurface);
     this->layout->addWidget(this->webview);
 }
 
@@ -112,9 +112,9 @@ void Tab::paintEvent(QPaintEvent *event){
 }
 
 void Tab::resizeEvent(QResizeEvent *event){
-    QPainterPath path;
-    path.addRoundedRect(rect(), 10, 10);
-    this->setMask(path.toFillPolygon().toPolygon());
+    // QPainterPath path;
+    // path.addRoundedRect(rect(), 10, 10);
+    // this->setMask(path.toFillPolygon().toPolygon());
 }
 
 void Tab::setTitleBarVisible(bool visible){

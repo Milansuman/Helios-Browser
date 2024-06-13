@@ -6,6 +6,7 @@
 #include <QPaintEvent>
 #include <QResizeEvent>
 #include <QIcon>
+#include <QLabel>
 
 #include "WebView.h"
 #include "TabTitleBar.h"
@@ -17,6 +18,7 @@ class Tab : public QWidget {
 private:
     QVBoxLayout *layout;
     WebView *webview;
+    QLabel *pageSurface;
     TabTitleBar *tabTitleBar;
     SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
