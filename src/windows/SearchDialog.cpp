@@ -27,7 +27,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
 
     //Search Icon
     searchIconLabel = new QLabel();
-    QPixmap searchIcon(":/icons/search.png");
+    QPixmap searchIcon(":/icons/white/search.png");
     searchIconLabel->setPixmap(searchIcon.scaled(20, 20));
     searchIconLabel->setFixedSize(20, 20);
 
@@ -37,6 +37,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     searchbar->setStyleSheet(
         "QLineEdit{"
         "   background: transparent;"
+        "   color: rgb(255, 255, 255);"
         "   border: none;"
         "}"
     );
@@ -68,6 +69,7 @@ void SearchDialog::open(){
     KWindowEffects::enableBlurBehind(this->windowHandle(), true, QRegion(path.toFillPolygon().toPolygon()));
 }
 #endif
+
 
 void SearchDialog::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
