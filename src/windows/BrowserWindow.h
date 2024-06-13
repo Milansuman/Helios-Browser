@@ -10,6 +10,8 @@
 #include <windows.h>
 #endif
 
+#include <QPropertyAnimation>
+
 #include "../components/WindowTitleBar.h"
 #include "../components/TabManager.h"
 #include "../components/SideBar.h"
@@ -24,6 +26,8 @@ private:
     QWidget *centralWidget;
     SideBar *sideBar;
     bool isMaximized;
+    QPropertyAnimation *sideBarAnimation;
+    void hideSideBar();
 #ifdef _WIN32
     HWND windowID;
     static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -33,6 +37,7 @@ private:
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
     BrowserWindow(QSize size, QWidget *parent=nullptr);
+    void toggleSideBar();
 #ifdef __linux__
     void show();
 #endif

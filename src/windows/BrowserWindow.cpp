@@ -11,6 +11,8 @@
 #include <QWindow>
 #include <QPainterPath>
 #include <QRegion>
+#include <QPropertyAnimation>
+#include <QEasingCurve>
 
 #ifdef __linux__
 #include <kwindoweffects.h>
@@ -20,6 +22,7 @@
 #include "../components/TabManager.h"
 
 #define EDGE_MARGIN 5
+
 
 BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent), isMaximized(false) {
     #ifdef _WIN32
@@ -122,9 +125,13 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     this->sideBar = new SideBar();
 
-    connect(this->titleBar, &WindowTitleBar::toggleSideBarRequested, this, [=](){
-        this->sideBar->setVisible(!this->sideBar->isVisible());
-    });
+    this->sideBarAnimation = new QPropertyAnimation(this->sideBar, "maximumWidth");
+    this->sideBarAnimation->setDuration(150);
+    this->sideBarAnimation->setEasingCurve(QEasingCurve::InOutQuad);
+
+    connect(this->titleBar, &WindowTitleBar::toggleSideBarRequested, this, &BrowserWindow::toggleSideBar);
+
+
 
     connect(this->sideBar, &SideBar::newGroupRequested, this, [=](){
         this->tabManager->addGroup();
@@ -151,6 +158,28 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     this->setCentralWidget(this->centralWidget);
 
+
+
+
+}
+
+void BrowserWindow::toggleSideBar() {
+    if (this->sideBar->isVisible()) {
+        this->sideBarAnimation->setStartValue(this->sideBar->width());
+        this->sideBarAnimation->setEndValue(0);
+        connect(this->sideBarAnimation, &QPropertyAnimation::finished, this, &BrowserWindow::hideSideBar);
+        this->sideBarAnimation->start();
+    } else {
+        this->sideBar->show();
+        this->sideBarAnimation->setStartValue(0);
+        this->sideBarAnimation->setEndValue(200);
+        disconnect(this->sideBarAnimation, &QPropertyAnimation::finished, this, &BrowserWindow::hideSideBar);
+        this->sideBarAnimation->start();
+    }
+}
+
+void BrowserWindow::hideSideBar() {
+    this->sideBar->hide();
 }
 
 #ifdef __linux__
@@ -297,6 +326,7 @@ BrowserWindow::~BrowserWindow() {
     delete this->contentLayout;
     delete this->layout;
     delete this->centralWidget;
+    delete this->sideBarAnimation;
 }
 
 
