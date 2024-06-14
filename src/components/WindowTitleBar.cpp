@@ -3,6 +3,7 @@
 #include <QIcon>
 #include <QApplication>
 #include <QStyle>
+#include <QPainter>
 
 WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->setContentsMargins(0,0,0,0);
@@ -35,11 +36,31 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->splitTabMenu = new SplitTabMenu();
     this->splitTabMenu->setButtonIcon(":/icons/white/split.png");
 
-    //Creating window titlebar buttons
+    auto colorizePixmap = [](const QPixmap &pixmap, const QColor &color) {
+        QPixmap coloredPixmap(pixmap.size());
+        coloredPixmap.fill(Qt::transparent);
+
+        QPainter painter(&coloredPixmap);
+        painter.setCompositionMode(QPainter::CompositionMode_Source);
+        painter.drawPixmap(0, 0, pixmap);
+        painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+        painter.fillRect(coloredPixmap.rect(), color);
+        painter.end();
+
+        return coloredPixmap;
+    };
+
+    // Creating window titlebar buttons with white icons
     QStyle *style = qApp->style();
     QIcon minimizeIcon = style->standardIcon(QStyle::SP_TitleBarMinButton);
     QIcon maximizeIcon = style->standardIcon(QStyle::SP_TitleBarMaxButton);
     QIcon closeIcon = style->standardIcon(QStyle::SP_TitleBarCloseButton);
+
+    QColor whiteColor(Qt::white);
+
+    minimizeIcon = QIcon(colorizePixmap(minimizeIcon.pixmap(30, 30), whiteColor));
+    maximizeIcon = QIcon(colorizePixmap(maximizeIcon.pixmap(30, 30), whiteColor));
+    closeIcon = QIcon(colorizePixmap(closeIcon.pixmap(30, 30), whiteColor));
 
     this->connect(this->sideBarButton, &IconButton::clicked, this, [=](){
         emit this->toggleSideBarRequested();
@@ -84,7 +105,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
         "   background: transparent;"
         "   border: none;"
         "}"
-    );
+        );
 
     this->maximize = new QPushButton();
     this->maximize->setIcon(maximizeIcon);
@@ -93,7 +114,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
         "   background: transparent;"
         "   border: none;"
         "}"
-    );
+        );
 
     this->close = new QPushButton();
     this->close->setIcon(closeIcon);
@@ -102,7 +123,7 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
         "   background: transparent;"
         "   border: none;"
         "}"
-    );
+        );
 
     this->titleBarLayout->addWidget(this->sideBarButton);
     this->titleBarLayout->addWidget(this->groupSelectorButton);
