@@ -22,6 +22,7 @@ private:
     TabTitleBar *tabTitleBar;
     SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
+    void initCustomScrollBar();
 
 
 public:

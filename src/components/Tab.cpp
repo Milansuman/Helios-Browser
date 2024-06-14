@@ -6,7 +6,9 @@
 #include <QClipboard>
 #include <QWebEnginePage>
 #include <QWebEngineFullScreenRequest>
+#include <QWebEngineScript>
 #include <QSizePolicy>
+#include <QWebEngineScriptCollection>
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://search.brave.com/", parent){}
 
@@ -18,16 +20,20 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->webview->load(QUrl(url));
 
     this->searchDialog = new SearchDialog(this);
-
+    //this->initCustomScrollBar();
     this->tabTitleBar = new TabTitleBar();
 
     this->connect(this->webview, &WebView::loadStarted, this, [=](){
         this->tabTitleBar->setTitle(this->webview->url().toString());
+        this->initCustomScrollBar();
     });
 
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
+
+        this->initCustomScrollBar();
+
     });
 
     this->connect(this->webview, &WebView::iconChanged, this, [=](){
@@ -99,6 +105,41 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->layout->addWidget(this->tabTitleBar);
     //this->layout->addWidget(this->pageSurface);
     this->layout->addWidget(this->webview);
+}
+
+//adding a custom scroll bar which gets hidden when not in use
+void Tab::initCustomScrollBar() {
+    QWebEngineScript script;
+    script.setName("customScrollBarScript");
+    script.setInjectionPoint(QWebEngineScript::DocumentReady);
+    script.setWorldId(QWebEngineScript::ApplicationWorld);
+    script.setRunsOnSubFrames(true);
+
+    QString js = R"(
+        var style = document.createElement('style');
+        style.innerHTML = `
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(to right, transparent 60%, #444 40%);
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #888;
+                border-radius: 6px;
+            }
+        `;
+        document.head.appendChild(style);
+    )";
+
+    script.setSourceCode(js);
+    this->webview->page()->scripts().insert(script);
 }
 
 void Tab::paintEvent(QPaintEvent *event){
