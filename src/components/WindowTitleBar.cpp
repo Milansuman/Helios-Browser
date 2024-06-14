@@ -36,31 +36,31 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
     this->splitTabMenu = new SplitTabMenu();
     this->splitTabMenu->setButtonIcon(":/icons/white/split.png");
 
-    auto colorizePixmap = [](const QPixmap &pixmap, const QColor &color) {
-        QPixmap coloredPixmap(pixmap.size());
-        coloredPixmap.fill(Qt::transparent);
+    // auto colorizePixmap = [](const QPixmap &pixmap, const QColor &color) {
+    //     QPixmap coloredPixmap(pixmap.size());
+    //     coloredPixmap.fill(Qt::transparent);
 
-        QPainter painter(&coloredPixmap);
-        painter.setCompositionMode(QPainter::CompositionMode_Source);
-        painter.drawPixmap(0, 0, pixmap);
-        painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-        painter.fillRect(coloredPixmap.rect(), color);
-        painter.end();
+    //     QPainter painter(&coloredPixmap);
+    //     painter.setCompositionMode(QPainter::CompositionMode_Source);
+    //     painter.drawPixmap(0, 0, pixmap);
+    //     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    //     painter.fillRect(coloredPixmap.rect(), color);
+    //     painter.end();
 
-        return coloredPixmap;
-    };
+    //     return coloredPixmap;
+    // };
 
     // Creating window titlebar buttons with white icons
-    QStyle *style = qApp->style();
-    QIcon minimizeIcon = style->standardIcon(QStyle::SP_TitleBarMinButton);
-    QIcon maximizeIcon = style->standardIcon(QStyle::SP_TitleBarMaxButton);
-    QIcon closeIcon = style->standardIcon(QStyle::SP_TitleBarCloseButton);
+    // QStyle *style = qApp->style();
+    // QIcon minimizeIcon = style->standardIcon(QStyle::SP_TitleBarMinButton);
+    // QIcon maximizeIcon = style->standardIcon(QStyle::SP_TitleBarMaxButton);
+    // QIcon closeIcon = style->standardIcon(QStyle::SP_TitleBarCloseButton);
 
-    QColor whiteColor(Qt::white);
+    // QColor whiteColor(Qt::white);
 
-    minimizeIcon = QIcon(colorizePixmap(minimizeIcon.pixmap(30, 30), whiteColor));
-    maximizeIcon = QIcon(colorizePixmap(maximizeIcon.pixmap(30, 30), whiteColor));
-    closeIcon = QIcon(colorizePixmap(closeIcon.pixmap(30, 30), whiteColor));
+    // minimizeIcon = QIcon(colorizePixmap(minimizeIcon.pixmap(30, 30), whiteColor));
+    // maximizeIcon = QIcon(colorizePixmap(maximizeIcon.pixmap(30, 30), whiteColor));
+    // closeIcon = QIcon(colorizePixmap(closeIcon.pixmap(30, 30), whiteColor));
 
     this->connect(this->sideBarButton, &IconButton::clicked, this, [=](){
         emit this->toggleSideBarRequested();
@@ -98,32 +98,12 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
         emit this->showGroupBar();
     });
 
-    this->minimize = new QPushButton();
-    this->minimize->setIcon(minimizeIcon);
-    this->minimize->setStyleSheet(
-        "QPushButton{"
-        "   background: transparent;"
-        "   border: none;"
-        "}"
-        );
-
-    this->maximize = new QPushButton();
-    this->maximize->setIcon(maximizeIcon);
-    this->maximize->setStyleSheet(
-        "QPushButton{"
-        "   background: transparent;"
-        "   border: none;"
-        "}"
-        );
-
-    this->close = new QPushButton();
-    this->close->setIcon(closeIcon);
-    this->close->setStyleSheet(
-        "QPushButton{"
-        "   background: transparent;"
-        "   border: none;"
-        "}"
-        );
+    this->minimize = new IconButton(":/icons/minimize.png");
+    this->minimize->scale(13, 13);
+    this->maximize = new IconButton(":/icons/maximize.png");
+    this->maximize->scale(13, 13);
+    this->close = new IconButton(":/icons/close.png");
+    this->close->scale(13, 13);
 
     this->titleBarLayout->addWidget(this->sideBarButton);
     this->titleBarLayout->addWidget(this->groupSelectorButton);

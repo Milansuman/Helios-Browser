@@ -30,6 +30,9 @@
         <file alias="grid.png">res/icons/grid.png</file>
         <file alias="plus.png">res/icons/plus.png</file>
         <file alias="earth.png">res/icons/earth.png</file>
+        <file alias="close.png">res/icons/close.png</file>
+        <file alias="minimize.png">res/icons/minimize.png</file>
+        <file alias="maximize.png">res/icons/maximize.png</file>
     </qresource>
     <qresource prefix="/icons/black">
         <file alias="bookmark.png">res/icons/black/bookmark.png</file>

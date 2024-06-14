@@ -9,11 +9,13 @@
 #include "IconButton.h"
 #include "SplitTabMenu.h"
 
+#include "IconButton.h"
+
 class WindowTitleBar : public QWidget{
     Q_OBJECT
 private:
     QHBoxLayout *tabTitleBarLayout, *titleBarLayout, *windowButtonsLayout;
-    QPushButton *minimize, *maximize, *close;
+    IconButton *minimize, *maximize, *close;
     IconButton *reloadButton, *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton, *groupSelectorButton;
     SplitTabMenu *splitTabMenu;
     QWidget *tabTitleBar;

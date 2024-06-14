@@ -17,8 +17,7 @@ IconButton::IconButton(QString filename, QWidget *parent): QPushButton(parent){
 }
 
 void IconButton::scale(int w, int h){
-    this->icon->scaled(w, h);
-    this->setIcon(QIcon(*this->icon));
+    this->setIcon(QIcon(this->icon->scaled(w, h, Qt::KeepAspectRatio, Qt::SmoothTransformation)));
     this->setFixedSize(w, h);
 }
 
