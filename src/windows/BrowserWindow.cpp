@@ -66,7 +66,14 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     compositor->SetAcrylicEffect(this->windowID, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
 
-    this->windowHandle()->setParent(QWindow::fromWinId(this->windowID));
+    DWM_BLURBEHIND bb = {0};
+
+    // Enable Blur Behind and apply to the entire client area
+    bb.dwFlags = DWM_BB_ENABLE;
+    bb.fEnable = true;
+    bb.hRgnBlur = NULL;
+
+    DwmEnableBlurBehindWindow(HWND(this->winId()), &bb);
     #endif
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
