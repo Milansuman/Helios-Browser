@@ -54,7 +54,7 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     SetWindowLongPtrW(this->windowID, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
-    this->compositor = new AcrylicCompositor(this->windowID);
+    compositor = new AcrylicCompositor(this->windowID);
 
     AcrylicCompositor::AcrylicEffectParameter param;
 	param.blurAmount = 40;
@@ -62,7 +62,7 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 	param.tintColor = D2D1::ColorF(0.0f, 0.0f, 0.0f, .30f);
 	param.fallbackColor = D2D1::ColorF(0.10f,0.10f,0.10f,1.0f);
 
-	compositor->SetAcrylicEffect(this->windowId, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
+    compositor->SetAcrylicEffect(this->windowID, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
 
     #endif
 
@@ -281,7 +281,7 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event) {
 LRESULT CALLBACK BrowserWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
     BrowserWindow *window = reinterpret_cast<BrowserWindow*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
 
-    if (this->compositor){
+    if (compositor){
 		if (uMsg == WM_ACTIVATE)
 		{
 			if (LOWORD(wParam) == WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE)
@@ -293,7 +293,7 @@ LRESULT CALLBACK BrowserWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPA
 				active = false;
 			}
 		}
-		this->compositor->Sync(hwnd, uMsg, wParam, lParam,active);
+        compositor->Sync(hwnd, uMsg, wParam, lParam,active);
 	}
 
     if(!window){
