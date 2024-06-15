@@ -31,8 +31,8 @@ private:
     void hideSideBar();
 #ifdef _WIN32
     HWND windowID;
-    static AcrylicCompositor *compositor;
-    static bool active;
+    inline static AcrylicCompositor *compositor = nullptr;
+    inline static bool active = false;
     static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
 
