@@ -66,8 +66,7 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     compositor->SetAcrylicEffect(this->windowID, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
 
-    SetParent(HWND(this->winId()), this->windowID);
-
+    this->windowHandle()->setParent(QWindow::fromWinId(this->windowID));
     #endif
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
