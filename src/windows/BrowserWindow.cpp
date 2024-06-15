@@ -54,6 +54,8 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     SetWindowLongPtrW(this->windowID, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
 
+    //ShowWindow(this->windowID, SW_NORMAL);
+
     compositor = new AcrylicCompositor(this->windowID);
 
     AcrylicCompositor::AcrylicEffectParameter param;
@@ -63,6 +65,17 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 	param.fallbackColor = D2D1::ColorF(0.10f,0.10f,0.10f,1.0f);
 
     compositor->SetAcrylicEffect(this->windowID, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
+
+    // Wrap the HWND in a QWindow
+    QWindow *windowContainer = QWindow::fromWinId((WId)this->windowID);
+
+    // Create a QWidget using the QWindow as its container
+    QWidget *containerWidget = QWidget::createWindowContainer(windowContainer, this);
+    containerWidget->setMinimumSize(size);
+    containerWidget->setMaximumSize(size);
+    containerWidget->setFocusPolicy(Qt::StrongFocus);
+
+    setCentralWidget(containerWidget);
 
     #endif
 
