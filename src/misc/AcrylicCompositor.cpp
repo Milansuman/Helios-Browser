@@ -1,6 +1,6 @@
 #include "AcrylicCompositor.h"
 
-#ifdef __WIN32
+#ifdef _WIN32
 AcrylicCompositor::AcrylicCompositor(HWND hwnd)
 {
 	InitLibs();

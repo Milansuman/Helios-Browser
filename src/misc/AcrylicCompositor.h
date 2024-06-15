@@ -4,7 +4,7 @@
 #define UNICODE
 #endif 
 
-#ifdef __WIN32
+#ifdef _WIN32
 #include <Windows.h>
 #include <dcomp.h>
 #include <d2d1_2.h>
