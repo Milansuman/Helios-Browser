@@ -66,19 +66,9 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     compositor->SetAcrylicEffect(this->windowID, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
 
-    // Wrap the HWND in a QWindow
-    QWindow *windowContainer = QWindow::fromWinId((WId)this->windowID);
-
-    // Create a QWidget using the QWindow as its container
-    QWidget *containerWidget = QWidget::createWindowContainer(windowContainer, this);
-    containerWidget->setMinimumSize(size);
-    containerWidget->setMaximumSize(size);
-    containerWidget->setFocusPolicy(Qt::StrongFocus);
-
-    setCentralWidget(containerWidget);
+    SetParent(HWND(this->winId()), this->windowID);
 
     #endif
-
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->resize(size);
