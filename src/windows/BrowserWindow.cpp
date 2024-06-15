@@ -2,9 +2,6 @@
 #include <windows.h>
 #include <windowsx.h>
 #include <dwmapi.h>
-#define FIXED_WIDTH(widget) (widget->minimumWidth() >= widget->maximumWidth())
-#define FIXED_HEIGHT(widget) (widget->minimumHeight() >= widget->maximumHeight())
-#define FIXED_SIZE(widget) (FIXED_WIDTH(widget) && FIXED_HEIGHT(widget))
 #endif
 
 #include <QPainter>
@@ -56,6 +53,16 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     }
 
     SetWindowLongPtrW(this->windowID, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
+
+    this->compositor = new AcrylicCompositor(this->windowID);
+
+    AcrylicCompositor::AcrylicEffectParameter param;
+	param.blurAmount = 40;
+	param.saturationAmount = 2;
+	param.tintColor = D2D1::ColorF(0.0f, 0.0f, 0.0f, .30f);
+	param.fallbackColor = D2D1::ColorF(0.10f,0.10f,0.10f,1.0f);
+
+	compositor->SetAcrylicEffect(this->windowId, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
 
     #endif
 
@@ -157,10 +164,6 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     connect(this->titleBar->closeButton(), &QPushButton::clicked, this, &BrowserWindow::close);
 
     this->setCentralWidget(this->centralWidget);
-
-
-
-
 }
 
 void BrowserWindow::toggleSideBar() {
@@ -277,6 +280,22 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event) {
 #ifdef _WIN32
 LRESULT CALLBACK BrowserWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
     BrowserWindow *window = reinterpret_cast<BrowserWindow*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+
+    if (this->compositor){
+		if (uMsg == WM_ACTIVATE)
+		{
+			if (LOWORD(wParam) == WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE)
+			{
+				active = true;
+			}
+			else if (LOWORD(wParam) == WA_INACTIVE)
+			{
+				active = false;
+			}
+		}
+		this->compositor->Sync(hwnd, uMsg, wParam, lParam,active);
+	}
+
     if(!window){
         return DefWindowProcW(hwnd, uMsg, wParam, lParam);
     }

@@ -6,11 +6,12 @@
 #include <QWidget>
 #include <QPaintEvent>
 #include <QRegion>
+#include <QPropertyAnimation>
+
 #ifdef _WIN32
 #include <windows.h>
+#include "../misc/AcrylicCompositor.h"
 #endif
-
-#include <QPropertyAnimation>
 
 #include "../components/WindowTitleBar.h"
 #include "../components/TabManager.h"
@@ -30,6 +31,7 @@ private:
     void hideSideBar();
 #ifdef _WIN32
     HWND windowID;
+    AcrylicCompositor *compositor = nullptr;
     static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 #endif
 
