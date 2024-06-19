@@ -7,7 +7,7 @@
 #include <QPainterPath>
 #include <QTimer>
 
-WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(profile, parent), pageSurface(nullptr){
+WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(profile, parent){
     this->connect(this, &WebView::loadFinished, this, [=](){
         QTimer::singleShot(200, [=](){
             emit this->colorChanged(this->getTopColor());

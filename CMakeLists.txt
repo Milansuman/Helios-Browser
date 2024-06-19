@@ -11,7 +11,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 add_subdirectory(src)
 
-find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui WebEngineWidgets WebEngineCore QuickWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Widgets Core Gui WebEngineWidgets WebEngineCore Network)
 
 if(LINUX)
     find_package(KF6WindowSystem)
@@ -26,7 +26,7 @@ qt_add_executable(project-web
     resources.qrc
 )
 
-target_link_libraries(project-web PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui Qt6::WebEngineWidgets Qt6::WebEngineCore Qt6::QuickWidgets)
+target_link_libraries(project-web PRIVATE Qt6::Widgets Qt6::Core Qt6::Gui Qt6::WebEngineWidgets Qt6::WebEngineCore Qt6::Network)
 
 if(LINUX)
     target_link_libraries(project-web PRIVATE KF6::WindowSystem)

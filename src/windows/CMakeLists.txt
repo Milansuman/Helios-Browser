@@ -7,5 +7,7 @@ set(SOURCES ${SOURCES}
     src/windows/GroupSelectorDialog.cpp
     src/windows/FullScreenWindow.h
     src/windows/FullScreenWindow.cpp
+    src/windows/AuthenticationDialog.h
+    src/windows/AuthenticationDialog.cpp
     PARENT_SCOPE
 )

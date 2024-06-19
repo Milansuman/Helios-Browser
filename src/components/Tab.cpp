@@ -10,7 +10,7 @@
 #include <QSizePolicy>
 #include <QWebEngineScriptCollection>
 
-Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://search.brave.com/", parent){}
+Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://duckduckgo.com/", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr){
     this->layout = new QVBoxLayout(this);
@@ -20,6 +20,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->webview->load(QUrl(url));
 
     this->searchDialog = new SearchDialog(this);
+    this->authDialog = new AuthenticationDialog(this);
     //this->initCustomScrollBar();
     this->tabTitleBar = new TabTitleBar();
 
@@ -32,7 +33,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
 
-        this->initCustomScrollBar();
+        //this->initCustomScrollBar();
 
     });
 
@@ -64,6 +65,10 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
             delete this->fullScreenWindow;
             this->fullScreenWindow = nullptr;
         }
+    });
+
+    this->connect(this->webview->page(), &QWebEnginePage::authenticationRequired, this, [=](const QUrl &requestUrl, QAuthenticator *authenticator){
+        this->authDialog->exec(requestUrl, authenticator);
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){

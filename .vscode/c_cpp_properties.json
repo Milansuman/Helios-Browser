@@ -11,7 +11,8 @@
                 "/usr/include/qt6/QtWebEngineCore",
                 "/usr/include/qt6/QtCore",
                 "/usr/include/KF6/KWindowSystem",
-                "/usr/include/qt6/QtQuickWidgets"
+                "/usr/include/qt6/QtQuickWidgets",
+                "/usr/include/qt6/QtNetwork"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

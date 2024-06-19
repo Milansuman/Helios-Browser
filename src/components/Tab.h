@@ -12,6 +12,7 @@
 #include "TabTitleBar.h"
 #include "../windows/SearchDialog.h"
 #include "../windows/FullScreenWindow.h"
+#include "../windows/AuthenticationDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -22,9 +23,9 @@ private:
     TabTitleBar *tabTitleBar;
     SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
+    AuthenticationDialog *authDialog;
+
     void initCustomScrollBar();
-
-
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
