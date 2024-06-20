@@ -1,12 +1,14 @@
 #include "TabManager.h"
 
 #include <QWebEngineSettings>
+#include <QWebEngineCookieStore>
 
 TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0){
     this->profile = new QWebEngineProfile();
     this->profile->settings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
     this->profile->settings()->setAttribute(QWebEngineSettings::Accelerated2dCanvasEnabled, true);
     this->profile->settings()->setAttribute(QWebEngineSettings::WebGLEnabled, true);
+    this->profile->cookieStore()->loadAllCookies();
 
     this->groups.push_back(new TabGroup(profile));
 

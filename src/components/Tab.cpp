@@ -9,6 +9,7 @@
 #include <QWebEngineScript>
 #include <QSizePolicy>
 #include <QWebEngineScriptCollection>
+#include <QAction>
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://duckduckgo.com/", parent){}
 
@@ -16,8 +17,20 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
     this->layout->setSpacing(0);
+
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
+
+    QAction *openDevToolsAction = new QAction("Inspect Element", this->webview);
+    openDevToolsAction->setShortcut(Qt::Key_F12);
+
+    this->webview->addAction(openDevToolsAction);
+
+    connect(openDevToolsAction, &QAction::triggered, this, [=](){
+        this->openDevTools();
+    });
+
+    this->devtoolsSplitter = new QSplitter();
 
     this->searchDialog = new SearchDialog(this);
     this->authDialog = new AuthenticationDialog(this);
@@ -26,15 +39,13 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->connect(this->webview, &WebView::loadStarted, this, [=](){
         this->tabTitleBar->setTitle(this->webview->url().toString());
-        this->initCustomScrollBar();
+        //this->initCustomScrollBar();
     });
 
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
-
         //this->initCustomScrollBar();
-
     });
 
     this->connect(this->webview, &WebView::iconChanged, this, [=](){
@@ -109,7 +120,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->layout->addWidget(this->tabTitleBar);
     //this->layout->addWidget(this->pageSurface);
-    this->layout->addWidget(this->webview);
+
+    this->devtoolsSplitter->addWidget(this->webview);
+    this->layout->addWidget(this->devtoolsSplitter);
 }
 
 //adding a custom scroll bar which gets hidden when not in use
@@ -193,6 +206,16 @@ void Tab::requestPreviousPage(){
 
 void Tab::requestReload(){
     this->webview->reload();
+}
+
+void Tab::openDevTools(){
+    this->devtools = new WebView();
+    this->webview->page()->setDevToolsPage(this->devtools->page());
+    this->devtoolsSplitter->insertWidget(1, this->devtools);
+}
+
+void Tab::closeDevTools(){
+    delete this->devtools;
 }
 
 Tab::~Tab(){

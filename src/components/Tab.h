@@ -7,6 +7,7 @@
 #include <QResizeEvent>
 #include <QIcon>
 #include <QLabel>
+#include <QSplitter>
 
 #include "WebView.h"
 #include "TabTitleBar.h"
@@ -18,9 +19,10 @@ class Tab : public QWidget {
     Q_OBJECT
 private:
     QVBoxLayout *layout;
-    WebView *webview;
+    WebView *webview, *devtools;
     QLabel *pageSurface;
     TabTitleBar *tabTitleBar;
+    QSplitter *devtoolsSplitter;
     SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
     AuthenticationDialog *authDialog;
@@ -37,6 +39,8 @@ public:
     void requestNextPage();
     void requestPreviousPage();
     void requestReload();
+    void openDevTools();
+    void closeDevTools();
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;
