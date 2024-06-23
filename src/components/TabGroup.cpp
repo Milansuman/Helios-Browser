@@ -1,6 +1,7 @@
 #include "TabGroup.h"
 
 TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(parent), profile(profile){
+    this->setMouseTracking(true);
     this->setStyleSheet(
         "QSplitter::handle{"
         "   background: transparent;"

@@ -6,6 +6,7 @@
 #include <QPainter>
 #include <QPainterPath>
 #include <QTimer>
+#include <QQuickWidget>
 
 WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(profile, parent){
     this->connect(this, &WebView::loadFinished, this, [=](){
@@ -13,6 +14,28 @@ WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(pr
             emit this->colorChanged(this->getTopColor());
         });
     });
+    this->setMouseTracking(true);
+}
+
+bool WebView::eventFilter(QObject *object, QEvent *event){
+    if(object == this->pageSurface && event->type() == QEvent::MouseMove){
+        QCoreApplication::sendEvent(this->parent(), static_cast<QMouseEvent*>(event));
+        return QWebEngineView::eventFilter(object, event);
+    }
+    return QWebEngineView::eventFilter(object, event);
+}
+
+bool WebView::event(QEvent *event){
+    if(event->type() == QEvent::ChildAdded){
+        QChildEvent *childEvent = static_cast<QChildEvent*>(event);
+
+        QQuickWidget *webViewWidget = qobject_cast<QQuickWidget*>(childEvent->child());
+        if(webViewWidget){
+            this->pageSurface = webViewWidget;
+            webViewWidget->installEventFilter(this);
+        }
+    }
+    return QWebEngineView::event(event);
 }
 
 QColor WebView::getTopColor(){

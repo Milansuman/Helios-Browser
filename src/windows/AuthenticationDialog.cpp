@@ -19,7 +19,6 @@ AuthenticationDialog::AuthenticationDialog(QWidget *parent): QDialog(parent), au
 
     this->infoLabel = new QLabel();
     this->infoLabel->setFont(*heading);
-    qDebug() << "Info label font:" << this->infoLabel->font();
     this->usernameLabel = new QLabel("Username");
     this->passwordLabel = new QLabel("Password");
 

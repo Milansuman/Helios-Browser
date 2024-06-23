@@ -17,6 +17,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
     this->layout->setSpacing(0);
+    this->setMouseTracking(true);
 
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
@@ -31,6 +32,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->devtoolsSplitter = new QSplitter();
+    this->devtoolsSplitter->setMouseTracking(true);
 
     this->searchDialog = new SearchDialog(this);
     this->authDialog = new AuthenticationDialog(this);
