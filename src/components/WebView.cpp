@@ -18,7 +18,7 @@ WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(pr
 }
 
 bool WebView::eventFilter(QObject *object, QEvent *event){
-    if(object == this->pageSurface && event->type() == QEvent::MouseMove){
+    if(object == this->pageSurface && (event->type() == QEvent::MouseMove || event->type() == QEvent::MouseButtonPress)){
         QCoreApplication::sendEvent(this->parent(), static_cast<QMouseEvent*>(event));
         return QWebEngineView::eventFilter(object, event);
     }

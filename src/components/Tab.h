@@ -45,10 +45,12 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
 signals:
     void closeTabRequested();
     void splitTabLeftRequested();
     void splitTabRightRequested();
     void titleChanged(QString title);
     void iconChanged(QIcon icon);
+    void tabFocused();
 };

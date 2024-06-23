@@ -10,6 +10,7 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
     this->setHandleWidth(5);
     this->tabs.push_back(new Tab(profile));
     this->tabs.at(0)->setTitleBarVisible(false);
+    this->activeTab = this->tabs.at(0);
 
     this->addWidget(this->tabs.at(0));
 
@@ -19,6 +20,10 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
 
     this->connect(this->tabs.at(0), &Tab::iconChanged, this, [=](){
         emit this->tabIconChanged();
+    });
+
+    this->connect(this->tabs.at(0), &Tab::tabFocused, this, [=](){
+        this->activeTab = this->tabs.at(0);
     });
 
     this->connect(this, &TabGroup::tabsChanged, this, [=](){
@@ -76,6 +81,10 @@ void TabGroup::splitLeft(int pos){
         this->removeTab(this->findTab(temp));
     });
 
+    connect(this->tabs.at(pos), &Tab::tabFocused, this, [=](){
+        this->activeTab = temp;
+    });
+
     emit this->tabIconChanged();
     emit this->tabsChanged();
 }
@@ -105,6 +114,10 @@ void TabGroup::splitRight(int pos){
         this->removeTab(this->findTab(temp));
     });
 
+    connect(this->tabs.at(pos+1), &Tab::tabFocused, this, [=](){
+        this->activeTab = temp;
+    });
+
     emit this->tabIconChanged();
     emit this->tabsChanged();
 }
@@ -124,6 +137,10 @@ std::vector<Tab*> TabGroup::getTabs(){
 
 Tab* TabGroup::getTab(int pos){
     return this->tabs.at(pos);
+}
+
+void TabGroup::openDevTools(){
+    this->activeTab->openDevTools();
 }
 
 TabGroup::~TabGroup(){

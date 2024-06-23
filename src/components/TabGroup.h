@@ -10,6 +10,7 @@ class TabGroup : public QSplitter{
     Q_OBJECT
 private:
     std::vector<Tab*> tabs;
+    Tab* activeTab;
     QWebEngineProfile *profile;
     int findTab(Tab *tab);
 public:
@@ -17,6 +18,7 @@ public:
     void splitLeft(int pos);
     void splitRight(int pos);
     void removeTab(int pos);
+    void openDevTools();
     std::vector<Tab*> getTabs();
     Tab* getTab(int pos);
     ~TabGroup();

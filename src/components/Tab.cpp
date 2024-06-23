@@ -22,15 +22,6 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
 
-    QAction *openDevToolsAction = new QAction("Inspect Element", this->webview);
-    openDevToolsAction->setShortcut(Qt::Key_F12);
-
-    this->webview->addAction(openDevToolsAction);
-
-    connect(openDevToolsAction, &QAction::triggered, this, [=](){
-        this->openDevTools();
-    });
-
     this->devtoolsSplitter = new QSplitter();
     this->devtoolsSplitter->setMouseTracking(true);
 
@@ -176,6 +167,10 @@ void Tab::resizeEvent(QResizeEvent *event){
     // QPainterPath path;
     // path.addRoundedRect(rect(), 10, 10);
     // this->setMask(path.toFillPolygon().toPolygon());
+}
+
+void Tab::mousePressEvent(QMouseEvent *event){
+    emit this->tabFocused();
 }
 
 void Tab::setTitleBarVisible(bool visible){

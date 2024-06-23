@@ -2,6 +2,7 @@
 
 #include <QWebEngineSettings>
 #include <QWebEngineCookieStore>
+#include <QShortcut>
 
 TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0){
     this->setMouseTracking(true);
@@ -12,6 +13,13 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
     this->profile->cookieStore()->loadAllCookies();
 
     this->groups.push_back(new TabGroup(profile));
+
+    QShortcut *openDevToolsAction = new QShortcut(this);
+    openDevToolsAction->setKey(Qt::Key_F12);
+
+    this->connect(openDevToolsAction, &QShortcut::activated, this, [=](){
+        this->getCurrentGroup()->openDevTools();
+    });
 
     this->groupSelectorDialog = new GroupSelectorDialog(this);
     this->groupSelectorDialog->addGroup(new GroupIcons(this->groups.at(0)));
