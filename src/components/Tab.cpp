@@ -13,7 +13,7 @@
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://duckduckgo.com/", parent){}
 
-Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr){
+Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr){
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
     this->layout->setSpacing(0);
@@ -206,17 +206,20 @@ void Tab::requestReload(){
 }
 
 void Tab::openDevTools(){
-    this->devtools = new WebView();
-    this->webview->page()->setDevToolsPage(this->devtools->page());
-    this->devtoolsSplitter->insertWidget(1, this->devtools);
+    if(!devtools){
+        this->devtools = new WebView();
+        this->webview->page()->setDevToolsPage(this->devtools->page());
+        this->devtoolsSplitter->insertWidget(1, this->devtools);
 
-    this->connect(this->devtools->page(), &QWebEnginePage::windowCloseRequested, this, [=](){
-        this->closeDevTools();
-    });
+        this->connect(this->devtools->page(), &QWebEnginePage::windowCloseRequested, this, [=](){
+            this->closeDevTools();
+        });
+    }
 }
 
 void Tab::closeDevTools(){
     delete this->devtools;
+    this->devtools = nullptr;
 }
 
 Tab::~Tab(){
