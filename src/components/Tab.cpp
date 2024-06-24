@@ -11,7 +11,7 @@
 #include <QWebEngineScriptCollection>
 #include <QAction>
 
-Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://duckduckgo.com/", parent){}
+Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr){
     this->layout = new QVBoxLayout(this);
