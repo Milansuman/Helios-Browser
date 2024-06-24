@@ -209,6 +209,10 @@ void Tab::openDevTools(){
     this->devtools = new WebView();
     this->webview->page()->setDevToolsPage(this->devtools->page());
     this->devtoolsSplitter->insertWidget(1, this->devtools);
+
+    this->connect(this->devtools->page(), &QWebEnginePage::windowCloseRequested, this, [=](){
+        this->closeDevTools();
+    });
 }
 
 void Tab::closeDevTools(){
