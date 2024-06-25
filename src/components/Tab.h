@@ -14,6 +14,7 @@
 #include "../windows/SearchDialog.h"
 #include "../windows/FullScreenWindow.h"
 #include "../windows/AuthenticationDialog.h"
+#include "../windows/PermissionDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -26,7 +27,7 @@ private:
     SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
     AuthenticationDialog *authDialog;
-
+    PermissionDialog *permissionDialog;
     void initCustomScrollBar();
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);

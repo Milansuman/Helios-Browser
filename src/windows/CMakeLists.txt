@@ -9,5 +9,7 @@ set(SOURCES ${SOURCES}
     src/windows/FullScreenWindow.cpp
     src/windows/AuthenticationDialog.h
     src/windows/AuthenticationDialog.cpp
+    src/windows/PermissionDialog.h
+    src/windows/PermissionDialog.cpp
     PARENT_SCOPE
 )
