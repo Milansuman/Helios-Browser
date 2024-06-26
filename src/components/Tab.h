@@ -2,12 +2,14 @@
 
 #include <QWidget>
 #include <QWebEngineProfile>
+#include <QWebEnginePage>
 #include <QVBoxLayout>
 #include <QPaintEvent>
 #include <QResizeEvent>
 #include <QIcon>
 #include <QLabel>
 #include <QSplitter>
+#include <vector>
 
 #include "WebView.h"
 #include "TabTitleBar.h"
@@ -28,7 +30,10 @@ private:
     FullScreenWindow *fullScreenWindow;
     AuthenticationDialog *authDialog;
     PermissionDialog *permissionDialog;
+    std::vector<QWebEnginePage::Feature> *permissions; //bitwise or permissions flags
+
     void initCustomScrollBar();
+    bool hasPermission(QWebEnginePage::Feature permission);
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);

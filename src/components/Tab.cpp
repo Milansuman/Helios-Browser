@@ -10,10 +10,12 @@
 #include <QSizePolicy>
 #include <QWebEngineScriptCollection>
 #include <QAction>
+#include <algorithm>
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr){
+    this->permissions = new std::vector<QWebEnginePage::Feature>();
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
     this->layout->setSpacing(0);
@@ -39,6 +41,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
+        this->permissions->clear();
         //this->initCustomScrollBar();
     });
 
@@ -77,35 +80,44 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->connect(this->webview->page(), &QWebEnginePage::featurePermissionRequested, this, [=](const QUrl &securityOrigin, QWebEnginePage::Feature feature){
-        switch(feature){
-            case QWebEnginePage::Feature::MediaAudioCapture:
-                this->permissionDialog->exec(this->webview->url().toString() + " is requesting microphone access.");
-                break;
-            case QWebEnginePage::Feature::Notifications:
-                this->permissionDialog->exec(this->webview->url().toString() + " wants to send notifications.");
-                break;
-            case QWebEnginePage::Feature::Geolocation:
-                this->permissionDialog->exec(this->webview->url().toString() + " wants your location.");
-                break;
-            case QWebEnginePage::Feature::MediaVideoCapture:
-                this->permissionDialog->exec(this->webview->url().toString() + " is requesting camera access.");
-                break;
-            case QWebEnginePage::Feature::MediaAudioVideoCapture:
-                this->permissionDialog->exec(this->webview->url().toString() + " is requesting camera and mic access.");
-                break;
-            case QWebEnginePage::Feature::DesktopVideoCapture:
-                this->permissionDialog->exec(this->webview->url().toString() + " wants to share your screen.");
-                break;
-            case QWebEnginePage::Feature::DesktopAudioVideoCapture:
-                this->permissionDialog->exec(this->webview->url().toString() + " wants to share your screen.");
-                break;
-        }
+        if(this->hasPermission(feature)){
+            this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionGrantedByUser);
+        }else{
+            switch(feature){
+                case QWebEnginePage::Feature::MediaAudioCapture:
+                    this->permissionDialog->exec(this->webview->url().toString() + " is requesting microphone access.");
+                    break;
+                case QWebEnginePage::Feature::Notifications:
+                    this->permissionDialog->exec(this->webview->url().toString() + " wants to send notifications.");
+                    break;
+                case QWebEnginePage::Feature::Geolocation:
+                    this->permissionDialog->exec(this->webview->url().toString() + " wants your location.");
+                    break;
+                case QWebEnginePage::Feature::MediaVideoCapture:
+                    this->permissionDialog->exec(this->webview->url().toString() + " is requesting camera access.");
+                    break;
+                case QWebEnginePage::Feature::MediaAudioVideoCapture:
+                    this->permissionDialog->exec(this->webview->url().toString() + " is requesting camera and mic access.");
+                    break;
+                case QWebEnginePage::Feature::DesktopVideoCapture:
+                    this->permissionDialog->exec(this->webview->url().toString() + " wants to share your screen.");
+                    break;
+                case QWebEnginePage::Feature::DesktopAudioVideoCapture:
+                    this->permissionDialog->exec(this->webview->url().toString() + " wants to share your screen.");
+                    break;
+            }
 
-        switch(this->permissionDialog->result()){
-            case QDialog::Accepted:
-                this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionGrantedByUser);
-            case QDialog::Rejected:
-                this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionDeniedByUser);
+            switch(this->permissionDialog->result()){
+                case QDialog::Accepted:
+                    this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionGrantedByUser);
+                    this->permissions->push_back(feature);
+                    break;
+                case QDialog::Rejected:
+                    this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionDeniedByUser);
+                    break;
+                default:
+                    this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionUnknown);
+            }
         }
     });
 
@@ -150,6 +162,11 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->devtoolsSplitter->addWidget(this->webview);
     this->layout->addWidget(this->devtoolsSplitter);
+}
+
+bool Tab::hasPermission(QWebEnginePage::Feature permission){
+    std::vector<QWebEnginePage::Feature>::iterator it = std::find(this->permissions->begin(), this->permissions->end(), permission);
+    return it != this->permissions->end();
 }
 
 //adding a custom scroll bar which gets hidden when not in use
