@@ -1,15 +1,10 @@
-#ifdef _WIN32
-#include <windows.h>
-#include <windowsx.h>
-#include <dwmapi.h>
-#endif
-
 #include <QPainter>
 #include <QWindow>
 #include <QPainterPath>
 #include <QRegion>
 #include <QPropertyAnimation>
 #include <QEasingCurve>
+#include <QApplication>
 
 #ifdef __linux__
 #include <kwindoweffects.h>
@@ -20,62 +15,28 @@
 
 #define EDGE_MARGIN 5
 
-
 BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent), isMaximized(false) {
     #ifdef _WIN32
-    HINSTANCE hInstance = GetModuleHandleW(nullptr);
+    this->nativeWindow = new WinNativeWindow(1  * window()->devicePixelRatio()
+        , 1 * window()->devicePixelRatio()
+        , 1 * window()->devicePixelRatio()
+        , 1 * window()->devicePixelRatio());
 
-    HWND parent_hwnd = nullptr;
+    this->nativeWindowHandle = this->nativeWindow->hWnd;
 
-    if (parent)
-        parent_hwnd = HWND(parent->winId());
-    WNDCLASSEXW wcx;
-    memset(&wcx, 0, sizeof(WNDCLASSEXW));
-    wcx.cbSize = sizeof(WNDCLASSEXW);
-    wcx.style = CS_HREDRAW | CS_VREDRAW;
-    wcx.hInstance = hInstance;
-    wcx.lpfnWndProc = WNDPROC(WndProc);
-    wcx.cbClsExtra = 0;
-    wcx.cbWndExtra = 0;
-    wcx.hCursor	= LoadCursorW(nullptr, IDC_ARROW);
+    if(this->nativeWindowHandle){
+        this->setProperty("_q_embedded_native_parent_handle", (WId)this->nativeWindowHandle);
+        SetWindowLong((HWND)this->winId(), GWL_STYLE, WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS);
 
-    wcx.lpszClassName = L"BrowserWindow";
-
-    RegisterClassExW(&wcx);
-
-    this->windowID = CreateWindowW(wcx.lpszClassName, nullptr,
-                           WS_OVERLAPPEDWINDOW | WS_CLIPCHILDREN | WS_CLIPSIBLINGS,
-                           CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
-                           parent_hwnd, nullptr, hInstance, nullptr);
-    if (!this->windowID)
-    {
-        qDebug()<<"error occured runnnnn";
+        SetParent((HWND)this->winId(), this->nativeWindowHandle);
+        QEvent e(QEvent::EmbeddingControl);
+        QApplication::sendEvent(this, &e);
     }
 
-    SetWindowLongPtrW(this->windowID, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
-    this->setProperty("_q_embedded_native_parent_handle", (WId)this->windowID);
-    SetParent((HWND)this->winId(), this->windowID);
-    ShowWindow(this->windowID, SW_NORMAL);
-
-    compositor = new AcrylicCompositor(this->windowID);
-
-    AcrylicCompositor::AcrylicEffectParameter param;
-	param.blurAmount = 40;
-	param.saturationAmount = 2;
-	param.tintColor = D2D1::ColorF(0.0f, 0.0f, 0.0f, .30f);
-	param.fallbackColor = D2D1::ColorF(0.10f,0.10f,0.10f,1.0f);
-
-    compositor->SetAcrylicEffect(this->windowID, AcrylicCompositor::BACKDROP_SOURCE_HOSTBACKDROP, param);
-
-    DWM_BLURBEHIND bb = {0};
-
-    // Enable Blur Behind and apply to the entire client area
-    bb.dwFlags = DWM_BB_ENABLE;
-    bb.fEnable = true;
-    bb.hRgnBlur = NULL;
-
-    DwmEnableBlurBehindWindow(HWND(this->winId()), &bb);
+    this->nativeWindow->childWindow = (HWND)this->winId();
+    this->nativeWindow->childWidget = this;
     #endif
+
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->resize(size);
@@ -148,8 +109,6 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     connect(this->titleBar, &WindowTitleBar::toggleSideBarRequested, this, &BrowserWindow::toggleSideBar);
 
-
-
     connect(this->sideBar, &SideBar::newGroupRequested, this, [=](){
         this->tabManager->addGroup();
     });
@@ -161,11 +120,22 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->layout->addLayout(this->contentLayout);
 
     // Handle titlebar buttons
-    connect(this->titleBar->minimizeButton(), &QPushButton::clicked, this, &BrowserWindow::showMinimized);
+    connect(this->titleBar->minimizeButton(), &QPushButton::clicked, this, [=](){
+        #ifdef __WIN32
+        SendMessage(this->nativeWindowHandle, WM_SYSCOMMAND, SC_MINIMIZE, 0)
+        #endif
+        this->showMinimized();
+    });
     connect(this->titleBar->maximizeButton(), &QPushButton::clicked, this, [=]() {
         if (this->isMaximized) {
+            #ifdef __WIN32
+            SendMessage(this->nativeWindowHandle, WM_SYSCOMMAND, SC_RESTORE, 0);
+            #endif
             this->showNormal();
         } else {
+            #ifdef __WIN32
+            SendMessage(this->nativeWindowHandle, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+            #endif
             this->showMaximized();
         }
         this->isMaximized = !this->isMaximized;
@@ -174,6 +144,10 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     connect(this->titleBar->closeButton(), &QPushButton::clicked, this, &BrowserWindow::close);
 
     this->setCentralWidget(this->centralWidget);
+
+    #ifdef __WIN32
+    SendMessage(this->nativeWindowHandle, WM_SIZE, 0, 0);
+    #endif
 }
 
 void BrowserWindow::toggleSideBar() {
@@ -287,30 +261,184 @@ void BrowserWindow::mouseMoveEvent(QMouseEvent *event) {
 
 
 
-#ifdef _WIN32
-LRESULT CALLBACK BrowserWindow::WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam){
-    BrowserWindow *window = reinterpret_cast<BrowserWindow*>(GetWindowLongPtrW(hwnd, GWLP_USERDATA));
+#ifdef __WIN32
+bool BrowserWindow::nativeEvent(const QByteArray &, void *message, long *result){
+    MSG *msg = (MSG *)message;
 
-    if (compositor){
-		if (uMsg == WM_ACTIVATE)
-		{
-			if (LOWORD(wParam) == WA_ACTIVE || LOWORD(wParam)==WA_CLICKACTIVE)
-			{
-				active = true;
-			}
-			else if (LOWORD(wParam) == WA_INACTIVE)
-			{
-				active = false;
-			}
-		}
-        compositor->Sync(hwnd, uMsg, wParam, lParam,active);
-	}
-
-    if(!window){
-        return DefWindowProcW(hwnd, uMsg, wParam, lParam);
+    if (msg->message == WM_SETFOCUS)
+    {
+        Qt::FocusReason reason;
+        if (::GetKeyState(VK_LBUTTON) < 0 || ::GetKeyState(VK_RBUTTON) < 0)
+            reason = Qt::MouseFocusReason;
+        else if (::GetKeyState(VK_SHIFT) < 0)
+            reason = Qt::BacktabFocusReason;
+        else
+            reason = Qt::TabFocusReason;
+        QFocusEvent e(QEvent::FocusIn, reason);
+        QApplication::sendEvent(this, &e);
     }
-    return DefWindowProcW(hwnd, uMsg, wParam, lParam);
+
+    //Only close if safeToClose clears()
+    if (msg->message == WM_CLOSE)
+    {
+		if (true /* put your check for it if it safe to close your app here */) //eg, does the user need to save a document
+		{
+			//Safe to close, so hide the parent window
+			ShowWindow(this->nativeWindow, false);
+
+			//And then quit
+			QApplication::quit();
+		}
+		else
+        {
+            *result = 0; //Set the message to 0 to ignore it, and thus, don't actually close
+            return true;
+        }
+    }
+
+    //Double check WM_SIZE messages to see if the parent native window is maximized
+    if (msg->message == WM_SIZE)
+    {
+        if (p_Widget && p_Widget->maximizeButton)
+        {
+			//Get the window state
+            WINDOWPLACEMENT wp;
+            GetWindowPlacement(this->nativeWindow, &wp);
+
+			//If we're maximized, 
+            if (wp.showCmd == SW_MAXIMIZE)
+            {
+                //Maximize button should show as Restore
+                p_Widget->maximizeButton->setChecked(true);
+            }
+            else
+            {
+                //Maximize button should show as Maximize
+                p_Widget->maximizeButton->setChecked(false);
+            }
+        }
+    }
+
+    //Pass NCHITTESTS on the window edges as determined by BORDERWIDTH & TOOLBARHEIGHT through to the parent native window
+    if (msg->message == WM_NCHITTEST)
+    {
+        RECT WindowRect;
+        int x, y;
+
+        GetWindowRect(msg->hwnd, &WindowRect);
+        x = GET_X_LPARAM(msg->lParam) - WindowRect.left;
+        y = GET_Y_LPARAM(msg->lParam) - WindowRect.top;
+
+        if (x >= BORDERWIDTH && x <= WindowRect.right - WindowRect.left - BORDERWIDTH && y >= BORDERWIDTH && y <= TOOLBARHEIGHT)
+		{
+            if (p_Widget->toolBar)
+            {
+                //If the mouse is over top of the toolbar area BUT is actually positioned over a child widget of the toolbar, 
+				//Then we don't want to enable dragging. This allows for buttons in the toolbar, eg, a Maximize button, to keep the mouse interaction
+				if (QApplication::widgetAt(QCursor::pos()) != p_Widget->toolBar)
+                    return false;
+	    	}
+			
+				//The mouse is over the toolbar area & is NOT over a child of the toolbar, so pass this message 
+				//through to the native window for HTCAPTION dragging
+				*result = HTTRANSPARENT;
+				return true;
+
+        }
+        else if (x < BORDERWIDTH && y < BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+        else if (x > WindowRect.right - WindowRect.left - BORDERWIDTH && y < BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+        else if (x > WindowRect.right - WindowRect.left - BORDERWIDTH && y > WindowRect.bottom - WindowRect.top - BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+        else if (x < BORDERWIDTH && y > WindowRect.bottom - WindowRect.top - BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+        else if (x < BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+        else if (y < BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+        else if (x > WindowRect.right - WindowRect.left - BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+        else if (y > WindowRect.bottom - WindowRect.top - BORDERWIDTH)
+        {
+            *result = HTTRANSPARENT;
+            return true;
+        }
+
+        return false;
+    }
+
+    return false;
 }
+
+bool BrowserWindow::eventFilter(QObject *o, QEvent *e)
+{
+    QWidget *w = (QWidget*)o;
+
+    switch (e->type())
+    {
+        case QEvent::WindowDeactivate:
+        if (w->isModal() && w->isHidden())
+            BringWindowToTop(this->nativeWindowHandle);
+        break;
+
+        case QEvent::Hide:
+        if (_reenableParent) {
+            EnableWindow(this->nativeWindowHandle, true);
+            _reenableParent = false;
+        }
+        resetFocus();
+
+        if (w->testAttribute(Qt::WA_DeleteOnClose) && w->isWindow())
+            deleteLater();
+        break;
+
+        case QEvent::Show:
+        if (w->isWindow()) {
+            saveFocus();
+            hide();
+            if (w->isModal() && !_reenableParent) {
+            EnableWindow(this->nativeWindowHandle, false);
+            _reenableParent = true;
+            }
+        }
+        break;
+
+        case QEvent::Close:
+        {
+            ::SetActiveWindow(this->nativeWindowHandle);
+            if (w->testAttribute(Qt::WA_DeleteOnClose))
+                deleteLater();
+            break;
+        }
+        default:
+        break;
+    }
+
+    return QWidget::eventFilter(o, e);
+}
+
 #endif
 
 bool BrowserWindow::isEdgePosition(QPointF position) {

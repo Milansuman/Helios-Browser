@@ -9,8 +9,7 @@
 #include <QPropertyAnimation>
 
 #ifdef _WIN32
-#include <windows.h>
-#include "../misc/AcrylicCompositor.h"
+#include "WinNativeWindow.h"
 #endif
 
 #include "../components/WindowTitleBar.h"
@@ -28,22 +27,23 @@ private:
     SideBar *sideBar;
     bool isMaximized;
     QPropertyAnimation *sideBarAnimation;
-    void hideSideBar();
-#ifdef _WIN32
-    HWND windowID;
-    inline static AcrylicCompositor *compositor = nullptr;
-    inline static bool active = false;
-    static LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
-#endif
 
+    #ifdef __WIN32
+    WinNativeWindow *nativeWindow;
+    HWND nativeWindowHandle;
+    #endif
+
+    void hideSideBar();
     bool isEdgePosition(QPointF position);
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
     BrowserWindow(QSize size, QWidget *parent=nullptr);
     void toggleSideBar();
-#ifdef __linux__
+
+    #ifdef __linux__
     void show();
-#endif
+    #endif
+
     ~BrowserWindow();
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -52,5 +52,10 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     #ifdef __linux__
     void resizeEvent(QResizeEvent *event) override;
+    #endif
+
+    #ifdef __WIN32
+    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
+    bool eventFilter( QObject *o, QEvent *e ) override;
     #endif
 };
