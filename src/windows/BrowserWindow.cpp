@@ -53,8 +53,9 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     }
 
     SetWindowLongPtrW(this->windowID, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(this));
-
-    //ShowWindow(this->windowID, SW_NORMAL);
+    this->setProperty("_q_embedded_native_parent_handle", (WId)this->windowID);
+    setParent((HWND)this->winId(), this->windowID);
+    ShowWindow(this->windowID, SW_NORMAL);
 
     compositor = new AcrylicCompositor(this->windowID);
 
