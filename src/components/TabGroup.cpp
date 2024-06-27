@@ -26,6 +26,10 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
         this->activeTab = this->tabs.at(0);
     });
 
+    this->connect(this->tabs.at(0), &Tab::newTabRequested, this, [=](QUrl url){
+        emit this->newTabRequested(url);
+    });
+
     this->connect(this, &TabGroup::tabsChanged, this, [=](){
         for(Tab* tab: this->tabs){
             tab->setTitleBarVisible(this->tabs.size() > 1);
@@ -85,6 +89,10 @@ void TabGroup::splitLeft(int pos){
         this->activeTab = temp;
     });
 
+    connect(this->tabs.at(pos), &Tab::newTabRequested, this, [=](QUrl url){
+        emit this->newTabRequested(url);
+    });
+
     emit this->tabIconChanged();
     emit this->tabsChanged();
 }
@@ -116,6 +124,10 @@ void TabGroup::splitRight(int pos){
 
     connect(this->tabs.at(pos+1), &Tab::tabFocused, this, [=](){
         this->activeTab = temp;
+    });
+
+    connect(this->tabs.at(pos+1), &Tab::newTabRequested, this, [=](QUrl url){
+        emit this->newTabRequested(url);
     });
 
     emit this->tabIconChanged();

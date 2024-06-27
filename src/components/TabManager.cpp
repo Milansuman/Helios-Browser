@@ -47,6 +47,11 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
         emit this->titleChanged(title);
     });
 
+    this->connect(this->groups.at(0), &TabGroup::newTabRequested, this, [=](QUrl url){
+        this->addGroup();
+        this->getCurrentGroup()->getTab(0)->load(url);
+    });
+
     this->addWidget(this->groups.at(0));
 }
 

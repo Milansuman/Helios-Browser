@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QSplitter>
 #include <vector>
+#include <QUrl>
 
 #include "WebView.h"
 #include "TabTitleBar.h"
@@ -47,6 +48,7 @@ public:
     void requestReload();
     void openDevTools();
     void closeDevTools();
+    void load(QUrl url);
     ~Tab();
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -59,4 +61,5 @@ signals:
     void titleChanged(QString title);
     void iconChanged(QIcon icon);
     void tabFocused();
+    void newTabRequested(QUrl url);
 };

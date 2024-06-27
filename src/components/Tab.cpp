@@ -9,6 +9,7 @@
 #include <QWebEngineScript>
 #include <QSizePolicy>
 #include <QWebEngineScriptCollection>
+#include <QWebEngineNewWindowRequest>
 #include <QAction>
 #include <algorithm>
 
@@ -118,6 +119,14 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
                 default:
                     this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionUnknown);
             }
+        }
+    });
+
+    this->connect(this->webview->page(), &QWebEnginePage::newWindowRequested, this, [=](QWebEngineNewWindowRequest &request){
+        switch (request.destination()){
+        case QWebEngineNewWindowRequest::DestinationType::InNewTab:
+            emit this->newTabRequested(request.requestedUrl());
+            break;
         }
     });
 
@@ -271,6 +280,10 @@ void Tab::openDevTools(){
 void Tab::closeDevTools(){
     delete this->devtools;
     this->devtools = nullptr;
+}
+
+void Tab::load(QUrl url){
+    this->webview->load(url);
 }
 
 Tab::~Tab(){

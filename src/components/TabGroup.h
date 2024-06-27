@@ -2,6 +2,7 @@
 
 #include <QWebEngineProfile>
 #include <QSplitter>
+#include <QUrl>
 #include <vector>
 
 #include "Tab.h"
@@ -26,4 +27,5 @@ signals:
     void tabsChanged();
     void tabIconChanged();
     void windowTitleChanged(QString title);
+    void newTabRequested(QUrl url);
 };
