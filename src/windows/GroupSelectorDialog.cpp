@@ -37,6 +37,12 @@ void GroupSelectorDialog::addGroup(GroupIcons *group){
     this->connect(group, &GroupIcons::clicked, this, [=](){
         emit this->changeGroupRequested(pos);
     });
+
+    this->connect(group, &GroupIcons::closeGroupRequested, this, [=](){
+        emit this->closeGroupRequested(pos);
+        delete group;
+        this->groups.erase(this->groups.begin()+pos);
+    });
 }
 
 void GroupSelectorDialog::insertGroup(int pos, GroupIcons *group){
@@ -45,6 +51,12 @@ void GroupSelectorDialog::insertGroup(int pos, GroupIcons *group){
 
     this->connect(group, &GroupIcons::clicked, this, [=](){
         emit this->changeGroupRequested(pos);
+    });
+
+    this->connect(group, &GroupIcons::closeGroupRequested, this, [=](){
+        emit this->closeGroupRequested(pos);
+        delete group;
+        this->groups.erase(this->groups.begin()+pos);
     });
 }
 

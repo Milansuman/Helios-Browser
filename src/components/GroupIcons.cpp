@@ -2,6 +2,7 @@
 #include "Tab.h"
 
 #include <QPainter>
+#include <QAction>
 
 GroupIcons::GroupIcons(QWidget *parent): QWidget(parent){
     this->layout = new QHBoxLayout(this);
@@ -13,6 +14,21 @@ GroupIcons::GroupIcons(TabGroup *group, QWidget *parent): QWidget(parent){
     this->layout = new QHBoxLayout(this);
     this->layout->setContentsMargins(10, 10, 10, 10);
     this->layout->setSpacing(10);
+
+    this->menu = new QMenu(this);
+    this->menu->setStyleSheet(
+        "QMenu{"
+        "   background: rgb(30,30,30);"
+        "   border-radius: 10px;"
+        "   border: none;"
+        "}"
+    );
+
+    this->menu->addAction(QIcon(":/icons/white/tab-close.png"), "Close Group");
+
+    this->connect(this->menu->actions().at(0), &QAction::triggered, this, [=](){
+        emit this->closeGroupRequested();
+    });
 
     for(Tab *tab: group->getTabs()){
         this->addFavicon(!tab->getIcon().isNull() ? tab->getIcon() : QIcon(":/icons/earth.png"));
@@ -46,6 +62,9 @@ void GroupIcons::paintEvent(QPaintEvent *event){
 void GroupIcons::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton){
         emit this->clicked();
+    }else if(event->button() == Qt::RightButton){
+        int height = this->menu->sizeHint().height();
+        this->menu->popup(this->mapToGlobal(QPoint(0,-10-height)));
     }
 }
 

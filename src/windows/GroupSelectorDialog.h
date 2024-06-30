@@ -22,4 +22,5 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 signals:
     void changeGroupRequested(int pos);
+    void closeGroupRequested(int pos);
 };

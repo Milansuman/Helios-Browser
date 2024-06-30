@@ -8,10 +8,6 @@
 #include <QRegion>
 #include <QPropertyAnimation>
 
-#ifdef _WIN32
-#include "WinNativeWindow.h"
-#endif
-
 #include "../components/WindowTitleBar.h"
 #include "../components/TabManager.h"
 #include "../components/SideBar.h"
@@ -27,11 +23,6 @@ private:
     SideBar *sideBar;
     bool isMaximized;
     QPropertyAnimation *sideBarAnimation;
-
-    #ifdef __WIN32
-    WinNativeWindow *nativeWindow;
-    HWND nativeWindowHandle;
-    #endif
 
     void hideSideBar();
     bool isEdgePosition(QPointF position);
@@ -52,10 +43,5 @@ protected:
     void mouseDoubleClickEvent(QMouseEvent *event) override;
     #ifdef __linux__
     void resizeEvent(QResizeEvent *event) override;
-    #endif
-
-    #ifdef __WIN32
-    bool nativeEvent(const QByteArray &eventType, void *message, long *result) override;
-    bool eventFilter( QObject *o, QEvent *e ) override;
     #endif
 };

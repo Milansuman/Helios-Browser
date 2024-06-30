@@ -7,6 +7,7 @@
 #include <QPaintEvent>
 #include <QMouseEvent>
 #include <QIcon>
+#include <QMenu>
 
 #include "TabGroup.h"
 
@@ -15,6 +16,7 @@ class GroupIcons: public QWidget{
 private:
     std::vector<QLabel*> favicons;
     QHBoxLayout *layout;
+    QMenu *menu;
 public:
     GroupIcons(QWidget *parent=nullptr);
     GroupIcons(TabGroup *group, QWidget *parent=nullptr);
@@ -27,4 +29,5 @@ protected:
     void mousePressEvent(QMouseEvent *event) override;
 signals:
     void clicked();
+    void closeGroupRequested();
 };

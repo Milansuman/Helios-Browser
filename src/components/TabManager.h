@@ -20,6 +20,7 @@ public:
     TabGroup* getGroup(int pos);
     TabGroup* getCurrentGroup();
     void addGroup();
+    void closeGroup(int pos);
     void windowSplitLeft();
     void windowSplitRight();
     void windowSearch();
