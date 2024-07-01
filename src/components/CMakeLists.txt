@@ -21,5 +21,7 @@ set(SOURCES ${SOURCES}
     src/components/SideBar.cpp
     src/components/GroupIcons.h
     src/components/GroupIcons.cpp
+    src/components/PreviewWindow.h
+    src/components/PreviewWindow.cpp
     PARENT_SCOPE
 )

@@ -11,6 +11,7 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
     this->profile->settings()->setAttribute(QWebEngineSettings::FullScreenSupportEnabled, true);
     this->profile->settings()->setAttribute(QWebEngineSettings::Accelerated2dCanvasEnabled, true);
     this->profile->settings()->setAttribute(QWebEngineSettings::WebGLEnabled, true);
+    this->profile->settings()->setAttribute(QWebEngineSettings::ScreenCaptureEnabled, true);
 
     this->groups.push_back(new TabGroup(profile));
 
@@ -39,6 +40,12 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
         if(this->currentGroup == pos){
             this->currentGroup = pos-1;
             this->setCurrentIndex(pos-1);
+        }
+
+        if(this->getCurrentGroup()->getTabs().size() == 1){
+            emit this->displayTitleBarOnWindowRequested();
+        }else{
+            emit this->hideTitleBarOnWindowRequested();
         }
         this->closeGroup(pos);
     });

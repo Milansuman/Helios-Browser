@@ -10,6 +10,7 @@
 #include <QSizePolicy>
 #include <QWebEngineScriptCollection>
 #include <QWebEngineNewWindowRequest>
+#include <QWebEngineDesktopMediaRequest>
 #include <QAction>
 #include <algorithm>
 
@@ -31,6 +32,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->searchDialog = new SearchDialog(this);
     this->authDialog = new AuthenticationDialog(this);
     this->permissionDialog = new PermissionDialog(this);
+    this->screenShareDialog = new ScreenShareDialog(this);
     //this->initCustomScrollBar();
     this->tabTitleBar = new TabTitleBar();
 
@@ -122,11 +124,18 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         }
     });
 
+    this->connect(this->webview->page(), &QWebEnginePage::desktopMediaRequested, this, [=](const QWebEngineDesktopMediaRequest &request){
+        //request.selectScreen(request.screensModel()->index(0));
+        this->screenShareDialog->exec(request);
+    });
+
     this->connect(this->webview->page(), &QWebEnginePage::newWindowRequested, this, [=](QWebEngineNewWindowRequest &request){
         switch (request.destination()){
         case QWebEngineNewWindowRequest::DestinationType::InNewTab:
             emit this->newTabRequested(request.requestedUrl());
             break;
+        case QWebEngineNewWindowRequest::DestinationType::InNewWindow:
+            emit this->newWindowRequested(request.requestedUrl());
         }
     });
 

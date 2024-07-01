@@ -18,6 +18,7 @@
 #include "../windows/FullScreenWindow.h"
 #include "../windows/AuthenticationDialog.h"
 #include "../windows/PermissionDialog.h"
+#include "../windows/ScreenShareDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -31,6 +32,7 @@ private:
     FullScreenWindow *fullScreenWindow;
     AuthenticationDialog *authDialog;
     PermissionDialog *permissionDialog;
+    ScreenShareDialog *screenShareDialog;
     std::vector<QWebEnginePage::Feature> *permissions; //bitwise or permissions flags
 
     void initCustomScrollBar();
@@ -62,4 +64,5 @@ signals:
     void iconChanged(QIcon icon);
     void tabFocused();
     void newTabRequested(QUrl url);
+    void newWindowRequested(QUrl url);
 };

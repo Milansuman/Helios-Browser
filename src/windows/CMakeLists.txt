@@ -13,5 +13,7 @@ set(SOURCES ${SOURCES}
     src/windows/PermissionDialog.cpp
     src/windows/WinNativeWindow.h
     src/windows/WinNativeWindow.cpp
+    src/windows/ScreenShareDialog.h
+    src/windows/ScreenShareDialog.cpp
     PARENT_SCOPE
 )
