@@ -25,7 +25,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->progressIndicator = new QProgressBar();
     this->progressIndicator->setTextVisible(false);
-    this->progressIndicator->setFixedHeight(5);
+    this->progressIndicator->setFixedHeight(3);
     this->progressIndicator->setStyleSheet(
         "QProgressBar{"
         "   border-radius: 0px;"
@@ -34,7 +34,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         "   padding: 0px;"
         "}"
         "QProgressBar::chunk{"
-        "   background-color: rgb(33, 139, 145);"
+        "   background: qlineargradient(x1:0, y1:0, x2:1, y2:0,"
+        "                               stop:0 #218B91,"
+        "                               stop:1 #A123AC);"
         "}"
     );
 
