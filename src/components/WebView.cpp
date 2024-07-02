@@ -9,10 +9,12 @@
 #include <QQuickWidget>
 
 WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(profile, parent){
-    this->connect(this, &WebView::loadFinished, this, [=](){
-        QTimer::singleShot(200, [=](){
-            emit this->colorChanged(this->getTopColor());
-        });
+    this->connect(this, &WebView::loadProgress, this, [=](int progress){
+        if(progress == 100){
+            QTimer::singleShot(200, [=](){
+                emit this->colorChanged(this->getTopColor());
+            });
+        }
     });
     this->setMouseTracking(true);
 }
@@ -68,10 +70,12 @@ QColor WebView::getTopColor(){
 }
 
 WebView::WebView(QWidget *parent): QWebEngineView(parent){
-    this->connect(this, &WebView::loadFinished, this, [=](){
-        QTimer::singleShot(200, [=](){
-            emit this->colorChanged(this->getTopColor());
-        });
+    this->connect(this, &WebView::loadProgress, this, [=](int progress){
+        if(progress == 100){
+            QTimer::singleShot(200, [=](){
+                emit this->colorChanged(this->getTopColor());
+            });
+        }
     });
 }
 

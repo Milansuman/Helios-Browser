@@ -59,18 +59,14 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->connect(this->webview, &WebView::loadProgress, this, [=](int progress){
         if(progress == 100){
+            this->tabTitleBar->setTitle(this->webview->title());
+            emit this->titleChanged(this->webview->title());
+            this->permissions->clear();
             this->progressIndicator->setVisible(false);
         }else{
             this->progressIndicator->setVisible(true);
         }
         this->progressIndicator->setValue(progress);
-    });
-
-    this->connect(this->webview, &WebView::loadFinished, this, [=](){
-        this->tabTitleBar->setTitle(this->webview->title());
-        emit this->titleChanged(this->webview->title());
-        this->permissions->clear();
-        //this->initCustomScrollBar();
     });
 
     this->connect(this->webview, &WebView::iconChanged, this, [=](){
