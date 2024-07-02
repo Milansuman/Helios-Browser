@@ -29,7 +29,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->progressIndicator->setStyleSheet(
         "QProgressBar{"
         "   border-radius: 0px;"
-        "   background-color: transparent;"
+        "   background-color: rbga(0,0,0,0);"
         "   margin: 0px;"
         "   padding: 0px;"
         "}"
