@@ -16,7 +16,7 @@
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
-Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr){
+Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile){
     this->permissions = new std::vector<QWebEnginePage::Feature>();
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
@@ -137,6 +137,15 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
             break;
         case QWebEngineNewWindowRequest::DestinationType::InNewWindow:
             emit this->newWindowRequested(request.requestedUrl());
+            break;
+        case QWebEngineNewWindowRequest::DestinationType::InNewDialog:
+            WebViewDialog *webViewDialog = new WebViewDialog(this->profile, request.requestedUrl());
+            webViewDialog->open();
+
+            this->connect(webViewDialog, &WebViewDialog::finished, this, [=](){
+                delete webViewDialog;
+            });
+            break;
         }
     });
 

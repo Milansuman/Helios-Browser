@@ -29,6 +29,7 @@ private:
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
 public:
     BrowserWindow(QSize size, QWidget *parent=nullptr);
+    BrowserWindow(QUrl url, QSize size, QWidget *parent=nullptr);
     void toggleSideBar();
 
     #ifdef __linux__

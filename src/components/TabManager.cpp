@@ -31,6 +31,7 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
 
         if(this->getCurrentGroup()->getTabs().size() == 1){
             emit this->displayTitleBarOnWindowRequested();
+            emit this->titleChanged(this->getCurrentGroup()->getTab(0)->getTitle());
         }else{
             emit this->hideTitleBarOnWindowRequested();
         }
@@ -44,6 +45,7 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
 
         if(this->getCurrentGroup()->getTabs().size() == 1){
             emit this->displayTitleBarOnWindowRequested();
+            emit this->titleChanged(this->getCurrentGroup()->getTab(0)->getTitle());
         }else{
             emit this->hideTitleBarOnWindowRequested();
         }
@@ -65,6 +67,10 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
     this->connect(this->groups.at(0), &TabGroup::newTabRequested, this, [=](QUrl url){
         this->addGroup();
         this->getCurrentGroup()->getTab(0)->load(url);
+    });
+
+    this->connect(this->groups.at(0), &TabGroup::newWindowRequested, this, [=](QUrl url){
+        emit this->newWindowRequested(url);
     });
 
     this->addWidget(this->groups.at(0));
@@ -95,15 +101,29 @@ void TabManager::addGroup(){
         emit this->titleChanged(title);
     });
 
+    this->connect(this->groups.at(pos), &TabGroup::newTabRequested, this, [=](QUrl url){
+        this->addGroup();
+        this->getCurrentGroup()->getTab(0)->load(url);
+    });
+
+    this->connect(this->groups.at(pos), &TabGroup::newWindowRequested, this, [=](QUrl url){
+        emit this->newWindowRequested(url);
+    });
+
     this->currentGroup = pos;
     this->addWidget(this->groups.at(pos));
     this->setCurrentIndex(pos);
     emit this->displayTitleBarOnWindowRequested();
+    emit this->titleChanged(this->getCurrentGroup()->getTab(0)->getTitle());
 }
 
 void TabManager::closeGroup(int pos){
     delete this->groups.at(pos);
     this->groups.erase(this->groups.begin()+pos);
+}
+
+void TabManager::setInitialUrl(QUrl url){
+    this->getCurrentGroup()->getTab(0)->load(url);
 }
 
 void TabManager::windowSplitLeft(){

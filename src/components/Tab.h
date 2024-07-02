@@ -19,6 +19,7 @@
 #include "../windows/AuthenticationDialog.h"
 #include "../windows/PermissionDialog.h"
 #include "../windows/ScreenShareDialog.h"
+#include "../windows/WebViewDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -33,6 +34,7 @@ private:
     AuthenticationDialog *authDialog;
     PermissionDialog *permissionDialog;
     ScreenShareDialog *screenShareDialog;
+    QWebEngineProfile *profile;
     std::vector<QWebEnginePage::Feature> *permissions; //bitwise or permissions flags
 
     void initCustomScrollBar();

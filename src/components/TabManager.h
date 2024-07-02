@@ -19,6 +19,7 @@ public:
     TabManager(QWidget *parent=nullptr);
     TabGroup* getGroup(int pos);
     TabGroup* getCurrentGroup();
+    void setInitialUrl(QUrl url);
     void addGroup();
     void closeGroup(int pos);
     void windowSplitLeft();
@@ -34,4 +35,5 @@ signals:
     void displayTitleBarOnWindowRequested();
     void hideTitleBarOnWindowRequested();
     void titleChanged(QString title);
+    void newWindowRequested(QUrl url);
 };

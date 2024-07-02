@@ -15,6 +15,10 @@
 
 #define EDGE_MARGIN 5
 
+BrowserWindow::BrowserWindow(QUrl url, QSize size, QWidget *parent): BrowserWindow(size, parent){
+    this->tabManager->setInitialUrl(url);
+}
+
 BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent), isMaximized(false) {
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
@@ -78,6 +82,11 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     connect(this->tabManager, &TabManager::hideTitleBarOnWindowRequested, this, [=](){
         this->titleBar->setTitleBarVisible(false);
+    });
+
+    connect(this->tabManager, &TabManager::newWindowRequested, this, [=](QUrl url){
+        BrowserWindow *newWindow = new BrowserWindow(url, QSize(1000, 900));
+        newWindow->show();
     });
 
     this->sideBar = new SideBar();
