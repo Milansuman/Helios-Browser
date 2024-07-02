@@ -69,5 +69,6 @@
         <file alias="split-right.png">res/icons/white/split-right.png</file>
         <file alias="split.png">res/icons/white/split.png</file>
         <file alias="group-selector.png">res/icons/white/group-selector.png</file>
+        <file alias="download.png">res/icons/white/download.png</file>
     </qresource>
 </RCC>

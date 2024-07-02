@@ -3,6 +3,7 @@
 #include <QWebEngineSettings>
 #include <QWebEngineCookieStore>
 #include <QShortcut>
+#include <QApplication>
 
 TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0){
     this->setMouseTracking(true);
@@ -38,7 +39,7 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
     });
 
     this->connect(this->groupSelectorDialog, &GroupSelectorDialog::closeGroupRequested, this, [=](int pos){
-        if(this->currentGroup == pos){
+        if(this->currentGroup == pos && this->currentGroup != 0){
             this->currentGroup = pos-1;
             this->setCurrentIndex(pos-1);
         }
@@ -120,6 +121,10 @@ void TabManager::addGroup(){
 void TabManager::closeGroup(int pos){
     delete this->groups.at(pos);
     this->groups.erase(this->groups.begin()+pos);
+
+    if(this->groups.size() == 0){
+        qApp->quit();
+    }
 }
 
 void TabManager::setInitialUrl(QUrl url){

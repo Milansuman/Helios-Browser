@@ -64,6 +64,10 @@ TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
         emit this->splitTabRightRequested();
     });
 
+    this->connect(this->splitTabMenu, &SplitTabMenu::splitTabFlipRequested, this, [=](){
+        emit this->splitTabFlipRequested();
+    });
+
     this->connect(this->closeButton, &IconButton::clicked, this, [=](){
         emit this->closeTabRequested();
     });

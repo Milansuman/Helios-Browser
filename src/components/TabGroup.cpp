@@ -53,6 +53,14 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
         this->splitRight(this->findTab(temp));
     });
 
+    connect(this->tabs.at(0), &Tab::splitTabFlipRequested, this, [=](){
+        if(this->orientation() == Qt::Orientation::Horizontal){
+            this->setOrientation(Qt::Orientation::Vertical);
+        }else{
+            this->setOrientation(Qt::Orientation::Horizontal);
+        }
+    });
+
     connect(this->tabs.at(0), &Tab::closeTabRequested, this, [=](){
         this->removeTab(this->findTab(temp));
     });
@@ -83,6 +91,14 @@ void TabGroup::splitLeft(int pos){
 
     connect(this->tabs.at(pos), &Tab::splitTabRightRequested, this, [=](){
         this->splitRight(this->findTab(temp));
+    });
+
+    connect(this->tabs.at(pos), &Tab::splitTabFlipRequested, this, [=](){
+        if(this->orientation() == Qt::Orientation::Horizontal){
+            this->setOrientation(Qt::Orientation::Vertical);
+        }else{
+            this->setOrientation(Qt::Orientation::Horizontal);
+        }
     });
 
     connect(this->tabs.at(pos), &Tab::closeTabRequested, this, [=](){
@@ -124,6 +140,14 @@ void TabGroup::splitRight(int pos){
 
     connect(this->tabs.at(pos+1), &Tab::splitTabRightRequested, this, [=](){
         this->splitRight(this->findTab(temp));
+    });
+
+    connect(this->tabs.at(pos+1), &Tab::splitTabFlipRequested, this, [=](){
+        if(this->orientation() == Qt::Orientation::Horizontal){
+            this->setOrientation(Qt::Orientation::Vertical);
+        }else{
+            this->setOrientation(Qt::Orientation::Horizontal);
+        }
     });
 
     connect(this->tabs.at(pos+1), &Tab::closeTabRequested, this, [=](){

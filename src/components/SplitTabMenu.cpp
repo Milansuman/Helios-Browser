@@ -8,6 +8,7 @@ SplitTabMenuAction::SplitTabMenuAction(QObject *parent): QWidgetAction(parent){
 
     this->splitTabLeftButton = new IconButton(":/icons/white/split-left.png");
     this->splitTabRightButton = new IconButton(":/icons/white/split-right.png");
+    this->splitTabFlipButton = new IconButton(":/icons/white/download.png");
 
     this->connect(this->splitTabLeftButton, &IconButton::clicked, this, [=](){
         emit this->splitTabLeftRequested();
@@ -17,8 +18,13 @@ SplitTabMenuAction::SplitTabMenuAction(QObject *parent): QWidgetAction(parent){
         emit this->splitTabRightRequested();
     });
 
+    this->connect(this->splitTabFlipButton, &IconButton::clicked, this, [=](){
+        emit this->splitTabFlipRequested();
+    });
+
     this->layout->addWidget(this->splitTabLeftButton);
     this->layout->addWidget(this->splitTabRightButton);
+    this->layout->addWidget(this->splitTabFlipButton);
 
     this->setDefaultWidget(this->defaultWidget);
 }
@@ -54,6 +60,11 @@ SplitTabMenu::SplitTabMenu(QWidget *parent): IconButton(":/icons/split.png", par
 
     this->connect(this->splitAction, &SplitTabMenuAction::splitTabRightRequested, this, [=](){
         emit this->splitTabRightRequested();
+        this->menu->hide();
+    });
+
+    this->connect(this->splitAction, &SplitTabMenuAction::splitTabFlipRequested, this, [=](){
+        emit this->splitTabFlipRequested();
         this->menu->hide();
     });
 }

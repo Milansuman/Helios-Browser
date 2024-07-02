@@ -12,13 +12,14 @@ class SplitTabMenuAction : public QWidgetAction {
 private:
     QWidget *defaultWidget;
     QHBoxLayout *layout;
-    IconButton *splitTabLeftButton, *splitTabRightButton;
+    IconButton *splitTabLeftButton, *splitTabRightButton, *splitTabFlipButton;
 public:
     SplitTabMenuAction(QObject *parent=nullptr);
     ~SplitTabMenuAction();
 signals:
     void splitTabLeftRequested();
     void splitTabRightRequested();
+    void splitTabFlipRequested();
 };
 
 class SplitTabMenu : public IconButton{
@@ -32,4 +33,5 @@ public:
 signals:
     void splitTabLeftRequested();
     void splitTabRightRequested();
+    void splitTabFlipRequested();
 };

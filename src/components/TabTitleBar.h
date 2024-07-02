@@ -32,6 +32,7 @@ signals:
     void closeTabRequested();
     void splitTabLeftRequested();
     void splitTabRightRequested();
+    void splitTabFlipRequested();
     void copyLinkRequested();
     void searchRequested();
 };

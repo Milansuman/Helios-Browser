@@ -62,6 +62,7 @@ signals:
     void closeTabRequested();
     void splitTabLeftRequested();
     void splitTabRightRequested();
+    void splitTabFlipRequested();
     void titleChanged(QString title);
     void iconChanged(QIcon icon);
     void tabFocused();

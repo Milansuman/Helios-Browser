@@ -181,6 +181,10 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         emit this->splitTabRightRequested();
     });
 
+    this->connect(this->tabTitleBar, &TabTitleBar::splitTabFlipRequested, this, [=](){
+        emit this->splitTabFlipRequested();
+    });
+
     this->connect(this->tabTitleBar, &TabTitleBar::closeTabRequested, this, [=](){
         emit this->closeTabRequested();
     });
