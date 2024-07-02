@@ -16,7 +16,7 @@
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
-Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr){
+Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr){
     this->permissions = new std::vector<QWebEnginePage::Feature>();
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
@@ -32,7 +32,6 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->searchDialog = new SearchDialog(this);
     this->authDialog = new AuthenticationDialog(this);
     this->permissionDialog = new PermissionDialog(this);
-    this->screenShareDialog = new ScreenShareDialog(this);
     //this->initCustomScrollBar();
     this->tabTitleBar = new TabTitleBar();
 
@@ -126,7 +125,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->connect(this->webview->page(), &QWebEnginePage::desktopMediaRequested, this, [=](const QWebEngineDesktopMediaRequest &request){
         //request.selectScreen(request.screensModel()->index(0));
+        this->screenShareDialog = new ScreenShareDialog(this);
         this->screenShareDialog->exec(request);
+        delete this->screenShareDialog;
     });
 
     this->connect(this->webview->page(), &QWebEnginePage::newWindowRequested, this, [=](QWebEngineNewWindowRequest &request){

@@ -44,10 +44,6 @@ ScreenShareDialog::ScreenShareDialog(QWidget *parent): QDialog(parent), request(
     this->windowsLayout->setHorizontalSpacing(5);
     this->optionsWidget->addTab(this->windowsWidget, "Windows");
 
-    this->connect(this, &ScreenShareDialog::finished, this, [=](){
-        this->deleteLater();
-    });
-
     this->layout->addWidget(this->optionsWidget);
 }
 
