@@ -23,6 +23,21 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->layout->setSpacing(0);
     this->setMouseTracking(true);
 
+    this->progressIndicator = new QProgressBar();
+    this->progressIndicator->setTextVisible(false);
+    this->progressIndicator->setFixedHeight(5);
+    this->progressIndicator->setStyleSheet(
+        "QProgressBar{"
+        "   border-radius: 0px;"
+        "   background-color: transparent;"
+        "   margin: 0px;"
+        "   padding: 0px;"
+        "}"
+        "QProgressBar::chunk{"
+        "   background-color: rgb(33, 139, 145);"
+        "}"
+    );
+
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
 
@@ -38,6 +53,15 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->connect(this->webview, &WebView::loadStarted, this, [=](){
         this->tabTitleBar->setTitle(this->webview->url().toString());
         //this->initCustomScrollBar();
+    });
+
+    this->connect(this->webview, &WebView::loadProgress, this, [=](int progress){
+        if(progress == 100){
+            this->progressIndicator->setVisible(false);
+        }else{
+            this->progressIndicator->setVisible(true);
+        }
+        this->progressIndicator->setValue(progress);
     });
 
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
@@ -190,6 +214,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->layout->addWidget(this->tabTitleBar);
+    this->layout->addWidget(this->progressIndicator);
     //this->layout->addWidget(this->pageSurface);
 
     this->devtoolsSplitter->addWidget(this->webview);

@@ -11,6 +11,7 @@
 #include <QSplitter>
 #include <vector>
 #include <QUrl>
+#include <QProgressBar>
 
 #include "WebView.h"
 #include "TabTitleBar.h"
@@ -28,6 +29,7 @@ private:
     WebView *webview, *devtools;
     QLabel *pageSurface;
     TabTitleBar *tabTitleBar;
+    QProgressBar *progressIndicator;
     QSplitter *devtoolsSplitter;
     SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;

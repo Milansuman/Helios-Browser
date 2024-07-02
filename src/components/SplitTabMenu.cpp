@@ -32,6 +32,7 @@ SplitTabMenuAction::SplitTabMenuAction(QObject *parent): QWidgetAction(parent){
 SplitTabMenuAction::~SplitTabMenuAction(){
     delete this->splitTabLeftButton;
     delete this->splitTabRightButton;
+    delete this->splitTabFlipButton;
     delete this->layout;
     delete this->defaultWidget;
 }
