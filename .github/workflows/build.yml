@@ -58,15 +58,23 @@ jobs:
         modules: qtwebengine qtpositioning qtwebchannel
     - uses: ilammy/msvc-dev-cmd@v1
 
+    - name: Install extra-cmake-modules
+      run: |
+        git clone https://invent.kde.org/frameworks/extra-cmake-modules
+        cd extra-cmake-modules
+        mkdir build && cd build
+        cmake ..
+        make install
+      if: runner.os == 'Linux'
+
     - name: Install KF6WindowSystem
       run: |
-        sudo apt install extra-cmake-modules
         git clone https://invent.kde.org/frameworks/kwindowsystem.git
         cd kwindowsystem
         mkdir build && cd build
         cmake ..
         make install
-      if: ${{ matrix.os }} == 'ubuntu_latest'
+      if: runner.os == 'Linux'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
