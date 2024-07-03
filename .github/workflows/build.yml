@@ -60,6 +60,7 @@ jobs:
 
     - name: Install KF6WindowSystem
       run: |
+        sudo apt install extra-cmake-modules
         git clone https://invent.kde.org/frameworks/kwindowsystem.git
         cd kwindowsystem
         mkdir build && cd build
