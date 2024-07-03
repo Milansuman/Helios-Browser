@@ -64,7 +64,7 @@ jobs:
         cd extra-cmake-modules
         mkdir build && cd build
         cmake ..
-        make install
+        sudo make install
       if: runner.os == 'Linux'
 
     - name: Install KF6WindowSystem
@@ -73,7 +73,7 @@ jobs:
         cd kwindowsystem
         mkdir build && cd build
         cmake ..
-        make install
+        sudo make install
       if: runner.os == 'Linux'
 
     - name: Configure CMake
