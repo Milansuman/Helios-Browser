@@ -69,7 +69,7 @@ jobs:
 
     - name: Install KF6WindowSystem
       run: |
-        sudo apt install libxcb-dev libxcb-util-dev
+        sudo apt install libxcb1-dev libxcb-util-dev
         git clone https://invent.kde.org/frameworks/kwindowsystem.git
         cd kwindowsystem
         mkdir build && cd build
