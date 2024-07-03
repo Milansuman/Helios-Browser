@@ -58,16 +58,14 @@ jobs:
         modules: qtwebengine qtpositioning qtwebchannel
     - uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Add KDE Frameworks repository
-      run: |
-        sudo add-apt-repository ppa:kubuntu-ppa/backports
-        sudo apt-get update
-      if: ${{ matrix.os }} == 'linux_latest'
-
     - name: Install KF6WindowSystem
       run: |
-        sudo apt-get install -y libkf6windowsystem-dev
-      if: ${{ matrix.os }} == 'linux_latest'
+        git clone https://invent.kde.org/frameworks/kwindowsystem.git
+        cd kwindowsystem
+        mkdir build && cd build
+        cmake ..
+        make install
+      if: ${{ matrix.os }} == 'ubuntu_latest'
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
