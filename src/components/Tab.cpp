@@ -57,6 +57,13 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         //this->initCustomScrollBar();
     });
 
+    this->connect(this->webview, &WebView::loadFinished, this, [=](){
+        this->tabTitleBar->setTitle(this->webview->title());
+        emit this->titleChanged(this->webview->title());
+        this->permissions->clear();
+        this->progressIndicator->setVisible(false);
+    });
+
     this->connect(this->webview, &WebView::loadProgress, this, [=](int progress){
         if(progress == 100){
             this->tabTitleBar->setTitle(this->webview->title());
@@ -159,14 +166,6 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
             break;
         case QWebEngineNewWindowRequest::DestinationType::InNewWindow:
             emit this->newWindowRequested(request.requestedUrl());
-            break;
-        case QWebEngineNewWindowRequest::DestinationType::InNewDialog:
-            WebViewDialog *webViewDialog = new WebViewDialog(this->profile, request.requestedUrl());
-            webViewDialog->open();
-
-            this->connect(webViewDialog, &WebViewDialog::finished, this, [=](){
-                delete webViewDialog;
-            });
             break;
         }
     });

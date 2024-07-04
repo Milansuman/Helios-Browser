@@ -12,6 +12,8 @@ private:
     WebView *webView;
     QVBoxLayout *layout;
 public:
+    WebViewDialog(QWebEngineProfile *profile, QWidget *parent=nullptr);
     WebViewDialog(QWebEngineProfile *profile, QUrl url, QWidget *parent=nullptr);
+    WebView* getView();
     ~WebViewDialog();
 };

@@ -8,6 +8,8 @@
 #include <QTimer>
 #include <QQuickWidget>
 
+#include "../windows/WebViewDialog.h"
+
 WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(profile, parent){
     this->connect(this, &WebView::loadProgress, this, [=](int progress){
         if(progress == 100){
@@ -15,6 +17,12 @@ WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(pr
                 emit this->colorChanged(this->getTopColor());
             });
         }
+    });
+
+    this->connect(this, &WebView::loadFinished, this, [=](){
+        QTimer::singleShot(200, [=](){
+            emit this->colorChanged(this->getTopColor());
+        });
     });
     this->setMouseTracking(true);
 }
@@ -38,6 +46,17 @@ bool WebView::event(QEvent *event){
         }
     }
     return QWebEngineView::event(event);
+}
+
+QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type){
+    WebViewDialog *webViewDialog = new WebViewDialog(this->page()->profile());
+    webViewDialog->open();
+
+    this->connect(webViewDialog, &WebViewDialog::finished, this, [=](){
+        delete webViewDialog;
+    });
+
+    return webViewDialog->getView();
 }
 
 QColor WebView::getTopColor(){
@@ -76,6 +95,12 @@ WebView::WebView(QWidget *parent): QWebEngineView(parent){
                 emit this->colorChanged(this->getTopColor());
             });
         }
+    });
+
+    this->connect(this, &WebView::loadFinished, this, [=](){
+        QTimer::singleShot(200, [=](){
+            emit this->colorChanged(this->getTopColor());
+        });
     });
 }
 

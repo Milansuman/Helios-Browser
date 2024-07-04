@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWebEngineView>
+#include <QWebEnginePage>
 #include <QWebEngineProfile>
 #include <QPaintEvent>
 #include <QEvent>
@@ -17,6 +18,7 @@ public:
     WebView(QWidget *parent=nullptr);
 protected:
     bool eventFilter(QObject *object, QEvent *event);
+    QWebEngineView* createWindow(QWebEnginePage::WebWindowType type) override;
 signals:
     void colorChanged(QColor color);
 };
