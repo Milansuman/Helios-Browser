@@ -2,11 +2,10 @@
 
 #include <QWebEnginePage>
 
-WebViewDialog::WebViewDialog(QWebEngineProfile *profile, QWidget *parent): QDialog(parent){
+WebViewDialog::WebViewDialog(WebView *webView, QWidget *parent): QDialog(parent), webView(webView){
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0, 0, 0, 0);
-
-    this->webView = new WebView(profile);
+    this->setMinimumSize(500, 600);
 
     this->connect(this->webView, &QWebEngineView::loadFinished, this, [=](){
         this->setWindowTitle(this->webView->title());
@@ -17,14 +16,6 @@ WebViewDialog::WebViewDialog(QWebEngineProfile *profile, QWidget *parent): QDial
     });
 
     this->layout->addWidget(this->webView);
-}
-
-WebViewDialog::WebViewDialog(QWebEngineProfile *profile, QUrl url, QWidget *parent): WebViewDialog(profile, parent){
-    this->webView->load(url);
-}
-
-WebView* WebViewDialog::getView(){
-    return this->webView;
 }
 
 WebViewDialog::~WebViewDialog() = default;

@@ -49,14 +49,21 @@ bool WebView::event(QEvent *event){
 }
 
 QWebEngineView* WebView::createWindow(QWebEnginePage::WebWindowType type){
-    WebViewDialog *webViewDialog = new WebViewDialog(this->page()->profile());
-    webViewDialog->open();
+    switch (type){
+    case QWebEnginePage::WebDialog:
+        WebView *newView = new WebView(this->page()->profile());
 
-    this->connect(webViewDialog, &WebViewDialog::finished, this, [=](){
-        delete webViewDialog;
-    });
+        WebViewDialog *webViewDialog = new WebViewDialog(newView);
+        webViewDialog->show();
 
-    return webViewDialog->getView();
+        this->connect(webViewDialog, &WebViewDialog::finished, this, [=](){
+            delete webViewDialog;
+        });
+
+        return newView;
+        break;
+    }
+    return nullptr;
 }
 
 QColor WebView::getTopColor(){
