@@ -9,12 +9,14 @@
 #include "AddressBox.h"
 
 #include "SplitTabMenu.h"
+#include "PageSettings.h"
 
 class TabTitleBar : public QWidget {
     Q_OBJECT
 private:
     QHBoxLayout *layout;
-    IconButton *reloadButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton, *closeButton;
+    IconButton *reloadButton, *backButton, *forwardButton, *copyLinkButton, *closeButton;
+    PageSettings *siteSettingsButton;
     SplitTabMenu *splitTabMenu;
     AddressBox *addressBox;
 public:
