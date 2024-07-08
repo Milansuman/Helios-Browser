@@ -17,5 +17,7 @@ set(SOURCES ${SOURCES}
     src/windows/ScreenShareDialog.cpp
     src/windows/WebViewDialog.h
     src/windows/WebViewDialog.cpp
+    src/windows/PageSettingsDialog.h
+    src/windows/PageSettingsDialog.cpp
     PARENT_SCOPE
 )

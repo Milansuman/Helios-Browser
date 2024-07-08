@@ -7,16 +7,13 @@
 
 #include "IconButton.h"
 #include "AddressBox.h"
-
 #include "SplitTabMenu.h"
-#include "PageSettings.h"
 
 class TabTitleBar : public QWidget {
     Q_OBJECT
 private:
     QHBoxLayout *layout;
-    IconButton *reloadButton, *backButton, *forwardButton, *copyLinkButton, *closeButton;
-    PageSettings *siteSettingsButton;
+    IconButton *reloadButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton, *closeButton;
     SplitTabMenu *splitTabMenu;
     AddressBox *addressBox;
 public:
@@ -37,4 +34,5 @@ signals:
     void splitTabFlipRequested();
     void copyLinkRequested();
     void searchRequested();
+    void siteSettingsRequested();
 };

@@ -21,6 +21,7 @@
 #include "../windows/PermissionDialog.h"
 #include "../windows/ScreenShareDialog.h"
 #include "../windows/WebViewDialog.h"
+#include "../windows/PageSettingsDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -36,6 +37,7 @@ private:
     AuthenticationDialog *authDialog;
     PermissionDialog *permissionDialog;
     ScreenShareDialog *screenShareDialog;
+    PageSettingsDialog *pageSettingsDialog;
     QWebEngineProfile *profile;
     std::vector<QWebEnginePage::Feature> *permissions; //bitwise or permissions flags
 

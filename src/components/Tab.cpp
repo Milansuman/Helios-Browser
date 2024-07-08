@@ -52,6 +52,12 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     //this->initCustomScrollBar();
     this->tabTitleBar = new TabTitleBar();
 
+    this->pageSettingsDialog = new PageSettingsDialog(this->tabTitleBar);
+
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleMuteAudio, this, [=](bool muted){
+        this->webview->page()->setAudioMuted(muted);
+    });
+
     this->connect(this->webview, &WebView::loadStarted, this, [=](){
         this->tabTitleBar->setTitle(this->webview->url().toString());
         //this->initCustomScrollBar();
@@ -62,6 +68,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         emit this->titleChanged(this->webview->title());
         this->permissions->clear();
         this->progressIndicator->setVisible(false);
+        this->pageSettingsDialog->setUrl(this->webview->url());
     });
 
     this->connect(this->webview, &WebView::loadProgress, this, [=](int progress){
@@ -136,6 +143,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
                 case QWebEnginePage::Feature::DesktopAudioVideoCapture:
                     this->permissionDialog->exec(this->webview->url().toString() + " wants to share your screen.");
                     break;
+                case QWebEnginePage::Feature::MouseLock:
+                    this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionDeniedByUser);
+                    break;
             }
 
             switch(this->permissionDialog->result()){
@@ -208,6 +218,10 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->connect(this->tabTitleBar, &TabTitleBar::closeTabRequested, this, [=](){
         emit this->closeTabRequested();
+    });
+
+    this->connect(this->tabTitleBar, &TabTitleBar::siteSettingsRequested, this, [=](){
+        this->pageSettingsDialog->open();
     });
 
     this->layout->addWidget(this->tabTitleBar);

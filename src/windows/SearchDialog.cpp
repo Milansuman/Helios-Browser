@@ -8,6 +8,7 @@
 #include <QPaintEvent>
 #include <QPainterPath>
 #include <QKeyEvent>
+#include <QUrl>
 
 #ifdef __linux__
 #include <kwindoweffects.h>
@@ -88,7 +89,7 @@ void SearchDialog::keyPressEvent(QKeyEvent *event){
 }
 
 QString SearchDialog::getSearch(){
-    return this->searchText;
+    return (QUrl::fromUserInput(this->searchText)).toString();
 }
 
 SearchDialog::~SearchDialog(){

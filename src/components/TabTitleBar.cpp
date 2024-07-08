@@ -16,7 +16,7 @@ TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
     this->addressBox = new AddressBox("search or enter link.");
     this->addressBox->setBlank(false);
 
-    this->siteSettingsButton = new PageSettings(this);
+    this->siteSettingsButton = new IconButton(":/icons/page-settings.png");
     this->splitTabMenu = new SplitTabMenu();
     this->closeButton = new IconButton(":/icons/tab-close.png");
 
@@ -72,6 +72,10 @@ TabTitleBar::TabTitleBar(QWidget *parent): QWidget(parent){
         emit this->closeTabRequested();
     });
 
+    this->connect(this->siteSettingsButton, &IconButton::clicked, this, [=](){
+        emit this->siteSettingsRequested();
+    });
+
     this->layout->addWidget(this->backButton);
     this->layout->addWidget(this->forwardButton);
     this->layout->addWidget(this->reloadButton);
@@ -98,7 +102,6 @@ void TabTitleBar::leaveEvent(QEvent *event){
 
 void TabTitleBar::setTitle(QString title){
     this->addressBox->setText(title);
-    this->siteSettingsButton->setTitle(title);
 }
 
 void TabTitleBar::setIsBlack(bool isBlack){
