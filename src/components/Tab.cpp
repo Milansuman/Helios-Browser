@@ -17,7 +17,13 @@
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile){
-    this->permissions = new std::vector<QWebEnginePage::Feature>();
+    this->permissions = new std::map<QWebEnginePage::Feature, bool>({
+        {QWebEnginePage::Feature::Notifications, false},
+        {QWebEnginePage::Feature::Geolocation, false},
+        {QWebEnginePage::Feature::DesktopVideoCapture, false},
+        {QWebEnginePage::Feature::MediaAudioCapture, false},
+        {QWebEnginePage::Feature::MediaVideoCapture, false}
+    });
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);
     this->layout->setSpacing(0);
@@ -58,6 +64,56 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         this->webview->page()->setAudioMuted(muted);
     });
 
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleCamera, this, [=](bool enabled){
+        QUrl url = this->webview->url();
+        QString securityOrigin = url.scheme() + "://" + url.host();
+        if (url.port() != -1) {
+            securityOrigin += ":" + QString::number(url.port());
+        }
+        this->permissions->at(QWebEnginePage::Feature::MediaVideoCapture) = false;
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::MediaVideoCapture);
+    });
+
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleNotifications, this, [=](bool enabled){
+        QUrl url = this->webview->url();
+        QString securityOrigin = url.scheme() + "://" + url.host();
+        if (url.port() != -1) {
+            securityOrigin += ":" + QString::number(url.port());
+        }
+        this->permissions->at(QWebEnginePage::Feature::Notifications) = enabled;
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::Notifications);
+    });
+
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleGeolocation, this, [=](bool enabled){
+        QUrl url = this->webview->url();
+        QString securityOrigin = url.scheme() + "://" + url.host();
+        if (url.port() != -1) {
+            securityOrigin += ":" + QString::number(url.port());
+        }
+        this->permissions->at(QWebEnginePage::Feature::Geolocation) = enabled;
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::Geolocation);
+    });
+
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleMicrophone, this, [=](bool enabled){
+        QUrl url = this->webview->url();
+        QString securityOrigin = url.scheme() + "://" + url.host();
+        if (url.port() != -1) {
+            securityOrigin += ":" + QString::number(url.port());
+        }
+        this->permissions->at(QWebEnginePage::Feature::MediaAudioCapture) = enabled;
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::MediaAudioCapture);
+    });
+
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleScreenShare, this, [=](bool enabled){
+        QUrl url = this->webview->url();
+        QString securityOrigin = url.scheme() + "://" + url.host();
+        if (url.port() != -1) {
+            securityOrigin += ":" + QString::number(url.port());
+        }
+        this->permissions->at(QWebEnginePage::Feature::DesktopVideoCapture) = enabled;
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::DesktopVideoCapture);
+    });
+
     this->connect(this->webview, &WebView::loadStarted, this, [=](){
         this->tabTitleBar->setTitle(this->webview->url().toString());
         //this->initCustomScrollBar();
@@ -66,17 +122,27 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
-        this->permissions->clear();
         this->progressIndicator->setVisible(false);
         this->pageSettingsDialog->setUrl(this->webview->url());
+        
+        for(std::pair<QWebEnginePage::Feature, bool> pair: *this->permissions){
+            this->permissions->at(pair.first) = false;
+        }
+
+        this->pageSettingsDialog->setPermissions(*this->permissions);
     });
 
     this->connect(this->webview, &WebView::loadProgress, this, [=](int progress){
         if(progress == 100){
             this->tabTitleBar->setTitle(this->webview->title());
             emit this->titleChanged(this->webview->title());
-            this->permissions->clear();
             this->progressIndicator->setVisible(false);
+
+            for(std::pair<QWebEnginePage::Feature, bool> pair: *this->permissions){
+                this->permissions->at(pair.first) = false;
+            }
+
+            this->pageSettingsDialog->setPermissions(*this->permissions);
         }else{
             this->progressIndicator->setVisible(true);
         }
@@ -118,7 +184,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->connect(this->webview->page(), &QWebEnginePage::featurePermissionRequested, this, [=](const QUrl &securityOrigin, QWebEnginePage::Feature feature){
-        if(this->hasPermission(feature)){
+        if(this->permissions->at(feature)){
             this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionGrantedByUser);
         }else{
             switch(feature){
@@ -151,14 +217,16 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
             switch(this->permissionDialog->result()){
                 case QDialog::Accepted:
                     this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionGrantedByUser);
-                    this->permissions->push_back(feature);
+                    this->permissions->at(feature) = true;
                     break;
                 case QDialog::Rejected:
                     this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionDeniedByUser);
+                    this->permissions->at(feature) = false;
                     break;
                 default:
                     this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionUnknown);
             }
+            this->pageSettingsDialog->setPermissions(*this->permissions);
         }
     });
 
@@ -230,11 +298,6 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->devtoolsSplitter->addWidget(this->webview);
     this->layout->addWidget(this->devtoolsSplitter);
-}
-
-bool Tab::hasPermission(QWebEnginePage::Feature permission){
-    std::vector<QWebEnginePage::Feature>::iterator it = std::find(this->permissions->begin(), this->permissions->end(), permission);
-    return it != this->permissions->end();
 }
 
 //adding a custom scroll bar which gets hidden when not in use

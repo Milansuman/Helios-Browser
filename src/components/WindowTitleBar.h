@@ -8,6 +8,7 @@
 #include "AddressBox.h"
 #include "IconButton.h"
 #include "SplitTabMenu.h"
+#include "../windows/PageSettingsDialog.h"
 
 #include "IconButton.h"
 
@@ -20,6 +21,7 @@ private:
     SplitTabMenu *splitTabMenu;
     QWidget *tabTitleBar;
     AddressBox *addressBox;
+    PageSettingsDialog *pageSettingsDialog;
 public:
     WindowTitleBar(QWidget *parent=nullptr);
     QPushButton* minimizeButton();

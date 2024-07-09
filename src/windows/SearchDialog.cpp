@@ -18,6 +18,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedWidth(500);
+    this->setFocus();
 
     QPalette palette = this->palette();
     palette.setColor(QPalette::Window, QColor(30,30,30, 170));
@@ -41,6 +42,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
         "   border: none;"
         "}"
     );
+    this->setFocusProxy(this->searchbar);
 
     searchLayout->addWidget(searchIconLabel);
     searchLayout->addWidget(searchbar);

@@ -9,9 +9,10 @@
 #include <QIcon>
 #include <QLabel>
 #include <QSplitter>
-#include <vector>
 #include <QUrl>
 #include <QProgressBar>
+#include <vector>
+#include <map>
 
 #include "WebView.h"
 #include "TabTitleBar.h"
@@ -39,10 +40,9 @@ private:
     ScreenShareDialog *screenShareDialog;
     PageSettingsDialog *pageSettingsDialog;
     QWebEngineProfile *profile;
-    std::vector<QWebEnginePage::Feature> *permissions; //bitwise or permissions flags
+    std::map<QWebEnginePage::Feature, bool> *permissions;
 
     void initCustomScrollBar();
-    bool hasPermission(QWebEnginePage::Feature permission);
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);

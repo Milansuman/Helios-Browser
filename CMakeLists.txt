@@ -19,7 +19,7 @@ endif()
 
 qt_standard_project_setup()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -ggdb")
 
 qt_add_executable(project-web
     ${SOURCES}
