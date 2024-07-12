@@ -423,7 +423,7 @@ void PageSettingsDialog::setPermissions(std::map<QWebEnginePage::Feature, bool> 
 }
 
 void PageSettingsDialog::open(){
-    this->move(this->parentWidget()->mapToGlobal(this->parentWidget()->geometry().center()) + QPoint(-(this->width()/2), 30));
+    this->move(this->parentWidget()->mapToGlobal(QPoint(this->parentWidget()->width()/2 - this->width()/2, 10)));
     QDialog::open();
 }
 

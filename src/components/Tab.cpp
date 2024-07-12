@@ -58,7 +58,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     //this->initCustomScrollBar();
     this->tabTitleBar = new TabTitleBar();
 
-    this->pageSettingsDialog = new PageSettingsDialog(this->tabTitleBar);
+    this->pageSettingsDialog = new PageSettingsDialog(this->webview);
 
     this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleMuteAudio, this, [=](bool muted){
         this->webview->page()->setAudioMuted(muted);
@@ -406,6 +406,10 @@ void Tab::closeDevTools(){
 
 void Tab::load(QUrl url){
     this->webview->load(url);
+}
+
+void Tab::showSiteSettings(){
+    this->pageSettingsDialog->open();
 }
 
 Tab::~Tab(){

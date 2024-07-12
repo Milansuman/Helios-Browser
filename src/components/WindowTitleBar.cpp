@@ -94,6 +94,10 @@ WindowTitleBar::WindowTitleBar(QWidget *parent): QWidget(parent){
         emit this->splitTabRightRequested();
     });
 
+    this->connect(this->siteSettingsButton, &IconButton::clicked, this, [=](){
+        emit this->showSiteSettingsRequested();
+    });
+
     this->connect(this->groupSelectorButton, &IconButton::clicked, this, [=](){
         emit this->showGroupBar();
     });

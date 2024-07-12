@@ -56,6 +56,7 @@ public:
     void requestReload();
     void openDevTools();
     void closeDevTools();
+    void showSiteSettings();
     void load(QUrl url);
     ~Tab();
 protected:

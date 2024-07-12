@@ -41,4 +41,5 @@ signals:
     void searchRequested();
     void toggleSideBarRequested();
     void showGroupBar();
+    void showSiteSettingsRequested();
 };

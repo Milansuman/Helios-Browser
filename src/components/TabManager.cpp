@@ -163,6 +163,10 @@ void TabManager::windowShowGroups(){
     this->groupSelectorDialog->open();
 }
 
+void TabManager::windowShowSiteSettings(){
+    this->getCurrentGroup()->getTab(0)->showSiteSettings();
+}
+
 TabManager::~TabManager(){
     for(TabGroup *group: this->groups){
         delete group;
