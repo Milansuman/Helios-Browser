@@ -126,6 +126,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         emit this->titleChanged(this->webview->title());
         this->progressIndicator->setVisible(false);
         this->pageSettingsDialog->setUrl(this->webview->url());
+        this->searchDialog->setUrl(this->webview->url());
         
         for(std::pair<QWebEnginePage::Feature, bool> pair: *this->permissions){
             this->permissions->at(pair.first) = false;

@@ -17,6 +17,7 @@ private:
 public:
     SearchDialog(QWidget *parent = nullptr);
     QString getSearch();
+    void setUrl(QUrl url);
     #ifdef __linux__
     void open();
     #endif
