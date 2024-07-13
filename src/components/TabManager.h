@@ -30,6 +30,7 @@ public:
     void windowNextPage();
     void windowReload();
     void windowShowGroups();
+    void windowShowSiteSettings();
     ~TabManager();
 signals:
     void displayTitleBarOnWindowRequested();

@@ -19,7 +19,7 @@ SoundButton::SoundButton(QWidget *parent): QPushButton(parent){
         "}"
     );
 
-    this->setFixedHeight(40);
+    this->setFixedHeight(35);
 }
 
 SoundButton::~SoundButton() = default;
@@ -36,62 +36,295 @@ PermissionsGroup::PermissionsGroup(QWidget *parent): QWidget(parent){
     this->notifications = new QPushButton(QIcon(":/icons/white/bell-dot.png"), "Notifications");
     this->notifications->setStyleSheet(
         "QPushButton{"
-        "   background-color: rgb(49, 53, 60);"
+        "   background-color: rgb(81, 169, 79);"
         "   border-radius: 6px;"
         "}"
     );
-    this->notifications->setFixedHeight(40);
+    this->notifications->setFixedHeight(35);
     this->notifications->setVisible(false);
 
     this->geolocation = new QPushButton(QIcon(":/icons/white/map-pin.png"), "Location");
     this->geolocation->setStyleSheet(
         "QPushButton{"
-        "   background-color: rgb(49, 53, 60);"
+        "   background-color: rgb(81, 169, 79);"
         "   border-radius: 6px;"
-        "   height: 40px;"
+        "   height: 35px;"
         "}"
     );
-    this->geolocation->setFixedHeight(40);
+    this->geolocation->setFixedHeight(35);
     this->geolocation->setVisible(false);
 
     this->microphone = new QPushButton(QIcon(":/icons/white/mic.png"), "Microphone");
     this->microphone->setStyleSheet(
         "QPushButton{"
-        "   background-color: rgb(49, 53, 60);"
+        "   background-color: rgb(81, 169, 79);"
         "   border-radius: 6px;"
-        "   height: 40px;"
+        "   height: 35px;"
         "}"
     );
-    this->microphone->setFixedHeight(40);
+    this->microphone->setFixedHeight(35);
     this->microphone->setVisible(false);
 
     this->camera = new QPushButton(QIcon(":/icons/white/camera.png"), "Camera");
     this->camera->setStyleSheet(
         "QPushButton{"
-        "   background-color: rgb(49, 53, 60);"
+        "   background-color: rgb(81, 169, 79);"
         "   border-radius: 6px;"
-        "   height: 40px;"
+        "   height: 35px;"
         "}"
     );
-    this->camera->setFixedHeight(40);
+    this->camera->setFixedHeight(35);
     this->camera->setVisible(false);
 
     this->screenShare = new QPushButton(QIcon(":/icons/white/airplay.png"), "Screen Share");
     this->screenShare->setStyleSheet(
         "QPushButton{"
-        "   background-color: rgb(49, 53, 60);"
+        "   background-color: rgb(81, 169, 79);"
         "   border-radius: 6px;"
-        "   height: 40px;"
+        "   height: 35px;"
         "}"
     );
-    this->screenShare->setFixedHeight(40);
+    this->screenShare->setFixedHeight(35);
     this->screenShare->setVisible(false);
+
+    this->permissionsMap = new std::map<QPushButton*, bool>({
+        {this->notifications, false},
+        {this->geolocation, false},
+        {this->microphone, false},
+        {this->camera, false},
+        {this->screenShare, false}
+    });
+
+    this->connect(this->notifications, &QPushButton::clicked, this, [=](){
+        if(this->permissionsMap->at(this->notifications)){
+            this->notifications->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(52, 52, 52);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }else{
+            this->notifications->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(81, 169, 79);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }
+        this->permissionsMap->at(this->notifications) = !this->permissionsMap->at(this->notifications);
+        emit this->toggleNotifications(this->permissionsMap->at(this->notifications));
+    });
+
+    this->connect(this->geolocation, &QPushButton::clicked, this, [=](){
+        if(this->permissionsMap->at(this->geolocation)){
+            this->geolocation->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(52, 52, 52);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }else{
+            this->geolocation->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(81, 169, 79);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }
+        this->permissionsMap->at(this->geolocation) = !this->permissionsMap->at(this->geolocation);
+        emit this->toggleGeolocation(this->permissionsMap->at(this->geolocation));
+    });
+
+    this->connect(this->camera, &QPushButton::clicked, this, [=](){
+        if(this->permissionsMap->at(this->camera)){
+            this->camera->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(52, 52, 52);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }else{
+            this->camera->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(81, 169, 79);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }
+        this->permissionsMap->at(this->camera) = !this->permissionsMap->at(this->camera);
+        emit this->toggleCamera(this->permissionsMap->at(this->camera));
+    });
+
+    this->connect(this->microphone, &QPushButton::clicked, this, [=](){
+        if(this->permissionsMap->at(this->microphone)){
+            this->microphone->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(52, 52, 52);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }else{
+            this->microphone->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(81, 169, 79);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }
+        this->permissionsMap->at(this->microphone) = !this->permissionsMap->at(this->microphone);
+        emit this->toggleMicrophone(this->permissionsMap->at(this->microphone));
+    });
+
+    this->connect(this->screenShare, &QPushButton::clicked, this, [=](){
+        if(this->permissionsMap->at(this->screenShare)){
+            this->screenShare->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(52, 52, 52);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }else{
+            this->screenShare->setStyleSheet(
+                "QPushButton{"
+                "   background-color: rgb(81, 169, 79);"
+                "   border-radius: 6px;"
+                "   height: 35px;"
+                "}"
+            );
+        }
+        this->permissionsMap->at(this->screenShare) = !this->permissionsMap->at(this->screenShare);
+        emit this->toggleScreenShare(this->permissionsMap->at(this->screenShare));
+    });
 
     this->layout->addWidget(this->notifications);
     this->layout->addWidget(this->geolocation);
     this->layout->addWidget(this->microphone);
     this->layout->addWidget(this->camera);
     this->layout->addWidget(this->screenShare);
+}
+
+void PermissionsGroup::setPermissions(std::map<QWebEnginePage::Feature, bool> permissions){
+    if(permissions.at(QWebEnginePage::Feature::Notifications)){
+        this->notifications->setVisible(true);
+        this->notifications->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(81, 169, 79);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->notifications) = true;
+    }else{
+        this->notifications->setVisible(false);
+        this->notifications->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(52, 169, 79);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->notifications) = false;
+    }
+
+    if(permissions.at(QWebEnginePage::Feature::Geolocation)){
+        this->geolocation->setVisible(true);
+        this->geolocation->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(81, 169, 79);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->geolocation) = true;
+    }else{
+        this->geolocation->setVisible(false);
+        this->geolocation->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(52, 52, 52);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->geolocation) = true;
+    }
+
+    if(permissions.at(QWebEnginePage::Feature::DesktopVideoCapture)){
+        this->screenShare->setVisible(true);
+        this->screenShare->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(81, 169, 79);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->screenShare) = true;
+    }else{
+        this->screenShare->setVisible(false);
+        this->screenShare->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(52, 52, 52);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->screenShare) = true;
+    }
+
+    if(permissions.at(QWebEnginePage::Feature::MediaVideoCapture)){
+        this->camera->setVisible(true);
+        this->camera->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(81, 169, 79);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->camera) = true;
+    }else{
+        this->camera->setVisible(false);
+        this->camera->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(52, 52, 52);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->camera) = true;
+    }
+
+    if(permissions.at(QWebEnginePage::Feature::MediaAudioCapture)){
+        this->microphone->setVisible(true);
+        this->microphone->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(81, 169, 79);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->microphone) = true;
+    }else{
+        this->microphone->setVisible(false);
+        this->microphone->setStyleSheet(
+            "QPushButton{"
+            "   background-color: rgb(52, 52, 52);"
+            "   border-radius: 6px;"
+            "   height: 35px;"
+            "}"
+        );
+        this->permissionsMap->at(this->microphone) = true;
+    }
+
+    this->layout->update();
+    this->updateGeometry();
 }
 
 PermissionsGroup::~PermissionsGroup() = default;
@@ -108,7 +341,7 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
     this->titleLayout = new QHBoxLayout();
     this->title = new QLabel("Document");
     this->title->setFont(font);
-    this->title->setMaximumHeight(40);
+    this->title->setMaximumHeight(35);
 
     this->titleLayout->addStretch();
     this->titleLayout->addWidget(this->title);
@@ -145,6 +378,26 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
 
     this->permissions = new PermissionsGroup();
 
+    this->connect(this->permissions, &PermissionsGroup::toggleNotifications, this, [=](bool enabled){
+        emit this->toggleNotifications(enabled);
+    });
+
+    this->connect(this->permissions, &PermissionsGroup::toggleCamera, this, [=](bool enabled){
+        emit this->toggleCamera(enabled);
+    });
+
+    this->connect(this->permissions, &PermissionsGroup::toggleMicrophone, this, [=](bool enabled){
+        emit this->toggleMicrophone(enabled);
+    });
+
+    this->connect(this->permissions, &PermissionsGroup::toggleGeolocation, this, [=](bool enabled){
+        emit this->toggleGeolocation(enabled);
+    });
+
+    this->connect(this->permissions, &PermissionsGroup::toggleScreenShare, this, [=](bool enabled){
+        emit this->toggleScreenShare(enabled);
+    });
+
     this->layout->addLayout(this->titleLayout);
     this->layout->addWidget(this->soundButton);
     this->layout->addWidget(this->permissions);
@@ -164,8 +417,13 @@ void PageSettingsDialog::setUrl(QUrl url){
     this->title->setText(url.host());
 }
 
+void PageSettingsDialog::setPermissions(std::map<QWebEnginePage::Feature, bool> permissions){
+    this->permissions->setPermissions(permissions);
+    this->updateGeometry();
+}
+
 void PageSettingsDialog::open(){
-    this->move(this->parentWidget()->mapToGlobal(this->parentWidget()->geometry().center()) + QPoint(-(this->width()/2), 30));
+    this->move(this->parentWidget()->mapToGlobal(QPoint(this->parentWidget()->width()/2 - this->width()/2, 10)));
     QDialog::open();
 }
 

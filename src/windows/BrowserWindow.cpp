@@ -66,6 +66,9 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     connect(this->titleBar, &WindowTitleBar::copyLinkRequested, this, [=]()
             { this->tabManager->windowCopyLink(); });
 
+    connect(this->titleBar, &WindowTitleBar::showSiteSettingsRequested, this, [=]()
+            { this->tabManager->windowShowSiteSettings(); });
+
     connect(this->tabManager, &TabManager::titleChanged, this, [=](QString title)
             { this->titleBar->setTitle(title); });
 
