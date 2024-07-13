@@ -80,6 +80,10 @@ void SearchDialog::open(){
 }
 #endif
 
+void SearchDialog::setUrl(QUrl url){
+    this->searchbar->setText(url.toString());
+    this->searchText = url.toString();
+}
 
 void SearchDialog::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
