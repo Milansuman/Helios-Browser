@@ -40,6 +40,7 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->contentLayout->setContentsMargins(0, 0, 0, 0);
 
     this->titleBar = new WindowTitleBar();
+    this->titleBar->setMouseTracking(true);
     this->tabManager = new TabManager();
 
     connect(this->titleBar, &WindowTitleBar::showGroupBar, this, [=]()
@@ -84,6 +85,7 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         newWindow->show(); });
 
     this->sideBar = new SideBar();
+    this->sideBar->setMouseTracking(true);
 
     this->sideBarAnimation = new QPropertyAnimation(this->sideBar, "maximumWidth");
     this->sideBarAnimation->setDuration(150);
