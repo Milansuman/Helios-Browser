@@ -362,7 +362,12 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
     int i = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
     QFont font(QFontDatabase::applicationFontFamilies(i).at(0), -1, QFont::Bold);
 
-    this->layout = new QVBoxLayout(this);
+    this->layout = new QStackedLayout(this);
+
+    this->mainPage = new QWidget();
+    this->mainLayout = new QVBoxLayout(this->mainPage);
+    this->mainLayout->setContentsMargins(15, 15, 15, 15);
+
     this->titleLayout = new QHBoxLayout();
     this->title = new QLabel("Document");
     this->title->setFont(font);
@@ -427,12 +432,14 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
     this->cookiesButton = new MenuButton(QPixmap(":/icons/white/cookie.png"), "Cookies and site data");
     this->siteSettingsButton = new MenuButton(QPixmap(":/icons/white/settings.png"), "Site settings");
 
-    this->layout->addLayout(this->titleLayout);
-    this->layout->addWidget(this->soundButton);
-    this->layout->addWidget(this->permissions);
-    this->layout->addWidget(this->connectionButton);
-    this->layout->addWidget(this->cookiesButton);
-    this->layout->addWidget(this->siteSettingsButton);
+    this->mainLayout->addLayout(this->titleLayout);
+    this->mainLayout->addWidget(this->soundButton);
+    this->mainLayout->addWidget(this->permissions);
+    this->mainLayout->addWidget(this->connectionButton);
+    this->mainLayout->addWidget(this->cookiesButton);
+    this->mainLayout->addWidget(this->siteSettingsButton);
+
+    this->layout->addWidget(this->mainPage);
 }
 
 void PageSettingsDialog::paintEvent(QPaintEvent *event){

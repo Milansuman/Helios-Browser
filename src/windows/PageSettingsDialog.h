@@ -8,6 +8,7 @@
 #include <QPushButton>
 #include <QPainter>
 #include <QWebEnginePage>
+#include <QStackedLayout>
 
 #include <vector>
 #include <map>
@@ -55,7 +56,9 @@ signals:
 class PageSettingsDialog: public QDialog{
     Q_OBJECT
 private:
-    QVBoxLayout *layout;
+    QStackedLayout *layout;
+    QWidget *mainPage, *connectionPage;
+    QVBoxLayout *mainLayout, *connectionLayout;
     QHBoxLayout *titleLayout;
     QLabel *title;
     SoundButton *soundButton;
