@@ -22,7 +22,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         {QWebEnginePage::Feature::Geolocation, false},
         {QWebEnginePage::Feature::DesktopVideoCapture, false},
         {QWebEnginePage::Feature::MediaAudioCapture, false},
-        {QWebEnginePage::Feature::MediaVideoCapture, false}
+        {QWebEnginePage::Feature::MediaVideoCapture, false},
+        {QWebEnginePage::Feature::MediaAudioVideoCapture, false},
+        {QWebEnginePage::Feature::MouseLock, true}
     });
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0,0,0,0);

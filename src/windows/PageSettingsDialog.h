@@ -19,6 +19,20 @@ public:
     ~SoundButton();
 };
 
+class MenuButton: public QWidget{
+    Q_OBJECT
+private:
+    QHBoxLayout *layout;
+    QLabel *icon, *text, *arrow;
+public:
+    MenuButton(QPixmap icon, QString text, QWidget *parent=nullptr);
+    ~MenuButton();
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+signals:
+    void clicked();
+};
+
 class PermissionsGroup: public QWidget{
     Q_OBJECT
 private:
@@ -46,6 +60,7 @@ private:
     QLabel *title;
     SoundButton *soundButton;
     PermissionsGroup *permissions;
+    MenuButton *connectionButton, *cookiesButton, *siteSettingsButton;
 
     bool muted;
 public:
