@@ -12,7 +12,12 @@
 #include "../components/TabManager.h"
 #include "../components/SideBar.h"
 
-class BrowserWindow : public QMainWindow {
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+class BrowserWindow : public QMainWindow
+{
     Q_OBJECT
 private:
     WindowTitleBar *titleBar;
@@ -27,22 +32,25 @@ private:
     void hideSideBar();
     bool isEdgePosition(QPointF position);
     QFlags<Qt::Edge> getEdgePosition(QPointF position);
+
+#ifdef _WIN32
+    void enableBlurBehind();
+#endif
+
 public:
-    BrowserWindow(QSize size, QWidget *parent=nullptr);
-    BrowserWindow(QUrl url, QSize size, QWidget *parent=nullptr);
+    BrowserWindow(QSize size, QWidget *parent = nullptr);
+    BrowserWindow(QUrl url, QSize size, QWidget *parent = nullptr);
     void toggleSideBar();
 
-    #ifdef __linux__
+    // #ifdef __linux__
     void show();
-    #endif
-
+    // #endif
     ~BrowserWindow();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseDoubleClickEvent(QMouseEvent *event) override;
-    #ifdef __linux__
     void resizeEvent(QResizeEvent *event) override;
-    #endif
 };

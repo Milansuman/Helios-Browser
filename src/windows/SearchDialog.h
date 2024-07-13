@@ -7,21 +7,30 @@
 #include <QLabel>
 #include <QHBoxLayout>
 
-class SearchDialog: public QDialog{
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+class SearchDialog : public QDialog
+{
     Q_OBJECT
 private:
     QString searchText;
     QLabel *searchIconLabel;
     QLineEdit *searchbar;
     QHBoxLayout *searchLayout;
+#ifdef _WIN32
+    void enableBlurBehind();
+#endif
 public:
     SearchDialog(QWidget *parent = nullptr);
     QString getSearch();
     void setUrl(QUrl url);
-    #ifdef __linux__
+    // #ifdef __linux__
     void open();
-    #endif
+    // #endif
     ~SearchDialog();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;

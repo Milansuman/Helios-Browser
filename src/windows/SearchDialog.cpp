@@ -14,14 +14,38 @@
 #include <kwindoweffects.h>
 #endif
 
-SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
+#ifdef _WIN32
+#include <dwmapi.h>
+#include <windows.h>
+#pragma comment(lib, "dwmapi.lib")
+#pragma comment(lib, "user32.lib")
+
+struct ACCENTPOLICY
+{
+    int nAccentState;
+    int nFlags;
+    int nColor;
+    int nAnimationId;
+};
+struct WINCOMPATTRDATA
+{
+    int nAttribute;
+    PVOID pData;
+    ULONG ulDataSize;
+};
+
+typedef BOOL(WINAPI *pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA *);
+#endif
+
+SearchDialog::SearchDialog(QWidget *parent) : QDialog(parent), searchText("")
+{
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedWidth(500);
     this->setFocus();
 
     QPalette palette = this->palette();
-    palette.setColor(QPalette::Window, QColor(30,30,30, 170));
+    palette.setColor(QPalette::Window, QColor(30, 30, 30, 170));
     setPalette(palette);
 
     searchLayout = new QHBoxLayout();
@@ -32,7 +56,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     searchIconLabel->setPixmap(searchIcon.scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     searchIconLabel->setFixedSize(20, 20);
 
-    //Search input
+    // Search input
     searchbar = new QLineEdit();
     searchbar->setPlaceholderText("Search or Enter URL");
     searchbar->setStyleSheet(
@@ -40,8 +64,7 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
         "   background: transparent;"
         "   color: rgb(255, 255, 255);"
         "   border: none;"
-        "}"
-    );
+        "}");
     this->setFocusProxy(this->searchbar);
 
     searchLayout->addWidget(searchIconLabel);
@@ -49,7 +72,8 @@ SearchDialog::SearchDialog(QWidget *parent): QDialog(parent), searchText(""){
     this->setLayout(searchLayout);
 }
 
-void SearchDialog::paintEvent(QPaintEvent *event) {
+void SearchDialog::paintEvent(QPaintEvent *event)
+{
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -71,22 +95,28 @@ void SearchDialog::paintEvent(QPaintEvent *event) {
     QDialog::paintEvent(event);
 }
 
-#ifdef __linux__
-void SearchDialog::open(){
+void SearchDialog::open()
+{
     QDialog::open();
+#ifdef __linux__
     QPainterPath path;
     path.addRoundedRect(rect(), 10, 10);
     KWindowEffects::enableBlurBehind(this->windowHandle(), true, QRegion(path.toFillPolygon().toPolygon()));
-}
+#elif defined(_WIN32)
+    enableBlurBehind();
 #endif
+}
 
-void SearchDialog::setUrl(QUrl url){
+void SearchDialog::setUrl(QUrl url)
+{
     this->searchbar->setText(url.toString());
     this->searchText = url.toString();
 }
 
-void SearchDialog::keyPressEvent(QKeyEvent *event){
-    if(event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter){
+void SearchDialog::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
+    {
         this->searchText = this->searchbar->text();
         this->accept();
         this->searchText = "";
@@ -94,12 +124,33 @@ void SearchDialog::keyPressEvent(QKeyEvent *event){
     }
 }
 
-QString SearchDialog::getSearch(){
+QString SearchDialog::getSearch()
+{
     return (QUrl::fromUserInput(this->searchText)).toString();
 }
 
-SearchDialog::~SearchDialog(){
+SearchDialog::~SearchDialog()
+{
     delete this->searchIconLabel;
     delete this->searchLayout;
     delete this->searchbar;
 }
+
+#ifdef _WIN32
+void SearchDialog::enableBlurBehind()
+{
+    HWND hwnd = (HWND)this->winId();
+
+    HMODULE hUser = GetModuleHandle(L"user32.dll");
+    if (hUser)
+    {
+        pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)GetProcAddress(hUser, "SetWindowCompositionAttribute");
+        if (SetWindowCompositionAttribute)
+        {
+            ACCENTPOLICY policy = {3, 0, 0, 0}; // ACCENT_ENABLE_BLURBEHIND
+            WINCOMPATTRDATA data = {19, &policy, sizeof(ACCENTPOLICY)};
+            SetWindowCompositionAttribute(hwnd, &data);
+        }
+    }
+}
+#endif
