@@ -24,6 +24,31 @@ SoundButton::SoundButton(QWidget *parent): QPushButton(parent){
 
 SoundButton::~SoundButton() = default;
 
+MenuButton::MenuButton(QPixmap icon, QString text, QWidget *parent): QWidget(parent){
+    this->layout = new QHBoxLayout(this);
+    this->layout->setContentsMargins(0, 0, 0, 0);
+    this->icon = new QLabel();
+    this->icon->setPixmap(icon.scaled(15, 15, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    this->text = new QLabel(text);
+    this->arrow = new QLabel();
+    this->arrow->setPixmap(QPixmap(":/icons/white/chevron-right.png").scaled(15, 15, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    this->arrow->setFixedHeight(20);
+
+    this->layout->addWidget(this->icon);
+    this->layout->addWidget(this->text);
+    this->layout->addStretch();
+    this->layout->addWidget(this->arrow);
+}
+
+void MenuButton::mousePressEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton){
+        emit this->clicked();
+    }
+}
+
+MenuButton::~MenuButton() = default;
+
 PermissionsGroup::PermissionsGroup(QWidget *parent): QWidget(parent){
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(1, 1, 1, 1);
@@ -332,7 +357,7 @@ PermissionsGroup::~PermissionsGroup() = default;
 PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(false){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setFixedWidth(200);
+    this->setFixedWidth(300);
 
     int i = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
     QFont font(QFontDatabase::applicationFontFamilies(i).at(0), -1, QFont::Bold);
@@ -398,9 +423,16 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
         emit this->toggleScreenShare(enabled);
     });
 
+    this->connectionButton = new MenuButton(QPixmap(":/icons/white/secure.png"), "Connection is secure");
+    this->cookiesButton = new MenuButton(QPixmap(":/icons/white/cookie.png"), "Cookies and site data");
+    this->siteSettingsButton = new MenuButton(QPixmap(":/icons/white/settings.png"), "Site settings");
+
     this->layout->addLayout(this->titleLayout);
     this->layout->addWidget(this->soundButton);
     this->layout->addWidget(this->permissions);
+    this->layout->addWidget(this->connectionButton);
+    this->layout->addWidget(this->cookiesButton);
+    this->layout->addWidget(this->siteSettingsButton);
 }
 
 void PageSettingsDialog::paintEvent(QPaintEvent *event){
