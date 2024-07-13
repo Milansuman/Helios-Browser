@@ -10,6 +10,29 @@
 #include <kwindoweffects.h>
 #endif
 
+#ifdef _WIN32
+#include <dwmapi.h>
+#pragma comment(lib, "dwmapi.lib")
+#pragma comment(lib, "user32.lib")
+
+// Windows-specific structures and functions
+struct ACCENTPOLICY
+{
+    int nAccentState;
+    int nFlags;
+    int nColor;
+    int nAnimationId;
+};
+struct WINCOMPATTRDATA
+{
+    int nAttribute;
+    PVOID pData;
+    ULONG ulDataSize;
+};
+
+typedef BOOL(WINAPI *pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA *);
+#endif
+
 #include "BrowserWindow.h"
 #include "../components/TabManager.h"
 
@@ -146,40 +169,66 @@ void BrowserWindow::hideSideBar()
 {
     this->sideBar->hide();
 }
-
-#ifdef __linux__
 void BrowserWindow::show()
 {
     QMainWindow::show();
 
-    QPainterPath *path = new QPainterPath();
-    path->addRoundedRect(rect(), 10, 10);
+#ifdef __linux__
+    QPainterPath path;
+    path.addRoundedRect(rect(), 10, 10);
 
     if (QWindow *window = windowHandle())
     {
-        KWindowEffects::enableBlurBehind(window, true, QRegion(path->toFillPolygon().toPolygon()));
+        KWindowEffects::enableBlurBehind(window, true, QRegion(path.toFillPolygon().toPolygon()));
     }
     else
     {
         qDebug() << this->windowHandle();
     }
+#elif defined(_WIN32)
+    enableBlurBehind();
+#endif
 }
 
-void BrowserWindow::resizeEvent(QResizeEvent *event)
+#ifdef _WIN32
+void BrowserWindow::enableBlurBehind()
 {
-    QPainterPath *path = new QPainterPath();
-    path->addRoundedRect(rect(), 10, 10);
+    HWND hwnd = (HWND)this->winId();
 
-    if (QWindow *window = windowHandle())
+    HMODULE hUser = GetModuleHandle(L"user32.dll");
+    if (hUser)
     {
-        KWindowEffects::enableBlurBehind(window, true, QRegion(path->toFillPolygon().toPolygon()));
-    }
-    else
-    {
-        qDebug() << this->windowHandle();
+        pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)GetProcAddress(hUser, "SetWindowCompositionAttribute");
+        if (SetWindowCompositionAttribute)
+        {
+            ACCENTPOLICY policy = {3, 0, 0, 0}; // ACCENT_ENABLE_BLURBEHIND
+            WINCOMPATTRDATA data = {19, &policy, sizeof(ACCENTPOLICY)};
+            SetWindowCompositionAttribute(hwnd, &data);
+        }
     }
 }
 #endif
+
+void BrowserWindow::resizeEvent(QResizeEvent *event)
+{
+    QMainWindow::resizeEvent(event);
+
+#ifdef __linux__
+    QPainterPath *path = new QPainterPath();
+    path->addRoundedRect(rect(), 10, 10);
+
+    if (QWindow *window = windowHandle())
+    {
+        KWindowEffects::enableBlurBehind(window, true, QRegion(path->toFillPolygon().toPolygon()));
+    }
+    else
+    {
+        qDebug() << this->windowHandle();
+    }
+#elif defined(_WIN32)
+    enableBlurBehind();
+#endif
+}
 
 void BrowserWindow::paintEvent(QPaintEvent *event)
 {
