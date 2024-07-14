@@ -37,7 +37,7 @@ winget install cmake
 git clone https://github.com/Milansuman/project-web.git
 cd project-web && mkdir build
 cd build
-cmake -DQt6_DIR:PATH=<path_to_qt_msvc>/lib/cmake/Qt6 -DQT_ADDITIONAL_PACKAGES_PREFIX_PATH=<path_to_qt_msvc> ..
+cmake -DQt6_DIR=<path_to_qt_msvc>/lib/cmake/Qt6 -DQT_ADDITIONAL_PACKAGES_PREFIX_PATH=<path_to_qt_msvc> ..
 cmake --build . --config Release
 ```
 
