@@ -19,5 +19,7 @@ set(SOURCES ${SOURCES}
     src/windows/WebViewDialog.cpp
     src/windows/PageSettingsDialog.h
     src/windows/PageSettingsDialog.cpp
+    src/windows/CertificateErrorDialog.h
+    src/windows/CertificateErrorDialog.cpp
     PARENT_SCOPE
 )

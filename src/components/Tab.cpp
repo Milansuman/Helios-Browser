@@ -59,6 +59,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->searchDialog = new SearchDialog(this);
     this->authDialog = new AuthenticationDialog(this);
     this->permissionDialog = new PermissionDialog(this);
+    this->certificateErrorDialog = new CertificateErrorDialog(this);
     //this->initCustomScrollBar();
     this->tabTitleBar = new TabTitleBar();
 
@@ -255,8 +256,19 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->connect(this->webview->page(), &QWebEnginePage::certificateError, this, [=](QWebEngineCertificateError certificateError){
-        qDebug() << certificateError.certificateChain().at(0);
-        certificateError.acceptCertificate();
+        this->certificateErrorDialog->exec(certificateError);
+        this->pageSettingsDialog->setSecure(false);
+
+        switch(this->certificateErrorDialog->result()){
+            case QDialog::Accepted:
+                certificateError.acceptCertificate();
+                break;
+            case QDialog::Rejected:
+                certificateError.rejectCertificate();
+                break;
+            default:
+                certificateError.rejectCertificate();
+        }
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){

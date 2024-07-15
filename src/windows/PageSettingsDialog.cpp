@@ -445,8 +445,10 @@ void SecurityPage::reset(){
 
 void SecurityPage::setUrl(QUrl url){
     this->titleSubText->setText(url.host());
+}
 
-    if(url.scheme() == "https"){
+void SecurityPage::setSecure(bool isSecure){
+    if(isSecure){
         this->securityIcon->setPixmap(QPixmap(":/icons/white/secure.png").scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
         this->security->setText("Connection is secure");
         this->certificate->setVisible(true);
@@ -461,7 +463,7 @@ void SecurityPage::setUrl(QUrl url){
 
 SecurityPage::~SecurityPage() = default;
 
-PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(false){
+PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(false), certificateError(false){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedWidth(300);
@@ -587,10 +589,23 @@ void PageSettingsDialog::setUrl(QUrl url){
     this->title->setText(url.host());
     this->securityPage->setUrl(url);
 
-    if(url.scheme() == "https"){
+    if(url.scheme() == "https" && !this->certificateError){
         this->connectionButton->setIcon(QPixmap(":/icons/white/secure.png"));
         this->connectionButton->setText("Connection is secure");
+        this->securityPage->setSecure(true);
     }
+}
+
+void PageSettingsDialog::setSecure(bool secure){
+    if(secure){
+        this->connectionButton->setIcon(QPixmap(":/icons/white/secure.png"));
+        this->connectionButton->setText("Connection is secure");
+    }else{
+        this->certificateError = true;
+        this->connectionButton->setIcon(QPixmap(":/icons/white/insecure.png"));
+        this->connectionButton->setText("Connection is not secure");
+    }
+    this->securityPage->setSecure(secure);
 }
 
 void PageSettingsDialog::setPermissions(std::map<QWebEnginePage::Feature, bool> permissions){
