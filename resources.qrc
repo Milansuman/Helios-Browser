@@ -81,5 +81,7 @@
         <file alias="map-pin.png">res/icons/white/map-pin.png</file>
         <file alias="insecure.png">res/icons/white/insecure.png</file>
         <file alias="airplay.png">res/icons/white/airplay.png</file>
+        <file alias="circle-arrow-left.png">res/icons/white/circle-arrow-left.png</file>
+        <file alias="ticket-check.png">res/icons/white/ticket-check.png</file>
     </qresource>
 </RCC>

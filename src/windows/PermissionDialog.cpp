@@ -8,6 +8,7 @@
 PermissionDialog::PermissionDialog(QWidget *parent): QDialog(parent){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setMaximumWidth(200);
 
     QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
     QString fontFamily = QFontDatabase::applicationFontFamilies(0).at(0);
@@ -23,7 +24,8 @@ PermissionDialog::PermissionDialog(QWidget *parent): QDialog(parent){
     this->ok->setStyleSheet(
         "QPushButton{"
         "   border: none;"
-        "   background-color: rgb(1, 71, 255);"
+        "   background-color: rgb(200, 200, 200);"
+        "   color: rgb(30, 30, 30);"
         "   border-radius: 5px;"
         "   padding: 10px;"
         "}"
@@ -34,7 +36,7 @@ PermissionDialog::PermissionDialog(QWidget *parent): QDialog(parent){
     this->cancel->setStyleSheet(
         "QPushButton{"
         "   border: none;"
-        "   background-color: rgb(255, 67, 67);"
+        "   background-color: rgb(60, 60, 60);"
         "   border-radius: 5px;"
         "   padding: 10px;"
         "}"

@@ -11,6 +11,8 @@
 #include <QWebEngineScriptCollection>
 #include <QWebEngineNewWindowRequest>
 #include <QWebEngineDesktopMediaRequest>
+#include <QWebEngineClientCertificateSelection>
+#include <QWebEngineCertificateError>
 #include <QAction>
 #include <algorithm>
 
@@ -118,6 +120,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->connect(this->webview, &WebView::loadStarted, this, [=](){
         this->tabTitleBar->setTitle(this->webview->url().toString());
+        this->pageSettingsDialog->reset();
         //this->initCustomScrollBar();
     });
 
@@ -249,6 +252,11 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
             emit this->newWindowRequested(request.requestedUrl());
             break;
         }
+    });
+
+    this->connect(this->webview->page(), &QWebEnginePage::certificateError, this, [=](QWebEngineCertificateError certificateError){
+        qDebug() << certificateError.certificateChain().at(0);
+        certificateError.acceptCertificate();
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
