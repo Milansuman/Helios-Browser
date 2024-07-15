@@ -195,25 +195,25 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         }else{
             switch(feature){
                 case QWebEnginePage::Feature::MediaAudioCapture:
-                    this->permissionDialog->exec(this->webview->url().toString() + " is requesting microphone access.");
+                    this->permissionDialog->exec(this->webview->url().host() + " is requesting microphone access.");
                     break;
                 case QWebEnginePage::Feature::Notifications:
-                    this->permissionDialog->exec(this->webview->url().toString() + " wants to send notifications.");
+                    this->permissionDialog->exec(this->webview->url().host() + " wants to send notifications.");
                     break;
                 case QWebEnginePage::Feature::Geolocation:
-                    this->permissionDialog->exec(this->webview->url().toString() + " wants your location.");
+                    this->permissionDialog->exec(this->webview->url().host() + " wants your location.");
                     break;
                 case QWebEnginePage::Feature::MediaVideoCapture:
-                    this->permissionDialog->exec(this->webview->url().toString() + " is requesting camera access.");
+                    this->permissionDialog->exec(this->webview->url().host() + " is requesting camera access.");
                     break;
                 case QWebEnginePage::Feature::MediaAudioVideoCapture:
-                    this->permissionDialog->exec(this->webview->url().toString() + " is requesting camera and mic access.");
+                    this->permissionDialog->exec(this->webview->url().host() + " is requesting camera and mic access.");
                     break;
                 case QWebEnginePage::Feature::DesktopVideoCapture:
-                    this->permissionDialog->exec(this->webview->url().toString() + " wants to share your screen.");
+                    this->permissionDialog->exec(this->webview->url().host() + " wants to share your screen.");
                     break;
                 case QWebEnginePage::Feature::DesktopAudioVideoCapture:
-                    this->permissionDialog->exec(this->webview->url().toString() + " wants to share your screen.");
+                    this->permissionDialog->exec(this->webview->url().host() + " wants to share your screen.");
                     break;
                 case QWebEnginePage::Feature::MouseLock:
                     this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionDeniedByUser);
