@@ -33,6 +33,7 @@
         <file alias="close.png">res/icons/close.png</file>
         <file alias="minimize.png">res/icons/minimize.png</file>
         <file alias="maximize.png">res/icons/maximize.png</file>
+        <file alias="download.png">res/icons/white/download.png</file>
     </qresource>
     <qresource prefix="/icons/black">
         <file alias="bookmark.png">res/icons/black/bookmark.png</file>
@@ -52,6 +53,7 @@
         <file alias="split.png">res/icons/black/split.png</file>
         <file alias="group-selector.png">res/icons/black/group-selector.png</file>
         <file alias="audio.png">res/icons/black/audio.png</file>
+        <file alias="download.png">res/icons/white/download.png</file>
     </qresource>
     <qresource prefix="/icons/white">
         <file alias="bookmark.png">res/icons/white/bookmark.png</file>
@@ -81,5 +83,6 @@
         <file alias="map-pin.png">res/icons/white/map-pin.png</file>
         <file alias="insecure.png">res/icons/white/insecure.png</file>
         <file alias="airplay.png">res/icons/white/airplay.png</file>
+        <file alias="download.png">res/icons/white/download.png</file>
     </qresource>
 </RCC>

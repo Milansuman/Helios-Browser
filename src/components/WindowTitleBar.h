@@ -9,24 +9,28 @@
 #include "IconButton.h"
 #include "SplitTabMenu.h"
 #include "../windows/PageSettingsDialog.h"
+#include "../windows/DownloadManager.h"
 
 #include "IconButton.h"
 
-class WindowTitleBar : public QWidget{
+class WindowTitleBar : public QWidget
+{
     Q_OBJECT
 private:
     QHBoxLayout *tabTitleBarLayout, *titleBarLayout, *windowButtonsLayout;
     IconButton *minimize, *maximize, *close;
-    IconButton *reloadButton, *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton, *groupSelectorButton;
+    IconButton *reloadButton, *sideBarButton, *backButton, *forwardButton, *copyLinkButton, *siteSettingsButton, *groupSelectorButton, *downloadButton;
     SplitTabMenu *splitTabMenu;
     QWidget *tabTitleBar;
     AddressBox *addressBox;
     PageSettingsDialog *pageSettingsDialog;
+    DownloadManager *downloadManger;
+
 public:
-    WindowTitleBar(QWidget *parent=nullptr);
-    QPushButton* minimizeButton();
-    QPushButton* maximizeButton();
-    QPushButton* closeButton();
+    WindowTitleBar(QWidget *parent = nullptr);
+    QPushButton *minimizeButton();
+    QPushButton *maximizeButton();
+    QPushButton *closeButton();
     void setTitle(QString title);
     void setTitleBarVisible(bool visible);
     ~WindowTitleBar();
@@ -42,4 +46,5 @@ signals:
     void toggleSideBarRequested();
     void showGroupBar();
     void showSiteSettingsRequested();
+    void downloadRequested();
 };
