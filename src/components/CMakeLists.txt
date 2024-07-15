@@ -23,5 +23,7 @@ set(SOURCES ${SOURCES}
     src/components/GroupIcons.cpp
     src/components/PreviewWindow.h
     src/components/PreviewWindow.cpp
+    src/components/Separator.h
+    src/components/Separator.cpp
     PARENT_SCOPE
 )

@@ -41,6 +41,14 @@ MenuButton::MenuButton(QPixmap icon, QString text, QWidget *parent): QWidget(par
     this->layout->addWidget(this->arrow);
 }
 
+void MenuButton::setIcon(QPixmap icon){
+    this->icon->setPixmap(icon.scaled(15, 15, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+}
+
+void MenuButton::setText(QString text){
+    this->text->setText(text);
+}
+
 void MenuButton::mousePressEvent(QMouseEvent *event){
     if(event->button() == Qt::LeftButton){
         emit this->clicked();
@@ -354,6 +362,105 @@ void PermissionsGroup::setPermissions(std::map<QWebEnginePage::Feature, bool> pe
 
 PermissionsGroup::~PermissionsGroup() = default;
 
+SecurityPage::SecurityPage(QWidget *parent): QWidget(parent){
+    int i = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
+    QFont font(QFontDatabase::applicationFontFamilies(i).at(0), -1, QFont::Bold);
+    this->layout = new QVBoxLayout(this);
+    this->layout->setContentsMargins(10, 10, 10, 10);
+    this->layout->setSpacing(10);
+
+    this->titlebar = new QHBoxLayout();
+    this->back = new IconButton(":/icons/white/circle-arrow-left.png");
+    this->back->scale(20, 20);
+
+    this->connect(this->back, &IconButton::clicked, this, [=](){
+        emit this->backRequested();
+    });
+
+    this->title = new QLabel("Security");
+    this->title->setFont(font);
+    this->titleSubText = new QLabel("https://example.com");
+    this->titleSubText->setStyleSheet(
+        "QLabel{ color: rgb(115, 115, 115); }"
+    );
+
+    this->titlebarTextLayout = new QVBoxLayout();
+    this->titlebarTextLayout->addWidget(this->title);
+    this->titlebarTextLayout->addWidget(this->titleSubText);
+    this->titlebarTextLayout->setSpacing(3);
+
+    this->titlebar->addWidget(this->back);
+    this->titlebar->addLayout(this->titlebarTextLayout);
+
+    this->securityLayout = new QHBoxLayout();
+    this->securityIcon = new QLabel();
+    this->securityIcon->setPixmap(QPixmap(":/icons/white/insecure.png").scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    this->security = new QLabel("Connection is not secure.");
+    this->security->setFont(font);
+
+    this->securityLayout->addWidget(this->securityIcon);
+    this->securityLayout->addWidget(this->security);
+    this->securityLayout->addStretch();
+
+    this->certificateLayout = new QHBoxLayout();
+    this->certificateIcon = new QLabel();
+    this->certificateIcon->setPixmap(QPixmap(":/icons/white/ticket-check.png").scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    this->certificate = new QLabel("Certificates are valid");
+    this->certificate->setFont(font);
+
+    this->certificateSubText = new QLabel("Certificate issued by Let's Encrypt");
+    this->certificateSubText->setStyleSheet(
+        "QLabel{ color: rgb(115, 115, 115); }"
+    );
+
+    this->certificateTextLayout = new QVBoxLayout();
+    this->certificateTextLayout->addWidget(this->certificate);
+    //this->certificateTextLayout->addWidget(this->certificateSubText);
+    this->certificateLayout->setSpacing(3);
+
+    this->certificateLayout->setSpacing(10);
+    this->certificateLayout->addWidget(this->certificateIcon);
+    this->certificateLayout->addLayout(this->certificateTextLayout);
+    this->certificateLayout->addStretch();
+
+    this->separator = new Separator();
+
+    this->layout->addLayout(this->titlebar);
+    this->layout->addWidget(this->separator);
+    this->layout->addLayout(this->securityLayout);
+    this->layout->addLayout(this->certificateLayout);
+    this->layout->addStretch();
+
+    this->certificate->setVisible(false);
+    this->certificateIcon->setVisible(false);
+    //this->certificateSubText->setVisible(false);
+}
+
+void SecurityPage::reset(){
+    this->securityIcon->setPixmap(QPixmap(":/icons/white/insecure.png").scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    this->security->setText("Connection is not secure");
+    this->certificate->setVisible(false);
+    this->certificateIcon->setVisible(false);
+}
+
+void SecurityPage::setUrl(QUrl url){
+    this->titleSubText->setText(url.host());
+
+    if(url.scheme() == "https"){
+        this->securityIcon->setPixmap(QPixmap(":/icons/white/secure.png").scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        this->security->setText("Connection is secure");
+        this->certificate->setVisible(true);
+        this->certificateIcon->setVisible(true);
+    }else{
+        this->securityIcon->setPixmap(QPixmap(":/icons/white/insecure.png").scaled(20, 20, Qt::KeepAspectRatio, Qt::SmoothTransformation));
+        this->security->setText("Connection is not secure");
+        this->certificate->setVisible(false);
+        this->certificateIcon->setVisible(false);
+    }
+}
+
+SecurityPage::~SecurityPage() = default;
+
 PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(false){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     this->setAttribute(Qt::WA_TranslucentBackground);
@@ -364,6 +471,7 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
 
     this->layout = new QStackedLayout(this);
 
+    //MAIN PAGE
     this->mainPage = new QWidget();
     this->mainLayout = new QVBoxLayout(this->mainPage);
     this->mainLayout->setContentsMargins(15, 15, 15, 15);
@@ -428,18 +536,35 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
         emit this->toggleScreenShare(enabled);
     });
 
-    this->connectionButton = new MenuButton(QPixmap(":/icons/white/secure.png"), "Connection is secure");
+    this->connectionButton = new MenuButton(QPixmap(":/icons/white/insecure.png"), "Connection is not secure");
     this->cookiesButton = new MenuButton(QPixmap(":/icons/white/cookie.png"), "Cookies and site data");
     this->siteSettingsButton = new MenuButton(QPixmap(":/icons/white/settings.png"), "Site settings");
+
+    this->connect(this->connectionButton, &MenuButton::clicked, this, [=](){
+        this->layout->setCurrentIndex(1);
+        this->setFixedHeight(this->layout->currentWidget()->sizeHint().height());
+    });
+
+    this->separator = new Separator();
 
     this->mainLayout->addLayout(this->titleLayout);
     this->mainLayout->addWidget(this->soundButton);
     this->mainLayout->addWidget(this->permissions);
+    this->mainLayout->addWidget(this->separator);
     this->mainLayout->addWidget(this->connectionButton);
     this->mainLayout->addWidget(this->cookiesButton);
     this->mainLayout->addWidget(this->siteSettingsButton);
 
+    //SECURITY PAGE
+    this->securityPage = new SecurityPage();
+
+    this->connect(this->securityPage, &SecurityPage::backRequested, this, [=](){
+        this->layout->setCurrentIndex(0);
+        this->setFixedHeight(this->layout->currentWidget()->sizeHint().height());
+    });
+
     this->layout->addWidget(this->mainPage);
+    this->layout->addWidget(this->securityPage);
 }
 
 void PageSettingsDialog::paintEvent(QPaintEvent *event){
@@ -452,8 +577,20 @@ void PageSettingsDialog::paintEvent(QPaintEvent *event){
     painter.drawRoundedRect(rect(), 10, 10);
 }
 
+void PageSettingsDialog::reset(){
+    this->connectionButton->setIcon(QPixmap(":/icons/white/insecure.png"));
+    this->connectionButton->setText("Connection is insecure");
+    this->securityPage->reset();
+}
+
 void PageSettingsDialog::setUrl(QUrl url){
     this->title->setText(url.host());
+    this->securityPage->setUrl(url);
+
+    if(url.scheme() == "https"){
+        this->connectionButton->setIcon(QPixmap(":/icons/white/secure.png"));
+        this->connectionButton->setText("Connection is secure");
+    }
 }
 
 void PageSettingsDialog::setPermissions(std::map<QWebEnginePage::Feature, bool> permissions){
