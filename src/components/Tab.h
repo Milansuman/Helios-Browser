@@ -23,6 +23,7 @@
 #include "../windows/ScreenShareDialog.h"
 #include "../windows/WebViewDialog.h"
 #include "../windows/PageSettingsDialog.h"
+#include "../windows/CertificateErrorDialog.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -39,6 +40,7 @@ private:
     PermissionDialog *permissionDialog;
     ScreenShareDialog *screenShareDialog;
     PageSettingsDialog *pageSettingsDialog;
+    CertificateErrorDialog *certificateErrorDialog;
     QWebEngineProfile *profile;
     std::map<QWebEnginePage::Feature, bool> *permissions;
 

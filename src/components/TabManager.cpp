@@ -13,6 +13,7 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
     this->profile->settings()->setAttribute(QWebEngineSettings::Accelerated2dCanvasEnabled, true);
     this->profile->settings()->setAttribute(QWebEngineSettings::WebGLEnabled, true);
     this->profile->settings()->setAttribute(QWebEngineSettings::ScreenCaptureEnabled, true);
+    this->profile->settings()->setAttribute(QWebEngineSettings::ScrollAnimatorEnabled, true);
 
     this->groups.push_back(new TabGroup(profile));
 
