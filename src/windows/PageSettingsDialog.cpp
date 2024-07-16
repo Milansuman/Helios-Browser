@@ -554,8 +554,8 @@ PageSettingsDialog::PageSettingsDialog(QWidget *parent): QDialog(parent), muted(
     this->mainLayout->addWidget(this->permissions);
     this->mainLayout->addWidget(this->separator);
     this->mainLayout->addWidget(this->connectionButton);
-    this->mainLayout->addWidget(this->cookiesButton);
-    this->mainLayout->addWidget(this->siteSettingsButton);
+    // this->mainLayout->addWidget(this->cookiesButton);
+    // this->mainLayout->addWidget(this->siteSettingsButton);
 
     //SECURITY PAGE
     this->securityPage = new SecurityPage();
