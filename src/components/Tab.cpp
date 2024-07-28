@@ -15,6 +15,7 @@
 #include <QWebEngineCertificateError>
 #include <QAction>
 #include <algorithm>
+#include <QWebChannel>
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
 
@@ -52,6 +53,44 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
 
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
+
+    this->channel = new QWebChannel(this->webview->page());
+    this->webview->page()->setWebChannel(this->channel);
+
+    this->tabsApi = new TabsApi();
+    this->channel->registerObject("tabs", this->tabsApi);
+
+    this->connect(this->tabsApi, &TabsApi::splitTabRequested, this, [=](QUrl url){
+        emit this->splitTabRequested(url);
+    });
+
+    this->connect(this->tabsApi, &TabsApi::newTabRequested, this, [=](QUrl url){
+        emit this->newTabRequested(url);
+    });
+
+    this->connect(this->tabsApi, &TabsApi::splitTabFlipRequested, this, [=](){
+        emit this->splitTabFlipRequested();
+    });
+
+    QWebEngineScript script;
+    script.setName("WebChannelScript");
+    script.setSourceCode(R"(
+        var script = document.createElement('script');
+        script.src = 'qrc:///qtwebchannel/qwebchannel.js';
+
+        script.onload = function() {
+            new QWebChannel(qt.webChannelTransport, function(channel) {
+                window.tabs = channel.objects.tabs;
+            });
+        };
+        document.getElementsByTagName('head')[0].appendChild(script);
+    )");
+
+    script.setInjectionPoint(QWebEngineScript::DocumentReady);
+    script.setWorldId(QWebEngineScript::MainWorld);
+    script.setRunsOnSubFrames(true);
+
+    this->webview->page()->scripts().insert(script);
 
     this->devtoolsSplitter = new QSplitter();
     this->devtoolsSplitter->setMouseTracking(true);
@@ -435,9 +474,4 @@ void Tab::showSiteSettings(){
     this->pageSettingsDialog->open();
 }
 
-Tab::~Tab(){
-    delete this->webview;
-    delete this->tabTitleBar;
-    delete this->layout;
-    delete this->searchDialog;
-}
+Tab::~Tab() = default;

@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QWebEngineProfile>
 #include <QWebEnginePage>
+#include <QWebChannel>
 #include <QVBoxLayout>
 #include <QPaintEvent>
 #include <QResizeEvent>
@@ -25,6 +26,8 @@
 #include "../windows/PageSettingsDialog.h"
 #include "../windows/CertificateErrorDialog.h"
 
+#include "../api/TabApi.h"
+
 class Tab : public QWidget {
     Q_OBJECT
 private:
@@ -42,7 +45,10 @@ private:
     PageSettingsDialog *pageSettingsDialog;
     CertificateErrorDialog *certificateErrorDialog;
     QWebEngineProfile *profile;
+    QWebChannel *channel;
     std::map<QWebEnginePage::Feature, bool> *permissions;
+
+    TabsApi *tabsApi;
 
     void initCustomScrollBar();
 public:
@@ -69,6 +75,7 @@ signals:
     void closeTabRequested();
     void splitTabLeftRequested();
     void splitTabRightRequested();
+    void splitTabRequested(QUrl url);
     void splitTabFlipRequested();
     void titleChanged(QString title);
     void iconChanged(QIcon icon);
