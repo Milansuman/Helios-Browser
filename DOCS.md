@@ -7,6 +7,7 @@ window.tabs.requestSplitTab(url: string): null
 window.tabs.requestSplitTab(): null
 window.tabs.requestFlipTabs(): null
 window.tabs.requestNewGroup(url: string): null
+window.tabs.addTabs(tabs: Array<Array<string>>): boolean
 ```
 ## File API
 

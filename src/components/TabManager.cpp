@@ -176,6 +176,19 @@ void TabManager::windowShowSiteSettings(){
     this->getCurrentGroup()->getTab(0)->showSiteSettings();
 }
 
+void TabManager::windowLoadBulk(QList<QList<QUrl>> urlsList){
+    for(QList<QUrl> group: urlsList){
+        this->addGroup();
+        for(QUrl url: group){
+            this->windowSplitRight();
+        }
+
+        for(int i=0; i<this->getCurrentGroup()->getTabs().size(); i++){
+            this->getCurrentGroup()->getTab(i)->load(group.at(i));
+        }
+    }
+}
+
 TabManager::~TabManager(){
     for(TabGroup *group: this->groups){
         delete group;

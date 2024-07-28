@@ -110,8 +110,23 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         newWindow->show(); });
 
     this->connect(this->tabManager, &TabManager::searchRequested, this, [=](int pos, int group){
-        qDebug() << "requested";
         this->spotlightDialog->open(pos, group);
+    });
+
+    this->connect(this->spotlightDialog, &SpotlightDialog::splitTabRequested, this, [=](QUrl url){
+        this->tabManager->windowSplitRight();
+    });
+
+    this->connect(this->spotlightDialog, &SpotlightDialog::splitTabHomeRequested, this, [=](){
+        this->tabManager->windowSplitRight();
+    });
+
+    this->connect(this->spotlightDialog, &SpotlightDialog::splitTabFlipRequested, this, [=](){
+        // this->tabManager->
+    });
+
+    this->connect(this->spotlightDialog, &SpotlightDialog::addTabsRequested, this, [=](QList<QList<QUrl>> urlsList){
+        this->tabManager->windowLoadBulk(urlsList);
     });
 
     this->sideBar = new SideBar();

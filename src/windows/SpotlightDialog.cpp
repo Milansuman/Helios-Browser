@@ -4,13 +4,14 @@
 #include <QPainter>
 #include <QWebEngineScript>
 #include <QWebEngineScriptCollection>
+#include <QList>
+#include <QUrl>
 
 SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
     this->setFixedSize(parent->size());
-    qDebug() << this->size();
     this->layout = new QVBoxLayout(this);
 
     this->webview = new WebView();
@@ -25,19 +26,23 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
     this->channel->registerObject("tabs", this->tabsApi);
 
     this->connect(this->tabsApi, &TabsApi::splitTabRequested, this, [=](QUrl url){
-        //emit this->splitTabRequested(url);
+        emit this->splitTabRequested(url);
     });
 
     this->connect(this->tabsApi, &TabsApi::splitTabHomeRequested, this, [=](){
-        //emit this->splitTabRightRequested();
+        emit this->splitTabHomeRequested();
     });
 
     this->connect(this->tabsApi, &TabsApi::newTabRequested, this, [=](QUrl url){
-        //emit this->newTabRequested(url);
+        emit this->newTabRequested(url);
     });
 
     this->connect(this->tabsApi, &TabsApi::splitTabFlipRequested, this, [=](){
-        //emit this->splitTabFlipRequested();
+        emit this->splitTabFlipRequested();
+    });
+
+    this->connect(this->tabsApi, &TabsApi::addTabsRequested, this, [=](QList<QList<QUrl>> tabsList){
+        emit this->addTabsRequested(tabsList);
     });
 
     this->fileApi = new FileApi();
@@ -78,7 +83,6 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
 void SpotlightDialog::open(int pos, int group){
     this->pos = pos;
     this->group = group;
-    qDebug() << "test";
     QDialog::open();
 }
 

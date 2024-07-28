@@ -3,6 +3,8 @@
 #include <vector>
 #include <QStackedWidget>
 #include <QWebEngineProfile>
+#include <QList>
+#include <QUrl>
 
 #include "TabGroup.h"
 #include "Tab.h"
@@ -31,6 +33,7 @@ public:
     void windowReload();
     void windowShowGroups();
     void windowShowSiteSettings();
+    void windowLoadBulk(QList<QList<QUrl>> tabsList);
     ~TabManager();
 signals:
     void displayTitleBarOnWindowRequested();
