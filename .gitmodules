@@ -1,3 +1,9 @@
 [submodule "extensions/spotlight"]
 	path = extensions/spotlight
 	url = https://github.com/Jovit-Mathew236/project-web-spotlight.git
+[submodule "extensions/home-page"]
+	path = extensions/home-page
+	url = https://github.com/Jovit-Mathew236/web-home-page.git
+[submodule "extensions/website"]
+	path = extensions/website
+	url = https://github.com/Milansuman/project-website.git
