@@ -51,6 +51,8 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->setMouseTracking(true);
     this->setContentsMargins(0, 0, 0, 0);
 
+    this->spotlightDialog = new SpotlightDialog(this);
+
     this->centralWidget = new QWidget();
     this->centralWidget->setContentsMargins(0, 0, 0, 0);
     this->centralWidget->setMouseTracking(true);
@@ -106,6 +108,11 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
             {
         BrowserWindow *newWindow = new BrowserWindow(url, QSize(1000, 900));
         newWindow->show(); });
+
+    this->connect(this->tabManager, &TabManager::searchRequested, this, [=](int pos, int group){
+        qDebug() << "requested";
+        this->spotlightDialog->open(pos, group);
+    });
 
     this->sideBar = new SideBar();
     this->sideBar->setMouseTracking(true);

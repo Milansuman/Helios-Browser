@@ -14,6 +14,10 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
 
     this->addWidget(this->tabs.at(0));
 
+    this->connect(this->tabs.at(0), &Tab::searchRequested, this, [=](){
+        emit this->searchRequested(0);
+    });
+
     this->connect(this->tabs.at(0), &Tab::titleChanged, this, [=](QString title){
         emit this->windowTitleChanged(title);
     });
@@ -86,6 +90,10 @@ void TabGroup::splitLeft(int pos){
 
     Tab *temp = this->tabs.at(pos);
 
+    this->connect(this->tabs.at(pos), &Tab::searchRequested, this, [=](){
+        emit this->searchRequested(pos);
+    });
+
     connect(this->tabs.at(pos), &Tab::iconChanged, this, [=](){
         emit this->tabIconChanged();
     });
@@ -139,6 +147,10 @@ void TabGroup::splitRight(int pos){
     this->insertWidget(pos+1, this->tabs.at(pos+1));
 
     Tab *temp = this->tabs.at(pos+1);
+
+    this->connect(this->tabs.at(pos+1), &Tab::searchRequested, this, [=](){
+        emit this->searchRequested(pos+1);
+    });
 
     connect(this->tabs.at(pos+1), &Tab::iconChanged, this, [=](){
         emit this->tabIconChanged();

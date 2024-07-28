@@ -17,7 +17,7 @@
 
 #include "WebView.h"
 #include "TabTitleBar.h"
-#include "../windows/SearchDialog.h"
+//#include "../windows/SearchDialog.h"
 #include "../windows/FullScreenWindow.h"
 #include "../windows/AuthenticationDialog.h"
 #include "../windows/PermissionDialog.h"
@@ -39,7 +39,7 @@ private:
     TabTitleBar *tabTitleBar;
     QProgressBar *progressIndicator;
     QSplitter *devtoolsSplitter;
-    SearchDialog *searchDialog;
+    //SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
     AuthenticationDialog *authDialog;
     PermissionDialog *permissionDialog;
@@ -86,4 +86,5 @@ signals:
     void tabFocused();
     void newTabRequested(QUrl url);
     void newWindowRequested(QUrl url);
+    void searchRequested();
 };

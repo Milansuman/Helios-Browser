@@ -29,4 +29,5 @@ signals:
     void windowTitleChanged(QString title);
     void newTabRequested(QUrl url);
     void newWindowRequested(QUrl url);
+    void searchRequested(int pos);
 };

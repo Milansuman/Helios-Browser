@@ -54,6 +54,10 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
         this->closeGroup(pos);
     });
 
+    this->connect(this->groups.at(0), &TabGroup::searchRequested, this, [=](int pos){
+        emit this->searchRequested(pos, 0);
+    });
+
     this->connect(this->groups.at(0), &TabGroup::tabsChanged, this, [=](){
         if(this->groups.at(0)->getTabs().size() == 1){
             emit this->displayTitleBarOnWindowRequested();
@@ -90,6 +94,10 @@ void TabManager::addGroup(){
     this->groups.push_back(new TabGroup(profile));
     int pos = this->groups.size()-1;
     this->groupSelectorDialog->addGroup(new GroupIcons(this->groups.at(pos)));
+
+    this->connect(this->groups.at(pos), &TabGroup::searchRequested, this, [=](int i){
+        emit this->searchRequested(i, pos);
+    });
 
     this->connect(this->groups.at(pos), &TabGroup::tabsChanged, this, [=](){
         if(this->groups.at(pos)->getTabs().size() == 1){

@@ -37,4 +37,5 @@ signals:
     void hideTitleBarOnWindowRequested();
     void titleChanged(QString title);
     void newWindowRequested(QUrl url);
+    void searchRequested(int pos, int group);
 };

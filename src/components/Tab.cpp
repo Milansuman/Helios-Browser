@@ -17,7 +17,7 @@
 #include <algorithm>
 #include <QWebChannel>
 
-Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
+Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://fluxbrowserhome.netlify.app/", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile){
     this->permissions = new std::map<QWebEnginePage::Feature, bool>({
@@ -107,7 +107,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->devtoolsSplitter = new QSplitter();
     this->devtoolsSplitter->setMouseTracking(true);
 
-    this->searchDialog = new SearchDialog(this);
+    //this->searchDialog = new SearchDialog(this);
     this->authDialog = new AuthenticationDialog(this);
     this->permissionDialog = new PermissionDialog(this);
     this->certificateErrorDialog = new CertificateErrorDialog(this);
@@ -181,7 +181,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         emit this->titleChanged(this->webview->title());
         this->progressIndicator->setVisible(false);
         this->pageSettingsDialog->setUrl(this->webview->url());
-        this->searchDialog->setUrl(this->webview->url());
+        //this->searchDialog->setUrl(this->webview->url());
         
         for(std::pair<QWebEnginePage::Feature, bool> pair: *this->permissions){
             this->permissions->at(pair.first) = false;
@@ -323,12 +323,13 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
-        this->searchDialog->open();
+        emit this->searchRequested();
+        //this->searchDialog->open();
     });
 
-    this->connect(this->searchDialog, &SearchDialog::accepted, this, [=](){
-        this->webview->load(QUrl(this->searchDialog->getSearch()));
-    });
+    // this->connect(this->searchDialog, &SearchDialog::accepted, this, [=](){
+    //     this->webview->load(QUrl(this->searchDialog->getSearch()));
+    // });
 
     this->connect(this->tabTitleBar, &TabTitleBar::copyLinkRequested, this, [=](){
         qApp->clipboard()->setText(this->webview->url().toString());
@@ -434,7 +435,8 @@ void Tab::setTitleBarVisible(bool visible){
 }
 
 void Tab::requestSearchDialog(){
-    this->searchDialog->open();
+    //this->searchDialog->open();
+    emit this->searchRequested();
 }
 
 QString Tab::getTitle(){
