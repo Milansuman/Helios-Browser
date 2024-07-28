@@ -64,6 +64,10 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         emit this->splitTabRequested(url);
     });
 
+    this->connect(this->tabsApi, &TabsApi::splitTabHomeRequested, this, [=](){
+        emit this->splitTabRightRequested();
+    });
+
     this->connect(this->tabsApi, &TabsApi::newTabRequested, this, [=](QUrl url){
         emit this->newTabRequested(url);
     });

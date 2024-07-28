@@ -6,6 +6,10 @@ void TabsApi::requestSplitTab(QString url){
     emit this->splitTabRequested(QUrl(url));
 }
 
+void TabsApi::requestSplitTab(){
+    emit this->splitTabHomeRequested();
+}
+
 void TabsApi::requestFlipTabs(){
     emit this->splitTabFlipRequested();
 }

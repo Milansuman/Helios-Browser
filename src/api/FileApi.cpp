@@ -6,16 +6,34 @@
 #include <QFile>
 #include <QStringList>
 #include <QFileDialog>
+#include <QJsonObject>
 
 FileApi::FileApi(QObject *parent): QObject(parent){}
 
-QJsonDocument FileApi::listDir(QString path){
+QJsonDocument FileApi::listDir(QString path, bool subdir){
     QJsonDocument folderData;
 
     QDir directory(path);
+    directory.setFilter(QDir::AllEntries | QDir::NoDotAndDotDot);
     QJsonArray entries;
-    for(QString path: directory.entryList()){
-        entries.append(path);
+    for(QFileInfo path: directory.entryInfoList()){
+        QJsonObject fileData;
+        fileData.insert("path", path.filePath());
+        fileData.insert("isDir", path.isDir());
+
+        if(subdir && path.isDir()){
+            QJsonArray subdirEntries;
+            for(QFileInfo subPath: QDir(path.filePath()).entryInfoList(QDir::AllEntries | QDir::NoDotAndDotDot)){
+                QJsonObject subFileData;
+
+                subFileData.insert("path", subPath.filePath());
+                subFileData.insert("isDir", subPath.isDir());
+                subdirEntries.append(subFileData);
+            }
+            fileData.insert("dirs", subdirEntries);
+        }
+
+        entries.append(fileData);
     }
 
     folderData.setArray(entries);
