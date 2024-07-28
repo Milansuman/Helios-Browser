@@ -5,5 +5,7 @@ set(SOURCES ${SOURCES}
     src/api/TerminalApi.cpp
     src/api/HistoryApi.h
     src/api/HistoryApi.cpp
+    src/api/FileApi.h
+    src/api/FileApi.cpp
     PARENT_SCOPE
 )

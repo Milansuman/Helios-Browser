@@ -28,6 +28,7 @@
 
 #include "../api/TabApi.h"
 #include "../api/HistoryApi.h"
+#include "../api/FileApi.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -51,6 +52,7 @@ private:
 
     TabsApi *tabsApi;
     HistoryApi *historyApi;
+    FileApi *fileApi;
 
     void initCustomScrollBar();
 public:
