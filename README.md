@@ -1,5 +1,35 @@
-# Project Web
-Project Web (name change pending) is a web browser focused on the needs of developers, designers and power users in general.
+# Flux Browser
+
+Flux Browser (previously known as project web) is an open source modular browser catered more towards developers, designers, and power users. It features functionalities meant to boost their workflow and automate many tasks.
+
+The browser is written in Qt for C++ and has implemented the Qt WebEngine component. We have built a custom window, UX, and the entire UI from scratch, including a custom window with only the web rendering part handled by Qt WebEngine (Chromium-based module for Qt).
+
+Our goal was to unify and optimize the workflow of developers and designers. Since we spend most of our time on the web, it made sense to integrate these functionalities into the browser itself with some impressive automations that would create a more fluid workflow.
+
+## Project Timeline
+
+# - April last week or may first week
+
+We started with a huge list of features and Qt as our chosen UI framework. We experimented with various web engines like Chromium, Gecko, and WebKit before discovering Qt WebEngine, which kickstarted our ability to render websites.
+
+After deciding on our UI, we started building it up and then added our proprietary features.
+
+## During this Hackathon
+
+During this hackathon, we had a breakthrough by deciding to use QWebChannel to convert JS instructions to C++ code. This allowed us to use an AI model like Ollama or Grok to implement automation from a web component instead of hard-coding it in C++, opening up a wide range of possibilities.
+
+In the limited time of 24 hours, we were able to implement AI models to control some basic browser actions, such as:
+
+- Using human language (voice model coming very soon) to give commands
+- Controlling opening, closing, and grouping of websites and tabs
+
+We plan to implement:
+
+- File system search for files
+- Using AI to read and scrape data from webpages
+- Integrating with other browser functionalities like history and bookmarks
+
+We also did some bug fixing and slight housekeeping during this period.
 
 ![Our design](screenshots/design.png)
 

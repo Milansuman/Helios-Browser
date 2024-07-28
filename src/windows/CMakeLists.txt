@@ -23,5 +23,7 @@ set(SOURCES ${SOURCES}
     src/windows/PageSettingsDialog.cpp
     src/windows/CertificateErrorDialog.h
     src/windows/CertificateErrorDialog.cpp
+    src/windows/SpotlightDialog.h
+    src/windows/SpotlightDialog.cpp
     PARENT_SCOPE
 )

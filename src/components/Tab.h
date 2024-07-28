@@ -3,6 +3,7 @@
 #include <QWidget>
 #include <QWebEngineProfile>
 #include <QWebEnginePage>
+#include <QWebChannel>
 #include <QVBoxLayout>
 #include <QPaintEvent>
 #include <QResizeEvent>
@@ -16,7 +17,7 @@
 
 #include "WebView.h"
 #include "TabTitleBar.h"
-#include "../windows/SearchDialog.h"
+// #include "../windows/SearchDialog.h"
 #include "../windows/FullScreenWindow.h"
 #include "../windows/AuthenticationDialog.h"
 #include "../windows/PermissionDialog.h"
@@ -24,6 +25,10 @@
 #include "../windows/WebViewDialog.h"
 #include "../windows/PageSettingsDialog.h"
 #include "../windows/CertificateErrorDialog.h"
+
+#include "../api/TabApi.h"
+#include "../api/HistoryApi.h"
+#include "../api/FileApi.h"
 #include "../windows/DownloadManager.h"
 
 class Tab : public QWidget
@@ -36,7 +41,7 @@ private:
     TabTitleBar *tabTitleBar;
     QProgressBar *progressIndicator;
     QSplitter *devtoolsSplitter;
-    SearchDialog *searchDialog;
+    // SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
     AuthenticationDialog *authDialog;
     PermissionDialog *permissionDialog;
@@ -44,8 +49,13 @@ private:
     PageSettingsDialog *pageSettingsDialog;
     CertificateErrorDialog *certificateErrorDialog;
     QWebEngineProfile *profile;
+    QWebChannel *channel;
     DownloadManager *downloadManager;
     std::map<QWebEnginePage::Feature, bool> *permissions;
+
+    TabsApi *tabsApi;
+    HistoryApi *historyApi;
+    FileApi *fileApi;
 
     void initCustomScrollBar();
 
@@ -74,10 +84,12 @@ signals:
     void closeTabRequested();
     void splitTabLeftRequested();
     void splitTabRightRequested();
+    void splitTabRequested(QUrl url);
     void splitTabFlipRequested();
     void titleChanged(QString title);
     void iconChanged(QIcon icon);
     void tabFocused();
     void newTabRequested(QUrl url);
     void newWindowRequested(QUrl url);
+    void searchRequested();
 };
