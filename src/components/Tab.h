@@ -27,6 +27,7 @@
 #include "../windows/CertificateErrorDialog.h"
 
 #include "../api/TabApi.h"
+#include "../api/HistoryApi.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -49,6 +50,7 @@ private:
     std::map<QWebEnginePage::Feature, bool> *permissions;
 
     TabsApi *tabsApi;
+    HistoryApi *historyApi;
 
     void initCustomScrollBar();
 public:

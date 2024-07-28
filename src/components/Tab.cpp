@@ -60,6 +60,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->tabsApi = new TabsApi();
     this->channel->registerObject("tabs", this->tabsApi);
 
+    this->historyApi = new HistoryApi(this->webview->page()->history());
+    this->channel->registerObject("tabHistory", this->historyApi);
+
     this->connect(this->tabsApi, &TabsApi::splitTabRequested, this, [=](QUrl url){
         emit this->splitTabRequested(url);
     });
@@ -81,6 +84,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         script.onload = function() {
             new QWebChannel(qt.webChannelTransport, function(channel) {
                 window.tabs = channel.objects.tabs;
+                window.tabHistory = channel.objects.tabHistory;
             });
         };
         document.getElementsByTagName('head')[0].appendChild(script);
