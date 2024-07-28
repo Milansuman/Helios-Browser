@@ -11,6 +11,7 @@
 #include "../components/WindowTitleBar.h"
 #include "../components/TabManager.h"
 #include "../components/SideBar.h"
+#include "SpotlightDialog.h"
 
 #ifdef _WIN32
 #include <windows.h>
@@ -26,6 +27,8 @@ private:
     QHBoxLayout *contentLayout;
     QWidget *centralWidget;
     SideBar *sideBar;
+    SpotlightDialog *spotlightDialog;
+
     bool isMaximized;
     QPropertyAnimation *sideBarAnimation;
 

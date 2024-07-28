@@ -14,6 +14,10 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
 
     this->addWidget(this->tabs.at(0));
 
+    this->connect(this->tabs.at(0), &Tab::searchRequested, this, [=](){
+        emit this->searchRequested(0);
+    });
+
     this->connect(this->tabs.at(0), &Tab::titleChanged, this, [=](QString title){
         emit this->windowTitleChanged(title);
     });
@@ -53,6 +57,11 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
         this->splitRight(this->findTab(temp));
     });
 
+    connect(this->tabs.at(0), &Tab::splitTabRequested, this, [=](QUrl url){
+        this->splitRight(this->findTab(temp));
+        this->getTabs().at(1)->load(url);
+    });
+
     connect(this->tabs.at(0), &Tab::splitTabFlipRequested, this, [=](){
         if(this->orientation() == Qt::Orientation::Horizontal){
             this->setOrientation(Qt::Orientation::Vertical);
@@ -81,6 +90,10 @@ void TabGroup::splitLeft(int pos){
 
     Tab *temp = this->tabs.at(pos);
 
+    this->connect(this->tabs.at(pos), &Tab::searchRequested, this, [=](){
+        emit this->searchRequested(pos);
+    });
+
     connect(this->tabs.at(pos), &Tab::iconChanged, this, [=](){
         emit this->tabIconChanged();
     });
@@ -91,6 +104,11 @@ void TabGroup::splitLeft(int pos){
 
     connect(this->tabs.at(pos), &Tab::splitTabRightRequested, this, [=](){
         this->splitRight(this->findTab(temp));
+    });
+
+    connect(this->tabs.at(pos), &Tab::splitTabRequested, this, [=](QUrl url){
+        this->splitRight(this->findTab(temp));
+        this->getTabs().at(pos+1)->load(url);
     });
 
     connect(this->tabs.at(pos), &Tab::splitTabFlipRequested, this, [=](){
@@ -130,6 +148,10 @@ void TabGroup::splitRight(int pos){
 
     Tab *temp = this->tabs.at(pos+1);
 
+    this->connect(this->tabs.at(pos+1), &Tab::searchRequested, this, [=](){
+        emit this->searchRequested(pos+1);
+    });
+
     connect(this->tabs.at(pos+1), &Tab::iconChanged, this, [=](){
         emit this->tabIconChanged();
     });
@@ -140,6 +162,11 @@ void TabGroup::splitRight(int pos){
 
     connect(this->tabs.at(pos+1), &Tab::splitTabRightRequested, this, [=](){
         this->splitRight(this->findTab(temp));
+    });
+
+    connect(this->tabs.at(pos+1), &Tab::splitTabRequested, this, [=](QUrl url){
+        this->splitRight(this->findTab(temp));
+        this->getTabs().at(pos+2)->load(url);
     });
 
     connect(this->tabs.at(pos+1), &Tab::splitTabFlipRequested, this, [=](){

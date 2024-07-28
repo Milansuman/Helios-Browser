@@ -15,8 +15,9 @@
 #include <QWebEngineCertificateError>
 #include <QAction>
 #include <algorithm>
+#include <QWebChannel>
 
-Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
+Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://fluxbrowserhome.netlify.app/", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile){
     this->permissions = new std::map<QWebEnginePage::Feature, bool>({
@@ -53,10 +54,60 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
 
+    this->channel = new QWebChannel(this->webview->page());
+    this->webview->page()->setWebChannel(this->channel);
+
+    this->tabsApi = new TabsApi();
+    this->channel->registerObject("tabs", this->tabsApi);
+
+    this->connect(this->tabsApi, &TabsApi::splitTabRequested, this, [=](QUrl url){
+        emit this->splitTabRequested(url);
+    });
+
+    this->connect(this->tabsApi, &TabsApi::splitTabHomeRequested, this, [=](){
+        emit this->splitTabRightRequested();
+    });
+
+    this->connect(this->tabsApi, &TabsApi::newTabRequested, this, [=](QUrl url){
+        emit this->newTabRequested(url);
+    });
+
+    this->connect(this->tabsApi, &TabsApi::splitTabFlipRequested, this, [=](){
+        emit this->splitTabFlipRequested();
+    });
+
+    this->historyApi = new HistoryApi(this->webview->page()->history());
+    this->channel->registerObject("tabHistory", this->historyApi);
+
+    this->fileApi = new FileApi();
+    this->channel->registerObject("fs", this->fileApi);
+
+    QWebEngineScript script;
+    script.setName("WebChannelScript");
+    script.setSourceCode(R"(
+        var script = document.createElement('script');
+        script.src = 'qrc:///qtwebchannel/qwebchannel.js';
+
+        script.onload = function() {
+            new QWebChannel(qt.webChannelTransport, function(channel) {
+                window.tabs = channel.objects.tabs;
+                window.tabHistory = channel.objects.tabHistory;
+                window.fs = channel.objects.fs;
+            });
+        };
+        document.getElementsByTagName('head')[0].appendChild(script);
+    )");
+
+    script.setInjectionPoint(QWebEngineScript::DocumentReady);
+    script.setWorldId(QWebEngineScript::MainWorld);
+    script.setRunsOnSubFrames(true);
+
+    this->webview->page()->scripts().insert(script);
+
     this->devtoolsSplitter = new QSplitter();
     this->devtoolsSplitter->setMouseTracking(true);
 
-    this->searchDialog = new SearchDialog(this);
+    //this->searchDialog = new SearchDialog(this);
     this->authDialog = new AuthenticationDialog(this);
     this->permissionDialog = new PermissionDialog(this);
     this->certificateErrorDialog = new CertificateErrorDialog(this);
@@ -130,7 +181,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         emit this->titleChanged(this->webview->title());
         this->progressIndicator->setVisible(false);
         this->pageSettingsDialog->setUrl(this->webview->url());
-        this->searchDialog->setUrl(this->webview->url());
+        //this->searchDialog->setUrl(this->webview->url());
         
         for(std::pair<QWebEnginePage::Feature, bool> pair: *this->permissions){
             this->permissions->at(pair.first) = false;
@@ -272,12 +323,13 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
     });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
-        this->searchDialog->open();
+        emit this->searchRequested();
+        //this->searchDialog->open();
     });
 
-    this->connect(this->searchDialog, &SearchDialog::accepted, this, [=](){
-        this->webview->load(QUrl(this->searchDialog->getSearch()));
-    });
+    // this->connect(this->searchDialog, &SearchDialog::accepted, this, [=](){
+    //     this->webview->load(QUrl(this->searchDialog->getSearch()));
+    // });
 
     this->connect(this->tabTitleBar, &TabTitleBar::copyLinkRequested, this, [=](){
         qApp->clipboard()->setText(this->webview->url().toString());
@@ -383,7 +435,8 @@ void Tab::setTitleBarVisible(bool visible){
 }
 
 void Tab::requestSearchDialog(){
-    this->searchDialog->open();
+    //this->searchDialog->open();
+    emit this->searchRequested();
 }
 
 QString Tab::getTitle(){
@@ -435,9 +488,4 @@ void Tab::showSiteSettings(){
     this->pageSettingsDialog->open();
 }
 
-Tab::~Tab(){
-    delete this->webview;
-    delete this->tabTitleBar;
-    delete this->layout;
-    delete this->searchDialog;
-}
+Tab::~Tab() = default;
