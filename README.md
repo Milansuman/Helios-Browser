@@ -8,6 +8,8 @@ Our goal was to unify and optimize the workflow of developers and designers. Sin
 
 ## Project Timeline
 
+# - April last week or may first week
+
 We started with a huge list of features and Qt as our chosen UI framework. We experimented with various web engines like Chromium, Gecko, and WebKit before discovering Qt WebEngine, which kickstarted our ability to render websites.
 
 After deciding on our UI, we started building it up and then added our proprietary features.
