@@ -23,9 +23,11 @@
 #include "../windows/ScreenShareDialog.h"
 #include "../windows/WebViewDialog.h"
 #include "../windows/PageSettingsDialog.h"
+#include "../windows/CertificateErrorDialog.h"
 #include "../windows/DownloadManager.h"
 
-class Tab : public QWidget {
+class Tab : public QWidget
+{
     Q_OBJECT
 private:
     QVBoxLayout *layout;
@@ -40,14 +42,16 @@ private:
     PermissionDialog *permissionDialog;
     ScreenShareDialog *screenShareDialog;
     PageSettingsDialog *pageSettingsDialog;
+    CertificateErrorDialog *certificateErrorDialog;
     QWebEngineProfile *profile;
     DownloadManager *downloadManager;
     std::map<QWebEnginePage::Feature, bool> *permissions;
 
     void initCustomScrollBar();
+
 public:
-    Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
-    Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
+    Tab(QWebEngineProfile *profile, QWidget *parent = nullptr);
+    Tab(QWebEngineProfile *profile, QString url, QWidget *parent = nullptr);
     void setTitleBarVisible(bool visible);
     void requestSearchDialog();
     QString getTitle();
@@ -61,6 +65,7 @@ public:
     void showSiteSettings();
     void load(QUrl url);
     ~Tab();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;

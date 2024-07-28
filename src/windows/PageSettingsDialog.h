@@ -70,6 +70,7 @@ public:
     SecurityPage(QWidget *parent=nullptr);
     void setUrl(QUrl url);
     void reset();
+    void setSecure(bool isSecure);
     ~SecurityPage();
 signals:
     void backRequested();
@@ -89,12 +90,13 @@ private:
     SecurityPage *securityPage;
     Separator *separator;
 
-    bool muted;
+    bool muted, certificateError;
 public:
     PageSettingsDialog(QWidget *parent=nullptr);
     void open();
     void reset();
     void setUrl(QUrl url);
+    void setSecure(bool isSecure);
     void setPermissions(std::map<QWebEnginePage::Feature, bool> permissions);
     ~PageSettingsDialog();
 protected:
