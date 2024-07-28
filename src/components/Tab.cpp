@@ -5,6 +5,8 @@
 #include <QApplication>
 #include <QClipboard>
 #include <QWebEnginePage>
+#include <QWebEngineProfile>
+#include <QWebEngineDownloadRequest>
 #include <QWebEngineFullScreenRequest>
 #include <QWebEngineScript>
 #include <QSizePolicy>
@@ -14,9 +16,10 @@
 #include <QWebEngineClientCertificateSelection>
 #include <QWebEngineCertificateError>
 #include <QAction>
+#include <QFileInfo>
 #include <algorithm>
 
-Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://browser-homepage-alpha.vercel.app/", parent){}
+Tab::Tab(QWebEngineProfile *profile, QWidget *parent): Tab(profile, "https://fluxbrowserhome.netlify.app", parent){}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile){
     this->permissions = new std::map<QWebEnginePage::Feature, bool>({
@@ -49,6 +52,8 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         "                               stop:1 #A123AC);"
         "}"
     );
+
+    this->downloadManager = new DownloadManager(this);
 
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
@@ -240,8 +245,39 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent): QWidget(pare
         //request.selectScreen(request.screensModel()->index(0));
         this->screenShareDialog = new ScreenShareDialog(this);
         this->screenShareDialog->exec(request);
-        delete this->screenShareDialog;
+        delete this->screenShareDialog; });
+
+    // this->connect(this->profile, &QWebEngineProfile::downloadRequested, this, [=](QWebEngineDownloadRequest *download){
+    //     download->accept();
+    //     QString downloadPath = download->downloadDirectory() + "/" + download->downloadFileName();
+    //     QFileInfo fileInfo(downloadPath);
+    //     int progress = static_cast<int>(((download->totalBytes() - download->receivedBytes()) * 100) / download->totalBytes());
+    //     this->downloadManager->addDownload(fileInfo.filePath(), progress);
+    // });
+
+
+   this->connect(this->profile, &QWebEngineProfile::downloadRequested, this, [=](QWebEngineDownloadRequest *download){
+    qDebug() << "Download requested:" << download->downloadFileName();
+    download->accept();
+    QString downloadPath = download->downloadDirectory() + "/" + download->downloadFileName();
+    QFileInfo fileInfo(downloadPath);
+    qDebug() << "Full download path:" << fileInfo.filePath();
+
+    this->downloadManager->addDownload(fileInfo.filePath(), 0);
+    this->downloadManager->open();  // Make sure the download manager is visible
+
+    this->connect(download, &QWebEngineDownloadRequest::receivedBytesChanged, this, [=]() {
+        int progress = download->totalBytes() > 0 ? (download->receivedBytes() * 100) / download->totalBytes() : 0;
+        qDebug() << "Download progress:" << fileInfo.filePath() << progress << "%";
+        this->downloadManager->updateDownloadProgress(fileInfo.filePath(), progress);
     });
+
+    this->connect(download, &QWebEngineDownloadRequest::isFinished, this, [=]() {
+        qDebug() << "Download finished:" << fileInfo.filePath();
+        this->downloadManager->updateDownloadProgress(fileInfo.filePath(), 100);
+        this->downloadManager->saveDownloads();
+    });
+});
 
     this->connect(this->webview->page(), &QWebEnginePage::newWindowRequested, this, [=](QWebEngineNewWindowRequest &request){
         switch (request.destination()){

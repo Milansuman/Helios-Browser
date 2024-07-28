@@ -23,6 +23,7 @@
 #include "../windows/ScreenShareDialog.h"
 #include "../windows/WebViewDialog.h"
 #include "../windows/PageSettingsDialog.h"
+#include "../windows/DownloadManager.h"
 
 class Tab : public QWidget {
     Q_OBJECT
@@ -40,6 +41,7 @@ private:
     ScreenShareDialog *screenShareDialog;
     PageSettingsDialog *pageSettingsDialog;
     QWebEngineProfile *profile;
+    DownloadManager *downloadManager;
     std::map<QWebEnginePage::Feature, bool> *permissions;
 
     void initCustomScrollBar();

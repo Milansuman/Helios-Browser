@@ -4,10 +4,18 @@
 #include <QFont>
 #include <QListWidgetItem>
 #include <QProgressBar>
+#include <QLabel>
+#include <QDesktopServices>
+#include <QUrl>
+#include <QDir>
 #include <QPainter>
+#include <QFile>
+#include <QTextStream>
+#include <QStandardPaths>
 
 DownloadManager::DownloadManager(QWidget *parent) : QDialog(parent)
 {
+    this->setWindowTitle("Downloads");
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->setFixedWidth(300);
@@ -16,24 +24,18 @@ DownloadManager::DownloadManager(QWidget *parent) : QDialog(parent)
     QString fontFamily = QFontDatabase::applicationFontFamilies(0).at(0);
     QFont *font = new QFont(fontFamily, -1, QFont::Bold);
 
-    this->layout = new QStackedLayout(this);
-    this->mainPage = new QWidget();
-    this->dialogLayout = new QVBoxLayout(this->mainPage);
+    this->dialogLayout = new QVBoxLayout(this);
     this->dialogLayout->setContentsMargins(15, 15, 15, 15);
 
     downloadList = new QListWidget(this);
-    downloadList->setFont(*font);
-    downloadList->setStyleSheet(
-        "QListWidget {"
-        "   background-color: rgb(228, 228, 228);"
-        "   border-radius:20px"
-        "   color: white;"
-        "}");
-
+    downloadList->setMinimumHeight(200);
     this->dialogLayout->addWidget(downloadList);
-    setLayout(this->dialogLayout);
 
-    this->layout->addWidget(this->mainPage);
+    connect(downloadList, &QListWidget::itemDoubleClicked, this, &DownloadManager::openFileLocation);
+
+    // addDownload(QDir::homePath() + "/test_download.txt", 50);
+    loadDownloads();
+    // this->dialogLayout->addWidget(this->mainPage);
 }
 
 void DownloadManager::paintEvent(QPaintEvent *event)
@@ -47,68 +49,86 @@ void DownloadManager::paintEvent(QPaintEvent *event)
     painter.drawRoundedRect(rect(), 10, 10);
 }
 
+void DownloadManager::saveDownloads()
+{
+    QFile file(QDir::homePath() + "/.downloads_history");
+    if (file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QTextStream out(&file);
+        for (const QString &filename : downloads.keys()) {
+            out << filename << "\n";
+        }
+        file.close();
+    }
+}
+
+void DownloadManager::loadDownloads()
+{
+    QString downloadsPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
+    QDir downloadsDir(downloadsPath);
+    
+    qDebug() << "Attempting to load downloads from:" << downloadsPath;
+
+    if (downloadsDir.exists()) {
+        QFileInfoList files = downloadsDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot);
+        
+        for (const QFileInfo &fileInfo : files) {
+            QString filename = fileInfo.filePath();
+            qDebug() << "Found file:" << filename;
+            addDownload(filename, 100);  // Add with 100% progress
+        }
+    } else {
+        qDebug() << "Downloads directory does not exist";
+    }
+}
+
 void DownloadManager::addDownload(const QString &filename, int progress)
 {
-    QListWidgetItem *item = new QListWidgetItem(downloadList);
-    downloadList->addItem(item);
+    qDebug() << "Adding download:" << filename << "Progress:" << progress;
+    if (!downloads.contains(filename)) {
+        QListWidgetItem *item = new QListWidgetItem(downloadList);
+        downloads[filename] = item;
 
-    QWidget *itemWidget = new QWidget(downloadList);
-    QVBoxLayout *itemLayout = new QVBoxLayout(itemWidget);
+        QWidget *itemWidget = new QWidget;
+        QVBoxLayout *itemLayout = new QVBoxLayout(itemWidget);
 
-    QLabel *filenameLabel = new QLabel(filename, itemWidget);
-    filenameLabel->setStyleSheet("color: white;");
+        QLabel *filenameLabel = new QLabel(QFileInfo(filename).fileName());
+        QProgressBar *progressBar = new QProgressBar;
+        progressBar->setValue(progress);
 
-    QProgressBar *progressBar = new QProgressBar(itemWidget);
-    progressBar->setValue(progress);
-    progressBar->setStyleSheet(
-        "QProgressBar {"
-        "   border: 1px solid white;"
-        "   border-radius: 5px;"
-        "   text-align: center;"
-        "}"
-        "QProgressBar::chunk {"
-        "   background-color: #0147FF;"
-        "   border-radius: 5px;"
-        "}");
+        itemLayout->addWidget(filenameLabel);
+        itemLayout->addWidget(progressBar);
 
-    itemLayout->addWidget(filenameLabel);
-    itemLayout->addWidget(progressBar);
-    itemWidget->setLayout(itemLayout);
-
-    item->setSizeHint(itemWidget->sizeHint());
-    downloadList->setItemWidget(item, itemWidget);
+        item->setSizeHint(itemWidget->sizeHint());
+        downloadList->setItemWidget(item, itemWidget);
+    }
+    updateDownloadProgress(filename, progress);
 }
 
 void DownloadManager::updateDownloadProgress(const QString &filename, int progress)
 {
-    for (int i = 0; i < downloadList->count(); ++i)
-    {
-        QListWidgetItem *item = downloadList->item(i);
+    if (downloads.contains(filename)) {
+        QListWidgetItem *item = downloads[filename];
         QWidget *itemWidget = downloadList->itemWidget(item);
-        if (itemWidget)
-        {
-            QLabel *filenameLabel = itemWidget->findChild<QLabel *>();
-            if (filenameLabel && filenameLabel->text() == filename)
-            {
-                QProgressBar *progressBar = itemWidget->findChild<QProgressBar *>();
-                if (progressBar)
-                {
-                    progressBar->setValue(progress);
-                    break;
-                }
-            }
+        QProgressBar *progressBar = itemWidget->findChild<QProgressBar*>();
+        if (progressBar) {
+            progressBar->setValue(progress);
         }
+    }
+}
+
+void DownloadManager::openFileLocation(QListWidgetItem *item)
+{
+    QString filename = downloads.key(item);
+    if (!filename.isEmpty()) {
+        QFileInfo fileInfo(filename);
+        QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absolutePath()));
     }
 }
 
 void DownloadManager::open()
 {
-    this->move(this->parentWidget()->mapToGlobal(QPoint(this->parentWidget()->width() / 2 - this->width() / 2, 10)));
+    this->move(this->parentWidget()->mapToGlobal(QPoint(this->parentWidget()->width() / 10 - this->width() / 2, 10)));
     QDialog::open();
 }
 
-DownloadManager::~DownloadManager()
-{
-    delete this->dialogLayout;
-    delete downloadList;
-}
+DownloadManager::~DownloadManager() = default;
