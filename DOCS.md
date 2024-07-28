@@ -15,3 +15,7 @@ window.fs.listDir(path: string, subdir?: boolean) : Array<{path: string, isDir: 
 window.fs.getFileUrl(): string
 window.fs.getFolderUrl(): string
 ```
+## Dialog API
+```ts
+window.dialog.closeDialog()
+```
