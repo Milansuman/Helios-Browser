@@ -5,7 +5,8 @@
 #include <QShortcut>
 #include <QApplication>
 
-TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0){
+TabManager::TabManager(QWidget *parent) : QStackedWidget(parent), currentGroup(0)
+{
     this->setMouseTracking(true);
     this->profile = new QWebEngineProfile("project-web");
     this->profile->setPersistentCookiesPolicy(QWebEngineProfile::ForcePersistentCookies);
@@ -17,17 +18,19 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
 
     this->groups.push_back(new TabGroup(profile));
 
+    this->downloadManager = new DownloadManager(this);
+
     QShortcut *openDevToolsAction = new QShortcut(this);
     openDevToolsAction->setKey(Qt::Key_F12);
 
-    this->connect(openDevToolsAction, &QShortcut::activated, this, [=](){
-        this->getCurrentGroup()->openDevTools();
-    });
+    this->connect(openDevToolsAction, &QShortcut::activated, this, [=]()
+                  { this->getCurrentGroup()->openDevTools(); });
 
     this->groupSelectorDialog = new GroupSelectorDialog(this);
     this->groupSelectorDialog->addGroup(new GroupIcons(this->groups.at(0)));
 
-    this->connect(this->groupSelectorDialog, &GroupSelectorDialog::changeGroupRequested, this, [=](int pos){
+    this->connect(this->groupSelectorDialog, &GroupSelectorDialog::changeGroupRequested, this, [=](int pos)
+                  {
         this->currentGroup = pos;
         this->setCurrentIndex(pos);
 
@@ -36,10 +39,10 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
             emit this->titleChanged(this->getCurrentGroup()->getTab(0)->getTitle());
         }else{
             emit this->hideTitleBarOnWindowRequested();
-        }
-    });
+        } });
 
-    this->connect(this->groupSelectorDialog, &GroupSelectorDialog::closeGroupRequested, this, [=](int pos){
+    this->connect(this->groupSelectorDialog, &GroupSelectorDialog::closeGroupRequested, this, [=](int pos)
+                  {
         if(this->currentGroup == pos && this->currentGroup != 0){
             this->currentGroup = pos-1;
             this->setCurrentIndex(pos-1);
@@ -51,74 +54,73 @@ TabManager::TabManager(QWidget *parent): QStackedWidget(parent), currentGroup(0)
         }else{
             emit this->hideTitleBarOnWindowRequested();
         }
-        this->closeGroup(pos);
-    });
+        this->closeGroup(pos); });
 
-    this->connect(this->groups.at(0), &TabGroup::searchRequested, this, [=](int pos){
-        emit this->searchRequested(pos, 0);
-    });
+    this->connect(this->groups.at(0), &TabGroup::searchRequested, this, [=](int pos)
+                  { emit this->searchRequested(pos, 0); });
 
-    this->connect(this->groups.at(0), &TabGroup::tabsChanged, this, [=](){
+    this->connect(this->groups.at(0), &TabGroup::tabsChanged, this, [=]()
+                  {
         if(this->groups.at(0)->getTabs().size() == 1){
             emit this->displayTitleBarOnWindowRequested();
         }else{
             emit this->hideTitleBarOnWindowRequested();
-        }
-    });
+        } });
 
-    this->connect(this->groups.at(0), &TabGroup::windowTitleChanged, this, [=](QString title){
-        emit this->titleChanged(title);
-    });
+    this->connect(this->groups.at(0), &TabGroup::windowTitleChanged, this, [=](QString title)
+                  { emit this->titleChanged(title); });
 
-    this->connect(this->groups.at(0), &TabGroup::newTabRequested, this, [=](QUrl url){
+    this->connect(this->groups.at(0), &TabGroup::newTabRequested, this, [=](QUrl url)
+                  {
         this->addGroup();
-        this->getCurrentGroup()->getTab(0)->load(url);
-    });
+        this->getCurrentGroup()->getTab(0)->load(url); });
 
-    this->connect(this->groups.at(0), &TabGroup::newWindowRequested, this, [=](QUrl url){
-        emit this->newWindowRequested(url);
-    });
+    this->connect(this->groups.at(0), &TabGroup::newWindowRequested, this, [=](QUrl url)
+                  { emit this->newWindowRequested(url); });
 
     this->addWidget(this->groups.at(0));
 }
 
-TabGroup* TabManager::getGroup(int pos){
+TabGroup *TabManager::getGroup(int pos)
+{
     return this->groups.at(pos);
 }
 
-TabGroup* TabManager::getCurrentGroup(){
+TabGroup *TabManager::getCurrentGroup()
+{
     return this->groups.at(this->currentGroup);
 }
 
-void TabManager::addGroup(){
+void TabManager::addGroup()
+{
     this->groups.push_back(new TabGroup(profile));
-    int pos = this->groups.size()-1;
+    int pos = this->groups.size() - 1;
     this->groupSelectorDialog->addGroup(new GroupIcons(this->groups.at(pos)));
 
-    this->connect(this->groups.at(pos), &TabGroup::searchRequested, this, [=](int i){
-        emit this->searchRequested(i, pos);
-    });
+    this->connect(this->groups.at(pos), &TabGroup::searchRequested, this, [=](int i)
+                  { emit this->searchRequested(i, pos); });
 
-    this->connect(this->groups.at(pos), &TabGroup::tabsChanged, this, [=](){
+    this->connect(this->groups.at(pos), &TabGroup::searchRequested, this, [=](int i)
+                  { emit this->searchRequested(i, pos); });
+
+    this->connect(this->groups.at(pos), &TabGroup::tabsChanged, this, [=]()
+                  {
         if(this->groups.at(pos)->getTabs().size() == 1){
             emit this->displayTitleBarOnWindowRequested();
         }else{
             emit this->hideTitleBarOnWindowRequested();
-        }
-    });
+        } });
 
-    this->connect(this->groups.at(pos), &TabGroup::windowTitleChanged, this, [=](QString title){
-        emit this->titleChanged(title);
-    });
+    this->connect(this->groups.at(pos), &TabGroup::windowTitleChanged, this, [=](QString title)
+                  { emit this->titleChanged(title); });
 
-    this->connect(this->groups.at(pos), &TabGroup::newTabRequested, this, [=](QUrl url){
+    this->connect(this->groups.at(pos), &TabGroup::newTabRequested, this, [=](QUrl url)
+                  {
         this->addGroup();
-        this->getCurrentGroup()->getTab(0)->load(url);
-    });
+        this->getCurrentGroup()->getTab(0)->load(url); });
 
-    this->connect(this->groups.at(pos), &TabGroup::newWindowRequested, this, [=](QUrl url){
-        emit this->newWindowRequested(url);
-    });
+    this->connect(this->groups.at(pos), &TabGroup::newWindowRequested, this, [=](QUrl url)
+                  { emit this->newWindowRequested(url); });
 
     this->currentGroup = pos;
     this->addWidget(this->groups.at(pos));
@@ -127,70 +129,92 @@ void TabManager::addGroup(){
     emit this->titleChanged(this->getCurrentGroup()->getTab(0)->getTitle());
 }
 
-void TabManager::closeGroup(int pos){
+void TabManager::closeGroup(int pos)
+{
     delete this->groups.at(pos);
-    this->groups.erase(this->groups.begin()+pos);
+    this->groups.erase(this->groups.begin() + pos);
 
-    if(this->groups.size() == 0){
+    if (this->groups.size() == 0)
+    {
         qApp->quit();
     }
 }
 
-void TabManager::setInitialUrl(QUrl url){
+void TabManager::setInitialUrl(QUrl url)
+{
     this->getCurrentGroup()->getTab(0)->load(url);
 }
 
-void TabManager::windowSplitLeft(){
+void TabManager::windowSplitLeft()
+{
     this->getCurrentGroup()->splitLeft(0);
 }
 
-void TabManager::windowSplitRight(){
+void TabManager::windowSplitRight()
+{
     this->getCurrentGroup()->splitRight(0);
 }
 
-void TabManager::windowCopyLink(){
+void TabManager::windowCopyLink()
+{
     this->getCurrentGroup()->getTab(0)->copyUrl();
 }
 
-void TabManager::windowSearch(){
+void TabManager::windowSearch()
+{
     this->getCurrentGroup()->getTab(0)->requestSearchDialog();
 }
 
-void TabManager::windowNextPage(){
+void TabManager::windowNextPage()
+{
     this->getCurrentGroup()->getTab(0)->requestNextPage();
 }
 
-void TabManager::windowPreviousPage(){
+void TabManager::windowPreviousPage()
+{
     this->getCurrentGroup()->getTab(0)->requestPreviousPage();
 }
 
-void TabManager::windowReload(){
+void TabManager::windowReload()
+{
     this->getCurrentGroup()->getTab(0)->requestReload();
 }
 
-void TabManager::windowShowGroups(){
+void TabManager::windowShowGroups()
+{
     this->groupSelectorDialog->open();
 }
+void TabManager::DownloadShowMenu()
+{
+    this->downloadManager->open();
+}
 
-void TabManager::windowShowSiteSettings(){
+void TabManager::windowShowSiteSettings()
+{
     this->getCurrentGroup()->getTab(0)->showSiteSettings();
 }
 
-void TabManager::windowLoadBulk(QList<QList<QUrl>> urlsList){
-    for(QList<QUrl> group: urlsList){
+void TabManager::windowLoadBulk(QList<QList<QUrl>> urlsList)
+{
+    for (QList<QUrl> group : urlsList)
+    {
         this->addGroup();
-        for(QUrl url: group){
+        for (QUrl url : group)
+        {
             this->windowSplitRight();
         }
 
-        for(int i=0; i<this->getCurrentGroup()->getTabs().size(); i++){
+        for (int i = 0; i < this->getCurrentGroup()->getTabs().size(); i++)
+        {
             this->getCurrentGroup()->getTab(i)->load(group.at(i));
         }
     }
 }
 
-TabManager::~TabManager(){
-    for(TabGroup *group: this->groups){
+TabManager::~TabManager()
+{
+    for (TabGroup *group : this->groups)
+    {
         delete group;
     }
     this->groups.clear();

@@ -17,7 +17,7 @@
 
 #include "WebView.h"
 #include "TabTitleBar.h"
-//#include "../windows/SearchDialog.h"
+// #include "../windows/SearchDialog.h"
 #include "../windows/FullScreenWindow.h"
 #include "../windows/AuthenticationDialog.h"
 #include "../windows/PermissionDialog.h"
@@ -29,9 +29,11 @@
 #include "../api/TabApi.h"
 #include "../api/HistoryApi.h"
 #include "../api/FileApi.h"
+#include "../windows/DownloadManager.h"
 #include "../api/OllamaApi.h"
 
-class Tab : public QWidget {
+class Tab : public QWidget
+{
     Q_OBJECT
 private:
     QVBoxLayout *layout;
@@ -40,7 +42,7 @@ private:
     TabTitleBar *tabTitleBar;
     QProgressBar *progressIndicator;
     QSplitter *devtoolsSplitter;
-    //SearchDialog *searchDialog;
+    // SearchDialog *searchDialog;
     FullScreenWindow *fullScreenWindow;
     AuthenticationDialog *authDialog;
     PermissionDialog *permissionDialog;
@@ -49,6 +51,7 @@ private:
     CertificateErrorDialog *certificateErrorDialog;
     QWebEngineProfile *profile;
     QWebChannel *channel;
+    DownloadManager *downloadManager;
     std::map<QWebEnginePage::Feature, bool> *permissions;
 
     TabsApi *tabsApi;
@@ -57,9 +60,10 @@ private:
     OllamaApi *ollamaApi;
 
     void initCustomScrollBar();
+
 public:
-    Tab(QWebEngineProfile *profile, QWidget *parent=nullptr);
-    Tab(QWebEngineProfile *profile, QString url, QWidget *parent=nullptr);
+    Tab(QWebEngineProfile *profile, QWidget *parent = nullptr);
+    Tab(QWebEngineProfile *profile, QString url, QWidget *parent = nullptr);
     void setTitleBarVisible(bool visible);
     void requestSearchDialog();
     QString getTitle();
@@ -73,6 +77,7 @@ public:
     void showSiteSettings();
     void load(QUrl url);
     ~Tab();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;

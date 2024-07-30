@@ -11,6 +11,8 @@ set(SOURCES ${SOURCES}
     src/windows/AuthenticationDialog.cpp
     src/windows/PermissionDialog.h
     src/windows/PermissionDialog.cpp
+    src/windows/DownloadManager.h
+    src/windows/DownloadManager.cpp
     src/windows/WinNativeWindow.h
     src/windows/WinNativeWindow.cpp
     src/windows/ScreenShareDialog.h
