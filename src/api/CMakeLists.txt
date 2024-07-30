@@ -9,5 +9,7 @@ set(SOURCES ${SOURCES}
     src/api/FileApi.cpp
     src/api/DialogApi.h
     src/api/DialogApi.cpp
+    src/api/OllamaApi.h
+    src/api/OllamaApi.cpp
     PARENT_SCOPE
 )

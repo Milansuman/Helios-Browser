@@ -30,6 +30,7 @@
 #include "../api/HistoryApi.h"
 #include "../api/FileApi.h"
 #include "../windows/DownloadManager.h"
+#include "../api/OllamaApi.h"
 
 class Tab : public QWidget
 {
@@ -56,6 +57,7 @@ private:
     TabsApi *tabsApi;
     HistoryApi *historyApi;
     FileApi *fileApi;
+    OllamaApi *ollamaApi;
 
     void initCustomScrollBar();
 

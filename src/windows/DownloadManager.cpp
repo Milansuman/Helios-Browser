@@ -9,6 +9,7 @@
 #include <QUrl>
 #include <QDir>
 #include <QPainter>
+#include <QPainterPath>
 #include <QFile>
 #include <QTextStream>
 #include <QStandardPaths>
@@ -45,7 +46,7 @@ DownloadManager::DownloadManager(QWidget *parent) : QDialog(parent)
     this->setWindowTitle("Downloads");
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setFixedWidth(300);
+    this->setMinimumWidth(300);
 
     QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
     QString fontFamily = QFontDatabase::applicationFontFamilies(0).at(0);

@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "C:\\\\Qt\\\\6.7.2\\\\msvc2019_64\\\\**"
+                "C:\\\\Qt\\\\6.7.2\\\\msvc2019_64\\\\**",
+                "/usr/include/qt6/**"
             ],
             "defines": [
                 "_DEBUG",
