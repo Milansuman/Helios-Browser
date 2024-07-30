@@ -7,8 +7,11 @@
 #include <QPainterPath>
 #include <QTimer>
 #include <QQuickWidget>
+#include <QVariant>
 
 #include "../windows/WebViewDialog.h"
+
+WebView::WebView(QWidget *parent): WebView(QWebEngineProfile::defaultProfile(), parent){}
 
 WebView::WebView(QWebEngineProfile *profile, QWidget *parent): QWebEngineView(profile, parent){
     this->connect(this, &WebView::loadProgress, this, [=](int progress){
@@ -93,21 +96,5 @@ QColor WebView::getTopColor(){
     }
 
     return QColor(r, g, b);
-}
-
-WebView::WebView(QWidget *parent): QWebEngineView(parent){
-    this->connect(this, &WebView::loadProgress, this, [=](int progress){
-        if(progress == 100){
-            QTimer::singleShot(200, [=](){
-                emit this->colorChanged(this->getTopColor());
-            });
-        }
-    });
-
-    this->connect(this, &WebView::loadFinished, this, [=](){
-        QTimer::singleShot(200, [=](){
-            emit this->colorChanged(this->getTopColor());
-        });
-    });
 }
 
