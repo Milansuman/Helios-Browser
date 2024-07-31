@@ -30,6 +30,10 @@ class DownloadManager: public QDialog{
 private:
     QList<DownloadItem*> downloadItems;
     QVBoxLayout *layout;
+
+    #ifdef _WIN32
+    void enableBlurBehind();
+    #endif
 public:
     DownloadManager(QWidget *parent=nullptr);
     void open();

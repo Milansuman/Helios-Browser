@@ -164,4 +164,23 @@ void DownloadManager::open(){
     #endif
 }
 
+#ifdef _WIN32
+void DownloadManager::enableBlurBehind()
+{
+    HWND hwnd = (HWND)this->winId();
+
+    HMODULE hUser = GetModuleHandle(L"user32.dll");
+    if (hUser)
+    {
+        pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)GetProcAddress(hUser, "SetWindowCompositionAttribute");
+        if (SetWindowCompositionAttribute)
+        {
+            ACCENTPOLICY policy = {3, 0, 0, 0}; // ACCENT_ENABLE_BLURBEHIND
+            WINCOMPATTRDATA data = {19, &policy, sizeof(ACCENTPOLICY)};
+            SetWindowCompositionAttribute(hwnd, &data);
+        }
+    }
+}
+#endif
+
 DownloadManager::~DownloadManager() = default;
