@@ -11,6 +11,8 @@ WindowTitleBar::WindowTitleBar(QWidget *parent) : QWidget(parent)
     this->setFixedHeight(30);
     this->tabTitleBar = new QWidget();
 
+    this->downloadManager = new DownloadManager(this);
+
     QSizePolicy retainWidth = this->tabTitleBar->sizePolicy();
     retainWidth.setRetainSizeWhenHidden(true);
     this->tabTitleBar->setSizePolicy(retainWidth);
@@ -80,8 +82,9 @@ WindowTitleBar::WindowTitleBar(QWidget *parent) : QWidget(parent)
     this->connect(this->reloadButton, &IconButton::clicked, this, [=]()
                   { emit this->reloadRequested(); });
 
-    this->connect(this->downloadButton, &IconButton::clicked, this, [=]()
-                  { emit this->downloadRequested(); });
+    this->connect(this->downloadButton, &IconButton::clicked, this, [=](){ 
+        this->downloadManager->open();
+    });
 
     this->connect(this->copyLinkButton, &IconButton::clicked, this, [=]()
                   { emit this->copyLinkRequested(); });

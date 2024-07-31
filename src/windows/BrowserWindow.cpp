@@ -71,9 +71,6 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     connect(this->titleBar, &WindowTitleBar::showGroupBar, this, [=]()
             { this->tabManager->windowShowGroups(); });
 
-    connect(this->titleBar, &WindowTitleBar::downloadRequested, this, [=]()
-            { this->tabManager->DownloadShowMenu(); });
-
     connect(this->titleBar, &WindowTitleBar::splitTabLeftRequested, this, [=]()
             { this->tabManager->windowSplitLeft(); });
 

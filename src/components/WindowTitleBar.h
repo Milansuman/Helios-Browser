@@ -24,7 +24,7 @@ private:
     QWidget *tabTitleBar;
     AddressBox *addressBox;
     PageSettingsDialog *pageSettingsDialog;
-    DownloadManager *downloadManger;
+    DownloadManager *downloadManager;
 
 public:
     WindowTitleBar(QWidget *parent = nullptr);
@@ -46,5 +46,5 @@ signals:
     void toggleSideBarRequested();
     void showGroupBar();
     void showSiteSettingsRequested();
-    void downloadRequested();
+    //void downloadRequested();
 };

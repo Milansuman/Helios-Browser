@@ -24,13 +24,15 @@ Tab::Tab(QWebEngineProfile *profile, QWidget *parent) : Tab(profile, "https://fl
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile)
 {
-    this->permissions = new std::map<QWebEnginePage::Feature, bool>({{QWebEnginePage::Feature::Notifications, false},
-                                                                     {QWebEnginePage::Feature::Geolocation, false},
-                                                                     {QWebEnginePage::Feature::DesktopVideoCapture, false},
-                                                                     {QWebEnginePage::Feature::MediaAudioCapture, false},
-                                                                     {QWebEnginePage::Feature::MediaVideoCapture, false},
-                                                                     {QWebEnginePage::Feature::MediaAudioVideoCapture, false},
-                                                                     {QWebEnginePage::Feature::MouseLock, true}});
+    this->permissions = new std::map<QWebEnginePage::Feature, bool>({
+        {QWebEnginePage::Feature::Notifications, false},
+        {QWebEnginePage::Feature::Geolocation, false},
+        {QWebEnginePage::Feature::DesktopVideoCapture, false},
+        {QWebEnginePage::Feature::MediaAudioCapture, false},
+        {QWebEnginePage::Feature::MediaVideoCapture, false},
+        {QWebEnginePage::Feature::MediaAudioVideoCapture, false},
+        {QWebEnginePage::Feature::MouseLock, true}
+    });
     this->layout = new QVBoxLayout(this);
     this->layout->setContentsMargins(0, 0, 0, 0);
     this->layout->setSpacing(0);
@@ -52,7 +54,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         "                               stop:1 #A123AC);"
         "}");
 
-    this->downloadManager = new DownloadManager(this);
+    // this->downloadManager = new DownloadManager(this);
 
     this->webview = new WebView(profile);
     this->webview->load(QUrl(url));
@@ -63,18 +65,21 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
     this->tabsApi = new TabsApi();
     this->channel->registerObject("tabs", this->tabsApi);
 
+    this->connect(this->tabsApi, &TabsApi::splitTabRequested, this, [=](QUrl url){ 
+        emit this->splitTabRequested(url); 
+    });
 
-    this->connect(this->tabsApi, &TabsApi::splitTabRequested, this, [=](QUrl url)
-                  { emit this->splitTabRequested(url); });
+    this->connect(this->tabsApi, &TabsApi::splitTabHomeRequested, this, [=](){
+        emit this->splitTabRightRequested(); 
+    });
 
-    this->connect(this->tabsApi, &TabsApi::splitTabHomeRequested, this, [=]()
-                  { emit this->splitTabRightRequested(); });
+    this->connect(this->tabsApi, &TabsApi::newTabRequested, this, [=](QUrl url){ 
+        emit this->newTabRequested(url); 
+    });
 
-    this->connect(this->tabsApi, &TabsApi::newTabRequested, this, [=](QUrl url)
-                  { emit this->newTabRequested(url); });
-
-    this->connect(this->tabsApi, &TabsApi::splitTabFlipRequested, this, [=]()
-                  { emit this->splitTabFlipRequested(); });
+    this->connect(this->tabsApi, &TabsApi::splitTabFlipRequested, this, [=](){ 
+        emit this->splitTabFlipRequested(); 
+    });
 
     this->historyApi = new HistoryApi(this->webview->page()->history());
     this->channel->registerObject("tabHistory", this->historyApi);
@@ -130,8 +135,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
 
     this->pageSettingsDialog = new PageSettingsDialog(this->webview);
 
-    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleMuteAudio, this, [=](bool muted)
-                  { this->webview->page()->setAudioMuted(muted); });
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleMuteAudio, this, [=](bool muted){ 
+        this->webview->page()->setAudioMuted(muted); 
+    });
 
     this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleCamera, this, [=](bool enabled)
                   {
@@ -234,8 +240,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
 
         this->tabTitleBar->setIsBlack(luminance > 0.5); });
 
-    this->connect(this->webview->page(), &QWebEnginePage::fullScreenRequested, this, [=](QWebEngineFullScreenRequest fullScreenRequest)
-                  {
+    this->connect(this->webview->page(), &QWebEnginePage::fullScreenRequested, this, [=](QWebEngineFullScreenRequest fullScreenRequest){
         if(fullScreenRequest.toggleOn()){
             if(this->fullScreenWindow){
                 return;
@@ -248,13 +253,12 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
             fullScreenRequest.accept();
             delete this->fullScreenWindow;
             this->fullScreenWindow = nullptr;
-        } });
+        } 
+    });
 
-    this->connect(this->webview->page(), &QWebEnginePage::authenticationRequired, this, [=](const QUrl &requestUrl, QAuthenticator *authenticator)
-                  { this->authDialog->exec(requestUrl, authenticator); });
+    this->connect(this->webview->page(), &QWebEnginePage::authenticationRequired, this, [=](const QUrl &requestUrl, QAuthenticator *authenticator){ this->authDialog->exec(requestUrl, authenticator); });
 
-    this->connect(this->webview->page(), &QWebEnginePage::featurePermissionRequested, this, [=](const QUrl &securityOrigin, QWebEnginePage::Feature feature)
-                  {
+    this->connect(this->webview->page(), &QWebEnginePage::featurePermissionRequested, this, [=](const QUrl &securityOrigin, QWebEnginePage::Feature feature){
         if(this->permissions->at(feature)){
             this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionGrantedByUser);
         }else{
@@ -298,48 +302,17 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
                     this->webview->page()->setFeaturePermission(securityOrigin, feature, QWebEnginePage::PermissionUnknown);
             }
             this->pageSettingsDialog->setPermissions(*this->permissions);
-        } });
+        }
+    });
 
-    this->connect(this->webview->page(), &QWebEnginePage::desktopMediaRequested, this, [=](const QWebEngineDesktopMediaRequest &request)
-                  {
+    this->connect(this->webview->page(), &QWebEnginePage::desktopMediaRequested, this, [=](const QWebEngineDesktopMediaRequest &request){
         //request.selectScreen(request.screensModel()->index(0));
         this->screenShareDialog = new ScreenShareDialog(this);
         this->screenShareDialog->exec(request);
-        delete this->screenShareDialog; });
-
-    // this->connect(this->profile, &QWebEngineProfile::downloadRequested, this, [=](QWebEngineDownloadRequest *download){
-    //     download->accept();
-    //     QString downloadPath = download->downloadDirectory() + "/" + download->downloadFileName();
-    //     QFileInfo fileInfo(downloadPath);
-    //     int progress = static_cast<int>(((download->totalBytes() - download->receivedBytes()) * 100) / download->totalBytes());
-    //     this->downloadManager->addDownload(fileInfo.filePath(), progress);
-    // });
-
-    this->connect(this->profile, &QWebEngineProfile::downloadRequested, this, [=](QWebEngineDownloadRequest *download)
-                  {
-    qDebug() << "Download requested:" << download->downloadFileName();
-    download->accept();
-    QString downloadPath = download->downloadDirectory() + "/" + download->downloadFileName();
-    QFileInfo fileInfo(downloadPath);
-    qDebug() << "Full download path:" << fileInfo.filePath();
-
-    this->downloadManager->addDownload(fileInfo.filePath(), 0);
-    this->downloadManager->open();  // Make sure the download manager is visible
-
-    this->connect(download, &QWebEngineDownloadRequest::receivedBytesChanged, this, [=]() {
-        int progress = download->totalBytes() > 0 ? (download->receivedBytes() * 100) / download->totalBytes() : 0;
-        qDebug() << "Download progress:" << fileInfo.filePath() << progress << "%";
-        this->downloadManager->updateDownloadProgress(fileInfo.filePath(), progress);
+        delete this->screenShareDialog; 
     });
 
-    this->connect(download, &QWebEngineDownloadRequest::isFinished, this, [=]() {
-        qDebug() << "Download finished:" << fileInfo.filePath();
-        this->downloadManager->updateDownloadProgress(fileInfo.filePath(), 100);
-        this->downloadManager->saveDownloads();
-    }); });
-
-    this->connect(this->webview->page(), &QWebEnginePage::newWindowRequested, this, [=](QWebEngineNewWindowRequest &request)
-                  {
+    this->connect(this->webview->page(), &QWebEnginePage::newWindowRequested, this, [=](QWebEngineNewWindowRequest &request){
         switch (request.destination()){
         case QWebEngineNewWindowRequest::DestinationType::InNewTab:
             emit this->newTabRequested(request.requestedUrl());
@@ -347,7 +320,8 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         case QWebEngineNewWindowRequest::DestinationType::InNewWindow:
             emit this->newWindowRequested(request.requestedUrl());
             break;
-        } });
+        } 
+    });
 
     this->connect(this->webview->page(), &QWebEnginePage::certificateError, this, [=](QWebEngineCertificateError certificateError)
                   {
@@ -365,11 +339,10 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
                 certificateError.rejectCertificate();
         } });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=]()
-                  {
-                      emit this->searchRequested();
-                      // this->searchDialog->open();
-                  });
+    this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
+        emit this->searchRequested();
+        // this->searchDialog->open();
+    });
 
     // this->connect(this->searchDialog, &SearchDialog::accepted, this, [=](){
     //     this->webview->load(QUrl(this->searchDialog->getSearch()));
