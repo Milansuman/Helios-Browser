@@ -36,8 +36,8 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
     int titleFontId = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
     int subTextFontId = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Regular.ttf");
 
-    QFont titleFont(QFontDatabase::applicationFontFamilies(titleFontId).at(0), 10, QFont::Bold);
-    QFont subTextFont(QFontDatabase::applicationFontFamilies(subTextFontId).at(0), 8, QFont::Normal);
+    QFont titleFont(QFontDatabase::applicationFontFamilies(titleFontId).at(0), 8, QFont::Bold);
+    QFont subTextFont(QFontDatabase::applicationFontFamilies(subTextFontId).at(0), 5, QFont::Normal);
 
     this->layout = new QHBoxLayout(this);
     this->layout->setContentsMargins(10, 10, 10, 10);
@@ -71,7 +71,7 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
     this->downloadProgressBar = new QProgressBar();
     this->downloadProgressBar->setValue(60);
     this->downloadProgressBar->setTextVisible(false);
-    this->downloadProgressBar->setFixedHeight(5);
+    this->downloadProgressBar->setFixedHeight(3);
 
     this->downloadProgressBar->setStyleSheet(
         "QProgressBar{"
@@ -89,11 +89,11 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
     this->subLayout->addWidget(this->downloadProgressBar);
 
     this->cancelButton = new IconButton(":/icons/white/close.png");
-    this->cancelButton->setFixedSize(40, 40);
-    this->cancelButton->setIconSize(QSize(20, 20));
+    this->cancelButton->setFixedSize(30, 30);
+    // this->cancelButton->setIconSize(QSize(20, 20));
     this->openFileExplorerButton = new IconButton(":/icons/white/folder-up.png");
-    this->openFileExplorerButton->setFixedSize(40, 40);
-    this->openFileExplorerButton->setIconSize(QSize(20, 20));
+    this->openFileExplorerButton->setFixedSize(30, 30);
+    // this->openFileExplorerButton->setIconSize(QSize(20, 20));
 
     this->cancelButton->setStyleSheet(
         "QPushButton{"
@@ -131,7 +131,7 @@ DownloadItem::~DownloadItem() = default;
 DownloadManager::DownloadManager(QWidget *parent): QDialog(parent){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setFixedWidth(400);
+    this->setFixedWidth(300);
 
     this->layout = new QVBoxLayout(this);
     this->downloadItems = QList<DownloadItem*>();
