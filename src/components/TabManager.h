@@ -38,7 +38,7 @@ public:
     void windowShowGroups();
     void windowShowSiteSettings();
     void windowLoadBulk(QList<QList<QUrl>> tabsList);
-    void DownloadShowMenu();
+    void windowShowDownloads();
     ~TabManager();
 signals:
     void displayTitleBarOnWindowRequested();

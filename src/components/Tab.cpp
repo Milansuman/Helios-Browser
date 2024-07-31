@@ -139,65 +139,63 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         this->webview->page()->setAudioMuted(muted); 
     });
 
-    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleCamera, this, [=](bool enabled)
-                  {
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleCamera, this, [=](bool enabled){
         QUrl url = this->webview->url();
         QString securityOrigin = url.scheme() + "://" + url.host();
         if (url.port() != -1) {
             securityOrigin += ":" + QString::number(url.port());
         }
         this->permissions->at(QWebEnginePage::Feature::MediaVideoCapture) = false;
-        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::MediaVideoCapture); });
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::MediaVideoCapture); 
+    });
 
-    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleNotifications, this, [=](bool enabled)
-                  {
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleNotifications, this, [=](bool enabled){
         QUrl url = this->webview->url();
         QString securityOrigin = url.scheme() + "://" + url.host();
         if (url.port() != -1) {
             securityOrigin += ":" + QString::number(url.port());
         }
         this->permissions->at(QWebEnginePage::Feature::Notifications) = enabled;
-        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::Notifications); });
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::Notifications); 
+    });
 
-    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleGeolocation, this, [=](bool enabled)
-                  {
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleGeolocation, this, [=](bool enabled){
         QUrl url = this->webview->url();
         QString securityOrigin = url.scheme() + "://" + url.host();
         if (url.port() != -1) {
             securityOrigin += ":" + QString::number(url.port());
         }
         this->permissions->at(QWebEnginePage::Feature::Geolocation) = enabled;
-        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::Geolocation); });
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::Geolocation); 
+    });
 
-    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleMicrophone, this, [=](bool enabled)
-                  {
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleMicrophone, this, [=](bool enabled){
         QUrl url = this->webview->url();
         QString securityOrigin = url.scheme() + "://" + url.host();
         if (url.port() != -1) {
             securityOrigin += ":" + QString::number(url.port());
         }
         this->permissions->at(QWebEnginePage::Feature::MediaAudioCapture) = enabled;
-        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::MediaAudioCapture); });
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::MediaAudioCapture); 
+    });
 
-    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleScreenShare, this, [=](bool enabled)
-                  {
+    this->connect(this->pageSettingsDialog, &PageSettingsDialog::toggleScreenShare, this, [=](bool enabled){
         QUrl url = this->webview->url();
         QString securityOrigin = url.scheme() + "://" + url.host();
         if (url.port() != -1) {
             securityOrigin += ":" + QString::number(url.port());
         }
         this->permissions->at(QWebEnginePage::Feature::DesktopVideoCapture) = enabled;
-        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::DesktopVideoCapture); });
+        emit this->webview->page()->featurePermissionRequested(url, QWebEnginePage::Feature::DesktopVideoCapture); 
+    });
 
-    this->connect(this->webview, &WebView::loadStarted, this, [=]()
-                  {
-                      this->tabTitleBar->setTitle(this->webview->url().toString());
-                      this->pageSettingsDialog->reset();
-                      // this->initCustomScrollBar();
-                  });
+    this->connect(this->webview, &WebView::loadStarted, this, [=](){
+        this->tabTitleBar->setTitle(this->webview->url().toString());
+        this->pageSettingsDialog->reset();
+        // this->initCustomScrollBar();
+    });
 
-    this->connect(this->webview, &WebView::loadFinished, this, [=]()
-                  {
+    this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
         this->progressIndicator->setVisible(false);
@@ -208,10 +206,10 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
             this->permissions->at(pair.first) = false;
         }
 
-        this->pageSettingsDialog->setPermissions(*this->permissions); });
+        this->pageSettingsDialog->setPermissions(*this->permissions); 
+    });
 
-    this->connect(this->webview, &WebView::loadProgress, this, [=](int progress)
-                  {
+    this->connect(this->webview, &WebView::loadProgress, this, [=](int progress){
         if(progress == 100){
             this->tabTitleBar->setTitle(this->webview->title());
             emit this->titleChanged(this->webview->title());
@@ -225,20 +223,22 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         }else{
             this->progressIndicator->setVisible(true);
         }
-        this->progressIndicator->setValue(progress); });
+        this->progressIndicator->setValue(progress); 
+    });
 
-    this->connect(this->webview, &WebView::iconChanged, this, [=]()
-                  { emit this->iconChanged(this->webview->icon()); });
+    this->connect(this->webview, &WebView::iconChanged, this, [=](){ 
+        emit this->iconChanged(this->webview->icon()); 
+    });
 
-    this->connect(this->webview, &WebView::colorChanged, this, [=](QColor color)
-                  {
+    this->connect(this->webview, &WebView::colorChanged, this, [=](QColor color){
         QPalette palette = this->palette();
         palette.setColor(QPalette::Window, color);
         setPalette(palette);
 
         double luminance = (0.299 * color.red() + 0.587 * color.green() + 0.114 * color.blue()) / 255;
 
-        this->tabTitleBar->setIsBlack(luminance > 0.5); });
+        this->tabTitleBar->setIsBlack(luminance > 0.5); 
+    });
 
     this->connect(this->webview->page(), &QWebEnginePage::fullScreenRequested, this, [=](QWebEngineFullScreenRequest fullScreenRequest){
         if(fullScreenRequest.toggleOn()){
@@ -256,7 +256,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         } 
     });
 
-    this->connect(this->webview->page(), &QWebEnginePage::authenticationRequired, this, [=](const QUrl &requestUrl, QAuthenticator *authenticator){ this->authDialog->exec(requestUrl, authenticator); });
+    this->connect(this->webview->page(), &QWebEnginePage::authenticationRequired, this, [=](const QUrl &requestUrl, QAuthenticator *authenticator){ 
+        this->authDialog->exec(requestUrl, authenticator); 
+    });
 
     this->connect(this->webview->page(), &QWebEnginePage::featurePermissionRequested, this, [=](const QUrl &securityOrigin, QWebEnginePage::Feature feature){
         if(this->permissions->at(feature)){
@@ -323,8 +325,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         } 
     });
 
-    this->connect(this->webview->page(), &QWebEnginePage::certificateError, this, [=](QWebEngineCertificateError certificateError)
-                  {
+    this->connect(this->webview->page(), &QWebEnginePage::certificateError, this, [=](QWebEngineCertificateError certificateError){
         this->certificateErrorDialog->exec(certificateError);
         this->pageSettingsDialog->setSecure(false);
 
@@ -337,7 +338,8 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
                 break;
             default:
                 certificateError.rejectCertificate();
-        } });
+        } 
+    });
 
     this->connect(this->tabTitleBar, &TabTitleBar::searchRequested, this, [=](){
         emit this->searchRequested();
@@ -348,32 +350,41 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
     //     this->webview->load(QUrl(this->searchDialog->getSearch()));
     // });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::copyLinkRequested, this, [=]()
-                  { qApp->clipboard()->setText(this->webview->url().toString()); });
+    this->connect(this->tabTitleBar, &TabTitleBar::copyLinkRequested, this, [=](){ 
+        qApp->clipboard()->setText(this->webview->url().toString()); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::previousPageRequested, this, [=]()
-                  { this->webview->back(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::previousPageRequested, this, [=](){ 
+        this->webview->back(); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::nextPageRequested, this, [=]()
-                  { this->webview->forward(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::nextPageRequested, this, [=](){ 
+        this->webview->forward(); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::reloadRequested, this, [=]()
-                  { this->webview->reload(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::reloadRequested, this, [=](){ 
+        this->webview->reload(); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::splitTabLeftRequested, this, [=]()
-                  { emit this->splitTabLeftRequested(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::splitTabLeftRequested, this, [=](){ 
+        emit this->splitTabLeftRequested(); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::splitTabRightRequested, this, [=]()
-                  { emit this->splitTabRightRequested(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::splitTabRightRequested, this, [=](){ 
+        emit this->splitTabRightRequested(); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::splitTabFlipRequested, this, [=]()
-                  { emit this->splitTabFlipRequested(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::splitTabFlipRequested, this, [=](){ 
+        emit this->splitTabFlipRequested(); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::closeTabRequested, this, [=]()
-                  { emit this->closeTabRequested(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::closeTabRequested, this, [=](){ 
+        emit this->closeTabRequested(); 
+    });
 
-    this->connect(this->tabTitleBar, &TabTitleBar::siteSettingsRequested, this, [=]()
-                  { this->pageSettingsDialog->open(); });
+    this->connect(this->tabTitleBar, &TabTitleBar::siteSettingsRequested, this, [=](){ 
+        this->pageSettingsDialog->open(); 
+    });
 
     this->layout->addWidget(this->tabTitleBar);
     this->layout->addWidget(this->progressIndicator);
@@ -384,8 +395,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
 }
 
 // adding a custom scroll bar which gets hidden when not in use
-void Tab::initCustomScrollBar()
-{
+void Tab::initCustomScrollBar(){
     QWebEngineScript script;
     script.setName("customScrollBarScript");
     script.setInjectionPoint(QWebEngineScript::DocumentReady);
@@ -419,8 +429,7 @@ void Tab::initCustomScrollBar()
     this->webview->page()->scripts().insert(script);
 }
 
-void Tab::paintEvent(QPaintEvent *event)
-{
+void Tab::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -430,61 +439,50 @@ void Tab::paintEvent(QPaintEvent *event)
     painter.drawRoundedRect(rect(), 10, 10);
 }
 
-void Tab::resizeEvent(QResizeEvent *event)
-{
+void Tab::resizeEvent(QResizeEvent *event){
     // QPainterPath path;
     // path.addRoundedRect(rect(), 10, 10);
     // this->setMask(path.toFillPolygon().toPolygon());
 }
 
-void Tab::mousePressEvent(QMouseEvent *event)
-{
+void Tab::mousePressEvent(QMouseEvent *event){
     emit this->tabFocused();
 }
 
-void Tab::setTitleBarVisible(bool visible)
-{
+void Tab::setTitleBarVisible(bool visible){
     this->tabTitleBar->setVisible(visible);
 }
 
-void Tab::requestSearchDialog()
-{
+void Tab::requestSearchDialog(){
     // this->searchDialog->open();
     emit this->searchRequested();
 }
 
-QString Tab::getTitle()
-{
+QString Tab::getTitle(){
     return this->webview->title();
 }
 
-QIcon Tab::getIcon()
-{
+QIcon Tab::getIcon(){
     return this->webview->icon();
 }
 
-void Tab::copyUrl()
-{
+void Tab::copyUrl(){
     qApp->clipboard()->setText(this->webview->url().toString());
 }
 
-void Tab::requestNextPage()
-{
+void Tab::requestNextPage(){
     this->webview->forward();
 }
 
-void Tab::requestPreviousPage()
-{
+void Tab::requestPreviousPage(){
     this->webview->back();
 }
 
-void Tab::requestReload()
-{
+void Tab::requestReload(){
     this->webview->reload();
 }
 
-void Tab::openDevTools()
-{
+void Tab::openDevTools(){
     if (!devtools)
     {
         this->devtools = new WebView();
@@ -496,19 +494,16 @@ void Tab::openDevTools()
     }
 }
 
-void Tab::closeDevTools()
-{
+void Tab::closeDevTools(){
     delete this->devtools;
     this->devtools = nullptr;
 }
 
-void Tab::load(QUrl url)
-{
+void Tab::load(QUrl url){
     this->webview->load(url);
 }
 
-void Tab::showSiteSettings()
-{
+void Tab::showSiteSettings(){
     this->pageSettingsDialog->open();
 }
 

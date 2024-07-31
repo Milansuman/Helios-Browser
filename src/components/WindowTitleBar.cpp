@@ -11,8 +11,6 @@ WindowTitleBar::WindowTitleBar(QWidget *parent) : QWidget(parent)
     this->setFixedHeight(30);
     this->tabTitleBar = new QWidget();
 
-    this->downloadManager = new DownloadManager(this);
-
     QSizePolicy retainWidth = this->tabTitleBar->sizePolicy();
     retainWidth.setRetainSizeWhenHidden(true);
     this->tabTitleBar->setSizePolicy(retainWidth);
@@ -41,65 +39,49 @@ WindowTitleBar::WindowTitleBar(QWidget *parent) : QWidget(parent)
     // this->downloadDialog = new DownloadDialog();
     this->splitTabMenu->setButtonIcon(":/icons/white/split.png");
 
-    // auto colorizePixmap = [](const QPixmap &pixmap, const QColor &color) {
-    //     QPixmap coloredPixmap(pixmap.size());
-    //     coloredPixmap.fill(Qt::transparent);
-
-    //     QPainter painter(&coloredPixmap);
-    //     painter.setCompositionMode(QPainter::CompositionMode_Source);
-    //     painter.drawPixmap(0, 0, pixmap);
-    //     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
-    //     painter.fillRect(coloredPixmap.rect(), color);
-    //     painter.end();
-
-    //     return coloredPixmap;
-    // };
-
-    // Creating window titlebar buttons with white icons
-    // QStyle *style = qApp->style();
-    // QIcon minimizeIcon = style->standardIcon(QStyle::SP_TitleBarMinButton);
-    // QIcon maximizeIcon = style->standardIcon(QStyle::SP_TitleBarMaxButton);
-    // QIcon closeIcon = style->standardIcon(QStyle::SP_TitleBarCloseButton);
-
-    // QColor whiteColor(Qt::white);
-
-    // minimizeIcon = QIcon(colorizePixmap(minimizeIcon.pixmap(30, 30), whiteColor));
-    // maximizeIcon = QIcon(colorizePixmap(maximizeIcon.pixmap(30, 30), whiteColor));
-    // closeIcon = QIcon(colorizePixmap(closeIcon.pixmap(30, 30), whiteColor));
-
-    this->connect(this->sideBarButton, &IconButton::clicked, this, [=]()
-                  { emit this->toggleSideBarRequested(); });
-
-    this->connect(this->addressBox, &AddressBox::searchRequested, this, [=]()
-                  { emit this->searchRequested(); });
-
-    this->connect(this->backButton, &IconButton::clicked, this, [=]()
-                  { emit this->previousPageRequested(); });
-
-    this->connect(this->forwardButton, &IconButton::clicked, this, [=]()
-                  { emit this->nextPageRequested(); });
-
-    this->connect(this->reloadButton, &IconButton::clicked, this, [=]()
-                  { emit this->reloadRequested(); });
-
-    this->connect(this->downloadButton, &IconButton::clicked, this, [=](){ 
-        this->downloadManager->open();
+    this->connect(this->sideBarButton, &IconButton::clicked, this, [=](){ 
+        emit this->toggleSideBarRequested(); 
     });
 
-    this->connect(this->copyLinkButton, &IconButton::clicked, this, [=]()
-                  { emit this->copyLinkRequested(); });
+    this->connect(this->addressBox, &AddressBox::searchRequested, this, [=](){ 
+        emit this->searchRequested(); 
+    });
 
-    this->connect(this->splitTabMenu, &SplitTabMenu::splitTabLeftRequested, this, [=]()
-                  { emit this->splitTabLeftRequested(); });
+    this->connect(this->backButton, &IconButton::clicked, this, [=](){ 
+        emit this->previousPageRequested(); 
+    });
 
-    this->connect(this->splitTabMenu, &SplitTabMenu::splitTabRightRequested, this, [=]()
-                  { emit this->splitTabRightRequested(); });
+    this->connect(this->forwardButton, &IconButton::clicked, this, [=](){ 
+        emit this->nextPageRequested(); 
+    });
 
-    this->connect(this->siteSettingsButton, &IconButton::clicked, this, [=]()
-                  { emit this->showSiteSettingsRequested(); });
+    this->connect(this->reloadButton, &IconButton::clicked, this, [=](){ 
+        emit this->reloadRequested(); 
+    });
 
-    this->connect(this->groupSelectorButton, &IconButton::clicked, this, [=]()
-                  { emit this->showGroupBar(); });
+    this->connect(this->downloadButton, &IconButton::clicked, this, [=](){ 
+        emit this->downloadDialogRequested();
+    });
+
+    this->connect(this->copyLinkButton, &IconButton::clicked, this, [=](){ 
+        emit this->copyLinkRequested(); 
+    });
+
+    this->connect(this->splitTabMenu, &SplitTabMenu::splitTabLeftRequested, this, [=](){ 
+        emit this->splitTabLeftRequested(); 
+    });
+
+    this->connect(this->splitTabMenu, &SplitTabMenu::splitTabRightRequested, this, [=](){ 
+        emit this->splitTabRightRequested(); 
+    });
+
+    this->connect(this->siteSettingsButton, &IconButton::clicked, this, [=](){ 
+        emit this->showSiteSettingsRequested(); 
+    });
+
+    this->connect(this->groupSelectorButton, &IconButton::clicked, this, [=](){ 
+        emit this->showGroupBar(); 
+    });
 
     this->minimize = new IconButton(":/icons/minimize.png");
     this->minimize->scale(13, 13);

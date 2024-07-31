@@ -38,13 +38,11 @@ typedef BOOL(WINAPI *pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA *);
 
 #define EDGE_MARGIN 5
 
-BrowserWindow::BrowserWindow(QUrl url, QSize size, QWidget *parent) : BrowserWindow(size, parent)
-{
+BrowserWindow::BrowserWindow(QUrl url, QSize size, QWidget *parent) : BrowserWindow(size, parent){
     this->tabManager->setInitialUrl(url);
 }
 
-BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent), isMaximized(false)
-{
+BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent), isMaximized(false){
     this->setWindowFlags(Qt::FramelessWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
     this->resize(size);
@@ -68,46 +66,62 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->titleBar->setMouseTracking(true);
     this->tabManager = new TabManager();
 
-    connect(this->titleBar, &WindowTitleBar::showGroupBar, this, [=]()
-            { this->tabManager->windowShowGroups(); });
+    connect(this->titleBar, &WindowTitleBar::showGroupBar, this, [=](){ 
+        this->tabManager->windowShowGroups(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::splitTabLeftRequested, this, [=]()
-            { this->tabManager->windowSplitLeft(); });
+    connect(this->titleBar, &WindowTitleBar::splitTabLeftRequested, this, [=](){ 
+        this->tabManager->windowSplitLeft(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::splitTabRightRequested, this, [=]()
-            { this->tabManager->windowSplitRight(); });
+    connect(this->titleBar, &WindowTitleBar::splitTabRightRequested, this, [=](){ 
+        this->tabManager->windowSplitRight(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::searchRequested, this, [=]()
-            { this->tabManager->windowSearch(); });
+    connect(this->titleBar, &WindowTitleBar::searchRequested, this, [=](){ 
+        this->tabManager->windowSearch(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::nextPageRequested, this, [=]()
-            { this->tabManager->windowNextPage(); });
+    connect(this->titleBar, &WindowTitleBar::nextPageRequested, this, [=](){ 
+        this->tabManager->windowNextPage(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::previousPageRequested, this, [=]()
-            { this->tabManager->windowPreviousPage(); });
+    connect(this->titleBar, &WindowTitleBar::previousPageRequested, this, [=](){ 
+        this->tabManager->windowPreviousPage(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::reloadRequested, this, [=]()
-            { this->tabManager->windowReload(); });
+    connect(this->titleBar, &WindowTitleBar::reloadRequested, this, [=](){ 
+        this->tabManager->windowReload(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::copyLinkRequested, this, [=]()
-            { this->tabManager->windowCopyLink(); });
+    connect(this->titleBar, &WindowTitleBar::copyLinkRequested, this, [=](){ 
+        this->tabManager->windowCopyLink(); 
+    });
 
-    connect(this->titleBar, &WindowTitleBar::showSiteSettingsRequested, this, [=]()
-            { this->tabManager->windowShowSiteSettings(); });
+    connect(this->titleBar, &WindowTitleBar::showSiteSettingsRequested, this, [=](){ 
+        this->tabManager->windowShowSiteSettings(); 
+    });
 
-    connect(this->tabManager, &TabManager::titleChanged, this, [=](QString title)
-            { this->titleBar->setTitle(title); });
+    connect(this->titleBar, &WindowTitleBar::downloadDialogRequested, this, [=](){
+        this->tabManager->windowShowDownloads();
+    });
 
-    connect(this->tabManager, &TabManager::displayTitleBarOnWindowRequested, this, [=]()
-            { this->titleBar->setTitleBarVisible(true); });
+    connect(this->tabManager, &TabManager::titleChanged, this, [=](QString title){ 
+        this->titleBar->setTitle(title); 
+    });
 
-    connect(this->tabManager, &TabManager::hideTitleBarOnWindowRequested, this, [=]()
-            { this->titleBar->setTitleBarVisible(false); });
+    connect(this->tabManager, &TabManager::displayTitleBarOnWindowRequested, this, [=](){ 
+        this->titleBar->setTitleBarVisible(true); 
+    });
 
-    connect(this->tabManager, &TabManager::newWindowRequested, this, [=](QUrl url)
-            {
+    connect(this->tabManager, &TabManager::hideTitleBarOnWindowRequested, this, [=](){ 
+        this->titleBar->setTitleBarVisible(false); 
+    });
+
+    connect(this->tabManager, &TabManager::newWindowRequested, this, [=](QUrl url){
         BrowserWindow *newWindow = new BrowserWindow(url, QSize(1000, 900));
-        newWindow->show(); });
+        newWindow->show(); 
+    });
 
     this->connect(this->tabManager, &TabManager::searchRequested, this, [=](int pos, int group){
         this->spotlightDialog->open(pos, group);
@@ -138,8 +152,9 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
 
     connect(this->titleBar, &WindowTitleBar::toggleSideBarRequested, this, &BrowserWindow::toggleSideBar);
 
-    connect(this->sideBar, &SideBar::newGroupRequested, this, [=]()
-            { this->tabManager->addGroup(); });
+    connect(this->sideBar, &SideBar::newGroupRequested, this, [=](){ 
+        this->tabManager->addGroup(); 
+    });
 
     this->contentLayout->addWidget(this->sideBar);
     this->contentLayout->addWidget(this->tabManager);
@@ -148,37 +163,31 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
     this->layout->addLayout(this->contentLayout);
 
     // Handle titlebar buttons
-    connect(this->titleBar->minimizeButton(), &QPushButton::clicked, this, [=]()
-            { this->showMinimized(); });
-    connect(this->titleBar->maximizeButton(), &QPushButton::clicked, this, [=]()
-            {
-                if (this->isMaximized)
-                {
-                    this->showNormal();
-                }
-                else
-                {
-                    this->showMaximized();
-                }
-                this->isMaximized = !this->isMaximized;
-                this->update(); // Trigger a repaint when maximizing/unmaximizing
-            });
+    connect(this->titleBar->minimizeButton(), &QPushButton::clicked, this, [=](){ 
+        this->showMinimized(); 
+    });
+
+    connect(this->titleBar->maximizeButton(), &QPushButton::clicked, this, [=](){
+        if (this->isMaximized){
+            this->showNormal();
+        }else{
+            this->showMaximized();
+        }
+        this->isMaximized = !this->isMaximized;
+        this->update(); // Trigger a repaint when maximizing/unmaximizing
+    });
     connect(this->titleBar->closeButton(), &QPushButton::clicked, this, &BrowserWindow::close);
 
     this->setCentralWidget(this->centralWidget);
 }
 
-void BrowserWindow::toggleSideBar()
-{
-    if (this->sideBar->isVisible())
-    {
+void BrowserWindow::toggleSideBar(){
+    if (this->sideBar->isVisible()){
         this->sideBarAnimation->setStartValue(this->sideBar->width());
         this->sideBarAnimation->setEndValue(0);
         connect(this->sideBarAnimation, &QPropertyAnimation::finished, this, &BrowserWindow::hideSideBar);
         this->sideBarAnimation->start();
-    }
-    else
-    {
+    }else{
         this->sideBar->show();
         this->sideBarAnimation->setStartValue(0);
         this->sideBarAnimation->setEndValue(200);
@@ -187,24 +196,20 @@ void BrowserWindow::toggleSideBar()
     }
 }
 
-void BrowserWindow::hideSideBar()
-{
+void BrowserWindow::hideSideBar(){
     this->sideBar->hide();
 }
-void BrowserWindow::show()
-{
+
+void BrowserWindow::show(){
     QMainWindow::show();
 
 #ifdef __linux__
     QPainterPath path;
     path.addRoundedRect(rect(), 10, 10);
 
-    if (QWindow *window = windowHandle())
-    {
+    if (QWindow *window = windowHandle()){
         KWindowEffects::enableBlurBehind(window, true, QRegion(path.toFillPolygon().toPolygon()));
-    }
-    else
-    {
+    }else{
         qDebug() << this->windowHandle();
     }
 #elif defined(_WIN32)
@@ -213,16 +218,13 @@ void BrowserWindow::show()
 }
 
 #ifdef _WIN32
-void BrowserWindow::enableBlurBehind()
-{
+void BrowserWindow::enableBlurBehind(){
     HWND hwnd = (HWND)this->winId();
 
     HMODULE hUser = GetModuleHandle(L"user32.dll");
-    if (hUser)
-    {
+    if (hUser){
         pSetWindowCompositionAttribute SetWindowCompositionAttribute = (pSetWindowCompositionAttribute)GetProcAddress(hUser, "SetWindowCompositionAttribute");
-        if (SetWindowCompositionAttribute)
-        {
+        if (SetWindowCompositionAttribute){
             ACCENTPOLICY policy = {3, 0, 0, 0}; // ACCENT_ENABLE_BLURBEHIND
             WINCOMPATTRDATA data = {19, &policy, sizeof(ACCENTPOLICY)};
             SetWindowCompositionAttribute(hwnd, &data);
@@ -231,20 +233,16 @@ void BrowserWindow::enableBlurBehind()
 }
 #endif
 
-void BrowserWindow::resizeEvent(QResizeEvent *event)
-{
+void BrowserWindow::resizeEvent(QResizeEvent *event){
     QMainWindow::resizeEvent(event);
 
 #ifdef __linux__
     QPainterPath *path = new QPainterPath();
     path->addRoundedRect(rect(), 10, 10);
 
-    if (QWindow *window = windowHandle())
-    {
+    if (QWindow *window = windowHandle()){
         KWindowEffects::enableBlurBehind(window, true, QRegion(path->toFillPolygon().toPolygon()));
-    }
-    else
-    {
+    }else{
         qDebug() << this->windowHandle();
     }
 #elif defined(_WIN32)

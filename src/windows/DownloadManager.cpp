@@ -4,6 +4,9 @@
 #include <QPainterPath>
 #include <QFontDatabase>
 #include <QFont>
+#include <QLocale>
+#include <QMouseEvent>
+#include <QDesktopServices>
 
 #ifdef __linux__
 #include <kwindoweffects.h>
@@ -32,7 +35,7 @@ struct WINCOMPATTRDATA
 typedef BOOL(WINAPI *pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA *);
 #endif
 
-DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
+DownloadItem::DownloadItem(QString filename, qint64 totalSize, QWidget *parent): QWidget(parent), totalSize(totalSize), downloadComplete(false), isPaused(false){
     int titleFontId = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
     int subTextFontId = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Regular.ttf");
 
@@ -44,11 +47,11 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
     this->subLayout = new QVBoxLayout();
     this->subLayout->setSpacing(2);
 
-    this->fileName = new QLabel("VERY BIG FILE NAME AAAAAAAAAAAAA.png");
+    this->fileName = new QLabel(filename);
     this->fileName->setFont(titleFont);
 
     this->progressTextLayout = new QHBoxLayout();
-    this->progressLabel = new QLabel("10MB/50GB");
+    this->progressLabel = new QLabel("0B/" + QLocale::system().formattedDataSize(this->totalSize));
     this->progressLabel->setFont(subTextFont);
     this->progressLabel->setStyleSheet(
         "QLabel{"
@@ -69,7 +72,7 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
     // this->progressTextLayout->addWidget(this->timeLabel);
 
     this->downloadProgressBar = new QProgressBar();
-    this->downloadProgressBar->setValue(60);
+    this->downloadProgressBar->setValue(0);
     this->downloadProgressBar->setTextVisible(false);
     this->downloadProgressBar->setFixedHeight(3);
 
@@ -95,11 +98,17 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
     this->openFileExplorerButton->setFixedSize(30, 30);
     // this->openFileExplorerButton->setIconSize(QSize(20, 20));
 
+    this->pauseButton = new IconButton(":/icons/white/pause.png");
+    this->pauseButton->setFixedSize(30, 30);
+
+    this->resumeButton = new IconButton(":/icons/white/play.png");
+    this->resumeButton->setFixedSize(30, 30);
+
     this->cancelButton->setStyleSheet(
         "QPushButton{"
         "   padding: 10px;"
         "   background-color: rgb(50, 50, 50);"
-        "   border-radius: 10px;"
+        "   border-radius: 5px;"
         "}"
     );
 
@@ -107,12 +116,62 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
         "QPushButton{"
         "   padding: 10px;"
         "   background-color: rgb(50, 50, 50);"
-        "   border-radius: 10px;"
+        "   border-radius: 5px;"
         "}"
     );
 
+    this->pauseButton->setStyleSheet(
+        "QPushButton{"
+        "   padding: 10px;"
+        "   background-color: rgb(50, 50, 50);"
+        "   border-radius: 5px;"
+        "}"
+    );
+
+    this->resumeButton->setStyleSheet(
+        "QPushButton{"
+        "   padding: 10px;"
+        "   background-color: rgb(50, 50, 50);"
+        "   border-radius: 5px;"
+        "}"
+    );
+
+    this->resumeButton->setVisible(false);
+
+    this->connect(this->pauseButton, &IconButton::clicked, this, [=](){
+        this->pauseButton->setVisible(false);
+        this->resumeButton->setVisible(true);
+
+        emit this->pauseDownload();
+    });
+
+    this->connect(this->resumeButton, &IconButton::clicked, this, [=](){
+        this->pauseButton->setVisible(true);
+        this->resumeButton->setVisible(false);
+
+        emit this->resumeDownload();
+    });
+
+    this->connect(this->cancelButton, &IconButton::clicked, this, [=](){
+        this->pauseButton->setVisible(false);
+        this->resumeButton->setVisible(false);
+        this->cancelButton->setVisible(false);
+        this->openFileExplorerButton->setVisible(false);
+        this->downloadProgressBar->setVisible(false);
+
+        this->progressLabel->setText("Download cancelled.");
+
+        emit this->cancelDownload();
+    });
+
+    this->connect(this->openFileExplorerButton, &IconButton::clicked, this, [=](){
+        emit this->openFolder();
+    });
+
     this->layout->addLayout(this->subLayout);
     this->layout->addWidget(this->cancelButton);
+    this->layout->addWidget(this->pauseButton);
+    this->layout->addWidget(this->resumeButton);
     this->layout->addWidget(this->openFileExplorerButton);
 }
 
@@ -126,6 +185,30 @@ void DownloadItem::paintEvent(QPaintEvent *event){
     painter.drawRoundedRect(rect().adjusted(1, 1, -1, -1), 10, 10);
 }
 
+void DownloadItem::setDownloaded(qint64 size, qint64 totalSize){
+    this->downloadedSize = size;
+    this->totalSize = totalSize;
+    this->progressLabel->setText(QLocale::system().formattedDataSize(size) + "/" + QLocale::system().formattedDataSize(totalSize));
+
+    this->downloadProgressBar->setValue(((double) size/totalSize) * 100);
+}
+
+void DownloadItem::setCompleted(){
+    this->pauseButton->setVisible(false);
+    this->resumeButton->setVisible(false);
+    this->cancelButton->setVisible(false);
+    this->openFileExplorerButton->setVisible(true);
+    this->downloadProgressBar->setVisible(false);
+
+    this->progressLabel->setText("Download completed.");
+}
+
+void DownloadItem::mousePressEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton){
+        emit this->clicked();
+    }
+}
+
 DownloadItem::~DownloadItem() = default;
 
 DownloadManager::DownloadManager(QWidget *parent): QDialog(parent){
@@ -134,12 +217,7 @@ DownloadManager::DownloadManager(QWidget *parent): QDialog(parent){
     this->setFixedWidth(300);
 
     this->layout = new QVBoxLayout(this);
-    this->downloadItems = QList<DownloadItem*>();
-
-    DownloadItem *item = new DownloadItem();
-    DownloadItem *item1 = new DownloadItem();
-    this->layout->addWidget(item);
-    this->layout->addWidget(item1);
+    this->downloadItems = QMap<QWebEngineDownloadRequest*, DownloadItem*>();
 }
 
 void DownloadManager::paintEvent(QPaintEvent *event){
@@ -153,7 +231,7 @@ void DownloadManager::paintEvent(QPaintEvent *event){
 }
 
 void DownloadManager::open(){
-    this->move(this->parentWidget()->mapToGlobal(QPoint(10, 30)));
+    this->move(this->parentWidget()->mapToGlobal(QPoint(10, 10)));
     QDialog::open();
     #ifdef __linux__
         QPainterPath path;
@@ -162,6 +240,37 @@ void DownloadManager::open(){
     #elif defined(_WIN32)
         enableBlurBehind();
     #endif
+}
+
+void DownloadManager::addDownloadItem(QWebEngineDownloadRequest *request){
+    DownloadItem *downloadItem = new DownloadItem(request->suggestedFileName(), request->totalBytes());
+    this->downloadItems.insert(request, downloadItem);
+
+    this->connect(downloadItem, &DownloadItem::pauseDownload, this, [=](){
+        request->pause();
+    });
+
+    this->connect(downloadItem, &DownloadItem::resumeDownload, this, [=](){
+        request->resume();
+    });
+
+    this->connect(downloadItem, &DownloadItem::cancelDownload, this, [=](){
+        request->cancel();
+    });
+
+    this->connect(downloadItem, &DownloadItem::clicked, this, [=](){
+        QDesktopServices::openUrl(QUrl(request->downloadDirectory() + "/" + request->downloadFileName()));
+    });
+
+    this->layout->addWidget(downloadItem);
+}
+
+void DownloadManager::updateDownloadItem(QWebEngineDownloadRequest *request){
+    this->downloadItems[request]->setDownloaded(request->receivedBytes(), request->totalBytes());
+}
+
+void DownloadManager::finishDownloadItem(QWebEngineDownloadRequest *request){
+    this->downloadItems[request]->setCompleted();
 }
 
 #ifdef _WIN32

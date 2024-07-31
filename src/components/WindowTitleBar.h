@@ -24,8 +24,6 @@ private:
     QWidget *tabTitleBar;
     AddressBox *addressBox;
     PageSettingsDialog *pageSettingsDialog;
-    DownloadManager *downloadManager;
-
 public:
     WindowTitleBar(QWidget *parent = nullptr);
     QPushButton *minimizeButton();
@@ -46,5 +44,5 @@ signals:
     void toggleSideBarRequested();
     void showGroupBar();
     void showSiteSettingsRequested();
-    //void downloadRequested();
+    void downloadDialogRequested();
 };
