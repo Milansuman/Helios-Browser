@@ -37,7 +37,7 @@ DownloadItem::DownloadItem(QWidget *parent): QWidget(parent){
     int subTextFontId = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Regular.ttf");
 
     QFont titleFont(QFontDatabase::applicationFontFamilies(titleFontId).at(0), 8, QFont::Bold);
-    QFont subTextFont(QFontDatabase::applicationFontFamilies(subTextFontId).at(0), 5, QFont::Normal);
+    QFont subTextFont(QFontDatabase::applicationFontFamilies(subTextFontId).at(0), 8, QFont::Normal);
 
     this->layout = new QHBoxLayout(this);
     this->layout->setContentsMargins(10, 10, 10, 10);
