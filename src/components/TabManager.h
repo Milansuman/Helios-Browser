@@ -16,6 +16,7 @@ class TabManager : public QStackedWidget
     Q_OBJECT
 private:
     std::vector<TabGroup *> groups;
+    QList<QWebEngineDownloadRequest*> downloadRequests;
     int currentGroup;
     QWebEngineProfile *profile;
     GroupSelectorDialog *groupSelectorDialog;
@@ -38,7 +39,7 @@ public:
     void windowShowGroups();
     void windowShowSiteSettings();
     void windowLoadBulk(QList<QList<QUrl>> tabsList);
-    void DownloadShowMenu();
+    void windowShowDownloads();
     ~TabManager();
 signals:
     void displayTitleBarOnWindowRequested();
@@ -46,4 +47,5 @@ signals:
     void titleChanged(QString title);
     void newWindowRequested(QUrl url);
     void searchRequested(int pos, int group);
+    void downloadsChanged(int downloads);
 };
