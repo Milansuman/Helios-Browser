@@ -31,6 +31,7 @@ public:
     QPushButton *closeButton();
     void setTitle(QString title);
     void setTitleBarVisible(bool visible);
+    void setDownloadButtonVisible();
     ~WindowTitleBar();
 signals:
     void reloadRequested();

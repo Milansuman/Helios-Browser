@@ -22,10 +22,15 @@ TabManager::TabManager(QWidget *parent) : QStackedWidget(parent), currentGroup(0
 
     this->downloadManager = new DownloadManager(this);
 
+    this->downloadRequests = QList<QWebEngineDownloadRequest*>();
+
     this->connect(this->profile, &QWebEngineProfile::downloadRequested, this, [=](QWebEngineDownloadRequest *request){
         request->accept();
+        this->downloadRequests.append(request);
         this->downloadManager->addDownloadItem(request);
         this->windowShowDownloads();
+
+        emit this->downloadsChanged(this->downloadRequests.size());
 
         this->connect(request, &QWebEngineDownloadRequest::receivedBytesChanged, this, [=](){
             this->downloadManager->updateDownloadItem(request);
@@ -36,9 +41,8 @@ TabManager::TabManager(QWidget *parent) : QStackedWidget(parent), currentGroup(0
         });
     });
 
-
     QShortcut *openDevToolsAction = new QShortcut(this);
-    openDevToolsAction->setKey(Qt::Key_F12);
+    openDevToolsAction->setKeys(QList<QKeySequence>({Qt::Key_F12, Qt::CTRL | Qt::SHIFT | Qt::Key_I}));
 
     this->connect(openDevToolsAction, &QShortcut::activated, this, [=](){ 
         this->getCurrentGroup()->openDevTools(); 

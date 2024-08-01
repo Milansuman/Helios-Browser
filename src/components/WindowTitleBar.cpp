@@ -35,6 +35,8 @@ WindowTitleBar::WindowTitleBar(QWidget *parent) : QWidget(parent)
     this->addressBox = new AddressBox("search or enter link.");
     this->siteSettingsButton = new IconButton(":/icons/white/page-settings.png");
 
+    this->downloadButton->setVisible(false);
+
     this->splitTabMenu = new SplitTabMenu();
     // this->downloadDialog = new DownloadDialog();
     this->splitTabMenu->setButtonIcon(":/icons/white/split.png");
@@ -135,6 +137,10 @@ void WindowTitleBar::setTitle(QString title)
 void WindowTitleBar::setTitleBarVisible(bool visible)
 {
     this->tabTitleBar->setVisible(visible);
+}
+
+void WindowTitleBar::setDownloadButtonVisible(){
+    this->downloadButton->setVisible(true);
 }
 
 WindowTitleBar::~WindowTitleBar()

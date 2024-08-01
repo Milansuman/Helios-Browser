@@ -235,7 +235,7 @@ void DownloadManager::open(){
     QDialog::open();
     #ifdef __linux__
         QPainterPath path;
-        path.addRoundedRect(rect(), 10, 10);
+        path.addRoundedRect(rect().adjusted(1, 1, -1, -1), 10, 10);
         KWindowEffects::enableBlurBehind(this->windowHandle(), true, QRegion(path.toFillPolygon().toPolygon()));
     #elif defined(_WIN32)
         enableBlurBehind();
@@ -258,8 +258,12 @@ void DownloadManager::addDownloadItem(QWebEngineDownloadRequest *request){
         request->cancel();
     });
 
+    this->connect(downloadItem, &DownloadItem::openFolder, this, [=](){
+        QDesktopServices::openUrl(QUrl(request->downloadDirectory()));
+    });
+
     this->connect(downloadItem, &DownloadItem::clicked, this, [=](){
-        QDesktopServices::openUrl(QUrl(request->downloadDirectory() + "/" + request->downloadFileName()));
+        QDesktopServices::openUrl(QUrl::fromLocalFile(request->downloadDirectory() + "/" + request->downloadFileName()));
     });
 
     this->layout->addWidget(downloadItem);

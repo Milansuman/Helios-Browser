@@ -123,6 +123,10 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         newWindow->show(); 
     });
 
+    this->connect(this->tabManager, &TabManager::downloadsChanged, this, [=](int downloads){
+        if(downloads > 0) this->titleBar->setDownloadButtonVisible();
+    });
+
     this->connect(this->tabManager, &TabManager::searchRequested, this, [=](int pos, int group){
         this->spotlightDialog->open(pos, group);
     });
