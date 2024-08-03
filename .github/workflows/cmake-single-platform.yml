@@ -72,13 +72,12 @@ jobs:
     - name: Build
       # Build your program with the given configuration. Note that --config is needed because the default Windows generator is a multi-config generator (Visual Studio generator).
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
-      
-    - name: Github Release
-      uses: elgohr/Github-Release-Action@20240405193535
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        title: Windows Build
+
+    - name: Statically link binary
+      run: windeploy ${{ steps.strings.outputs.build-output-dir }}/Release/project-web.exe
+    
+    
+    
         
             
         
