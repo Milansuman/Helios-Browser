@@ -89,7 +89,7 @@ jobs:
       with:
         files: ${{ steps.strings.outputs.build-output-dir }}/Release.zip
         generate_release_notes: true
-        tag_name: ${{ steps.tagger.output.new-tag }}
+        tag_name: ${{ steps.tagger.outputs.new-tag }}
         
     
     
