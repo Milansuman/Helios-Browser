@@ -1,6 +1,6 @@
 # This starter workflow is for a CMake project running on multiple platforms. There is a different starter workflow if you just want a single platform.
 # See: https://github.com/actions/starter-workflows/blob/main/ci/cmake-single-platform.yml
-name: CMake on multiple platforms
+name: CMake on windows
 
 on:
   push:
@@ -75,6 +75,15 @@ jobs:
 
     - name: Statically link binary
       run: windeployqt ${{ steps.strings.outputs.build-output-dir }}/Release/project-web.exe
+
+    - name: Compress Archive
+      run: Compress-Archive -Path ${{ steps.strings.outputs.build-output-dir }}/Release -DestinationPath ${{ steps.strings.outputs.build-output-dir }}/Release.zip
+
+    - name: Release
+      uses: softprops/action-gh-release@v2
+      with:
+        files: ${{ steps.strings.outputs.build-output-dir }}/Release.zip
+        generate_release_notes: true
     
     
     
