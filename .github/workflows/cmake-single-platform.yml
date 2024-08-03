@@ -78,12 +78,28 @@ jobs:
 
     - name: Compress Archive
       run: Compress-Archive -Path ${{ steps.strings.outputs.build-output-dir }}/Release -DestinationPath ${{ steps.strings.outputs.build-output-dir }}/Release.zip
+    
+    - name: Dry run tag
+      id: tagger
+      uses: anothrNick/github-tag-action@v1 # Don't use @master or @v1 unless you're happy to test the latest version
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+        WITH_V: true
+        DRY_RUN: true
 
     - name: Release
       uses: softprops/action-gh-release@v2
       with:
         files: ${{ steps.strings.outputs.build-output-dir }}/Release.zip
         generate_release_notes: true
+        tag_name: ${{ steps.tagger.output.tag }}
+
+    - name: Actually publish tag
+      uses: anothrNick/github-tag-action@v1 # Don't use @master or @v1 unless you're happy to test the latest version
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # if you don't want to set write permissions use a PAT token
+        WITH_V: true
+        
     
     
     
