@@ -74,7 +74,7 @@ jobs:
       run: cmake --build ${{ steps.strings.outputs.build-output-dir }} --config ${{ matrix.build_type }}
 
     - name: Statically link binary
-      run: windeploy ${{ steps.strings.outputs.build-output-dir }}/Release/project-web.exe
+      run: windeployqt ${{ steps.strings.outputs.build-output-dir }}/Release/project-web.exe
     
     
     
