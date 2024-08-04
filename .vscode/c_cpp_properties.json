@@ -5,7 +5,8 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "C:\\\\Qt\\\\6.7.2\\\\msvc2019_64\\\\**",
-                "/usr/include/qt6/**"
+                "/usr/include/qt6/**",
+                "/usr/include/KF6/KWindowSystem"
             ],
             "defines": [
                 "_DEBUG",

@@ -42,4 +42,8 @@ void TabsApi::requestNewGroup(QString url){
     emit this->newTabRequested(QUrl(url));
 }
 
+void TabsApi::load(int group, int tab, QString url){
+    emit this->loadUrl(group, tab, url);
+}
+
 TabsApi::~TabsApi() = default;

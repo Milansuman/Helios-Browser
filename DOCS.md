@@ -8,6 +8,7 @@ window.tabs.requestSplitTab(): null
 window.tabs.requestFlipTabs(): null
 window.tabs.requestNewGroup(url: string): null
 window.tabs.addTabs(tabs: Array<Array<string>>): boolean //array of array of urls
+window.tabs.load(group: number, tab: number, url: string): null
 ```
 ## File API
 

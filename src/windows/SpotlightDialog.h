@@ -26,10 +26,14 @@ public:
     SpotlightDialog(QWidget *parent=nullptr);
     void open(int pos, int group);
     ~SpotlightDialog();
+
+    Q_PROPERTY(int tab MEMBER pos)
+    Q_PROPERTY(int group MEMBER group)
 signals:
     void splitTabRequested(QUrl url);
     void splitTabHomeRequested();
     void newTabRequested(QUrl url);
     void splitTabFlipRequested();
     void addTabsRequested(QList<QList<QUrl>> tabsList);
+    void loadUrl(int group, int tab, QString url);
 };

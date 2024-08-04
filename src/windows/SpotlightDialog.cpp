@@ -45,6 +45,10 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
         emit this->addTabsRequested(tabsList);
     });
 
+    this->connect(this->tabsApi, &TabsApi::loadUrl, this, [=](int group, int tab, QString url){
+        emit this->loadUrl(group, tab, url);
+    });
+
     this->fileApi = new FileApi();
     this->channel->registerObject("fs", this->fileApi);
 
@@ -53,6 +57,8 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
 
     this->ollamaApi = new OllamaApi();
     this->channel->registerObject("ollama", this->ollamaApi);
+
+    this->channel->registerObject("misc", this);
 
     this->connect(this->dialogApi, &DialogApi::closeDialogRequested, this, [=](){
         this->accept();
@@ -80,6 +86,9 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
                         });
                     }
                 };
+
+                window.currentTab = channel.objects.misc.tab;
+                window.currentGroup = channel.objects.misc.group;
             });
         };
         document.getElementsByTagName('head')[0].appendChild(script);
