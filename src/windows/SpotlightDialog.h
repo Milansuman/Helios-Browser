@@ -8,6 +8,7 @@
 #include "../api/TabApi.h"
 #include "../api/FileApi.h"
 #include "../api/DialogApi.h"
+#include "../api/OllamaApi.h"
 
 class SpotlightDialog: public QDialog{
     Q_OBJECT
@@ -20,6 +21,7 @@ private:
     TabsApi *tabsApi;
     FileApi *fileApi;
     DialogApi *dialogApi;
+    OllamaApi *ollamaApi;
 public:
     SpotlightDialog(QWidget *parent=nullptr);
     void open(int pos, int group);
