@@ -1,3 +1,4 @@
 .vscode/
 build/
 docs/
+.dir-locals.el

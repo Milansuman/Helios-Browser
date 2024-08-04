@@ -86,5 +86,7 @@
         <file alias="circle-arrow-left.png">res/icons/white/circle-arrow-left.png</file>
         <file alias="ticket-check.png">res/icons/white/ticket-check.png</file>
         <file alias="download.png">res/icons/white/download.png</file>
+        <file alias="close.png">res/icons/white/close.png</file>
+        <file alias="folder-up.png">res/icons/white/folder-up.png</file>
     </qresource>
 </RCC>

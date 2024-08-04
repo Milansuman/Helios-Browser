@@ -1,50 +1,60 @@
 #pragma once
 
 #include <QDialog>
-#include <QPaintEvent>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>
-#include <QLabel>
-#include <QListWidget>
-#include <QStackedLayout>
-#include <QMenu>
-#include <QCloseEvent>
+#include <QHBoxLayout>
+#include <QWidget>
+#include <QProgressBar>
 #include <QMap>
-#include <QWidgetAction>
+#include <QLabel>
+#include <QWebEngineDownloadRequest>
+
 #include "../components/IconButton.h"
 
-#ifdef _WIN32
-#include <windows.h>
-#endif
-
-class DownloadManager : public QDialog
-{
+class DownloadItem: public QWidget{
     Q_OBJECT
 private:
-    // QLabel *messageLabel;
-    QVBoxLayout *dialogLayout;
-    QListWidget *downloadList;
-    QMap<QString, QListWidgetItem *> downloads;
-    QWidget *mainPage;
-    QMenu *menu;
+    QHBoxLayout *layout, *progressTextLayout;
+    QVBoxLayout *subLayout;
+    QLabel *fileName, *progressLabel, *timeLabel;
+    QProgressBar *downloadProgressBar;
+    IconButton *cancelButton, *openFileExplorerButton, *pauseButton, *resumeButton;
 
-    void openFileLocation(QListWidgetItem *item);
-#ifdef _WIN32
-    void enableBlurBehind();
-#endif
+    qint64 totalSize, downloadedSize;
+    bool downloadComplete, isPaused;
 public:
-    // DownloadManager(QWidget *parent = nullptr);
-    explicit DownloadManager(QWidget *parent = nullptr);
-    void addDownload(const QString &filename, int progress = 0);
-    void updateDownloadProgress(const QString &filename, int progress);
-    void open();
-    void saveDownloads();
-    void loadDownloads();
-
-    ~DownloadManager();
-
+    DownloadItem(QString filename, qint64 totalSize, QWidget *parent=nullptr);
+    void setDownloaded(qint64 size, qint64 totalSize);
+    void setCompleted();
+    ~DownloadItem();
 protected:
     void paintEvent(QPaintEvent *event) override;
-    // void closeEvent(QCloseEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+signals:
+    void pauseDownload();
+    void resumeDownload();
+    void stopDownload();
+    void openFolder();
+    void cancelDownload();
+    void clicked();
+};
+
+class DownloadManager: public QDialog{
+    Q_OBJECT
+private:
+    QMap<QWebEngineDownloadRequest*, DownloadItem*> downloadItems;
+    QVBoxLayout *layout;
+
+    #ifdef _WIN32
+    void enableBlurBehind();
+    #endif
+public:
+    DownloadManager(QWidget *parent=nullptr);
+    void open();
+    void addDownloadItem(QWebEngineDownloadRequest *request);
+    void updateDownloadItem(QWebEngineDownloadRequest *request);
+    void finishDownloadItem(QWebEngineDownloadRequest *request);
+    ~DownloadManager();
+protected:
+    void paintEvent(QPaintEvent *event);
 };
