@@ -20,7 +20,7 @@
 #include <algorithm>
 #include <QWebChannel>
 
-Tab::Tab(QWebEngineProfile *profile, QWidget *parent) : Tab(profile, "https://fluxbrowserhome.netlify.app/", parent) {}
+Tab::Tab(QWebEngineProfile *profile, QWidget *parent) : Tab(profile, "https://google.com/", parent) {}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile)
 {

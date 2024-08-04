@@ -15,7 +15,7 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
     this->layout = new QVBoxLayout(this);
 
     this->webview = new WebView();
-    this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 0));
+    this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 1));
 
     this->webview->load(QUrl("https://jovit-mathew236.github.io/project-web-spotlight/"));
 
