@@ -101,18 +101,105 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
                 window.tabs = channel.objects.tabs;
                 window.tabHistory = channel.objects.tabHistory;
                 window.fs = channel.objects.fs;
-                window.ai = {
-                    generate: (model, prompt) => {
-                        return new Promise((resolve, reject) => {
-                            channel.objects.ollama.generate(model, prompt);
+                // window.ai = {
+                //     generate: (model, prompt) => {
+                //         return new Promise((resolve, reject) => {
+                //             channel.objects.ollama.generate(model, prompt);
 
-                            channel.objects.ollama.responseGenerated.connect((response) => {
-                                resolve(response);
-                            })
-                        });
-                    }
-                };
+                //             channel.objects.ollama.responseGenerated.connect((response) => {
+                //                 resolve(response);
+                //             })
+                //         });
+                //     }
+                // };
             });
+
+            function inject(fn) {
+                const script = document.createElement('script')
+                script.text = `(${fn.toString()})();`
+                document.documentElement.appendChild(script)
+            }
+
+            function run() {
+                const OLLAMA_MODEL_NAME = "qwen2:0.5b"
+                Object.defineProperty(navigator, 'userAgent', {
+                    get: function () { return 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36'; }
+                });
+
+                console.log(navigator.userAgent)
+
+                window.ai =  {
+                    canCreateGenericSession: async () => "readily",
+                    canCreateTextSession: async () => "readily",
+                    defaultTextSessionOptions: async () => {},
+                    createTextSession: async () => {
+                    function createStreamFromApi(message) {
+                        let cumulativeContent = '';
+                        const stream = new ReadableStream({
+                        start(controller) {
+                            fetch('http://localhost:11434/api/chat', {
+                            method: 'POST',
+                            // mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                model: OLLAMA_MODEL_NAME,
+                                messages: [
+                                {
+                                    role: 'user',
+                                    content: message
+                                }
+                                ],
+                            })
+                            })
+                            .then(response => {
+                            console.log(response);
+                            const reader = response.body.getReader();
+                            const decoder = new TextDecoder();
+                            
+                            function push() {
+                                reader.read().then(({ done, value }) => {
+                                if (done) {
+                                    controller.close();
+                                    return;
+                                }
+                                
+                                const text = decoder.decode(value, { stream: true });
+                                const jsonObjects = text.trim().split('\n').map(line => JSON.parse(line));
+                                for (const jsonObject of jsonObjects) {
+                                    if (jsonObject.message && jsonObject.message.content) {
+                                    cumulativeContent += jsonObject.message.content
+                                    controller.enqueue(cumulativeContent);
+                                    }
+                                }
+                                
+                                push();
+                                });
+                            }
+                            
+                            push();
+                            })
+                            .catch(error => {
+                            console.error(error);
+                            controller.error(error);
+                            });
+                        }
+                        });
+                        
+                        return stream;
+                    }
+
+
+                    return {
+                        promptStreaming: createStreamFromApi
+                    }
+                }
+            }
+            }
+
+            inject(run)
+            
         };
         document.getElementsByTagName('head')[0].appendChild(script);
     )");
