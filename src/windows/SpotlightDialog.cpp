@@ -51,6 +51,9 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
     this->dialogApi = new DialogApi();
     this->channel->registerObject("dialog", this->dialogApi);
 
+    this->ollamaApi = new OllamaApi();
+    this->channel->registerObject("ollama", this->ollamaApi);
+
     this->connect(this->dialogApi, &DialogApi::closeDialogRequested, this, [=](){
         this->accept();
     });
@@ -66,6 +69,17 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
                 window.tabs = channel.objects.tabs;
                 window.fs = channel.objects.fs;
                 window.dialog = channel.objects.dialog;
+                window.ai = {
+                    generate: (model, prompt) => {
+                        return new Promise((resolve, reject) => {
+                            channel.objects.ollama.generate(model, prompt);
+
+                            channel.objects.ollama.responseGenerated.connect((response) => {
+                                resolve(response);
+                            })
+                        });
+                    }
+                };
             });
         };
         document.getElementsByTagName('head')[0].appendChild(script);
