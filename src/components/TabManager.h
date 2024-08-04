@@ -40,6 +40,7 @@ public:
     void windowShowSiteSettings();
     void windowLoadBulk(QList<QList<QUrl>> tabsList);
     void windowShowDownloads();
+    void windowLoadTab(int group, int tab, QString url);
     ~TabManager();
 signals:
     void displayTitleBarOnWindowRequested();

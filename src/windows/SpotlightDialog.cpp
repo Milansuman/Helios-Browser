@@ -6,8 +6,9 @@
 #include <QWebEngineScriptCollection>
 #include <QList>
 #include <QUrl>
+#include <QPainter>
 
-SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
+SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_group(0){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
 
@@ -17,7 +18,7 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
     this->webview = new WebView();
     this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 0));
 
-    this->webview->load(QUrl("https://jovit-mathew236.github.io/project-web-spotlight/"));
+    this->webview->load(QUrl("http://localhost:5173/"));
 
     this->channel = new QWebChannel(this->webview->page());
     this->webview->page()->setWebChannel(this->channel);
@@ -89,6 +90,14 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
 
                 window.currentTab = channel.objects.misc.tab;
                 window.currentGroup = channel.objects.misc.group;
+
+                channel.objects.misc.tabChanged.connect((tab) => {
+                    window.currentTab = tab;
+                });
+
+                channel.objects.misc.groupChanged.connect((group) => {
+                    window.currentGroup = group;
+                });
             });
 
             function inject(fn) {
@@ -188,10 +197,29 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent){
     this->layout->addWidget(this->webview);
 }
 
+void SpotlightDialog::paintEvent(QPaintEvent *event){
+    QPainter painter(this);
+
+    painter.setBrush(QBrush(QColor(0, 0, 0, 80)));
+    painter.setPen(Qt::NoPen);
+
+    painter.drawRoundedRect(rect(), 10, 10);
+}
+
 void SpotlightDialog::open(int pos, int group){
-    this->pos = pos;
-    this->group = group;
+    this->m_pos = pos;
+    this->m_group = group;
+    emit this->tabChanged(pos);
+    emit this->groupChanged(group);
     QDialog::open();
+}
+
+int SpotlightDialog::getTab(){
+    return this->m_pos;
+}
+
+int SpotlightDialog::getGroup(){
+    return this->m_group;
 }
 
 SpotlightDialog::~SpotlightDialog() = default;

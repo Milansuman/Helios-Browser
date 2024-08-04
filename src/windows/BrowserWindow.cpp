@@ -147,6 +147,11 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         this->tabManager->windowLoadBulk(urlsList);
     });
 
+    this->connect(this->spotlightDialog, &SpotlightDialog::loadUrl, this, [=](int group, int tab, QString url){
+        qDebug() << tab << group;
+        this->tabManager->windowLoadTab(group, tab, url);
+    });
+
     this->sideBar = new SideBar();
     this->sideBar->setMouseTracking(true);
 
