@@ -89,4 +89,9 @@
         <file alias="close.png">res/icons/white/close.png</file>
         <file alias="folder-up.png">res/icons/white/folder-up.png</file>
     </qresource>
+    <qresource prefix="/extensions/spotlight">
+        <file alias="bundle.js">res/extensions/spotlight/bundle.js</file>
+        <file alias="index.html">res/extensions/spotlight/index.html</file>
+        <file alias="style.css">res/extensions/spotlight/style.css</file>
+    </qresource>
 </RCC>

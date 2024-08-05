@@ -18,7 +18,7 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_
     this->webview = new WebView();
     this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 1));
 
-    this->webview->load(QUrl("http://localhost:5173/"));
+    this->webview->load(QUrl("qrc:/extensions/spotlight/index.html"));
 
     this->channel = new QWebChannel(this->webview->page());
     this->webview->page()->setWebChannel(this->channel);
