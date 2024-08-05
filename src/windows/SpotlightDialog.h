@@ -12,10 +12,12 @@
 
 class SpotlightDialog: public QDialog{
     Q_OBJECT
+    Q_PROPERTY(int tab READ getTab NOTIFY tabChanged)
+    Q_PROPERTY(int group READ getGroup NOTIFY groupChanged)
 private:
     QVBoxLayout *layout;
     WebView *webview;
-    int pos, group;
+    int m_pos, m_group;
 
     QWebChannel *channel;
     TabsApi *tabsApi;
@@ -25,10 +27,11 @@ private:
 public:
     SpotlightDialog(QWidget *parent=nullptr);
     void open(int pos, int group);
+    int getTab();
+    int getGroup();
     ~SpotlightDialog();
-
-    Q_PROPERTY(int tab MEMBER pos)
-    Q_PROPERTY(int group MEMBER group)
+protected:
+    void paintEvent(QPaintEvent *event);
 signals:
     void splitTabRequested(QUrl url);
     void splitTabHomeRequested();
@@ -36,4 +39,6 @@ signals:
     void splitTabFlipRequested();
     void addTabsRequested(QList<QList<QUrl>> tabsList);
     void loadUrl(int group, int tab, QString url);
+    void tabChanged(int tab);
+    void groupChanged(int group);
 };

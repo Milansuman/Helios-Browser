@@ -63,7 +63,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
     this->webview->page()->setWebChannel(this->channel);
 
     this->tabsApi = new TabsApi();
-    this->channel->registerObject("tabs", this->tabsApi);
+    //this->channel->registerObject("tabs", this->tabsApi);
 
     this->connect(this->tabsApi, &TabsApi::splitTabRequested, this, [=](QUrl url){ 
         emit this->splitTabRequested(url); 
@@ -82,13 +82,13 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
     });
 
     this->historyApi = new HistoryApi(this->webview->page()->history());
-    this->channel->registerObject("tabHistory", this->historyApi);
+    //this->channel->registerObject("tabHistory", this->historyApi);
 
     this->fileApi = new FileApi();
-    this->channel->registerObject("fs", this->fileApi);
+    //this->channel->registerObject("fs", this->fileApi);
 
     this->ollamaApi = new OllamaApi();
-    this->channel->registerObject("ollama", this->ollamaApi);
+    //this->channel->registerObject("ollama", this->ollamaApi);
 
     QWebEngineScript script;
     script.setName("WebChannelScript");
@@ -98,9 +98,9 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
 
         script.onload = function() {
             new QWebChannel(qt.webChannelTransport, function(channel) {
-                window.tabs = channel.objects.tabs;
-                window.tabHistory = channel.objects.tabHistory;
-                window.fs = channel.objects.fs;
+                //window.tabs = channel.objects.tabs;
+                //window.tabHistory = channel.objects.tabHistory;
+                //window.fs = channel.objects.fs;
                 // window.ai = {
                 //     generate: (model, prompt) => {
                 //         return new Promise((resolve, reject) => {

@@ -236,6 +236,10 @@ void TabManager::windowShowDownloads(){
     this->downloadManager->open();
 }
 
+void TabManager::windowLoadTab(int group, int tab, QString url){
+    this->getGroup(group)->getTab(tab)->load(QUrl::fromUserInput(url));
+}
+
 TabManager::~TabManager()
 {
     for (TabGroup *group : this->groups){
