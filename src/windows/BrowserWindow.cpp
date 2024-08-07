@@ -165,6 +165,10 @@ BrowserWindow::BrowserWindow(QSize size, QWidget *parent) : QMainWindow(parent),
         this->tabManager->addGroup(); 
     });
 
+    this->connect(this->sideBar, &SideBar::openURL, this, [=](QUrl url){
+        this->tabManager->addGroup(url);
+    });
+
     this->contentLayout->addWidget(this->sideBar);
     this->contentLayout->addWidget(this->tabManager);
 
