@@ -28,6 +28,7 @@ public:
     TabGroup *getCurrentGroup();
     void setInitialUrl(QUrl url);
     void addGroup();
+    void addGroup(QUrl url);
     void closeGroup(int pos);
     void windowSplitLeft();
     void windowSplitRight();

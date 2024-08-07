@@ -158,6 +158,11 @@ void TabManager::addGroup()
     emit this->titleChanged(this->getCurrentGroup()->getTab(0)->getTitle());
 }
 
+void TabManager::addGroup(QUrl url){
+    this->addGroup();
+    this->getCurrentGroup()->getTab(0)->load(url);
+}
+
 void TabManager::closeGroup(int pos)
 {
     delete this->groups.at(pos);
