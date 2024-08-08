@@ -11,5 +11,7 @@ set(SOURCES ${SOURCES}
     src/api/DialogApi.cpp
     src/api/OllamaApi.h
     src/api/OllamaApi.cpp
+    src/api/SearchSuggestionsApi.h
+    src/api/SearchSuggestionsApi.cpp
     PARENT_SCOPE
 )

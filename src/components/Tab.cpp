@@ -88,7 +88,7 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
     //this->channel->registerObject("fs", this->fileApi);
 
     this->ollamaApi = new OllamaApi();
-    //this->channel->registerObject("ollama", this->ollamaApi);
+    this->channel->registerObject("ollama", this->ollamaApi);
 
     QWebEngineScript script;
     script.setName("WebChannelScript");
@@ -101,17 +101,17 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
                 //window.tabs = channel.objects.tabs;
                 //window.tabHistory = channel.objects.tabHistory;
                 //window.fs = channel.objects.fs;
-                // window.ai = {
-                //     generate: (model, prompt) => {
-                //         return new Promise((resolve, reject) => {
-                //             channel.objects.ollama.generate(model, prompt);
+                window.ai = {
+                    generate: (model, prompt) => {
+                        return new Promise((resolve, reject) => {
+                            channel.objects.ollama.generate(model, prompt);
 
-                //             channel.objects.ollama.responseGenerated.connect((response) => {
-                //                 resolve(response);
-                //             })
-                //         });
-                //     }
-                // };
+                            channel.objects.ollama.responseGenerated.connect((response) => {
+                                resolve(response);
+                            })
+                        });
+                    }
+                };
             });
 
             function inject(fn) {

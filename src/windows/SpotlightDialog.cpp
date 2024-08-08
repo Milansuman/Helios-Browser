@@ -19,6 +19,7 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_
     this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 1));
 
     this->webview->load(QUrl("qrc:/extensions/spotlight/index.html"));
+    //this->webview->load(QUrl("http://localhost:5173"));
 
     this->channel = new QWebChannel(this->webview->page());
     this->webview->page()->setWebChannel(this->channel);
@@ -59,6 +60,9 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_
     this->ollamaApi = new OllamaApi();
     this->channel->registerObject("ollama", this->ollamaApi);
 
+    this->searchSuggestionsApi = new SearchSuggestionsApi();
+    this->channel->registerObject("searchSuggestions", this->searchSuggestionsApi);
+
     this->channel->registerObject("misc", this);
 
     this->connect(this->dialogApi, &DialogApi::closeDialogRequested, this, [=](){
@@ -76,6 +80,17 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_
                 window.tabs = channel.objects.tabs;
                 window.fs = channel.objects.fs;
                 window.dialog = channel.objects.dialog;
+                window.suggestions = {
+                    getDuckDuckGoSuggestions: (text) => {
+                        return new Promise((resolve, reject) => {
+                            channel.objects.searchSuggestions.getDuckDuckGoSuggestions(text);
+
+                            channel.objects.searchSuggestions.duckDuckGoSuggestionsGenerated.connect((response) => {
+                                resolve(response);
+                            });
+                        });
+                    }
+                }
                 // window.ai = {
                 //     generate: (model, prompt) => {
                 //         return new Promise((resolve, reject) => {
