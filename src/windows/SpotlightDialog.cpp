@@ -91,17 +91,17 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_
                         });
                     }
                 }
-                // window.ai = {
-                //     generate: (model, prompt) => {
-                //         return new Promise((resolve, reject) => {
-                //             channel.objects.ollama.generate(model, prompt);
+                window.ai = {
+                    generate: (model, prompt) => {
+                        return new Promise((resolve, reject) => {
+                            channel.objects.ollama.generate(model, prompt);
 
-                //             channel.objects.ollama.responseGenerated.connect((response) => {
-                //                 resolve(response);
-                //             })
-                //         });
-                //     }
-                // };
+                            channel.objects.ollama.responseGenerated.connect((response) => {
+                                resolve(response);
+                            })
+                        });
+                    }
+                };
 
                 window.currentTab = channel.objects.misc.tab;
                 window.currentGroup = channel.objects.misc.group;
@@ -226,6 +226,7 @@ void SpotlightDialog::open(int pos, int group){
     this->m_group = group;
     emit this->tabChanged(pos);
     emit this->groupChanged(group);
+    this->setFixedSize(this->parentWidget()->size());
     QDialog::open();
 }
 
