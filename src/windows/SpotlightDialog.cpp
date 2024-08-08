@@ -226,6 +226,7 @@ void SpotlightDialog::open(int pos, int group){
     this->m_group = group;
     emit this->tabChanged(pos);
     emit this->groupChanged(group);
+    this->setFixedSize(this->parentWidget()->size());
     QDialog::open();
 }
 
