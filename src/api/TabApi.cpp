@@ -4,10 +4,10 @@
 
 TabsApi::TabsApi(QObject *parent): QObject(parent){}
 
-bool TabsApi::addTabs(QJsonDocument tabs){
+bool TabsApi::addTabs(QJsonValue tabs){
     if(tabs.isArray()){
         QList<QList<QUrl>> tabsList;
-        for(QJsonValueRef group: tabs.array()){
+        for(QJsonValueRef group: tabs.toArray()){
             if(group.isArray()){
                 QList<QUrl> urls;
 

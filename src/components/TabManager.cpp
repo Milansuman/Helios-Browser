@@ -225,9 +225,10 @@ void TabManager::windowShowSiteSettings()
 
 void TabManager::windowLoadBulk(QList<QList<QUrl>> urlsList)
 {
+    qDebug() << urlsList;
     for (QList<QUrl> group : urlsList){
         this->addGroup();
-        for (QUrl url : group){
+        for(int i=0; i<group.size()-1; i++){
             this->windowSplitRight();
         }
 

@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QUrl>
 #include <QJsonDocument>
+#include <QJsonValue>
 #include <QList>
 #include <QUrl>
 
@@ -18,7 +19,7 @@ class TabsApi: public QObject{
 public:
     TabsApi(QObject *parent=nullptr);
     Q_INVOKABLE void load(int group, int tab, QString url);
-    Q_INVOKABLE bool addTabs(QJsonDocument tabs);
+    Q_INVOKABLE bool addTabs(QJsonValue value);
     Q_INVOKABLE void requestSplitTab(QString url);
     Q_INVOKABLE void requestSplitTab();
     Q_INVOKABLE void requestFlipTabs();
