@@ -90,19 +90,30 @@ SideBar::SideBar(QWidget *parent): QWidget(parent){
     this->gridViewButton->setStyleSheet(
         "QPushButton{"
         "   background-color: rgba(0,0,0,0.5);"
+        "   width: 30%;"
         "   border-radius: 5px;"
         "}"
     );
-    this->gridViewButton->setFixedSize(60, 40);
-    
+    this->gridViewButton->setFixedSize(30, 30);
+    this->gridViewButton->setIconSize(QSize(10, 10));
+    this->gridViewButton->setToolTip("Coming Soon!");
+
+    // Set the width of the second button to 90% of the total width
     this->newGroupButton = new IconButton(":/icons/plus.png");
+    // add text
+    this->newGroupButton->setText(" New Group");
     this->newGroupButton->setStyleSheet(
         "QPushButton{"
         "   background-color: rgba(0,0,0,0.5);"
+        "   width: 90%;"
         "   border-radius: 5px;"
+        "   font-size: 12px;"
+        "   padding: 0 5px;" 
         "}"
     );
-    this->newGroupButton->setFixedSize(60, 40);
+    this->newGroupButton->setFixedSize(90, 30);
+    this->newGroupButton->setIconSize(QSize(10, 10));
+    this->newGroupButton->setToolTip("New Group");
 
     this->connect(this->newGroupButton, &IconButton::clicked, this, [=](){
         emit this->newGroupRequested();
