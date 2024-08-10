@@ -19,6 +19,7 @@ private:
     QVBoxLayout *layout;
     WebView *webview;
     int m_pos, m_group;
+    bool initialized;
 
     QWebChannel *channel;
     TabsApi *tabsApi;
@@ -26,6 +27,9 @@ private:
     DialogApi *dialogApi;
     OllamaApi *ollamaApi;
     SearchSuggestionsApi *searchSuggestionsApi;
+
+    void initialize();
+    void finalize();
 public:
     SpotlightDialog(QWidget *parent=nullptr);
     void open(int pos, int group);
@@ -34,6 +38,7 @@ public:
     ~SpotlightDialog();
 protected:
     void paintEvent(QPaintEvent *event);
+    void showEvent(QShowEvent *event);
 signals:
     void splitTabRequested(QUrl url);
     void splitTabHomeRequested();

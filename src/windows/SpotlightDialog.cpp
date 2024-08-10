@@ -8,17 +8,17 @@
 #include <QUrl>
 #include <QPainter>
 
-SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_group(0){
+SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_group(0), initialized(false){
     this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
     this->setAttribute(Qt::WA_TranslucentBackground);
-
-    this->setFixedSize(parent->size());
     this->layout = new QVBoxLayout(this);
 
+    this->initialize();
+}
+
+void SpotlightDialog::initialize(){
     this->webview = new WebView();
     this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 1));
-
-    this->webview->load(QUrl("qrc:/extensions/spotlight/index.html"));
     //this->webview->load(QUrl("http://localhost:5173"));
 
     this->channel = new QWebChannel(this->webview->page());
@@ -208,8 +208,11 @@ SpotlightDialog::SpotlightDialog(QWidget *parent): QDialog(parent), m_pos(0), m_
     script.setRunsOnSubFrames(true);
 
     this->webview->page()->scripts().insert(script);
-
     this->layout->addWidget(this->webview);
+}
+
+void SpotlightDialog::finalize(){
+    this->webview->load(QUrl("qrc:/extensions/spotlight/index.html"));
 }
 
 void SpotlightDialog::paintEvent(QPaintEvent *event){
@@ -219,6 +222,15 @@ void SpotlightDialog::paintEvent(QPaintEvent *event){
     painter.setPen(Qt::NoPen);
 
     painter.drawRoundedRect(rect(), 10, 10);
+}
+
+void SpotlightDialog::showEvent(QShowEvent *event){
+    if(!this->initialized){
+        qDebug() << this->initialized;
+        this->finalize();
+        this->initialized = true;
+    }
+    QDialog::showEvent(event);
 }
 
 void SpotlightDialog::open(int pos, int group){
