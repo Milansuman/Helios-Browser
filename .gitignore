@@ -4,3 +4,4 @@ build/
 docs/
 .dir-locals.el
 build*
+.flatpak-builder
