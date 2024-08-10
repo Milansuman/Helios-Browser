@@ -1,18 +1,12 @@
 #include "DownloadManager.h"
 
-#include <QFontDatabase>
-#include <QFont>
-#include <QListWidgetItem>
-#include <QProgressBar>
-#include <QLabel>
-#include <QDesktopServices>
-#include <QUrl>
-#include <QDir>
 #include <QPainter>
 #include <QPainterPath>
-#include <QFile>
-#include <QTextStream>
-#include <QStandardPaths>
+#include <QFontDatabase>
+#include <QFont>
+#include <QLocale>
+#include <QMouseEvent>
+#include <QDesktopServices>
 
 #ifdef __linux__
 #include <kwindoweffects.h>
@@ -41,156 +35,247 @@ struct WINCOMPATTRDATA
 typedef BOOL(WINAPI *pSetWindowCompositionAttribute)(HWND, WINCOMPATTRDATA *);
 #endif
 
-DownloadManager::DownloadManager(QWidget *parent) : QDialog(parent)
-{
-    this->setWindowTitle("Downloads");
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
-    this->setAttribute(Qt::WA_TranslucentBackground);
-    this->setMinimumWidth(300);
+DownloadItem::DownloadItem(QString filename, qint64 totalSize, QWidget *parent): QWidget(parent), totalSize(totalSize), downloadComplete(false), isPaused(false){
+    int titleFontId = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
+    int subTextFontId = QFontDatabase::addApplicationFont(":/fonts/SFUIText-Regular.ttf");
 
-    QFontDatabase::addApplicationFont(":/fonts/SFUIText-Bold.ttf");
-    QString fontFamily = QFontDatabase::applicationFontFamilies(0).at(0);
-    QFont *font = new QFont(fontFamily, -1, QFont::Bold);
+    QFont titleFont(QFontDatabase::applicationFontFamilies(titleFontId).at(0), 8, QFont::Bold);
+    QFont subTextFont(QFontDatabase::applicationFontFamilies(subTextFontId).at(0), 8, QFont::Normal);
 
-    this->dialogLayout = new QVBoxLayout(this);
-    this->dialogLayout->setContentsMargins(0, 0, 0, 0);
+    this->layout = new QHBoxLayout(this);
+    this->layout->setContentsMargins(10, 10, 10, 10);
+    this->subLayout = new QVBoxLayout();
+    this->subLayout->setSpacing(2);
 
-    this->setStyleSheet(
-        "QListWidget{"
-        "   background: rgba( 255, 255, 255, 0.15 );"
-        "   box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );"
-        "   backdrop-filter: blur( 6.5px );"
-        "   -webkit-backdrop-filter: blur( 6.5px );"
+    this->fileName = new QLabel(filename);
+    this->fileName->setFont(titleFont);
+
+    this->progressTextLayout = new QHBoxLayout();
+    this->progressLabel = new QLabel("0B/" + QLocale::system().formattedDataSize(this->totalSize));
+    this->progressLabel->setFont(subTextFont);
+    this->progressLabel->setStyleSheet(
+        "QLabel{"
+        "   color: rgb(164, 164, 164);"
+        "}"
+    );
+
+    this->timeLabel = new QLabel("10d 10h 10m 10s");
+    this->timeLabel->setFont(subTextFont);
+    this->timeLabel->setStyleSheet(
+        "QLabel{"
+        "   color: rgb(164, 164, 164);"
+        "}"
+    );
+
+    this->progressTextLayout->addWidget(this->progressLabel);
+    // this->progressTextLayout->addStretch();
+    // this->progressTextLayout->addWidget(this->timeLabel);
+
+    this->downloadProgressBar = new QProgressBar();
+    this->downloadProgressBar->setValue(0);
+    this->downloadProgressBar->setTextVisible(false);
+    this->downloadProgressBar->setFixedHeight(3);
+
+    this->downloadProgressBar->setStyleSheet(
+        "QProgressBar{"
+        "   border: none;"
+        "   background-color: rgb(50, 50, 50);"
         "   border-radius: 10px;"
-        "   border: 1px solid rgba( 255, 255, 255, 0.18 );"
-        // "   padding: 10px;"
-        "}");
+        "}"
+        "QProgressBar::chunk{"
+        "   background-color: rgb(56, 241, 52);"
+        "}"
+    );
 
-    downloadList = new QListWidget(this);
-    downloadList->setMinimumHeight(200);
-    downloadList->setContentsMargins(0, 0, 0, 0);
-    this->dialogLayout->addWidget(downloadList);
+    this->subLayout->addWidget(this->fileName);
+    this->subLayout->addLayout(this->progressTextLayout);
+    this->subLayout->addWidget(this->downloadProgressBar);
 
-    connect(downloadList, &QListWidget::itemDoubleClicked, this, &DownloadManager::openFileLocation);
+    this->cancelButton = new IconButton(":/icons/white/close.png");
+    this->cancelButton->setFixedSize(30, 30);
+    // this->cancelButton->setIconSize(QSize(20, 20));
+    this->openFileExplorerButton = new IconButton(":/icons/white/folder-up.png");
+    this->openFileExplorerButton->setFixedSize(30, 30);
+    // this->openFileExplorerButton->setIconSize(QSize(20, 20));
 
-    // addDownload(QDir::homePath() + "/test_download.txt", 50);
-    loadDownloads();
-    // this->dialogLayout->addWidget(this->mainPage);
+    this->pauseButton = new IconButton(":/icons/white/pause.png");
+    this->pauseButton->setFixedSize(30, 30);
+
+    this->resumeButton = new IconButton(":/icons/white/play.png");
+    this->resumeButton->setFixedSize(30, 30);
+
+    this->cancelButton->setStyleSheet(
+        "QPushButton{"
+        "   padding: 10px;"
+        "   background-color: rgb(50, 50, 50);"
+        "   border-radius: 5px;"
+        "}"
+    );
+
+    this->openFileExplorerButton->setStyleSheet(
+        "QPushButton{"
+        "   padding: 10px;"
+        "   background-color: rgb(50, 50, 50);"
+        "   border-radius: 5px;"
+        "}"
+    );
+
+    this->pauseButton->setStyleSheet(
+        "QPushButton{"
+        "   padding: 10px;"
+        "   background-color: rgb(50, 50, 50);"
+        "   border-radius: 5px;"
+        "}"
+    );
+
+    this->resumeButton->setStyleSheet(
+        "QPushButton{"
+        "   padding: 10px;"
+        "   background-color: rgb(50, 50, 50);"
+        "   border-radius: 5px;"
+        "}"
+    );
+
+    this->resumeButton->setVisible(false);
+
+    this->connect(this->pauseButton, &IconButton::clicked, this, [=](){
+        this->pauseButton->setVisible(false);
+        this->resumeButton->setVisible(true);
+
+        emit this->pauseDownload();
+    });
+
+    this->connect(this->resumeButton, &IconButton::clicked, this, [=](){
+        this->pauseButton->setVisible(true);
+        this->resumeButton->setVisible(false);
+
+        emit this->resumeDownload();
+    });
+
+    this->connect(this->cancelButton, &IconButton::clicked, this, [=](){
+        this->pauseButton->setVisible(false);
+        this->resumeButton->setVisible(false);
+        this->cancelButton->setVisible(false);
+        this->openFileExplorerButton->setVisible(false);
+        this->downloadProgressBar->setVisible(false);
+
+        this->progressLabel->setText("Download cancelled.");
+
+        emit this->cancelDownload();
+    });
+
+    this->connect(this->openFileExplorerButton, &IconButton::clicked, this, [=](){
+        emit this->openFolder();
+    });
+
+    this->layout->addLayout(this->subLayout);
+    this->layout->addWidget(this->cancelButton);
+    this->layout->addWidget(this->pauseButton);
+    this->layout->addWidget(this->resumeButton);
+    this->layout->addWidget(this->openFileExplorerButton);
 }
 
-void DownloadManager::paintEvent(QPaintEvent *event)
-{
+void DownloadItem::paintEvent(QPaintEvent *event){
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setRenderHints(QPainter::Antialiasing);
 
-    // painter.setBrush(QBrush(QColor(30, 30, 30, 230)));
+    painter.setBrush(QBrush(QColor(30, 30, 30, 80)));
     painter.setPen(Qt::NoPen);
 
-    painter.drawRoundedRect(rect(), 10, 10);
+    painter.drawRoundedRect(rect().adjusted(1, 1, -1, -1), 10, 10);
 }
 
-void DownloadManager::saveDownloads()
-{
-    QFile file(QDir::homePath() + "/.downloads_history");
-    if (file.open(QIODevice::WriteOnly | QIODevice::Text))
-    {
-        QTextStream out(&file);
-        for (const QString &filename : downloads.keys())
-        {
-            out << filename << "\n";
-        }
-        file.close();
+void DownloadItem::setDownloaded(qint64 size, qint64 totalSize){
+    this->downloadedSize = size;
+    this->totalSize = totalSize;
+    this->progressLabel->setText(QLocale::system().formattedDataSize(size) + "/" + QLocale::system().formattedDataSize(totalSize));
+
+    this->downloadProgressBar->setValue(((double) size/totalSize) * 100);
+}
+
+void DownloadItem::setCompleted(){
+    this->pauseButton->setVisible(false);
+    this->resumeButton->setVisible(false);
+    this->cancelButton->setVisible(false);
+    this->openFileExplorerButton->setVisible(true);
+    this->downloadProgressBar->setVisible(false);
+
+    this->progressLabel->setText("Download completed.");
+}
+
+void DownloadItem::mousePressEvent(QMouseEvent *event){
+    if(event->button() == Qt::LeftButton){
+        emit this->clicked();
     }
 }
 
-void DownloadManager::loadDownloads()
-{
-    QString downloadsPath = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
-    QDir downloadsDir(downloadsPath);
+DownloadItem::~DownloadItem() = default;
 
-    qDebug() << "Attempting to load downloads from:" << downloadsPath;
+DownloadManager::DownloadManager(QWidget *parent): QDialog(parent){
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::Popup | Qt::NoDropShadowWindowHint);
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    this->setFixedWidth(300);
 
-    if (downloadsDir.exists())
-    {
-        QFileInfoList files = downloadsDir.entryInfoList(QDir::Files | QDir::NoDotAndDotDot, QDir::Time | QDir::Reversed);
-
-        for (const QFileInfo &fileInfo : files)
-        {
-            QString filename = fileInfo.filePath();
-            qDebug() << "Found file:" << filename;
-            addDownload(filename, 100); // Add with 100% progress
-        }
-    }
-    else
-    {
-        qDebug() << "Downloads directory does not exist";
-    }
+    this->layout = new QVBoxLayout(this);
+    this->downloadItems = QMap<QWebEngineDownloadRequest*, DownloadItem*>();
 }
 
-void DownloadManager::addDownload(const QString &filename, int progress)
-{
-    qDebug() << "Adding download:" << filename << "Progress:" << progress;
-    if (!downloads.contains(filename))
-    {
-        QListWidgetItem *item = new QListWidgetItem();
-        downloads[filename] = item;
+void DownloadManager::paintEvent(QPaintEvent *event){
+    QPainter painter(this);
+    painter.setRenderHints(QPainter::Antialiasing);
 
-        QWidget *itemWidget = new QWidget;
-        QVBoxLayout *itemLayout = new QVBoxLayout(itemWidget);
+    painter.setBrush(QBrush(QColor(30, 30, 30, 190)));
+    painter.setPen(QPen(QColor(128, 128, 128)));
 
-        QLabel *filenameLabel = new QLabel(QFileInfo(filename).fileName());
-        QProgressBar *progressBar = new QProgressBar;
-        progressBar->setValue(progress);
-
-        itemLayout->addWidget(filenameLabel);
-        itemLayout->addWidget(progressBar);
-
-        item->setSizeHint(itemWidget->sizeHint());
-
-        downloadList->insertItem(0, item);
-        downloadList->setItemWidget(item, itemWidget);
-    }
-    updateDownloadProgress(filename, progress);
+    painter.drawRoundedRect(rect().adjusted(1, 1, -1, -1), 10, 10);
 }
 
-void DownloadManager::updateDownloadProgress(const QString &filename, int progress)
-{
-    if (downloads.contains(filename))
-    {
-        QListWidgetItem *item = downloads[filename];
-        QWidget *itemWidget = downloadList->itemWidget(item);
-        QProgressBar *progressBar = itemWidget->findChild<QProgressBar *>();
-        if (progressBar)
-        {
-            progressBar->setValue(progress);
-        }
-    }
-}
-
-void DownloadManager::openFileLocation(QListWidgetItem *item)
-{
-    QString filename = downloads.key(item);
-    if (!filename.isEmpty())
-    {
-        QFileInfo fileInfo(filename);
-        QDesktopServices::openUrl(QUrl::fromLocalFile(fileInfo.absolutePath()));
-    }
-}
-
-void DownloadManager::open()
-{
-    this->move(this->parentWidget()->mapToGlobal(QPoint(this->parentWidget()->width() / 10 - this->width() / 2, 10)));
+void DownloadManager::open(){
+    this->move(this->parentWidget()->mapToGlobal(QPoint(10, 10)));
     QDialog::open();
-#ifdef __linux__
-    QPainterPath path;
-    path.addRoundedRect(rect(), 10, 10);
-    KWindowEffects::enableBlurBehind(this->windowHandle(), true, QRegion(path.toFillPolygon().toPolygon()));
-#elif defined(_WIN32)
-    enableBlurBehind();
-#endif
+    #ifdef __linux__
+        QPainterPath path;
+        path.addRoundedRect(rect().adjusted(1, 1, -1, -1), 10, 10);
+        KWindowEffects::enableBlurBehind(this->windowHandle(), true, QRegion(path.toFillPolygon().toPolygon()));
+    #elif defined(_WIN32)
+        enableBlurBehind();
+    #endif
 }
 
-DownloadManager::~DownloadManager() = default;
+void DownloadManager::addDownloadItem(QWebEngineDownloadRequest *request){
+    DownloadItem *downloadItem = new DownloadItem(request->suggestedFileName(), request->totalBytes());
+    this->downloadItems.insert(request, downloadItem);
+
+    this->connect(downloadItem, &DownloadItem::pauseDownload, this, [=](){
+        request->pause();
+    });
+
+    this->connect(downloadItem, &DownloadItem::resumeDownload, this, [=](){
+        request->resume();
+    });
+
+    this->connect(downloadItem, &DownloadItem::cancelDownload, this, [=](){
+        request->cancel();
+    });
+
+    this->connect(downloadItem, &DownloadItem::openFolder, this, [=](){
+        QDesktopServices::openUrl(QUrl(request->downloadDirectory()));
+    });
+
+    this->connect(downloadItem, &DownloadItem::clicked, this, [=](){
+        QDesktopServices::openUrl(QUrl::fromLocalFile(request->downloadDirectory() + "/" + request->downloadFileName()));
+    });
+
+    this->layout->addWidget(downloadItem);
+}
+
+void DownloadManager::updateDownloadItem(QWebEngineDownloadRequest *request){
+    this->downloadItems[request]->setDownloaded(request->receivedBytes(), request->totalBytes());
+}
+
+void DownloadManager::finishDownloadItem(QWebEngineDownloadRequest *request){
+    this->downloadItems[request]->setCompleted();
+}
 
 #ifdef _WIN32
 void DownloadManager::enableBlurBehind()
@@ -210,3 +295,5 @@ void DownloadManager::enableBlurBehind()
     }
 }
 #endif
+
+DownloadManager::~DownloadManager() = default;

@@ -1,4 +1,7 @@
+.vscode/*
 .vscode/
 build/
 docs/
-build.ps1
+.dir-locals.el
+build*
+.flatpak-builder

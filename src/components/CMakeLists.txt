@@ -25,5 +25,7 @@ set(SOURCES ${SOURCES}
     src/components/PreviewWindow.cpp
     src/components/Separator.h
     src/components/Separator.cpp
+    src/components/BookMarkGroup.h
+    src/components/BookMarkGroup.cpp
     PARENT_SCOPE
 )

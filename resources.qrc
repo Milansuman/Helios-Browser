@@ -86,5 +86,24 @@
         <file alias="circle-arrow-left.png">res/icons/white/circle-arrow-left.png</file>
         <file alias="ticket-check.png">res/icons/white/ticket-check.png</file>
         <file alias="download.png">res/icons/white/download.png</file>
+        <file alias="close.png">res/icons/white/close.png</file>
+        <file alias="folder-up.png">res/icons/white/folder-up.png</file>
+        <file alias="behance-brands-solid.png">res/icons/white/behance-brands-solid.png</file>
+        <file alias="code-solid.png">res/icons/white/code-solid.png</file>
+        <file alias="codepen-brands-solid.png">res/icons/white/codepen-brands-solid.png</file>
+        <file alias="discord-brands-solid.png">res/icons/white/discord-brands-solid.png</file>
+        <file alias="dribbble-brands-solid.png">res/icons/white/dribbble-brands-solid.png</file>
+        <file alias="figma-brands-solid.png">res/icons/white/figma-brands-solid.png</file>
+        <file alias="github-brands-solid.png">res/icons/white/github-brands-solid.png</file>
+        <file alias="instagram-brands-solid.png">res/icons/white/instagram-brands-solid.png</file>
+        <file alias="linkedin-brands-solid.png">res/icons/white/linkedin-brands-solid.png</file>
+        <file alias="telegram-brands-solid.png">res/icons/white/telegram-brands-solid.png</file>
+        <file alias="youtube-brands-solid.png">res/icons/white/youtube-brands-solid.png</file>
+        <file alias="twitter-brands-solid.png">res/icons/white/twitter-brands-solid.png</file>
+    </qresource>
+    <qresource prefix="/extensions/spotlight">
+        <file alias="bundle.js">res/extensions/spotlight/bundle.js</file>
+        <file alias="index.html">res/extensions/spotlight/index.html</file>
+        <file alias="style.css">res/extensions/spotlight/style.css</file>
     </qresource>
 </RCC>
