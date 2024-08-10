@@ -239,6 +239,7 @@ void SpotlightDialog::open(int pos, int group){
     emit this->tabChanged(pos);
     emit this->groupChanged(group);
     this->setFixedSize(this->parentWidget()->size());
+    this->move(this->parentWidget()->mapToGlobal(QPoint(0, 0)));
     QDialog::open();
 }
 
