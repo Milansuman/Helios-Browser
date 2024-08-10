@@ -12,6 +12,8 @@ class GroupSelectorDialog : public QDialog{
 private:
     std::vector<GroupIcons*> groups;
     QHBoxLayout *layout;
+
+    int findGroup(GroupIcons *group);
 public:
     GroupSelectorDialog(QWidget *parent=nullptr);
     void addGroup(GroupIcons *group);
