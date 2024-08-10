@@ -35,7 +35,7 @@ void GroupSelectorDialog::addGroup(GroupIcons *group){
     int pos = this->groups.size()-1;
 
     this->connect(group, &GroupIcons::clicked, this, [=](){
-        emit this->changeGroupRequested(pos);
+        emit this->changeGroupRequested(this->findGroup(group));
     });
 
     this->connect(group, &GroupIcons::closeGroupRequested, this, [=](){
@@ -50,7 +50,7 @@ void GroupSelectorDialog::insertGroup(int pos, GroupIcons *group){
     this->layout->insertWidget(pos, this->groups.at(pos));
 
     this->connect(group, &GroupIcons::clicked, this, [=](){
-        emit this->changeGroupRequested(pos);
+        emit this->changeGroupRequested(this->findGroup(group));
     });
 
     this->connect(group, &GroupIcons::closeGroupRequested, this, [=](){
@@ -101,6 +101,11 @@ void GroupSelectorDialog::open() {
     } else {
         QDialog::open();
     }
+}
+
+int GroupSelectorDialog::findGroup(GroupIcons *group){
+    std::vector<GroupIcons*>::iterator it = std::find(this->groups.begin(), this->groups.end(), group);
+    return std::distance(this->groups.begin(), it);
 }
 
 GroupSelectorDialog::~GroupSelectorDialog(){
