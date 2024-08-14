@@ -50,9 +50,12 @@ private:
     PageSettingsDialog *pageSettingsDialog;
     CertificateErrorDialog *certificateErrorDialog;
     QWebEngineProfile *profile;
+    QUrl url;
     QWebChannel *channel;
     DownloadManager *downloadManager;
     std::map<QWebEnginePage::Feature, bool> *permissions;
+
+    bool initialized;
 
     TabsApi *tabsApi;
     HistoryApi *historyApi;
@@ -60,7 +63,8 @@ private:
     OllamaApi *ollamaApi;
 
     void initCustomScrollBar();
-
+    void initializeWebView();
+    void finalizeWebView();
 public:
     Tab(QWebEngineProfile *profile, QWidget *parent = nullptr);
     Tab(QWebEngineProfile *profile, QString url, QWidget *parent = nullptr);
@@ -82,6 +86,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
+    void showEvent(QShowEvent *event) override;
 signals:
     void closeTabRequested();
     void splitTabLeftRequested();
