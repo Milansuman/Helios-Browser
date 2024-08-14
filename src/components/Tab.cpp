@@ -55,8 +55,6 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         "}");
 
     // this->downloadManager = new DownloadManager(this);
-
-    this->webview = new WebView(profile);
     
     this->initializeWebView();
     
@@ -99,6 +97,7 @@ void Tab::initCustomScrollBar(){
 
 void Tab::initializeWebView(){
     //this->webview->load(QUrl(url));
+    this->webview = new WebView(this->profile);
 
     this->channel = new QWebChannel(this->webview->page());
     this->webview->page()->setWebChannel(this->channel);
