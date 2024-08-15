@@ -1,6 +1,6 @@
-# Flux Browser
+# Helios Browser
 
-Flux Browser (previously known as project web) is an open source modular browser catered more towards developers, designers, and power users. It features functionalities meant to boost their workflow and automate many tasks.
+Helios Browser (previously known as project web) is an open source modular browser catered more towards developers, designers, and power users. It features functionalities meant to boost their workflow and automate many tasks.
 
 The browser is written in Qt for C++ and has implemented the Qt WebEngine component. We have built a custom window, UX, and the entire UI from scratch, including a custom window with only the web rendering part handled by Qt WebEngine (Chromium-based module for Qt).
 
