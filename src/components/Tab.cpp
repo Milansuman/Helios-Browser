@@ -22,8 +22,9 @@
 
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent) : Tab(profile, "https://fluxbrowserhome.netlify.app/", parent) {}
 
-Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile)
+Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile), url(QUrl(url)), initialized(false)
 {
+    
     this->permissions = new std::map<QWebEnginePage::Feature, bool>({
         {QWebEnginePage::Feature::Notifications, false},
         {QWebEnginePage::Feature::Geolocation, false},
@@ -55,9 +56,49 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
         "}");
 
     // this->downloadManager = new DownloadManager(this);
+    
+    this->initializeWebView();
+    
+}
 
-    this->webview = new WebView(profile);
-    this->webview->load(QUrl(url));
+// adding a custom scroll bar which gets hidden when not in use
+void Tab::initCustomScrollBar(){
+    QWebEngineScript script;
+    script.setName("customScrollBarScript");
+    script.setInjectionPoint(QWebEngineScript::DocumentReady);
+    script.setWorldId(QWebEngineScript::ApplicationWorld);
+    script.setRunsOnSubFrames(true);
+
+    QString js = R"(
+        var style = document.createElement('style');
+        style.innerHTML = `
+            ::-webkit-scrollbar {
+                width: 10px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background-color: transparent;
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: linear-gradient(to right, transparent 60%, #444 40%);
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: #888;
+                border-radius: 6px;
+            }
+        `;
+        document.head.appendChild(style);
+    )";
+
+    script.setSourceCode(js);
+    this->webview->page()->scripts().insert(script);
+}
+
+void Tab::initializeWebView(){
+    //this->webview->load(QUrl(url));
+    this->webview = new WebView(this->profile);
 
     this->channel = new QWebChannel(this->webview->page());
     this->webview->page()->setWebChannel(this->channel);
@@ -481,39 +522,16 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
     this->layout->addWidget(this->devtoolsSplitter);
 }
 
-// adding a custom scroll bar which gets hidden when not in use
-void Tab::initCustomScrollBar(){
-    QWebEngineScript script;
-    script.setName("customScrollBarScript");
-    script.setInjectionPoint(QWebEngineScript::DocumentReady);
-    script.setWorldId(QWebEngineScript::ApplicationWorld);
-    script.setRunsOnSubFrames(true);
+void Tab::finalizeWebView(){
+    this->webview->load(this->url);
+}
 
-    QString js = R"(
-        var style = document.createElement('style');
-        style.innerHTML = `
-            ::-webkit-scrollbar {
-                width: 10px;
-            }
-
-            ::-webkit-scrollbar-track {
-                background-color: transparent;
-            }
-
-            ::-webkit-scrollbar-thumb {
-                background: linear-gradient(to right, transparent 60%, #444 40%);
-            }
-
-            ::-webkit-scrollbar-thumb:hover {
-                background: #888;
-                border-radius: 6px;
-            }
-        `;
-        document.head.appendChild(style);
-    )";
-
-    script.setSourceCode(js);
-    this->webview->page()->scripts().insert(script);
+void Tab::showEvent(QShowEvent *event){
+    if(!this->initialized){
+        this->finalizeWebView();
+        this->initialized = true;
+    }
+    QWidget::showEvent(event);
 }
 
 void Tab::paintEvent(QPaintEvent *event){

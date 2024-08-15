@@ -207,12 +207,17 @@ void SpotlightDialog::initialize(){
     script.setWorldId(QWebEngineScript::MainWorld);
     script.setRunsOnSubFrames(true);
 
+    //WebView *devtools = new WebView();
+    //devtools->page()->setInspectedPage(this->webview->page());
+
     this->webview->page()->scripts().insert(script);
     this->layout->addWidget(this->webview);
+    //this->layout->addWidget(devtools);
 }
 
 void SpotlightDialog::finalize(){
     this->webview->load(QUrl("qrc:/extensions/spotlight/index.html"));
+    //this->webview->load(QUrl("http://localhost:5173"));
 }
 
 void SpotlightDialog::paintEvent(QPaintEvent *event){
@@ -226,7 +231,6 @@ void SpotlightDialog::paintEvent(QPaintEvent *event){
 
 void SpotlightDialog::showEvent(QShowEvent *event){
     if(!this->initialized){
-        qDebug() << this->initialized;
         this->finalize();
         this->initialized = true;
     }
