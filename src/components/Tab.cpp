@@ -24,6 +24,7 @@ Tab::Tab(QWebEngineProfile *profile, QWidget *parent) : Tab(profile, "https://fl
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile), url(QUrl(url)), initialized(false)
 {
+    
     this->permissions = new std::map<QWebEnginePage::Feature, bool>({
         {QWebEnginePage::Feature::Notifications, false},
         {QWebEnginePage::Feature::Geolocation, false},
@@ -530,6 +531,7 @@ void Tab::showEvent(QShowEvent *event){
         this->finalizeWebView();
         this->initialized = true;
     }
+    QWidget::showEvent(event);
 }
 
 void Tab::paintEvent(QPaintEvent *event){
