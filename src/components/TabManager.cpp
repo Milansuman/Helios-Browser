@@ -23,6 +23,7 @@ TabManager::TabManager(QWidget *parent) : QStackedWidget(parent), currentGroup(0
     this->downloadManager = new DownloadManager(this);
 
     this->downloadRequests = QList<QWebEngineDownloadRequest*>();
+    this->history = QList<History>();
 
     this->connect(this->profile, &QWebEngineProfile::downloadRequested, this, [=](QWebEngineDownloadRequest *request){
         request->accept();
@@ -103,6 +104,14 @@ TabManager::TabManager(QWidget *parent) : QStackedWidget(parent), currentGroup(0
         emit this->newWindowRequested(url); 
     });
 
+    this->connect(this->groups.at(0), &TabGroup::navigationRequested, this, [=](QString title, QUrl url){
+        this->history.append({
+            title,
+            url,
+            QDateTime::currentDateTime()
+        });
+    });
+
     this->addWidget(this->groups.at(0));
 }
 
@@ -149,6 +158,14 @@ void TabManager::addGroup()
 
     this->connect(this->groups.at(pos), &TabGroup::newWindowRequested, this, [=](QUrl url){ 
         emit this->newWindowRequested(url); 
+    });
+
+    this->connect(this->groups.at(pos), &TabGroup::navigationRequested, this, [=](QString title, QUrl url){
+        this->history.append({
+            title,
+            url,
+            QDateTime::currentDateTime()
+        });
     });
 
     this->currentGroup = pos;

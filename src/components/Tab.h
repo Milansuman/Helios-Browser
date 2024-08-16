@@ -99,4 +99,5 @@ signals:
     void newTabRequested(QUrl url);
     void newWindowRequested(QUrl url);
     void searchRequested();
+    void navigationChanged(QString title, QUrl url);
 };

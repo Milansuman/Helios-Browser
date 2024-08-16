@@ -30,4 +30,5 @@ signals:
     void newTabRequested(QUrl url);
     void newWindowRequested(QUrl url);
     void searchRequested(int pos);
+    void navigationRequested(QString title, QUrl url);
 };

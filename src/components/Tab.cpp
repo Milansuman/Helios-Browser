@@ -326,6 +326,7 @@ void Tab::initializeWebView(){
     this->connect(this->webview, &WebView::loadFinished, this, [=](){
         this->tabTitleBar->setTitle(this->webview->title());
         emit this->titleChanged(this->webview->title());
+        emit this->navigationChanged(this->webview->title(), this->webview->url());
         this->progressIndicator->setVisible(false);
         this->pageSettingsDialog->setUrl(this->webview->url());
         //this->searchDialog->setUrl(this->webview->url());

@@ -73,6 +73,10 @@ TabGroup::TabGroup(QWebEngineProfile *profile, QWidget *parent): QSplitter(paren
     connect(this->tabs.at(0), &Tab::closeTabRequested, this, [=](){
         this->removeTab(this->findTab(temp));
     });
+
+    connect(this->tabs.at(0), &Tab::navigationChanged, this, [=](QString title, QUrl url){
+        emit this->navigationRequested(title, url);
+    });
 }
 
 int TabGroup::findTab(Tab *tab){
@@ -135,6 +139,10 @@ void TabGroup::splitLeft(int pos){
         emit this->newWindowRequested(url);
     });
 
+    connect(this->tabs.at(pos), &Tab::navigationChanged, this, [=](QString title, QUrl url){
+        emit this->navigationRequested(title, url);
+    });
+
     emit this->tabIconChanged();
     emit this->tabsChanged();
 }
@@ -191,6 +199,10 @@ void TabGroup::splitRight(int pos){
 
     connect(this->tabs.at(pos+1), &Tab::newWindowRequested, this, [=](QUrl url){
         emit this->newWindowRequested(url);
+    });
+
+    connect(this->tabs.at(pos+1), &Tab::navigationChanged, this, [=](QString title, QUrl url){
+        emit this->navigationRequested(title, url);
     });
 
     emit this->tabIconChanged();

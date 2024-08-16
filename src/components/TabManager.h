@@ -5,11 +5,18 @@
 #include <QWebEngineProfile>
 #include <QList>
 #include <QUrl>
+#include <QDateTime>
 
 #include "TabGroup.h"
 #include "Tab.h"
 #include "../windows/GroupSelectorDialog.h"
 #include "../windows/DownloadManager.h"
+
+typedef struct History{
+    QString title;
+    QUrl url;
+    QDateTime timestamp;
+} History;
 
 class TabManager : public QStackedWidget
 {
@@ -17,6 +24,8 @@ class TabManager : public QStackedWidget
 private:
     std::vector<TabGroup *> groups;
     QList<QWebEngineDownloadRequest*> downloadRequests;
+    QList<History> history;
+
     int currentGroup;
     QWebEngineProfile *profile;
     GroupSelectorDialog *groupSelectorDialog;
