@@ -1,4 +1,5 @@
 #include "SideBar.h"
+#include "ExtensionWrapper.h"
 
 SideBar::SideBar(QWidget *parent): QWidget(parent){
     this->setVisible(false);
@@ -122,9 +123,14 @@ SideBar::SideBar(QWidget *parent): QWidget(parent){
     this->bottomRowLayout->addWidget(this->gridViewButton);
     this->bottomRowLayout->addWidget(this->newGroupButton);
 
-    this->layout->addWidget(this->programmingBookMarkGroup);
-    this->layout->addWidget(this->designBookMarkGroup);
-    this->layout->addWidget(this->socialBookMarkGroup);
+    QUrl url = QUrl::fromLocalFile("/home/milan/projects/chrome-extensions-samples/functional-samples/tutorial.hello-world");
+    qDebug() << url;
+    ExtensionWrapper *helloWorld = new ExtensionWrapper(url, this);
+
+    // this->layout->addWidget(this->programmingBookMarkGroup);
+    // this->layout->addWidget(this->designBookMarkGroup);
+    // this->layout->addWidget(this->socialBookMarkGroup);
+    this->layout->addWidget(helloWorld);
     this->layout->addStretch();
     this->layout->addLayout(this->bottomRowLayout);
 }

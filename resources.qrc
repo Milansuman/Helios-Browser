@@ -1,4 +1,7 @@
 <RCC>
+    <qresource prefix="/qml">
+        <file alias="webview.qml">res/qml/webview.qml</file>
+    </qresource>
     <qresource prefix="/fonts">
         <file alias="calsans.ttf">res/fonts/calsans.ttf</file>
         <file alias="SFUIText-Bold.ttf">res/fonts/SFUIText-Bold.ttf</file>

@@ -27,5 +27,7 @@ set(SOURCES ${SOURCES}
     src/components/Separator.cpp
     src/components/BookMarkGroup.h
     src/components/BookMarkGroup.cpp
+    src/components/ExtensionWrapper.h
+    src/components/ExtensionWrapper.cpp
     PARENT_SCOPE
 )

@@ -15,6 +15,7 @@
 #include <QWebEngineDesktopMediaRequest>
 #include <QWebEngineClientCertificateSelection>
 #include <QWebEngineCertificateError>
+#include <QGraphicsOpacityEffect>
 #include <QAction>
 #include <QFileInfo>
 #include <algorithm>
@@ -23,8 +24,7 @@
 Tab::Tab(QWebEngineProfile *profile, QWidget *parent) : Tab(profile, "https://fluxbrowserhome.netlify.app/", parent) {}
 
 Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(parent), fullScreenWindow(nullptr), devtools(nullptr), screenShareDialog(nullptr), profile(profile), url(QUrl(url)), initialized(false)
-{
-    
+{   
     this->permissions = new std::map<QWebEnginePage::Feature, bool>({
         {QWebEnginePage::Feature::Notifications, false},
         {QWebEnginePage::Feature::Geolocation, false},
@@ -58,7 +58,6 @@ Tab::Tab(QWebEngineProfile *profile, QString url, QWidget *parent) : QWidget(par
     // this->downloadManager = new DownloadManager(this);
     
     this->initializeWebView();
-    
 }
 
 // adding a custom scroll bar which gets hidden when not in use
@@ -545,9 +544,19 @@ void Tab::paintEvent(QPaintEvent *event){
 }
 
 void Tab::resizeEvent(QResizeEvent *event){
-    // QPainterPath path;
-    // path.addRoundedRect(rect(), 10, 10);
-    // this->setMask(path.toFillPolygon().toPolygon());
+    // QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
+
+    // QPixmap pixmap(size());
+    // pixmap.fill(Qt::transparent);
+    // QPainter painter(&pixmap);
+    // painter.setRenderHint(QPainter::Antialiasing);
+    // painter.setBrush(Qt::white);
+    // painter.setPen(Qt::NoPen);
+    // painter.drawRoundedRect(rect(), 10, 10);
+    
+    // QBrush brush(pixmap);
+    // effect->setOpacityMask(brush);
+    // this->setGraphicsEffect(effect);
 }
 
 void Tab::mousePressEvent(QMouseEvent *event){
